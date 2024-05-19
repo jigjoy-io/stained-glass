@@ -4,11 +4,11 @@ import textToolbar from '../decorators/textToolbar'
 
 @textToolbar()
 @contentEditing()
-export default class Text extends React.Component<any> {
+export default class Title extends React.Component<any> {
 
 	render() {
 		return (
-			<p>{this.props.children}</p>
+			<p className='text-4xl font-bold'>{this.props.children}</p>
 		)
 	}
 

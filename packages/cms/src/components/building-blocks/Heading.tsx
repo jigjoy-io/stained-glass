@@ -8,7 +8,7 @@ export default class Text extends React.Component<any> {
 
 	render() {
 		return (
-			<p>{this.props.children}</p>
+			<p className='text-2xl font-bold'>{this.props.children}</p>
 		)
 	}
 
