@@ -9,7 +9,7 @@ class ClickOutsideListener extends React.Component<any> {
 
     wrapperRef: React.RefObject<HTMLDivElement>
 
-    constructor(props) {
+    constructor(props: any) {
         super(props)
 
         this.wrapperRef = React.createRef()

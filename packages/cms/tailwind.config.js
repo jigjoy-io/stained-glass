@@ -21,7 +21,7 @@ module.exports = {
         'text-default': '#E2E2E2', 
       },
       boxShadow: {
-        'DEFAULT': '0px 4px 16px rgba(17,17,26,0.1), 0px 8px 24px rgba(17,17,26,0.1), 0px 16px 56px rgba(17,17,26,0.1)'
+        'DEFAULT': '0px 2px 8px rgba(17,17,26,0.1), 0px 4px 12px rgba(17,17,26,0.1), 0px 8px 28px rgba(17,17,26,0.1)'
       },
 
       fontSize: {

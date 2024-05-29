@@ -25,7 +25,7 @@ function ChapterPage(props: any) {
     }
 
     return <div className="h-fit relative block min-w-[100vw] md:min-w-[400px] max-w-[100vw] md:max-w-[400px]">
-        <div className="flex flex-row h-max mb-4">
+        <div className="flex flex-row h-max mb-4 p-4">
             <Progress precentage={(current/(pages.length-1))*100}/>
             <div className='w-max bg-primary-light border-2 border-primary p-1 rounded-md cursor-pointer' onClick={() => loadPage({ pageId: origin, mode: props.mode })}>
                 <CloseIcon />
@@ -33,12 +33,12 @@ function ChapterPage(props: any) {
         </div>
         {(pages && pages.length > 0) && <Page mode={props.mode} id={pages[current]} key={pages[current]} />}
         {
-            (current != pages.length - 1) && <div className="flex flex-row mt-4 gap-3">
+            (current != pages.length - 1) && <div className="flex flex-row mt-4 gap-3 px-4">
                 <Button text="Previous" action={previousPage}/> <Button text="Next" action={nextPage}/>
             </div>
         }
         {
-            (current == pages.length - 1) && <div className="flex flex-row mt-4 gap-3">
+            (current == pages.length - 1) && <div className="flex flex-row mt-4 gap-3 px-4">
                 <Button text="Back to Home" action={() => loadPage({ pageId: origin, mode: props.mode })} />
             </div>
         }
