@@ -17,7 +17,7 @@ function Page(props: any) {
 
 
     return <>{
-        <div className="min-w-[100dvw] md:min-w-[400px] md:max-w-[400px] max-h-[100dvh] min-h-[625px]">
+        <div className="min-w-[100dvw] md:min-w-[400px] md:max-w-[400px] max-h-[100dvh] h-[100dvh] md:h-[675px] md:min-h-[675px]">
                 {config != null && PageFactory.get(config)}
         </div>
     }
