@@ -1,13 +1,21 @@
 import React, { lazy, Suspense } from "react"
+import AudioButton from "../components/audio/AudioButton"
+import Text from "../components/text/Text"
+import Heading from "../components/heading/Heading"
+import Title from "../components/title/Title"
+import Image from "../components/image/Image"
+import Button from "../components/button/Button"
+import Question from "../components/question/Question"
+import ChapterTile from "../components/chapter/ChapterTile"
 
-const AudioButton = lazy(() => import('../components/audio/AudioButton'))
-const Text = lazy(() => import('../components/text/Text'))
-const Heading = lazy(() => import('../components/heading/Heading'))
-const Title = lazy(() => import('../components/title/Title'))
-const Image = lazy(() => import('../components/image/Image'))
-const Button = lazy(() => import('../components/button/Button'))
-const Question = lazy(() => import('../components/question/Question'))
-const ChapterTile = lazy(() => import('../components/chapter/ChapterTile'))
+// const AudioButton = lazy(() => import('../components/audio/AudioButton'))
+// const Text = lazy(() => import('../components/text/Text'))
+// const Heading = lazy(() => import('../components/heading/Heading'))
+// const Title = lazy(() => import('../components/title/Title'))
+// const Image = lazy(() => import('../components/image/Image'))
+// const Button = lazy(() => import('../components/button/Button'))
+// const Question = lazy(() => import('../components/question/Question'))
+// const ChapterTile = lazy(() => import('../components/chapter/ChapterTile'))
 
 export default class BlockFactory extends React.Component {
 

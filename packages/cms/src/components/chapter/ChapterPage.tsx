@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { connect } from "react-redux"
 import { loadPage } from "../../reducers/pageReducer"
 import CloseIcon from "../../icons/CloseIcon"
@@ -9,6 +9,7 @@ import Progress from "../progress/Progress"
 function ChapterPage(props: any) {
 
     const [current, setCurrent] = useState(0)
+    const [percentage, setPercentage] = useState(0)
     const [pages, setPages] = useState(props.pages)
     const [origin, setOrigin] = useState(props.origin)
 
@@ -16,17 +17,28 @@ function ChapterPage(props: any) {
         props.loadPage(page)
     }
 
+    const calculatePercentage = (pageNumber: number) => {
+        let percentage = (pageNumber/(pages.length - 1)) * 100
+        setPercentage(percentage) 
+    }
+
+    useEffect(()=> {
+        calculatePercentage(current)
+    }, [])
+
     const nextPage = () => {
+        calculatePercentage(1 + current)
         setCurrent(1 + current)
     }
 
     const previousPage = () => {
+        calculatePercentage(1 + current)
         setCurrent(current - 1)
     }
 
     return <div className="h-fit relative block min-w-[100vw] md:min-w-[400px] max-w-[100vw] md:max-w-[400px]">
         <div className="flex flex-row h-max mb-4 p-4">
-            <Progress precentage={(current/(pages.length-1))*100}/>
+            <Progress percentage={percentage}/>
             <div className='w-max bg-primary-light border-2 border-primary p-1 rounded-md cursor-pointer' onClick={() => loadPage({ pageId: origin, mode: props.mode })}>
                 <CloseIcon />
             </div>
