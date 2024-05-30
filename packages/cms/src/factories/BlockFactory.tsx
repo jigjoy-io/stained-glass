@@ -8,6 +8,7 @@ import Button from "../components/button/Button"
 import Question from "../components/question/Question"
 import ChapterTile from "../components/chapter/ChapterTile"
 import Conversation from "../components/conversation/Conversation"
+import Reel from "../components/reel/Reel"
 
 // const AudioButton = lazy(() => import('../components/audio/AudioButton'))
 // const Text = lazy(() => import('../components/text/Text'))
@@ -47,6 +48,9 @@ export default class BlockFactory extends React.Component {
         },
         "conversation": {
             component: Conversation
+        },
+        "reel": {
+            component: Reel
         }
     }
     

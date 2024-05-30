@@ -11,11 +11,15 @@ class ChapterTile extends React.Component<any> {
     }
 
     componentDidMount() {
-        if (this.props.color == "blue") {
+        if (this.props.color == "green") {
             this.setState({
                 color: "bg-[#EFFDFB]"
             })
-        } else if (this.props.color == "brown") {
+        } else if (this.props.color=="blue") {
+            this.setState({
+                color: "bg-[#E5EFFA]"
+            })
+        }else if (this.props.color == "brown") {
             this.setState({
                 color: "bg-brown"
             })
