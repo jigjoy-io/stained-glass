@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import { loadPage } from "../../reducers/pageReducer"
 import CloseIcon from "../../icons/CloseIcon"
 import Button from "../button/Button"
-import Page from "../pages/Page"
+import Page from "../Page"
 import Progress from "../progress/Progress"
 
 function ChapterPage(props: any) {

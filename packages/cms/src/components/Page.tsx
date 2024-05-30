@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
-import { PageFactory } from "../../factories/PageFactory"
-import container from '../../util/container'
+import { PageFactory } from "../factories/PageFactory"
+import container from '../util/container'
 
 function Page(props: any) {
 

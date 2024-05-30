@@ -1,10 +1,11 @@
 
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import Page from './components/pages/Page'
+import Page from './components/Page'
 import AudioButton from './components/audio/AudioButton'
 import { loadPage } from './reducers/pageReducer'
 import Conversation from './components/conversation/Conversation'
+import Smartlook from 'smartlook-client'
 
 // import RemoteButtonProps from "@mfTypes/Button"
 // const RemoteButton = React.lazy(
@@ -32,6 +33,11 @@ function App(props: any) {
 	useEffect(() => {
 		setMode(props.mode)
 	}, [props.mode])
+
+	useEffect(() => {
+		let smartLookKey = process.env.REACT_APP_SMARTLOOK_API_KEY || ""
+		Smartlook.init(smartLookKey)
+	}, [])
 
 
 	return <div style={{ pointerEvents: isInteractionBlocked ? 'none' : 'auto', zIndex: 100 }}>

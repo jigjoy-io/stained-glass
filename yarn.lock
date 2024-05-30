@@ -4871,6 +4871,11 @@ slash@^5.1.0:
   resolved "https://registry.yarnpkg.com/slash/-/slash-5.1.0.tgz#be3adddcdf09ac38eebe8dcdc7b1a57a75b095ce"
   integrity sha512-ZA6oR3T/pEyuqwMgAKT0/hAv8oAXckzbkmR0UkUosQ+Mc4RxGoJkRmwHgHufaenlyAgE1Mxgpdcrf75y6XcnDg==
 
+smartlook-client@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/smartlook-client/-/smartlook-client-9.0.0.tgz#9fc08922768b4ed116a5caf2a0b35d28a1706c2a"
+  integrity sha512-SvOUvwADQBCxIqGPApc4dxj3NzDYC2RXdgMb8pFtYTCROyXSjowBnfzbr4q9nyDmxoNJTyZ9TiWcWFQFmSdNyg==
+
 sockjs@^0.3.24:
   version "0.3.24"
   resolved "https://registry.yarnpkg.com/sockjs/-/sockjs-0.3.24.tgz#c9bc8995f33a111bea0395ec30aa3206bdb5ccce"
