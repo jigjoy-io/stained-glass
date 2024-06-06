@@ -11,7 +11,7 @@ function ChapterTile(props: any) {
 
     useEffect(() => {
         setColor(props.color)
-    }, [[props.color]])
+    }, [props.color])
 
     const loadPage = () => {
         props.loadPage(props.chapterId)

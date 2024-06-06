@@ -28,8 +28,10 @@ export default function Content(props: any) {
     const blocks: any = props.blocks
 
     return <>{
-        (blocks) && <div className="bg-[white] rounded-lg h-[100%] overflow-y-auto overwflow-x-hidden p-4">
+        (blocks!=null) && <div className="bg-[white] rounded-lg h-[100%] overflow-y-auto overwflow-x-hidden p-4">
+            
             <div className="bg-[white] rounded-lg h-[100%] overflow-y-auto overwflow-x-hidden p-4">
+            
                 <LazyMotion features={loadFeatures}>
                     <m.div variants={animation} initial="hidden" animate="show">
                         {
