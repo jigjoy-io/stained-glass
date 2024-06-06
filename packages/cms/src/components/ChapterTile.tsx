@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import Button from './button/Button'
 import Grid from './grid/Grid'
-import { connect } from "react-redux"
+import { connect, useDispatch } from "react-redux"
 import Tile from '../util/Tile'
 import { loadPage } from '../reducers/pageReducer'
 
-function ChapterTile(props: any) {
+export default function ChapterTile(props: any) {
 
     const [color, setColor] = useState('')
+    const dispatch = useDispatch()
 
     useEffect(() => {
         setColor(props.color)
     }, [props.color])
 
-    const loadPage = () => {
-        props.loadPage(props.chapterId)
+    const load = () => {
+        dispatch(loadPage(props.chapterId))
     }
 
     return (
@@ -26,7 +27,7 @@ function ChapterTile(props: any) {
             <div className='pt-4'>
 
                 <Grid numberOfCols={1}>
-                    <Button text="Pokreni" color="primary" action={loadPage} />
+                    <Button text="Pokreni" color="primary" action={load} />
                 </Grid>
             </div>
 
@@ -34,9 +35,3 @@ function ChapterTile(props: any) {
     )
 
 }
-
-const mapDispatchToProps = {
-    loadPage
-}
-
-export default connect(null, mapDispatchToProps)(ChapterTile)
