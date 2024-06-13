@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react'
+import FailedIcon from '../../icons/FailedIcon'
 import SuccessIcon from '../../icons/SuccessIcon'
 
 export default function Alert (props: any) {
@@ -14,7 +15,7 @@ export default function Alert (props: any) {
         },
         danger: {
             bg: "bg-alert-danger",
-            icon: SuccessIcon
+            icon: FailedIcon
         }
     }
 

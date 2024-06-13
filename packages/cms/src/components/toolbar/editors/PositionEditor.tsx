@@ -4,7 +4,6 @@ import CenterAlignmentIcon from "../../../icons/CenterAlignmentIcon"
 import LeftAlignmentIcon from "../../../icons/LeftAlignmentIcon"
 import RightAlignmentIcon from "../../../icons/RightAlignmentIcon"
 import { updateBlock } from "../../../reducers/pageReducer"
-import colorVariants from "../../../util/colorVariants"
 import Button from "../../button/Button"
 import Item from "../../item/Item"
 

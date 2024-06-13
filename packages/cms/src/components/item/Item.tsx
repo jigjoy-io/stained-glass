@@ -17,7 +17,7 @@ export default function Item(props: any) {
 
 
 				<div onClick={() => props.action(props)}
-					className={`min-w-[200px]
+					className={`min-w-[225px]
 						${selected == props.id ? "bg-primary-light" : "bg-[white]"} 
 						${props.borderOn && "!border-light shadow-md"} 
 						hover:border-primary
@@ -35,7 +35,7 @@ export default function Item(props: any) {
 
 
 				<div onClick={() => props.action(props)}
-					className={`min-w-[200px] ${(selected != null && selected === props.id) ? "bg-primary-light" : "bg-[white]"} 
+					className={`min-w-[225px] ${(selected != null && selected === props.id) ? "bg-primary-light" : "bg-[white]"} 
 								border-2 border-[white] hover:bg-primary-light  
 								${props.borderOn && "border border-light shadow-md"} 
 								p-2 hover:border-primary rounded-lg cursor-pointer flex flex-row`}>
