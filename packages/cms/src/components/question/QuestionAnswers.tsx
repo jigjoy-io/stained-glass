@@ -18,10 +18,10 @@ function QuestionAnswers(props: any) {
     const checkAnswer = () => {
 
         if (selected.correct) {
-            setAlert(props.correct)
+            setAlert(props.outcomes.correct)
             setAnswered(true)
         } else {
-            setAlert(props.incorrect)
+            setAlert(props.outcomes.incorrect)
             setAnswered(true)
         }
 
@@ -36,7 +36,7 @@ function QuestionAnswers(props: any) {
 
             {answered && <Alert  {...alert} />}
 
-            {!answered && <Button text="Check the answer" key={selected.id} width="full" color={selected!=null ? "secondary": "default"} action={checkAnswer} disabled={selected.id==null}/>}
+            {!answered && <Button text={props.outcomes.confirmationButtonText} key={selected.id} width="full" color={selected != null ? "secondary" : "default"} action={checkAnswer} disabled={selected.id == null} />}
 
         </div>
     )

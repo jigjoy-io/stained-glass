@@ -6,6 +6,7 @@ import MessageEditableBlockBuilder from "../components/toolbar/builder/MessageEd
 import NoneEditableBlockBuilder from "../components/toolbar/builder/NoneEditableBlockBuilder"
 import ProfileEditableBlockBuilder from "../components/toolbar/builder/ProfileEditableBlockBuilder"
 import QuestionEditableBlockBuilder from "../components/toolbar/builder/QuestionEditableBlockBuilder"
+import ReelEditableBlockBuilder from "../components/toolbar/builder/ReelEditableBlockBuilder"
 import TextEditableBlockBuilder from "../components/toolbar/builder/TextEditableBlockBuilder"
 
 
@@ -34,7 +35,7 @@ export default class EditorFactory extends React.Component {
             builder: new ProfileEditableBlockBuilder()
         },
         "reel": {
-            builder: new ImageEditableBlockBuilder()
+            builder: new ReelEditableBlockBuilder()
         },
         "message": {
             builder: new MessageEditableBlockBuilder()

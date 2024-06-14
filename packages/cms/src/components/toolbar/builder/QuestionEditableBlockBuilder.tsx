@@ -4,6 +4,7 @@ import OutcomeMessageEditingIcon from "../../../icons/OutcomeMessageEditingIcon"
 import TextEditingIcon from "../../../icons/TextEditingIcon"
 import QuestionAnswersEditor from "../editors/QuestionAnswersEditor"
 import QuestionContentEditor from "../editors/QuestionContentEditor"
+import QuestionOutcomesEditor from "../editors/QuestionOutcomesEditor"
 import Toolbar from "../Toolbar"
 import EditableBlockBuilder from "./EditableBlockBuilder"
 
@@ -24,7 +25,9 @@ export default class QuestionEditableBlockBuilder extends EditableBlockBuilder {
     },{
         name: 'Edit outcomes',
         type: 'selector',
-        icon: OutcomeMessageEditingIcon
+        icon: OutcomeMessageEditingIcon,
+        key: 'outcomes',
+        editor: QuestionOutcomesEditor
     }]
 
     addToolbar(props: any) {

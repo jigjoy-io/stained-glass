@@ -10,7 +10,7 @@ export default function Profile(props: any) {
         <Tile color={props.color}>
             <div className="flex flex-row gap-4">
                 <div>
-                    <Image imageUrl={props.image} radius="full" />
+                    <Image source={props.image} radius="full" />
                 </div>
 
                 <div className="flex flex-col">

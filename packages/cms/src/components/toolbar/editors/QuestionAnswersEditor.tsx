@@ -5,7 +5,6 @@ import { updateBlock } from "../../../reducers/pageReducer"
 import Button from "../../button/Button"
 import { v4 as uuid } from 'uuid'
 import Checkbox from "../../checkbox/Checkbox"
-import Grid from "../../grid/Grid"
 
 export default function QuestionAnswersEditor(props: any) {
 
