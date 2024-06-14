@@ -12,19 +12,16 @@ export default class ImageEditableBlockBuilder extends EditableBlockBuilder {
 
     editingOptions = [{
         name: 'Edit image',
-        type: 'selector',
         icon: ImageEditingIcon,
         editor: ImageEditor,
         key: 'source'
     }, {
         name: 'Edit size',
-        type: 'selector',
         icon: SizeIcon,
         editor: SizeEditor,
         key: "size"
     }, {
         name: 'Edit position',
-        type: 'selector',
         icon: PositionEditingIcon,
         editor: PositionEditor,
         key: "position"

@@ -13,23 +13,19 @@ export default class ProfileEditableBlockBuilder extends EditableBlockBuilder {
 
     editingOptions = [{
         name: 'Edit headline',
-        type: 'selector',
         icon: TextEditingIcon,
         key: 'headline',
         editor: TextEditor
     },{
         name: 'Edit image',
-        type: 'selector',
         icon: ImageEditingIcon
     },{
         name: 'Edit description',
-        type: 'selector',
         key: 'description',
         icon: DescriptionEditingIcon,
         editor: TextAreaEditor
     },{
         name: 'Edit color',
-        type: 'selector',
         icon: ColorEditingIcon,
         editor: ColorEditor,
         key: 'color'

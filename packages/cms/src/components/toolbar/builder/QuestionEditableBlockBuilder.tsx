@@ -12,19 +12,16 @@ export default class QuestionEditableBlockBuilder extends EditableBlockBuilder {
 
     editingOptions = [{
         name: 'Edit question',
-        type: 'selector',
         icon: TextEditingIcon,
         editor: QuestionContentEditor,
         key: 'content'
     },{
         name: 'Edit answers',
-        type: 'selector',
         icon: AnswersEditingIcon,
         editor: QuestionAnswersEditor,
         key: 'answers'
     },{
         name: 'Edit outcomes',
-        type: 'selector',
         icon: OutcomeMessageEditingIcon,
         key: 'outcomes',
         editor: QuestionOutcomesEditor
