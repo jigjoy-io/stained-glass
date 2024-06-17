@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 import ToolbarButtonWrapper from './ToolbarButtonWrapper'
 import Item from '../item/Item'
@@ -22,6 +22,7 @@ interface ToolbarOptions {
     children: any
 
 }
+
 export default function Toolbar(props: ToolbarOptions) {
 
     const [on, setOn] = useState(false)

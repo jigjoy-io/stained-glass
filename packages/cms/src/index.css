@@ -2,21 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Firefox */
-* {
-  scrollbar-width: 10px;
-}
-
-/* Chrome, Edge, and Safari */
-*::-webkit-scrollbar {
-  width: 10px;
-}
-
 body {
   margin: 0;
   font-family: "Open-sans", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   display: grid;
   justify-content: center;
 }

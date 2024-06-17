@@ -4,7 +4,7 @@ import { updateBlock } from "../../../reducers/pageReducer"
 import AudioButton from "../../audio/AudioButton"
 import Button from "../../button/Button"
 
-export default function VideoEditor(props: any) {
+export default function AudioEditor(props: any) {
 
     const [value, setValue] = useState(props.value)
     const [displayUrlInput, setDisplayUrlInput] = useState(false)

@@ -48,6 +48,9 @@ export default class EditorFactory extends React.Component {
         },
         "cta": {
             builder: new NoneEditableBlockBuilder()
+        },
+        "block-selector": {
+            builder: new NoneEditableBlockBuilder()
         }
     }
 

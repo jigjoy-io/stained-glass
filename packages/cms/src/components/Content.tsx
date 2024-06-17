@@ -28,12 +28,12 @@ export default function Content(props: any) {
     const blocks: any = props.blocks
 
     return <>{
-        (blocks!=null) && <div className="bg-[white] rounded-lg h-[100%] overflow-y-auto overwflow-x-hidden">
+        (blocks!=null) && <div className="bg-[white] rounded-lg h-[100%]">
             
-            <div className="bg-[white] rounded-lg h-[100%] overflow-y-auto overwflow-x-hidden p-4">
+            <div className="pb-[150px]">
             
                 <LazyMotion features={loadFeatures}>
-                    <m.div variants={animation} initial="hidden" animate="show">
+                    <m.div variants={animation} initial="hidden" animate="show" >
                         {
                             blocks.map((block: any) => (
                                 <m.div className="mt-6" key={block.id} variants={item}>

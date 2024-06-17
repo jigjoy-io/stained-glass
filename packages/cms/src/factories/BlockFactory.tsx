@@ -12,6 +12,7 @@ const Message = lazy(() => import('../components/message/Message'))
 const Reel = lazy(() => import('../components/reel/Reel'))
 const Profile = lazy(() => import('../components/profile/Profile'))
 const Cta = lazy(() => import('../components/cta/Cta'))
+const BlockSelector = lazy(() => import('../components/toolbar/BlockSelector'))
 
 export default class BlockFactory extends React.Component {
 
@@ -51,6 +52,9 @@ export default class BlockFactory extends React.Component {
         },
         "cta": {
             component: Cta
+        },
+        "block-selector": {
+            component: BlockSelector
         }
     }
     
