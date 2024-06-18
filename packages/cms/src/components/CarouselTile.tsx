@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import Button from './button/Button'
 import Grid from './grid/Grid'
-import { connect, useDispatch } from "react-redux"
+import { useDispatch } from "react-redux"
 import Tile from '../util/Tile'
 import { loadPage } from '../reducers/pageReducer'
 
-export default function ChapterTile(props: any) {
+export default function CarouselTile(props: any) {
 
     const [color, setColor] = useState('')
     const dispatch = useDispatch()

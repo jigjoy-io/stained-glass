@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react"
 import { useDispatch } from "react-redux"
 import { v4 as uuid } from 'uuid'
+import TemplateFactory from "../../factories/TemplateFactory"
 import AudioEditingIcon from "../../icons/AudioEditingIcon"
 import CarouselIcon from "../../icons/CarouselIcon"
 import ImageEditingIcon from "../../icons/ImageEditingIcon"
@@ -8,6 +9,7 @@ import ProfileIcon from "../../icons/ProfileIcon"
 import TextEditingIcon from "../../icons/TextEditingIcon"
 import VideoEditingIcon from "../../icons/VideoEditingIcon"
 import { blockingUpdated } from "../../reducers/toolbarReducer"
+import { insertBlock } from "../../reducers/pageReducer"
 import Item from "../item/Item"
 import ClickOutsideListener from "../popover/ClickOutsideListener"
 
@@ -108,7 +110,7 @@ export default function BlockSelector(props: any) {
     const [allOptions, setAllOptions] = useState(selectorOptions)
     const [showMenu, setShowMenu] = useState(false)
     const ref = useRef<HTMLInputElement>(null)
-    
+
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -158,16 +160,24 @@ export default function BlockSelector(props: any) {
         }
     }
 
-    const handleOutsideClick = () => {
+    const closeMenu = () => {
         dispatch(blockingUpdated(false))
         setShowMenu(false)
     }
 
-    const insertBlock = (type: string) => {
-        alert(type)
+    const insert = (type: string) => {
+
+        let blockConfig = TemplateFactory.get(type)
+        dispatch(insertBlock({
+            referenceBlock: props.id,
+            newBlock: blockConfig
+        }))
+
+        closeMenu()
+        ref.current?.focus()
     }
 
-    return <ClickOutsideListener callback={handleOutsideClick}>
+    return <ClickOutsideListener callback={closeMenu}>
         <input
             ref={ref}
             type="text"
@@ -185,10 +195,10 @@ export default function BlockSelector(props: any) {
                     options.map((option: any, index) => <div style={{ pointerEvents: 'auto', zIndex: 100 }}>
                         <>
                             {option.commands.map((command: any) => <>
-                                <Item icon={command.icon} text={command.label} action={() => insertBlock(command.key)}><div className="mt-2 text-sm">{command.description}</div></Item>
+                                <Item icon={command.icon} text={command.label} action={() => insert(command.key)}><div className="mt-2 text-sm">{command.description}</div></Item>
                             </>)
                             }
-                            {options.length!=index + 1 && <div className="py-2"><hr /></div>}
+                            {options.length != index + 1 && <div className="py-2"><hr /></div>}
                         </>
                     </div>)
                 }

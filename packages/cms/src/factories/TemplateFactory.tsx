@@ -1,4 +1,6 @@
 import React, { lazy, Suspense } from "react"
+import packageInfo from '../../package.json'
+import { v4 as uuidv4 } from 'uuid'
 
 const AudioButton = lazy(() => import('../components/audio/AudioButton'))
 const Text = lazy(() => import('../components/text/Text'))
@@ -14,14 +16,14 @@ const Profile = lazy(() => import('../components/profile/Profile'))
 const Cta = lazy(() => import('../components/cta/Cta'))
 const BlockSelector = lazy(() => import('../components/toolbar/BlockSelector'))
 
-export default class BlockFactory extends React.Component {
+export default class TemplateFactory extends React.Component {
 
-    static buildingBlocks : any = {
+    static templates: any = {
         "audio": {
-            component: AudioButton
+
         },
         "text": {
-            component: Text
+
         },
         "heading": {
             component: Heading
@@ -30,7 +32,12 @@ export default class BlockFactory extends React.Component {
             component: Title
         },
         "image": {
-            component: Image
+            type: "image",
+            source: "https://jigjoy.io/assets/placeholderimage.jpg",
+            position: "left",
+            size: 'large',
+            focus: true,
+            builderVersion: packageInfo.version
         },
         "button": {
             component: Button
@@ -57,9 +64,11 @@ export default class BlockFactory extends React.Component {
             component: BlockSelector
         }
     }
-    
-    static get(props: any ) {
-        let block : any = this.buildingBlocks[props.type]
-        return <Suspense><block.component {...props}/></Suspense>
+
+    static get(type: string) {
+        let block: any = this.templates[type]
+        let template = JSON.parse(JSON.stringify(block))
+        template.id = uuidv4()
+        return template
     }
 }

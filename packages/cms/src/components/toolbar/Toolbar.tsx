@@ -20,7 +20,6 @@ interface ToolbarOptions {
     editingOptions: any,
     block: any,
     children: any
-
 }
 
 export default function Toolbar(props: ToolbarOptions) {

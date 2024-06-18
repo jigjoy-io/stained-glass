@@ -5,14 +5,13 @@ interface PageState {
     pageId: string
     page: any
     mode: string
-  }
+}
 
 let initialState: PageState = {
     pageId: "01858c7d-17dc-4c64",
     page: null,
     mode: "visiting"
 }
-
 
 export const pageSlice = createSlice({
     name: 'page',
@@ -26,6 +25,19 @@ export const pageSlice = createSlice({
 
         pageUpdated: (state, action: PayloadAction<any>) => {
             state.page = action.payload
+        },
+
+        insertBlock: (state, action: PayloadAction<any>) => {
+            let page = JSON.parse(JSON.stringify(state.page))
+
+            let referenceBlockIndex = page.buildingBlocks.findIndex((block: any) => block.id == action.payload.referenceBlock)
+            let index = action.payload.position === 'above' ? referenceBlockIndex : referenceBlockIndex + 1
+            page.buildingBlocks.splice(index, 0, action.payload.newBlock)
+
+            page.buildingBlocks.map((block: any) => block.focus = false)
+
+            state.page = page
+            updatePage(page)
         },
 
         updateBlock: (state, action: PayloadAction<any>) => {
@@ -50,7 +62,7 @@ export const pageSlice = createSlice({
     }
 })
 
-export const { pageUpdated, modeUpdated, loadPage, updateBlock, removeBlock } = pageSlice.actions
+export const { pageUpdated, modeUpdated, loadPage, insertBlock, updateBlock, removeBlock } = pageSlice.actions
 
 
 export default pageSlice.reducer

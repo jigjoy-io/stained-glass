@@ -6,7 +6,7 @@ import TextEditingIcon from "../../../icons/TextEditingIcon"
 import Toolbar from "../Toolbar"
 import EditableBlockBuilder from "./EditableBlockBuilder"
 
-export default class ChapterEditableBlockBuilder extends EditableBlockBuilder {
+export default class CarouselEditableBlockBuilder extends EditableBlockBuilder {
 
     editingOptions = [{
         name: 'Edit title',

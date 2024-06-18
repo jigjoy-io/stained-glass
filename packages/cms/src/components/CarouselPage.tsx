@@ -7,7 +7,7 @@ import Progress from "./progress/Progress"
 import Content from "./Content"
 import { getPage } from "../api/page"
 
-export default function ChapterPage(props: any) {
+export default function CarouselPage(props: any) {
 
     const [current, setCurrent] = useState(0)
     const [percentage, setPercentage] = useState(0)

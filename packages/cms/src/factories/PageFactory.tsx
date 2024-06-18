@@ -1,12 +1,12 @@
 import React from "react"
-import ChapterPage from "../components/ChapterPage"
+import CarouselPage from "../components/CarouselPage"
 import BlankPage from "../components/BlankPage"
 
 export class PageFactory extends React.Component {
 
     static layouts : any = {
-        "chapter": {
-            component: ChapterPage
+        "carousel": {
+            component: CarouselPage
         },
         "blank": {
             component: BlankPage
