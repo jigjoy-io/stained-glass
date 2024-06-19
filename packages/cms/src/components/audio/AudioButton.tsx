@@ -15,7 +15,7 @@ function AudioButton(props: any) {
     }, [props.position])
 
     return <div className="flex w-full" style={{ justifyContent: position }} >
-        <div className='w-max hover:bg-primary-light border-2 border-[transparent] hover:border-primary p-1 rounded-md cursor-pointer'
+        <div className='w-max hover:bg-primary-light border-2 border-[transparent] p-1 rounded-md cursor-pointer'
             onClick={() => play(props.source)}>
             <SpeakerOnIcon />
         </div>

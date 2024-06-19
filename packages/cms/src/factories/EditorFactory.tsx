@@ -7,6 +7,7 @@ import NoneEditableBlockBuilder from "../components/toolbar/builder/NoneEditable
 import ProfileEditableBlockBuilder from "../components/toolbar/builder/ProfileEditableBlockBuilder"
 import QuestionEditableBlockBuilder from "../components/toolbar/builder/QuestionEditableBlockBuilder"
 import ReelEditableBlockBuilder from "../components/toolbar/builder/ReelEditableBlockBuilder"
+import SelectorBlockBuilder from "../components/toolbar/builder/SelectorBlockBuilder"
 import TextEditableBlockBuilder from "../components/toolbar/builder/TextEditableBlockBuilder"
 
 
@@ -50,7 +51,7 @@ export default class EditorFactory extends React.Component {
             builder: new NoneEditableBlockBuilder()
         },
         "block-selector": {
-            builder: new NoneEditableBlockBuilder()
+            builder: new SelectorBlockBuilder()
         }
     }
 

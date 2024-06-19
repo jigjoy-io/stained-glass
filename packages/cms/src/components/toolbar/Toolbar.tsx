@@ -73,7 +73,7 @@ export default function Toolbar(props: ToolbarOptions) {
                                     <Grid numberOfCols={1}>
                                         <Item text="Duplicate block" icon={DuplicateBlockIcon} action={() => { alert("home") }} />
                                         <Item text="Delete block" textColor="red" icon={DeleteBlockIcon} action={deleteBlock} />
-                                        <hr className='text-light' />
+                                        <div className='border-b border-default-light' />
                                         {
                                             props.editingOptions.map((option: any, index) =>
                                                 <Popover key={index} onClose={() => setEditingActive(null)}>

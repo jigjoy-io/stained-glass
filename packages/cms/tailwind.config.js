@@ -38,6 +38,9 @@ module.exports = {
         'heading': ['1.5rem', {
           lineHeight: '2rem',
           fontWeight: '700'
+        }],
+        'paragraph': ['1rem', {
+          lineHeight: '1rem'
         }]
       },
   

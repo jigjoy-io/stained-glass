@@ -10,8 +10,9 @@ export default function Text(props: any) {
 		setPosition(props.position)
 	}, [props.position])
 
-	return <div className={`${alignmentVariations[position]}`} >
-			<div>{props.text}</div>
-		</div>
+	return <div
+		className={`flex flex-col justify-end text-paragraph h-min-[1.5rem] h-[1.5rem] pb-[1px] ${alignmentVariations[position]}`} >
+		<div className='h-[1rem]'>{props.text}</div>
+	</div>
 
 }

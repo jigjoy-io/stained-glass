@@ -19,10 +19,9 @@ export default class TextEditableBlockBuilder extends EditableBlockBuilder {
     }
 
     createEditableBlock(props: any): any {
-
         return this.setBlock(props)
+            .enableContentEditing(props)
             .addToolbar(props)
-            .enableContentEditing()
             .block
     }
 

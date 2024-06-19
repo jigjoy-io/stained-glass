@@ -22,7 +22,7 @@ const item = {
 
 const loadFeatures = () => import("../util/animations").then(res => res.default)
 
-export default function Content(props: any) {
+export default function PageContent(props: any) {
 
     const mode: any = useMode()
     const blocks: any = props.blocks
@@ -36,7 +36,7 @@ export default function Content(props: any) {
                     <m.div variants={animation} initial="hidden" animate="show" >
                         {
                             blocks.map((block: any) => (
-                                <m.div className="mt-6" key={block.id} variants={item}>
+                                <m.div className="" key={block.id} variants={item}>
                                     <BuildingBlock {...block} mode={mode} />
                                 </m.div>
                             ))

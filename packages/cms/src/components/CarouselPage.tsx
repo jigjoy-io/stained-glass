@@ -4,7 +4,7 @@ import { loadPage } from '../reducers/pageReducer'
 import CloseIcon from "../icons/CloseIcon"
 import Button from "./button/Button"
 import Progress from "./progress/Progress"
-import Content from "./Content"
+import Content from "./PageContent"
 import { getPage } from "../api/page"
 
 export default function CarouselPage(props: any) {

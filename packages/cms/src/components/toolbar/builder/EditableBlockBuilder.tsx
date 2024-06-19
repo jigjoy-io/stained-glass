@@ -8,8 +8,8 @@ export default abstract class EditableBlockBuilder {
 
     abstract addToolbar(props: any): EditableBlockBuilder
 
-    enableContentEditing(): EditableBlockBuilder {
-        this.block = <ContentEditingWrapper>{this.block}</ContentEditingWrapper>
+    enableContentEditing(props: any): EditableBlockBuilder {
+        this.block = <ContentEditingWrapper {...props}>{this.block}</ContentEditingWrapper>
         return this
     }
 

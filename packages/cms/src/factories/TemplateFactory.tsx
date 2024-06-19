@@ -2,11 +2,8 @@ import React, { lazy, Suspense } from "react"
 import packageInfo from '../../package.json'
 import { v4 as uuidv4 } from 'uuid'
 
-const AudioButton = lazy(() => import('../components/audio/AudioButton'))
-const Text = lazy(() => import('../components/text/Text'))
 const Heading = lazy(() => import('../components/heading/Heading'))
 const Title = lazy(() => import('../components/title/Title'))
-const Image = lazy(() => import('../components/image/Image'))
 const Button = lazy(() => import('../components/button/Button'))
 const Question = lazy(() => import('../components/question/Question'))
 const CarouselTile = lazy(() => import('../components/CarouselTile'))
@@ -14,7 +11,6 @@ const Message = lazy(() => import('../components/message/Message'))
 const Reel = lazy(() => import('../components/reel/Reel'))
 const Profile = lazy(() => import('../components/profile/Profile'))
 const Cta = lazy(() => import('../components/cta/Cta'))
-const BlockSelector = lazy(() => import('../components/toolbar/BlockSelector'))
 
 export default class TemplateFactory extends React.Component {
 
@@ -23,7 +19,10 @@ export default class TemplateFactory extends React.Component {
 
         },
         "text": {
-
+            type: "text",
+            text: "a",
+            position: "left",
+            builderVersion: packageInfo.version
         },
         "heading": {
             component: Heading
@@ -36,7 +35,6 @@ export default class TemplateFactory extends React.Component {
             source: "https://jigjoy.io/assets/placeholderimage.jpg",
             position: "left",
             size: 'large',
-            focus: true,
             builderVersion: packageInfo.version
         },
         "button": {
@@ -61,7 +59,8 @@ export default class TemplateFactory extends React.Component {
             component: Cta
         },
         "block-selector": {
-            component: BlockSelector
+            type: "block-selector",
+            builderVersion: packageInfo.version
         }
     }
 

@@ -6,7 +6,7 @@ import Image from "../image/Image"
 
 export default function Profile(props: any) {
     
-    return <div>
+    return <div className="my-3">
         <Tile color={props.color}>
             <div className="flex flex-row gap-4">
                 <div>

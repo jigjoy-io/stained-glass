@@ -38,8 +38,8 @@ export const selectorOptions = [
         key: "text",
         commands: [
             {
-                key: "paragraph",
-                label: "Paragraph",
+                key: "text",
+                label: "Text",
                 description: "Begin writing with plain text",
                 icon: TextEditingIcon
             },
@@ -109,6 +109,7 @@ export default function BlockSelector(props: any) {
     const [options, setOptions] = useState(selectorOptions)
     const [allOptions, setAllOptions] = useState(selectorOptions)
     const [showMenu, setShowMenu] = useState(false)
+    const [placeholder, setPlaceholder] = useState('')
     const ref = useRef<HTMLInputElement>(null)
 
     const dispatch = useDispatch()
@@ -130,33 +131,37 @@ export default function BlockSelector(props: any) {
 
         setOption(event.target.value)
 
+        if (event.target.value.startsWith("/")) {
+            dispatch(blockingUpdated(true))
+            setShowMenu(true)
 
-        dispatch(blockingUpdated(true))
-        setShowMenu(true)
+            let comm = JSON.parse(JSON.stringify(allOptions)) //deep copy
+            let temp = comm.map((option: any, index: number) => filterCommands(option, event.target.value, index))
 
-        let comm = JSON.parse(JSON.stringify(allOptions)) //deep copy
-        let temp = comm.map((option: any, index: number) => filterCommands(option, event.target.value, index))
+            let result = temp.filter((option) => option.commands.length > 0)
 
-        let result = temp.filter((option) => option.commands.length > 0)
+            setOptions(result)
+        } else {
+            setShowMenu(false)
+        }
 
-        setOptions(result)
+
 
     }
 
     const handleKeyDown = (event: any) => {
         if (event.key === 'Enter') {
-            this.props.insertBlock({
-                block: {
-                    text: event.target.value.trim(),
-                    type: 'paragraph',
-                    insertType: 'direct-typing',
-                    position: 'left',
-                    id: uuid(),
-                    builderVersion: this.builderVersion,
-                    focus: false
-                },
-                id: props.id
-            })
+
+            let block = TemplateFactory.get('text')
+            block.text = event.target.value.trim()
+            dispatch(insertBlock({
+                referenceBlock: props.id,
+                newBlock: block,
+                position: 'above'
+            }))
+
+            setOption("")
+
         }
     }
 
@@ -174,6 +179,7 @@ export default function BlockSelector(props: any) {
         }))
 
         closeMenu()
+
         ref.current?.focus()
     }
 
@@ -182,23 +188,24 @@ export default function BlockSelector(props: any) {
             ref={ref}
             type="text"
             value={option}
-            className="w-[100%] h-[50px] bg-primary-light rounded-lg hover:bg-gray-300 cursor-pointer flex items-center pl-5 focus:outline-0 placeholder:text-[black]"
-            placeholder="Click here to add element or type '/'"
+            onFocus={() => setPlaceholder("Write something or type '/' to add element...")}
+            className="w-[100%] h-[1.5rem] rounded-lg hover:bg-gray-300 flex items-center focus:outline-0 placeholder:text-[gray]"
+            placeholder={placeholder}
             onChange={handleChange}
-            onClick={handleChange}
             onKeyDown={handleKeyDown}
+            onBlur={() => setPlaceholder("")}
         />
 
         {
-            showMenu && <div className="absolute w-[400px] min-w-[400px] max-h-[500px] h-auto overflow-y-auto z-40 bg-white p-2 border rounded-lg">
+            showMenu && <div className="absolute w-[400px] min-w-[400px] max-h-[500px] h-auto overflow-y-auto z-40 bg-white shadow rounded-lg">
                 {
                     options.map((option: any, index) => <div style={{ pointerEvents: 'auto', zIndex: 100 }}>
                         <>
-                            {option.commands.map((command: any) => <>
+                            {option.commands.map((command: any) => <div className="p-1">
                                 <Item icon={command.icon} text={command.label} action={() => insert(command.key)}><div className="mt-2 text-sm">{command.description}</div></Item>
-                            </>)
+                            </div>)
                             }
-                            {options.length != index + 1 && <div className="py-2"><hr /></div>}
+                            {options.length != index + 1 && <hr />}
                         </>
                     </div>)
                 }

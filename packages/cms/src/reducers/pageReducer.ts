@@ -34,8 +34,6 @@ export const pageSlice = createSlice({
             let index = action.payload.position === 'above' ? referenceBlockIndex : referenceBlockIndex + 1
             page.buildingBlocks.splice(index, 0, action.payload.newBlock)
 
-            page.buildingBlocks.map((block: any) => block.focus = false)
-
             state.page = page
             updatePage(page)
         },
