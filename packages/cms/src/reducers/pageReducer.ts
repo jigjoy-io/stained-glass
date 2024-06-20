@@ -4,13 +4,15 @@ import { updatePage } from "../api/page"
 interface PageState {
     pageId: string
     page: any
-    mode: string
+    mode: string,
+    activeSelector: string | null
 }
 
 let initialState: PageState = {
     pageId: "01858c7d-17dc-4c64",
     page: null,
-    mode: "visiting"
+    mode: "visiting",
+    activeSelector: null
 }
 
 export const pageSlice = createSlice({
@@ -54,13 +56,17 @@ export const pageSlice = createSlice({
             updatePage(state.page)
         },
 
+        focusSelector: (state, action: PayloadAction<any>) => {
+            state.activeSelector = action.payload
+        },
+
         modeUpdated: (state, action: PayloadAction<any>) => {
             state.mode = action.payload
         }
     }
 })
 
-export const { pageUpdated, modeUpdated, loadPage, insertBlock, updateBlock, removeBlock } = pageSlice.actions
+export const { pageUpdated, modeUpdated, loadPage, insertBlock, updateBlock, removeBlock, focusSelector } = pageSlice.actions
 
 
 export default pageSlice.reducer

@@ -1,7 +1,10 @@
-import React from "react"
+import React, { useRef } from "react"
 import BuildingBlock from "../factories/BuildingBlock"
 import { LazyMotion, m } from "framer-motion"
 import { useMode } from "../util/store"
+import TemplateFactory from "../factories/TemplateFactory"
+import { focusSelector, insertBlock } from "../reducers/pageReducer"
+import { useDispatch } from "react-redux"
 
 
 const animation = {
@@ -26,24 +29,40 @@ export default function PageContent(props: any) {
 
     const mode: any = useMode()
     const blocks: any = props.blocks
+    const dispatch = useDispatch()
+    const ref = useRef(null)
+
+    const ativateSelector = () => {
+
+        if (blocks[blocks.length - 1].type == "block-selector") {
+            dispatch(focusSelector(blocks[blocks.length - 1].id))
+        } else {
+            let selector = TemplateFactory.get("block-selector")
+
+            dispatch(insertBlock({
+                referenceBlock: blocks[blocks.length - 1].id,
+                newBlock: selector
+            }))
+        }
+
+    }
 
     return <>{
-        (blocks!=null) && <div className="bg-[white] rounded-lg h-[100%]">
-            
-            <div className="pb-[150px]">
-            
+        (blocks != null) && <div className="bg-[white] rounded-lg h-[100%] flex flex-col">
+            <div>
                 <LazyMotion features={loadFeatures}>
                     <m.div variants={animation} initial="hidden" animate="show" >
                         {
                             blocks.map((block: any) => (
-                                <m.div className="" key={block.id} variants={item}>
+                                <m.div key={block.id} variants={item}>
                                     <BuildingBlock {...block} mode={mode} />
                                 </m.div>
                             ))
                         }
                     </m.div>
                 </LazyMotion>
-
+            </div>
+            <div className="flex-1 min-h-[150px]" onClick={ativateSelector}>
             </div>
         </div>
     }</>

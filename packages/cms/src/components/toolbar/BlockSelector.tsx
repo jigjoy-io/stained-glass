@@ -9,9 +9,10 @@ import ProfileIcon from "../../icons/ProfileIcon"
 import TextEditingIcon from "../../icons/TextEditingIcon"
 import VideoEditingIcon from "../../icons/VideoEditingIcon"
 import { blockingUpdated } from "../../reducers/toolbarReducer"
-import { insertBlock } from "../../reducers/pageReducer"
+import { focusSelector, insertBlock } from "../../reducers/pageReducer"
 import Item from "../item/Item"
 import ClickOutsideListener from "../popover/ClickOutsideListener"
+import { useActiveSelector } from "../../util/store"
 
 export const selectorOptions = [
 
@@ -110,6 +111,7 @@ export default function BlockSelector(props: any) {
     const [allOptions, setAllOptions] = useState(selectorOptions)
     const [showMenu, setShowMenu] = useState(false)
     const [placeholder, setPlaceholder] = useState('')
+    const activeSelector = useActiveSelector()
     const ref = useRef<HTMLInputElement>(null)
 
     const dispatch = useDispatch()
@@ -117,6 +119,11 @@ export default function BlockSelector(props: any) {
     useEffect(() => {
         ref.current?.focus()
     }, [])
+
+    useEffect(() => {
+        if(activeSelector==props.id)
+            ref.current?.focus()
+    }, [activeSelector])
 
     const filterCommands = (option: any, value: any, index: number) => {
 
@@ -183,6 +190,11 @@ export default function BlockSelector(props: any) {
         ref.current?.focus()
     }
 
+    const handleLoseFocus = () => {
+        setPlaceholder("")
+        dispatch(focusSelector(null))
+    }
+
     return <ClickOutsideListener callback={closeMenu}>
         <input
             ref={ref}
@@ -193,7 +205,7 @@ export default function BlockSelector(props: any) {
             placeholder={placeholder}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
-            onBlur={() => setPlaceholder("")}
+            onBlur={handleLoseFocus}
         />
 
         {
