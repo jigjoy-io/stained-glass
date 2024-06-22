@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import TemplateFactory from '../../../factories/TemplateFactory'
 import { insertBlock, updateBlock } from '../../../reducers/pageReducer'
 import alignmentVariations from '../../../util/alignmentVariations'
-import { useActiveBlock } from '../../../util/store'
+import { useActiveBlock, useExpandedToolbar } from '../../../util/store'
 import textEditingVariants from '../../../util/textEditingVariations'
 
 export default function ContentEditingText(props: any) {
@@ -12,6 +12,7 @@ export default function ContentEditingText(props: any) {
 	const [position, setPosition] = useState(props.position)
 	const [type, setType] = useState(props.type)
 	const [style, setStyle] = useState({} as any)
+	const expandedToolbar = useExpandedToolbar()
 
 	useEffect(() => {
 		setPosition(props.position)
@@ -69,7 +70,9 @@ export default function ContentEditingText(props: any) {
 			spellCheck="false"
 			onKeyDown={handleKeyDown}
 			onBlur={(e) => updateText(e)}
-			className={`${style.class} whitespace-pre [&[contenteditable]]:focus:border-none [&[contenteditable]]:focus:outline-none w-[100%]`}
+			className={`${style.class} 
+			${expandedToolbar==props.id && 'bg-primary-light rounded-md'}
+			whitespace-pre [&[contenteditable]]:focus:border-none [&[contenteditable]]:focus:outline-none w-[100%]`}
 			ref={ref}>{props.text}</div>
 	</div>
 
