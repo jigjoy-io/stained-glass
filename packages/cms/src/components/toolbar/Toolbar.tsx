@@ -58,12 +58,12 @@ export default function Toolbar(props: ToolbarOptions) {
             {(on || expandedToolbar == props.id || editingActive != null) &&
                 <div className="absolute -translate-x-[100%] px-2">
                     <div className='flex flex-row'>
-                        <AddNewBlock />
+                        <AddNewBlock id={props.id} />
                         <div>
                             <Popover onClose={onClose}>
                                 <PopoverTrigger >
                                     <div onClick={() => expandToolbar()}>
-                                        <ToolbarButtonWrapper tooltip="open menu">
+                                        <ToolbarButtonWrapper tooltip={<div className='text-center text-[14px]'>Open menu</div>}>
                                             <OpenMenuIcon />
                                         </ToolbarButtonWrapper>
                                     </div>

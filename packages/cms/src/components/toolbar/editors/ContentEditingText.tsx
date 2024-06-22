@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import TemplateFactory from '../../../factories/TemplateFactory'
 import { insertBlock, updateBlock } from '../../../reducers/pageReducer'
 import alignmentVariations from '../../../util/alignmentVariations'
-import { useActiveBlock, useExpandedToolbar } from '../../../util/store'
+import { useActiveBlock } from '../../../util/store'
 import textEditingVariants from '../../../util/textEditingVariations'
 
 export default function ContentEditingText(props: any) {

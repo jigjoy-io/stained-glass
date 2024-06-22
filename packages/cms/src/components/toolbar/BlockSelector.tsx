@@ -86,7 +86,6 @@ export default function BlockSelector(props: any) {
     const insert = (type: string) => {
         
         dispatch(focusBlock(null))
-        //setOption("")
         let block = TemplateFactory.get(type)
         block.id = props.id
         dispatch(expandedToolbarUpdated(null))
