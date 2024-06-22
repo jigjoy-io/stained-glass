@@ -105,7 +105,7 @@ export default function BlockSelector(props: any) {
             type="text"
             value={option}
             onFocus={() => setPlaceholder("Write something or type '/' to add element...")}
-            className="w-[100%] h-[1.5rem] rounded-lg hover:bg-gray-300 flex items-center focus:outline-0 placeholder:text-[gray]"
+            className="w-[100%] h-[1.8rem] rounded-lg hover:bg-gray-300 flex items-center focus:outline-0 placeholder:text-[gray]"
             placeholder={placeholder}
             onChange={handleChange}
             onKeyDown={handleKeyDown}

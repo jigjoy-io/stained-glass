@@ -35,6 +35,7 @@ export const templates = {
     },
     "question": {
         type: 'question',
+        builderVersion: packageInfo.version,
         content: {
             displayQuestion: true,
             text: "Question text...",
@@ -75,6 +76,12 @@ export const templates = {
     "carousel": {
     },
     "message": {
+        type: "message",
+        message: "Message text goes here...",
+        audio: "https://www.w3schools.com/html/mov_bbb.mp4",
+        position: "left",
+        builderVersion: packageInfo.version,
+        color: "rose"
     },
     "reel": {
         type: "reel",

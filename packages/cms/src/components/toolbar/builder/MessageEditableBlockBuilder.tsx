@@ -3,6 +3,9 @@ import AudioEditingIcon from "../../../icons/AudioEditingIcon"
 import ColorEditingIcon from "../../../icons/ColorEditingIcon"
 import ImageEditingIcon from "../../../icons/ImageEditingIcon"
 import PositionEditingIcon from "../../../icons/PositionEditingIcon"
+import AudioEditor from "../editors/AudioEditor"
+import ColorEditor from "../editors/ColorEditor"
+import PositionEditor from "../editors/PositionEditor"
 import TextAreaEditor from "../editors/TextAreaEditor"
 import Toolbar from "../Toolbar"
 import EditableBlockBuilder from "./EditableBlockBuilder"
@@ -16,21 +19,23 @@ export default class MessageEditableBlockBuilder extends EditableBlockBuilder {
         editor: TextAreaEditor
     }, {
         name: 'Edit audio',
-        type: 'selector',
-        icon: AudioEditingIcon
+        key: 'audio',
+        icon: AudioEditingIcon,
+        editor: AudioEditor
     }, {
         name: 'Edit color',
-        type: 'selector',
+        key: 'color',
         icon: ColorEditingIcon,
-        editor: TextAreaEditor
+        editor: ColorEditor
     }, {
         name: 'Edit position',
-        type: 'selector',
-        icon: PositionEditingIcon
+        key: 'position',
+        icon: PositionEditingIcon,
+        editor: PositionEditor
     }]
 
     addToolbar(props: any) {
-        this.block = <Toolbar key={props.id} id={props.id} block={props} editingOptions={this.editingOptions}>{this.block}</Toolbar>
+        this.block = <Toolbar id={props.id} block={props} editingOptions={this.editingOptions}><div>{this.block}</div></Toolbar>
         return this
     }
 

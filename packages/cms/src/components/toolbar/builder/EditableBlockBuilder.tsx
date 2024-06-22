@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react"
+import { ReactElement } from "react"
 import BlockFactory from "../../../factories/BlockFactory"
 
 export default abstract class EditableBlockBuilder {

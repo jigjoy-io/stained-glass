@@ -1,6 +1,6 @@
 const textEditingVariants = {
     text: {
-        lineHeight: 'h-min-[1.5rem] h-[1.5rem]',
+        lineHeight: 'h-min-[1.7rem] h-[1.7rem]',
         class: ''
     },
     heading: {
