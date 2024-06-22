@@ -1,4 +1,5 @@
 import packageInfo from '../../package.json'
+import { v4 as uuid } from 'uuid'
 
 export const templates = {
     "audio": {
@@ -33,6 +34,43 @@ export const templates = {
         builderVersion: packageInfo.version
     },
     "question": {
+        type: 'question',
+        content: {
+            displayQuestion: true,
+            text: "Question text...",
+            displayImage: true,
+            image: "https://jigjoy.io/assets/placeholderimage.jpg"
+        },
+        answers: [
+            {
+                id: uuid(),
+                correct: false,
+                text: "Answer 1 text"
+            },
+            {
+                id: uuid(),
+                correct: true,
+                text: "Answer 2 text"
+            },
+            {
+                id: uuid(),
+                correct: false,
+                text: "Answer 3 text"
+            }
+        ],
+        outcomes: {
+            confirmationButtonText: "Check the answer",
+            correct: {
+             message: "The answer is correct.",
+             title: "Great!",
+             type: "success"
+            },
+            incorrect: {
+             message: "The answer is not correct.",
+             title: "Better luck next time",
+             type: "danger"
+            }
+           },
     },
     "carousel": {
     },
@@ -45,6 +83,12 @@ export const templates = {
         builderVersion: packageInfo.version
     },
     "profile": {
+        type: "profile",
+        headline: "Headline",
+        description: "Decription goes here...",
+        image: "https://jigjoy.io/assets/placeholderimage.jpg",
+        username: "@username",
+        builderVersion: packageInfo.version
     },
     "block-selector": {
         type: "block-selector",

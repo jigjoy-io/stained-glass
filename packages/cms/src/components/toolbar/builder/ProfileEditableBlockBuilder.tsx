@@ -4,6 +4,7 @@ import DescriptionEditingIcon from "../../../icons/DescriptionEditingIcon"
 import ImageEditingIcon from "../../../icons/ImageEditingIcon"
 import TextEditingIcon from "../../../icons/TextEditingIcon"
 import ColorEditor from "../editors/ColorEditor"
+import ImageEditor from "../editors/ImageEditor"
 import TextAreaEditor from "../editors/TextAreaEditor"
 import TextEditor from "../editors/TextEditor"
 import Toolbar from "../Toolbar"
@@ -18,7 +19,9 @@ export default class ProfileEditableBlockBuilder extends EditableBlockBuilder {
         editor: TextEditor
     },{
         name: 'Edit image',
-        icon: ImageEditingIcon
+        icon: ImageEditingIcon,
+        key: 'image',
+        editor: ImageEditor
     },{
         name: 'Edit description',
         key: 'description',

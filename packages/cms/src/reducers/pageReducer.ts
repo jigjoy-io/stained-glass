@@ -40,6 +40,15 @@ export const pageSlice = createSlice({
             updatePage(page)
         },
 
+        appendBlock: (state, action: PayloadAction<any>) => {
+            let page = JSON.parse(JSON.stringify(state.page))
+
+            page.buildingBlocks.push(action.payload.block)
+
+            state.page = page
+            updatePage(page)
+        },
+
         updateBlock: (state, action: PayloadAction<any>) => {
             let page = JSON.parse(JSON.stringify(state.page))
 
@@ -78,7 +87,7 @@ export const pageSlice = createSlice({
     }
 })
 
-export const { pageUpdated, modeUpdated, loadPage, insertBlock, updateBlock, removeBlock, replaceBlock, focusBlock } = pageSlice.actions
+export const { pageUpdated, modeUpdated, loadPage, insertBlock, updateBlock, removeBlock, replaceBlock, focusBlock, appendBlock } = pageSlice.actions
 
 
 export default pageSlice.reducer
