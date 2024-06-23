@@ -18,8 +18,8 @@ export const selectorOptions = [
                 icon: ProfileIcon
             },
             {
-                key: "carousel",
-                label: "Carousel",
+                key: "carousel-configurer",
+                label: "Page Carousel",
                 description: "Separate content into multiple connected pages.",
                 icon: CarouselIcon
             }

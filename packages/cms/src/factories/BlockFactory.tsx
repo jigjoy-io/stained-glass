@@ -7,12 +7,13 @@ const Title = lazy(() => import('../components/title/Title'))
 const Image = lazy(() => import('../components/image/Image'))
 const Button = lazy(() => import('../components/button/Button'))
 const Question = lazy(() => import('../components/question/Question'))
-const CarouselTile = lazy(() => import('../components/CarouselTile'))
+const CarouselTile = lazy(() => import('../components/carousel/CarouselTile'))
 const Message = lazy(() => import('../components/message/Message'))
 const Reel = lazy(() => import('../components/reel/Reel'))
 const Profile = lazy(() => import('../components/profile/Profile'))
 const Cta = lazy(() => import('../components/cta/Cta'))
 const BlockSelector = lazy(() => import('../components/toolbar/BlockSelector'))
+const CarouselConfigurer = lazy(() => import('../components/toolbar/CarouselConfigurer'))
 
 export default class BlockFactory extends React.Component {
 
@@ -36,7 +37,7 @@ export default class BlockFactory extends React.Component {
             component: Button
         },
         "question": {
-            component: Question
+            component: Question,
         },
         "carousel": {
             component: CarouselTile
@@ -52,6 +53,9 @@ export default class BlockFactory extends React.Component {
         },
         "cta": {
             component: Cta
+        },
+        "carousel-configurer": {
+            component: CarouselConfigurer
         },
         "block-selector": {
             component: BlockSelector

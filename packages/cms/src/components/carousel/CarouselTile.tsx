@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import Button from './button/Button'
-import Grid from './grid/Grid'
+import Button from '../button/Button'
+import Grid from '../grid/Grid'
 import { useDispatch } from "react-redux"
-import Tile from '../util/Tile'
-import { loadPage } from '../reducers/pageReducer'
+import Tile from '../../util/Tile'
+import { loadPage } from '../../reducers/pageReducer'
 
 export default function CarouselTile(props: any) {
 
     const [color, setColor] = useState('')
+    const [cta, setCta] = useState('')
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -15,7 +16,7 @@ export default function CarouselTile(props: any) {
     }, [props.color])
 
     const load = () => {
-        dispatch(loadPage(props.chapterId))
+        dispatch(loadPage(props.pageId))
     }
 
     return (
@@ -27,7 +28,7 @@ export default function CarouselTile(props: any) {
             <div className='pt-4'>
 
                 <Grid numberOfCols={1}>
-                    <Button text="Pokreni" color="primary" action={load} />
+                    <Button text={cta} color="primary" action={load} />
                 </Grid>
             </div>
 

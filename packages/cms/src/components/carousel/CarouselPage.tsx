@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
-import { loadPage } from '../reducers/pageReducer'
-import CloseIcon from "../icons/CloseIcon"
-import Button from "./button/Button"
-import Progress from "./progress/Progress"
-import Content from "./PageContent"
-import { getPage } from "../api/page"
+import { loadPage } from '../../reducers/pageReducer'
+import CloseIcon from "../../icons/CloseIcon"
+import Button from "../button/Button"
+import Progress from "../progress/Progress"
+import Content from "../PageContent"
+import { getPage } from "../../api/page"
 
 export default function CarouselPage(props: any) {
 

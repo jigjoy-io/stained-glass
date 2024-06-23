@@ -100,5 +100,9 @@ export const templates = {
     "block-selector": {
         type: "block-selector",
         builderVersion: packageInfo.version
+    },
+    "carousel-configurer": {
+        type: "carousel-configurer",
+        builderVersion: packageInfo.version
     }
 }

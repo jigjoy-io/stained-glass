@@ -7,7 +7,7 @@ import NoneEditableBlockBuilder from "../components/toolbar/builder/NoneEditable
 import ProfileEditableBlockBuilder from "../components/toolbar/builder/ProfileEditableBlockBuilder"
 import QuestionEditableBlockBuilder from "../components/toolbar/builder/QuestionEditableBlockBuilder"
 import ReelEditableBlockBuilder from "../components/toolbar/builder/ReelEditableBlockBuilder"
-import SelectorBlockBuilder from "../components/toolbar/builder/SelectorBlockBuilder"
+import BasicEditingBlockBuilder from "../components/toolbar/builder/BasicEditingBlockBuilder"
 import TextEditableBlockBuilder from "../components/toolbar/builder/TextEditableBlockBuilder"
 
 
@@ -50,8 +50,11 @@ export default class EditorFactory extends React.Component {
         "cta": {
             builder: new NoneEditableBlockBuilder()
         },
+        "carousel-configurer": {
+            builder: new BasicEditingBlockBuilder()
+        },
         "block-selector": {
-            builder: new SelectorBlockBuilder()
+            builder: new BasicEditingBlockBuilder()
         }
     }
 
