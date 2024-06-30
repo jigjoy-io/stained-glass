@@ -14,7 +14,8 @@ export const removePageHandler = async (event) => {
 
     console.info('received:', event)
 
-
+    const id = event.pathParameters.id
+    
     var params = {
         TableName: tableName,
         Key: { id: id },

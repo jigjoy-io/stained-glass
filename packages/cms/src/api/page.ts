@@ -33,3 +33,17 @@ export async function updatePage(page: any) {
     const res = await fetch(`${API_HOST}/`, options)
     return (await res.json())
 }
+
+export async function removePage(page: any) {
+
+    const options = {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(page),
+    }
+
+    const res = await fetch(`${API_HOST}/`, options)
+    return (await res.json())
+}

@@ -38,6 +38,37 @@ Resources:
             Path: /
             Method: POST
 
+  createNewPageFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/adapters/primary/create-new-page/create-new-page-adapter.createNewPageHandler
+      Runtime: nodejs20.x
+      Architectures:
+      - x86_64
+      MemorySize: 128
+      Timeout: 100
+      Description: Create a new page
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName: !Ref PageTable
+      Environment:
+        Variables:
+          PAGE_TABLE: !Ref PageTable
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /new/
+            Method: POST
+    Metadata: #Manage esbuild properties
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints: 
+        - src/adapters/primary/create-new-page/create-new-page-adapter.ts
+
   getPageFunction:
     Type: AWS::Serverless::Function
     Properties:

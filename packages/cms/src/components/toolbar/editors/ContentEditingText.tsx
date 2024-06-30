@@ -38,7 +38,6 @@ export default function ContentEditingText(props: any) {
 
 		let block = {
 			id: props.id,
-			builderVersion: props.builderVersion,
 			position: props.position,
 			type: props.type,
 			text: newValue
