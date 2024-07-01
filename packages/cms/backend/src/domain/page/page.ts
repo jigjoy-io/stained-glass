@@ -4,6 +4,9 @@ import { CreatePageProps, EnvironmentType, UnmarsalledPage } from "@models/types
 import { schema } from '@schemas/create-page.schema'
 
 
+/**
+ * Represents a Page domain entity with methods to create, convert to input/output DTOs, and convert to domain object.
+ */
 export class Page extends Entity<CreatePageProps> {
 
 

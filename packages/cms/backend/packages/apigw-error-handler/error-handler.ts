@@ -1,4 +1,4 @@
-import { APIGatewayProxyResult } from 'aws-lambda';
+import { APIGatewayProxyResult } from 'aws-lambda'
 
 // we would typically use middy - but to keep this simple to read
 // without mutliple additional packages lets build outselves
@@ -9,6 +9,7 @@ export function errorHandler(error: Error | unknown): APIGatewayProxyResult {
     let statusCode: number
 
     if (error instanceof Error) {
+        
         switch (error.name) {
             case 'ValidationError':
                 errorMessage = error.message
@@ -17,15 +18,15 @@ export function errorHandler(error: Error | unknown): APIGatewayProxyResult {
             default:
                 errorMessage = 'An error has occurred'
                 statusCode = 500
-                break;
+                break
         }
     } else {
         errorMessage = 'An error has occurred'
-        statusCode = 500;
+        statusCode = 500
     }
 
     return {
         statusCode: statusCode,
-        body: JSON.stringify(errorMessage),
-    };
+        body: errorMessage,
+    }
 }
