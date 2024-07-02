@@ -2,7 +2,7 @@
 import { Page } from "@domain/page/page"
 import { CreatePageDto, ReturnPageDto } from "@dto/page/page"
 import { EnvironmentType } from "@models/types"
-import { createNewPage } from "@repositories/create-page-repository"
+import { createNewPage } from "@repositories/create-new-page-repository"
 
 /**
  * Converts page creation dto object into page domain object and passes it to repository for creation.

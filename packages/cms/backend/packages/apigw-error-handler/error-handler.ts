@@ -15,6 +15,10 @@ export function errorHandler(error: Error | unknown): APIGatewayProxyResult {
                 errorMessage = error.message
                 statusCode = 400
                 break
+            case 'PageNotFoundError':
+                errorMessage = error.message
+                statusCode = 404
+                break
             default:
                 errorMessage = 'An error has occurred'
                 statusCode = 500

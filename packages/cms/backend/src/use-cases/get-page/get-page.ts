@@ -2,7 +2,7 @@
 import { Page } from "@domain/page/page"
 import { ReturnPageDto } from "@dto/page/page"
 import { EnvironmentType } from "@models/types"
-import { getPage } from "@repositories/create-page-repository"
+import { getPage } from "@repositories/get-page-repository"
 
 /**
  * Retrieves a page by its ID and returns a DTO representation based on the environment type.

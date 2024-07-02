@@ -40,7 +40,6 @@ export async function retrievePage(pageId: string): Promise<PageDto> {
         ...(item as PageDto),
     }
 
-
     return page
 }
 
