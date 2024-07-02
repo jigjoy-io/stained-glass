@@ -1,6 +1,5 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
 import { ValidationError } from '@errors/validation-error'
-import { v4 as uuid } from 'uuid'
 import { createNewPageUseCase } from '@use-cases/create-new-page'
 import { errorHandler } from '@packages/apigw-error-handler'
 import { CreatePageDto, ReturnPageDto } from '@dto/page/page'
@@ -18,9 +17,6 @@ export async function createNewPageHandler({
 }: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
 
 	try {
-		const correlationId = uuid()
-		const method = 'create-new-page.handler'
-		const prefix = `${correlationId} - ${method}`
 
 		if (!body) throw new ValidationError('No page body')
 
@@ -28,14 +24,14 @@ export async function createNewPageHandler({
 
 		schemaValidator(schema, page)
 
-		console.log(`${prefix} - page: ${JSON.stringify(page)}`)
+		console.log(`page: ${JSON.stringify(page)}`)
 
 		const createdPage: ReturnPageDto = await createNewPageUseCase(page)
 
-		console.log(`${prefix} - page created: ${JSON.stringify(createdPage)}`)
+		console.log(`page created: ${JSON.stringify(createdPage)}`)
 
 		return {
-			statusCode: 200,
+			statusCode: 201,
 			body: JSON.stringify(createdPage),
 		}
 

@@ -1,7 +1,7 @@
 import { CreatePageDto, ReturnPageDto } from "@dto/page/page"
 import { Entity } from "@entity/entity"
 import { CreatePageProps, EnvironmentType, UnmarsalledPage } from "@models/types"
-import { schema } from '@schemas/create-page.schema'
+import { schema } from '@schemas/page.schema'
 
 
 /**
@@ -26,7 +26,7 @@ export class Page extends Entity<CreatePageProps> {
 
 
         const instance: Page = new Page(pageProps)
-        //instance.validate(schema)
+        instance.validate(schema)
 
         return instance
     }
@@ -58,6 +58,7 @@ export class Page extends Entity<CreatePageProps> {
     // create a domain object based on the dto
     public static toDomain(raw: UnmarsalledPage): Page {
         const instance = new Page(raw)
+        instance.validate(schema)
         return instance
     }
 
