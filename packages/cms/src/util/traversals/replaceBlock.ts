@@ -4,10 +4,8 @@ function traversBlankPage(page: any, block: any) {
         if(page.buildingBlocks[i].id == block.id){
             page.buildingBlocks[i] = block
             return page
-        }else if (page.buildingBlocks[i].type == 'page-tile'){
+        }else if (page.buildingBlocks[i].type == 'page-tile' || page.buildingBlocks[i].type == 'carousel-tile'){
             page.buildingBlocks[i].page = traversPage(page.buildingBlocks[i].page, block)
-        }else if (page.buildingBlocks[i].type == 'carousel-tile'){
-            page.buildingBlocks[i].page = traversCarouselPage(page.buildingBlocks[i].page, block)
         }
     }
     return page

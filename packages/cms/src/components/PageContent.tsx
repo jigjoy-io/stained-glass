@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import BuildingBlock from "../factories/BuildingBlock"
 import { LazyMotion, m } from "framer-motion"
 import { useMode } from "../util/store"
@@ -28,8 +28,15 @@ const loadFeatures = () => import("../util/animations").then(res => res.default)
 export default function PageContent(props: any) {
 
     const mode: any = useMode()
-    const blocks: any = props.blocks
+    const id: any = props.id
     const dispatch = useDispatch()
+
+
+    const [blocks, setBlocks] = useState(props.blocks)
+
+    useEffect(() => {
+        setBlocks(props.blocks)
+    }, [props.blocks])
 
     const ativateSelector = () => {
 
@@ -38,7 +45,10 @@ export default function PageContent(props: any) {
         } else {
             let selector = TemplateFactory.get("block-selector")
 
-            dispatch(appendBlock(selector))
+            dispatch(appendBlock({
+                pageId: id,
+                block: selector
+            }))
         }
 
     }

@@ -1,5 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { getPage } from "../api/page"
+import { addBlock } from "../util/traversals/addBlock"
+import { deleteBlock } from "../util/traversals/deleteBlock"
+import { pushBlock } from "../util/traversals/pushBlock"
 import { replaceBlock } from "../util/traversals/replaceBlock"
 
 interface PageState {
@@ -38,18 +41,12 @@ export const pageSlice = createSlice({
 
         insertBlock: (state, action: PayloadAction<any>) => {
             let page = JSON.parse(JSON.stringify(state.activePage))
-
-            let referenceBlockIndex = page.buildingBlocks.findIndex((block: any) => block.id == action.payload.referenceBlock)
-            let index = action.payload.position === 'above' ? referenceBlockIndex : referenceBlockIndex + 1
-            page.buildingBlocks.splice(index, 0, action.payload.block)
-
-            state.activePage = page
+            state.activePage = addBlock(page, action.payload)
         },
 
         appendBlock: (state, action: PayloadAction<any>) => {
             let page = JSON.parse(JSON.stringify(state.activePage))
-            page.buildingBlocks.push(action.payload)
-            state.activePage = page
+            state.activePage = pushBlock(page, action.payload)
         },
 
         updateBlock: (state, action: PayloadAction<any>) => {
@@ -59,8 +56,7 @@ export const pageSlice = createSlice({
 
         removeBlock: (state, action: PayloadAction<string>) => {
             let page = JSON.parse(JSON.stringify(state.activePage))
-            page.buildingBlocks = page.buildingBlocks.filter((block: any) => block.id !== action.payload)
-            state.activePage = page
+            state.activePage = deleteBlock(page, action.payload)
         },
 
         focusBlock: (state, action: PayloadAction<any>) => {
@@ -80,7 +76,7 @@ export const pageSlice = createSlice({
     }
 })
 
-export const { rootPageUpdated, pageUpdated, modeUpdated, insertBlock, removeBlock, updateBlock, focusBlock, appendBlock } = pageSlice.actions
+export const { rootPageUpdated, pageUpdated, modeUpdated, insertBlock, removeBlock, updateBlock, appendBlock, focusBlock } = pageSlice.actions
 
 
 export default pageSlice.reducer

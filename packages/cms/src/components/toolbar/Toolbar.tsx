@@ -13,13 +13,14 @@ import { blockingUpdated, expandedToolbarUpdated } from '../../reducers/toolbarR
 import { AddNewBlock } from './builder/AddNewBlock'
 import { DuplicateBlockIcon } from '../../icons/DuplicateBlockIcon'
 import DeleteBlockIcon from '../../icons/DeleteBlockIcon'
-import { removeBlock } from '../../reducers/pageReducer'
+import { insertBlock, removeBlock } from '../../reducers/pageReducer'
+import { duplicateBlock } from '../../util/traversals/duplcateBlock'
 
 export default function Toolbar(props: any) {
 
     const [on, setOn] = useState(false)
     const [editingActive, setEditingActive] = useState(null)
-    const [blockRadius, setBlockRadius ]= useState(props.blockRadius ? props.blockRadius : "rounded-lg")
+    const [blockRadius, setBlockRadius] = useState(props.blockRadius ? props.blockRadius : "rounded-lg")
 
     const expandedToolbar = useExpandedToolbar()
     const dispatch = useDispatch()
@@ -47,6 +48,17 @@ export default function Toolbar(props: any) {
         dispatch(removeBlock(props.id))
     }
 
+    const duplicate = () => {
+        onClose()
+
+        let block = duplicateBlock(props.block)
+        
+        dispatch(insertBlock({
+            referenceBlock: props.block.id,
+            block: block
+        }))
+    }
+
     return (<>
         <div onMouseEnter={turnOnToolbar} onMouseLeave={turnOffToolbar} className="flex flex-col">
             {(on || expandedToolbar == props.id || editingActive != null) &&
@@ -65,11 +77,12 @@ export default function Toolbar(props: any) {
                                 </PopoverTrigger>
                                 <PopoverContent>
                                     <Grid numberOfCols={1}>
-                                        <Item text="Duplicate block" icon={DuplicateBlockIcon} action={() => { alert("home") }} />
+                                        <Item text="Duplicate block" icon={DuplicateBlockIcon} action={duplicate} />
                                         <Item text="Delete block" textColor="red" icon={DeleteBlockIcon} action={deleteBlock} />
-                                        <div className='border-b border-default-light' />
+
                                         {
-                                            props.editingOptions.map((option: any, index) =>
+                                            props.editingOptions.map((option: any, index) => <>
+                                                {index == 0 && <div className='border-b border-default-light' />}
                                                 <Popover key={index} onClose={() => setEditingActive(null)}>
                                                     <PopoverTrigger>
                                                         <Item text={option.name} icon={option.icon} action={() => setEditingActive(index)} />
@@ -78,7 +91,7 @@ export default function Toolbar(props: any) {
                                                         <option.editor id={props.id} block={props.block} attribute={option.key} value={props.block[option.key]} />
                                                     </PopoverContent>
                                                 </Popover>
-
+                                            </>
                                             )
                                         }
                                     </Grid>
