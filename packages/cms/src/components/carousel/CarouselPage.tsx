@@ -6,7 +6,6 @@ import Button from "../button/Button"
 import Progress from "../progress/Progress"
 import Content from "../PageContent"
 import { usePage, useRootPage } from "../../util/store"
-import { getPage } from "../../api/page"
 
 export default function CarouselPage(props: any) {
 
@@ -46,8 +45,8 @@ export default function CarouselPage(props: any) {
     }
 
     return <>
-        {page && <div className="flex flex-col h-[100%]">
-            <div className="flex flex-row h-max mb-4 pt-4">
+        {page && <div className="flex flex-col h-[100%] p-3">
+            <div className="flex flex-row h-max mb-4">
                 <Progress percentage={percentage} />
                 <div className='w-max bg-primary-light border-2 border-primary p-1 rounded-md cursor-pointer' onClick={() => backToHome(origin)}>
                     <CloseIcon />
@@ -55,12 +54,12 @@ export default function CarouselPage(props: any) {
             </div>
             <Content blocks={pages[current].buildingBlocks} key={page.id} id={pages[current].id} />
             {
-                (current != pages.length - 1) && <div className="flex flex-row mt-4 gap-3 px-4 pb-4">
+                (current != pages.length - 1) && <div className="flex flex-row mt-4 gap-3">
                     <Button text="Previous" action={previousPage} /> <Button text="Next" action={nextPage} />
                 </div>
             }
             {
-                (current == pages.length - 1) && <div className="flex flex-row mt-4 gap-3 px-4 pb-4">
+                (current == pages.length - 1) && <div className="flex flex-row mt-4 gap-3">
                     <Button text="Back to Home" action={() => backToHome(origin)} />
                 </div>
             }
