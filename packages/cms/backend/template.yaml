@@ -1,10 +1,9 @@
-
 AWSTemplateFormatVersion: 2010-09-09
 Description: >-
   store-backend
 
 Transform:
-- AWS::Serverless-2016-10-31
+  - AWS::Serverless-2016-10-31
 
 Globals:
   Api:
@@ -14,6 +13,258 @@ Globals:
       AllowOrigin: "'*'"
 
 Resources:
+  DefineAuthChallenge:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/auth/define-auth-challenge/define-auth-challenge.defineAuthChallengeHandler
+      Runtime: nodejs20.x
+      Architectures:
+        - x86_64
+      MemorySize: 128
+      Timeout: 100
+    Metadata: #Manage esbuild properties
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints:
+          - src/auth/define-auth-challenge/define-auth-challenge.ts
+
+  UserPoolDefineAuthChallengeLambdaPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:invokeFunction
+      Principal: cognito-idp.amazonaws.com
+      FunctionName: !GetAtt DefineAuthChallenge.Arn
+      SourceArn: !GetAtt JigJoyUserPool.Arn
+
+  CreateAuthChallenge:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/auth/create-auth-challenge/create-auth-challenge.createAuthChallengeHandler
+      Runtime: nodejs20.x
+      Architectures:
+        - x86_64
+      MemorySize: 128
+      Timeout: 100
+    Metadata: #Manage esbuild properties
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints:
+          - src/auth/create-auth-challenge/create-auth-challenge.ts
+
+  UserPoolCreateAuthChallengeLambdaPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:invokeFunction
+      Principal: cognito-idp.amazonaws.com
+      FunctionName: !GetAtt CreateAuthChallenge.Arn
+      SourceArn: !GetAtt JigJoyUserPool.Arn
+
+  VerifyAuthChallengeResponse:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/auth/verify-auth-challenge-response/verify-auth-challenge-response.verifyAuthChallengeResponseHandler
+      Runtime: nodejs20.x
+      Architectures:
+        - x86_64
+      MemorySize: 128
+      Timeout: 100
+      Environment:
+        Variables:
+          KMS_KEY_ID: !Ref EncryptionKey
+      Policies:
+        - Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Action: kms:Decrypt
+              Resource: !GetAtt EncryptionKey.Arn
+    Metadata: #Manage esbuild properties
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints:
+          - src/auth/verify-auth-challenge-response/verify-auth-challenge-response.ts
+
+  UserPoolVerifyAuthChallengeResponseLambdaPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:invokeFunction
+      Principal: cognito-idp.amazonaws.com
+      FunctionName: !GetAtt VerifyAuthChallengeResponse.Arn
+      SourceArn: !GetAtt JigJoyUserPool.Arn
+
+  PreSignUp:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/auth/pre-sign-up/pre-sign-up.preSignUpHandler
+      Runtime: nodejs20.x
+      Architectures:
+        - x86_64
+      MemorySize: 128
+      Timeout: 100
+    Metadata: #Manage esbuild properties
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints:
+          - src/auth/pre-sign-up/pre-sign-up.ts
+
+  UserPoolPreSignUpLambdaPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:invokeFunction
+      Principal: cognito-idp.amazonaws.com
+      FunctionName: !GetAtt PreSignUp.Arn
+      SourceArn: !GetAtt JigJoyUserPool.Arn
+
+  PostAuthentication:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/auth/post-authentication/post-authentication.postAuthenticationHandler
+      Runtime: nodejs20.x
+      Architectures:
+        - x86_64
+      MemorySize: 128
+      Timeout: 100
+      Policies:
+      - Statement:
+        - Sid: AttributesUpdate
+          Effect: Allow
+          Action:
+          - cognito-idp:AdminUpdateUserAttributes
+          Resource: '*'
+      Events:
+        CognitoEvent:
+          Type: Cognito
+          Properties:
+            UserPool: !Ref JigJoyUserPool
+            Trigger: PostAuthentication
+    Metadata: #Manage esbuild properties
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints:
+          - src/auth/post-authentication/post-authentication.ts
+
+
+  EncryptionKey:
+    Type: AWS::KMS::Key
+    Properties:
+      Enabled: true
+      EnableKeyRotation: true
+      KeyPolicy:
+        Version: "2012-10-17"
+        Id: key-default-1
+        Statement:
+          - Sid: Enable IAM User Permissions
+            Effect: Allow
+            Principal:
+              AWS: !Sub arn:aws:iam::${AWS::AccountId}:root
+            Action: kms:*
+            Resource: "*"
+      MultiRegion: false
+      PendingWindowInDays: 7
+
+  # User Pool
+  JigJoyUserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName: userPool
+      Policies:
+        PasswordPolicy:
+          MinimumLength: 8
+      UsernameAttributes:
+        - email
+      Schema:
+        - AttributeDataType: String
+          Name: email
+          Required: true
+        - AttributeDataType: String
+          Mutable: true
+          Required: false
+          Name: authChallenge
+      LambdaConfig:
+        CreateAuthChallenge: !GetAtt CreateAuthChallenge.Arn
+        DefineAuthChallenge: !GetAtt DefineAuthChallenge.Arn
+        PreSignUp: !GetAtt PreSignUp.Arn
+        VerifyAuthChallengeResponse: !GetAtt VerifyAuthChallengeResponse.Arn
+
+  # Domain For Sending Confirmation Email
+  UserPoolDomain:
+    Type: AWS::Cognito::UserPoolDomain
+    Properties:
+      UserPoolId: !Ref JigJoyUserPool
+      Domain: "jigjoy-user-pool-domain"
+
+  # Web Client
+  WebClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      UserPoolId: !Ref JigJoyUserPool
+      ClientName: webClient
+      ExplicitAuthFlows:
+        - ALLOW_CUSTOM_AUTH
+        - ALLOW_REFRESH_TOKEN_AUTH
+      PreventUserExistenceErrors: ENABLED
+
+  sendMagicLinkFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/auth/send-magic-link/send-magic-link.sendMagicLinkHandler
+      Runtime: nodejs20.x
+      Architectures:
+        - x86_64
+      MemorySize: 128
+      Timeout: 100
+      Description: Send magic link to user email
+      Environment:
+        Variables:
+          KMS_KEY_ID: !Ref EncryptionKey
+          USER_POOL_ID: !Ref JigJoyUserPool
+          SES_FROM_ADDRESS: team@jigjoy.io
+          BASE_URL: http://localhost:3000
+      Policies:
+        - Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Action: ses:SendEmail
+              Resource: "*"
+            - Effect: Allow
+              Action: kms:Encrypt
+              Resource: !GetAtt EncryptionKey.Arn
+            - Effect: Allow
+              Action:
+                [
+                  "cognito-idp:AdminUpdateUserAttributes",
+                  "cognito-idp:AdminGetUser",
+                  "cognito-idp:AdminCreateUser",
+                ]
+              Resource: !GetAtt JigJoyUserPool.Arn
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /send-magic-link/
+            Method: POST
+    Metadata: #Manage esbuild properties
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints:
+          - src/auth/send-magic-link/send-magic-link.ts
 
   createPageFunction:
     Type: AWS::Serverless::Function
@@ -21,13 +272,13 @@ Resources:
       Handler: src/adapters/primary/create-page/create-page-adapter.createPageHandler
       Runtime: nodejs20.x
       Architectures:
-      - x86_64
+        - x86_64
       MemorySize: 128
       Timeout: 100
       Description: Create a new page
       Policies:
-      - DynamoDBCrudPolicy:
-          TableName: !Ref PageTable
+        - DynamoDBCrudPolicy:
+            TableName: !Ref PageTable
       Environment:
         Variables:
           PAGE_TABLE: !Ref PageTable
@@ -43,8 +294,8 @@ Resources:
         Minify: true
         Target: "es2020"
         Sourcemap: true
-        EntryPoints: 
-        - src/adapters/primary/create-page/create-page-adapter.ts
+        EntryPoints:
+          - src/adapters/primary/create-page/create-page-adapter.ts
 
   retrievePageFunction:
     Type: AWS::Serverless::Function
@@ -52,13 +303,13 @@ Resources:
       Handler: src/adapters/primary/retrieve-page/retrieve-page-adapter.retrievePageHandler
       Runtime: nodejs20.x
       Architectures:
-      - x86_64
+        - x86_64
       MemorySize: 128
       Timeout: 100
       Description: Retrieve a page based on id and environement
       Policies:
-      - DynamoDBCrudPolicy:
-          TableName: !Ref PageTable
+        - DynamoDBCrudPolicy:
+            TableName: !Ref PageTable
       Environment:
         Variables:
           PAGE_TABLE: !Ref PageTable
@@ -74,8 +325,8 @@ Resources:
         Minify: true
         Target: "es2020"
         Sourcemap: true
-        EntryPoints: 
-        - src/adapters/primary/retrieve-page/retrieve-page-adapter.ts
+        EntryPoints:
+          - src/adapters/primary/retrieve-page/retrieve-page-adapter.ts
 
   updatePageFunction:
     Type: AWS::Serverless::Function
@@ -83,13 +334,13 @@ Resources:
       Handler: src/adapters/primary/update-page/update-page-adapter.updatePageHandler
       Runtime: nodejs20.x
       Architectures:
-      - x86_64
+        - x86_64
       MemorySize: 128
       Timeout: 100
       Description: Update existing page
       Policies:
-      - DynamoDBCrudPolicy:
-          TableName: !Ref PageTable
+        - DynamoDBCrudPolicy:
+            TableName: !Ref PageTable
       Environment:
         Variables:
           PAGE_TABLE: !Ref PageTable
@@ -105,8 +356,8 @@ Resources:
         Minify: true
         Target: "es2020"
         Sourcemap: true
-        EntryPoints: 
-        - src/adapters/primary/update-page/update-page-adapter.ts
+        EntryPoints:
+          - src/adapters/primary/update-page/update-page-adapter.ts
 
   getPagesByOriginHandler:
     Type: AWS::Serverless::Function
@@ -136,26 +387,26 @@ Resources:
     Properties:
       TableName: Page
       AttributeDefinitions:
-      - AttributeName: id
-        AttributeType: S
-      - AttributeName: origin
-        AttributeType: S
+        - AttributeName: id
+          AttributeType: S
+        - AttributeName: origin
+          AttributeType: S
       KeySchema:
-      - AttributeName: id
-        KeyType: HASH
+        - AttributeName: id
+          KeyType: HASH
       ProvisionedThroughput:
         ReadCapacityUnits: 2
         WriteCapacityUnits: 2
       GlobalSecondaryIndexes:
-      - IndexName: pageGSI
-        KeySchema:
-        - AttributeName: origin
-          KeyType: HASH
-        Projection:
-          ProjectionType: ALL
-        ProvisionedThroughput:
-          ReadCapacityUnits: 2
-          WriteCapacityUnits: 2
+        - IndexName: pageGSI
+          KeySchema:
+            - AttributeName: origin
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+          ProvisionedThroughput:
+            ReadCapacityUnits: 2
+            WriteCapacityUnits: 2
 
 Outputs:
   WebEndpoint:

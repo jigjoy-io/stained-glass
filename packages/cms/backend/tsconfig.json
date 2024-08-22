@@ -21,6 +21,7 @@
     "baseUrl": ".",
     "paths": {
       "@adapters/*": ["./src/adapters/*"],
+      "@auth/*": ["./src/auth/*"],
       "@config/*": ["./src/config/*"],
       "@domain/*": ["./src/domain/*"],
       "@dto/*": ["./src/dto/*"],
@@ -30,7 +31,8 @@
       "@schemas/*": ["./src/schemas/*"],
       "@models/*": ["./src/models/*"],
       "@use-cases/*": ["./src/use-cases/*"],
-      "@packages/*": ["./packages/*"]
+      "@packages/*": ["./packages/*"],
+      "@utils/*": ["./src/utils/*"]
     }
   },
   "exclude": ["node_modules", "**/*.test.ts"]

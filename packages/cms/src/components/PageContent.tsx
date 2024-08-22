@@ -35,7 +35,6 @@ export default function PageContent(props: any) {
     const [blocks, setBlocks] = useState(props.config.buildingBlocks)
 
     useEffect(() => {
-        console.log(props.config.buildingBlocks)
         setBlocks(props.config.buildingBlocks)
     }, [props.config])
 

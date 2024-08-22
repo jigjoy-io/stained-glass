@@ -5,6 +5,7 @@ import { errorHandler } from '@packages/apigw-error-handler'
 import { CreatePageDto, ReturnPageDto } from '@dto/page/page'
 import { schema } from '@schemas/create-page.schema'
 import { schemaValidator } from '@packages/schema-validator'
+import Responses from '@utils/api-responses'
 
 /**
  * Handles the creation of a new page based on the provided request body.
@@ -30,10 +31,7 @@ export async function createPageHandler({
 
 		console.log(`page created: ${JSON.stringify(createdPage)}`)
 
-		return {
-			statusCode: 201,
-			body: JSON.stringify(createdPage),
-		}
+		return Responses._201(createdPage)
 
 	} catch (error) {
 		return errorHandler(error)

@@ -4,6 +4,7 @@ import { errorHandler } from '@packages/apigw-error-handler'
 import { ReturnPageDto } from '@dto/page/page'
 import { retrievePageUseCase } from '@use-cases/retrieve-page'
 import { EnvironmentType } from '@models/types'
+import Responses from '@utils/api-responses'
 
 /**
  * Handles the API Gateway event to get a specific page based on the provided ID.
@@ -26,10 +27,8 @@ export async function retrievePageHandler({
 
         console.log(`page fetched: ${JSON.stringify(page)}`)
 
-        return {
-            statusCode: 200,
-            body: JSON.stringify(page),
-        }
+		return Responses._200(page)
+        
 
     } catch (error) {
         return errorHandler(error)

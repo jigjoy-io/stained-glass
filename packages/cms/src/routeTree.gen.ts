@@ -16,15 +16,21 @@ import { Route as rootRoute } from './routes/__root'
 
 // Create Virtual Routes
 
-const EditorLazyImport = createFileRoute('/editor')()
+const DesignerLazyImport = createFileRoute('/designer')()
+const DashboardLazyImport = createFileRoute('/dashboard')()
 const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
 
-const EditorLazyRoute = EditorLazyImport.update({
-  path: '/editor',
+const DesignerLazyRoute = DesignerLazyImport.update({
+  path: '/designer',
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/editor.lazy').then((d) => d.Route))
+} as any).lazy(() => import('./routes/designer.lazy').then((d) => d.Route))
+
+const DashboardLazyRoute = DashboardLazyImport.update({
+  path: '/dashboard',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/dashboard.lazy').then((d) => d.Route))
 
 const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
@@ -42,11 +48,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
-    '/editor': {
-      id: '/editor'
-      path: '/editor'
-      fullPath: '/editor'
-      preLoaderRoute: typeof EditorLazyImport
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/designer': {
+      id: '/designer'
+      path: '/designer'
+      fullPath: '/designer'
+      preLoaderRoute: typeof DesignerLazyImport
       parentRoute: typeof rootRoute
     }
   }
@@ -56,7 +69,8 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
-  EditorLazyRoute,
+  DashboardLazyRoute,
+  DesignerLazyRoute,
 })
 
 /* prettier-ignore-end */
@@ -68,14 +82,18 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/editor"
+        "/dashboard",
+        "/designer"
       ]
     },
     "/": {
       "filePath": "index.lazy.tsx"
     },
-    "/editor": {
-      "filePath": "editor.lazy.tsx"
+    "/dashboard": {
+      "filePath": "dashboard.lazy.tsx"
+    },
+    "/designer": {
+      "filePath": "designer.lazy.tsx"
     }
   }
 }

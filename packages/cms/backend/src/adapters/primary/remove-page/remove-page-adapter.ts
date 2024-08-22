@@ -2,6 +2,7 @@ import { ReturnPageDto } from "@dto/page"
 import { ValidationError } from "@errors/validation-error"
 import { errorHandler } from "@packages/apigw-error-handler"
 import { removePageUseCase } from "@use-cases/remove-page/remove-page"
+import Responses from "@utils/api-responses"
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
 
 export async function removePageHandler({
@@ -20,10 +21,7 @@ export async function removePageHandler({
 
         console.log(`page fetched: ${JSON.stringify(page)}`)
 
-        return {
-            statusCode: 200,
-            body: JSON.stringify(page),
-        }
+		return Responses._202(page)
 
     } catch (error) {
         return errorHandler(error)

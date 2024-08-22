@@ -5,6 +5,7 @@ import { ReturnPageDto, UpdatePageDto } from '@dto/page/page'
 import { schema } from '@schemas/create-page.schema'
 import { schemaValidator } from '@packages/schema-validator'
 import { updatePageUseCase } from '@use-cases/update-page/update-page'
+import Responses from '@utils/api-responses'
 
 
 /**
@@ -34,10 +35,7 @@ export async function updatePageHandler({
 
 		console.log(`page created: ${JSON.stringify(updatedPage)}`)
 
-		return {
-			statusCode: 201,
-			body: JSON.stringify(updatedPage),
-		}
+		return Responses._201(updatedPage)
 
 	} catch (error) {
 		return errorHandler(error)

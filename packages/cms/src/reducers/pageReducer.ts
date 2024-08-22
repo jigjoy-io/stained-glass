@@ -14,7 +14,7 @@ interface PageState {
 }
 
 let initialState: PageState = {
-    pageId: "01858c7d-17dc-4c64",
+    pageId: "1aaf00a1-14c6-41ea-84ac-a3b701c8669c",
     rootPage: null,
     activePage: null,
     mode: "visiting",
@@ -70,7 +70,6 @@ export const pageSlice = createSlice({
     extraReducers(builder) {
         builder
             .addCase(fetchPage.fulfilled, (state, action) => {
-                console.log(action.payload)
                 state.rootPage = action.payload
                 state.activePage = action.payload
             })

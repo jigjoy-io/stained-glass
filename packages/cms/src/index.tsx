@@ -5,6 +5,17 @@ import { Provider } from 'react-redux'
 import { store } from './util/store'
 import { RouterProvider, createRouter } from "@tanstack/react-router"
 import { routeTree } from "./routeTree.gen"
+import { Amplify } from 'aws-amplify'
+
+
+Amplify.configure({
+	Auth: {
+		Cognito: {
+			userPoolId: process.env.REACT_APP_USER_POOL_ID || '',
+			userPoolClientId: process.env.REACT_APP_USER_POOL_WEB_CLIENT_ID || ''
+		}
+	}
+})
 
 const root = document.createElement("div")
 document.body.appendChild(root)
