@@ -27,6 +27,5 @@ export const handleConfirmSignIn = async (email, challengeResponse) => {
 	})
 
 	const output = await confirmSignIn({ challengeResponse })
-	console.log(output)
 	return output.isSignedIn
 }

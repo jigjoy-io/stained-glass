@@ -2,7 +2,7 @@ import React from "react"
 import ColorEditingIcon from "../../../icons/ColorEditingIcon"
 import CTAEditingIcon from "../../../icons/CTAEditingIcon"
 import DescriptionEditingIcon from "../../../icons/DescriptionEditingIcon"
-import TextEditingIcon from "../../../icons/TextEditingIcon"
+import { RenameIcon } from "../../../icons/RenameIcon"
 import ColorEditor from "../editors/ColorEditor"
 import TextEditor from "../editors/TextEditor"
 import Toolbar from "../Toolbar"
@@ -11,8 +11,8 @@ import EditableBlock from "./EditableBlock"
 export default class EditablePageTile extends EditableBlock {
 
     editingOptions = [{
-        name: 'Edit title',
-        icon: TextEditingIcon,
+        name: 'Rename',
+        icon: RenameIcon,
         key: 'title',
         editor: TextEditor
     },{

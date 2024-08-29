@@ -2,10 +2,10 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import { Provider } from 'react-redux'
-import { store } from './util/store'
 import { RouterProvider, createRouter } from "@tanstack/react-router"
 import { routeTree } from "./routeTree.gen"
 import { Amplify } from 'aws-amplify'
+import { store } from './util/store'
 
 
 Amplify.configure({

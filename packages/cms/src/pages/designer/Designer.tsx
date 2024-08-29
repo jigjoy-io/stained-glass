@@ -1,29 +1,20 @@
 import React, { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import Page from "../../components/Page"
-import { fetchPage, modeUpdated, rootPageUpdated } from "../../reducers/pageReducer"
-import { AppDispatch, useBlocked, useMode, usePage, usePageId, useRootPage } from "../../util/store"
+import { modeUpdated, rootPageUpdated } from "../../reducers/pageReducer"
+import { AppDispatch, useBlocked, useMode, usePage, useRootPage } from "../../util/store"
 
 import { updatePage } from "../../api/page"
 import { replaceBlock } from "../../util/traversals/replaceBlock"
+import PageTree from "./PageTree"
 
 export default function Designer() {
 
     const blocked = useBlocked()
-    const pageId = usePageId()
     const mode = useMode()
     const page = usePage()
     const rootPage = useRootPage()
     const dispatch = useDispatch<AppDispatch>()
-
-    useEffect(() => {
-
-        (async () => {
-            dispatch(modeUpdated("editing"))
-            dispatch(fetchPage(pageId))
-        })()
-
-    }, [])
 
 
     const update = (rootPage, page) => {
@@ -36,12 +27,25 @@ export default function Designer() {
 
         root = replaceBlock(root, activePage)
         dispatch(rootPageUpdated(root))
+
         updatePage(root)
     }
 
     useEffect(() => {
+        dispatch(modeUpdated("editing"))
+    }, [])
+
+    useEffect(() => {
         update(rootPage, page)
+
     }, [page])
 
-    return <div style={{ pointerEvents: blocked ? 'none' : 'auto', zIndex: 100 }}>{(pageId && mode) && <Page />}</div>
+    return <div style={{ pointerEvents: blocked ? 'none' : 'auto', zIndex: 100 }}>
+        <div className="flex flex-row">
+            <PageTree />
+            {(page && mode) && <div key={page.id} className="grow flex flex-col justify-center items-center">
+                <Page />
+            </div>}
+        </div>
+    </div>
 }

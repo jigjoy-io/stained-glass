@@ -1,5 +1,5 @@
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
-import { DynamoDBDocumentClient, GetCommand, PutCommand } from '@aws-sdk/lib-dynamodb'
+import { DynamoDBDocumentClient, GetCommand, PutCommand, QueryCommand } from '@aws-sdk/lib-dynamodb'
 import { PageDto } from "@dto/page/page"
 const client = new DynamoDBClient({})
 const ddbDocClient = DynamoDBDocumentClient.from(client)
@@ -43,3 +43,22 @@ export async function getPage(pageId: string): Promise<PageDto> {
     return page
 }
 
+
+export async function getPages(origin: string): Promise<PageDto []> {
+
+    const params = {
+		KeyConditionExpression: 'origin = :origin',
+		IndexName: 'pageGSI',
+		ExpressionAttributeValues: {
+			':origin': origin
+		},
+		TableName: tableName
+	}
+
+	const data = await ddbDocClient.send(new QueryCommand(params))
+    let items = data.Items as []
+	let pages: PageDto [] = items.map((item) => item as PageDto)
+
+
+    return pages
+}

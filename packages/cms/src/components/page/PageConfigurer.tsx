@@ -8,7 +8,7 @@ import Tab from "../tabs/Tab"
 import TemplateFactory from "../../factories/TemplateFactory"
 import { updateBlock } from "../../reducers/pageReducer"
 import { useDispatch } from "react-redux"
-import { usePageId } from "../../util/store"
+import { usePage } from "../../util/store"
 
 export default function CarouselConfigurer(props: any) {
 
@@ -19,7 +19,7 @@ export default function CarouselConfigurer(props: any) {
     const [accessType, setAccessType] = useState(props.accessType)
     const [description, setDescription] = useState(props.description)
     const [title, setHeadline] = useState(props.title)
-    const pageId = usePageId()
+    const activePage = usePage()
 
     const ref = useRef<HTMLInputElement>(null)
 
@@ -31,7 +31,7 @@ export default function CarouselConfigurer(props: any) {
     const create = () => {
 
         let page = TemplateFactory.get("blank")
-        page.origin = pageId
+        page.origin = activePage.id
 
         let block = TemplateFactory.get('page-tile')
 

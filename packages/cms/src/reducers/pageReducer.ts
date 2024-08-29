@@ -1,24 +1,24 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { getPage } from "../api/page"
+import { getPage, updatePage } from "../api/page"
 import { addBlock } from "../util/traversals/addBlock"
 import { deleteBlock } from "../util/traversals/deleteBlock"
 import { pushBlock } from "../util/traversals/pushBlock"
 import { replaceBlock } from "../util/traversals/replaceBlock"
 
 interface PageState {
-    pageId: string,
     rootPage: any,
     activePage: any,
     mode: string,
-    activeBlock: string | null
+    activeBlock: string | null,
+    pages: any []
 }
 
 let initialState: PageState = {
-    pageId: "1aaf00a1-14c6-41ea-84ac-a3b701c8669c",
     rootPage: null,
     activePage: null,
     mode: "visiting",
-    activeBlock: null
+    activeBlock: null,
+    pages: []
 }
 
 export const fetchPage = createAsyncThunk('loadPage', async (id: string) => {
@@ -32,7 +32,11 @@ export const pageSlice = createSlice({
     reducers: {
 
         rootPageUpdated: (state, action: PayloadAction<any>) =>{
-            state.rootPage = action.payload
+            let page: any = action.payload
+            state.rootPage = page
+
+            let index = state.pages.findIndex((p: any) => p.id == page.id)
+            state.pages.splice(index, 1, page)
         },
 
         pageUpdated: (state, action: PayloadAction<any>) => {
@@ -65,6 +69,10 @@ export const pageSlice = createSlice({
 
         modeUpdated: (state, action: PayloadAction<any>) => {
             state.mode = action.payload
+        },
+
+        pagesUpdated: (state, action: PayloadAction<any>) => {
+            state.pages = action.payload
         }
     },
     extraReducers(builder) {
@@ -76,7 +84,7 @@ export const pageSlice = createSlice({
     }
 })
 
-export const { rootPageUpdated, pageUpdated, modeUpdated, insertBlock, removeBlock, updateBlock, appendBlock, focusBlock } = pageSlice.actions
+export const { rootPageUpdated, pageUpdated, modeUpdated, insertBlock, removeBlock, updateBlock, appendBlock, focusBlock, pagesUpdated } = pageSlice.actions
 
 
 export default pageSlice.reducer

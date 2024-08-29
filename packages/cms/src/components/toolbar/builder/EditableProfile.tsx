@@ -2,7 +2,7 @@ import React from "react"
 import ColorEditingIcon from "../../../icons/ColorEditingIcon"
 import DescriptionEditingIcon from "../../../icons/DescriptionEditingIcon"
 import ImageEditingIcon from "../../../icons/ImageEditingIcon"
-import TextEditingIcon from "../../../icons/TextEditingIcon"
+import { RenameIcon } from "../../../icons/RenameIcon"
 import ColorEditor from "../editors/ColorEditor"
 import ImageEditor from "../editors/ImageEditor"
 import TextAreaEditor from "../editors/TextAreaEditor"
@@ -13,8 +13,8 @@ import EditableBlock from "./EditableBlock"
 export default class EditableProfile extends EditableBlock {
 
     editingOptions = [{
-        name: 'Edit headline',
-        icon: TextEditingIcon,
+        name: 'Rename',
+        icon: RenameIcon,
         key: 'headline',
         editor: TextEditor
     },{

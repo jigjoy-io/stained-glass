@@ -58,9 +58,9 @@ export default function Authorization(props: any) {
 		setEmail(email)
 	}
 
-	return <div className="mt-[10vh]">
+	return <div className="mt-[10vh] flex justify-center">
 		<LazyMotion features={loadFeatures}>
-			<m.div variants={animation} initial="hidden" animate="show" className='gap-5 flex flex-col'>
+			<m.div variants={animation} initial="hidden" animate="show" className='gap-5 flex flex-col w-[400px]'>
 				<m.div key='logo' variants={item}><Logo /></m.div>
 				<m.div key='title' variants={item}>
 					<div className="my-5">

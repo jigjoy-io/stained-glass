@@ -2,7 +2,7 @@ import AudioEditingIcon from "../icons/AudioEditingIcon"
 import CarouselIcon from "../icons/CarouselIcon"
 import ImageEditingIcon from "../icons/ImageEditingIcon"
 import ProfileIcon from "../icons/ProfileIcon"
-import TextEditingIcon from "../icons/TextEditingIcon"
+import { RenameIcon } from "../icons/RenameIcon"
 import VideoEditingIcon from "../icons/VideoEditingIcon"
 
 export const selectorOptions = [
@@ -39,19 +39,19 @@ export const selectorOptions = [
                 key: "text",
                 label: "Text",
                 description: "Begin writing with plain text",
-                icon: TextEditingIcon
+                icon: RenameIcon
             },
             {
                 key: "title",
                 label: "Title",
                 description: "Create a bold section heading",
-                icon: TextEditingIcon
+                icon: RenameIcon
             },
             {
                 key: "heading",
                 label: "Heading",
                 description: "Create a medium section heading",
-                icon: TextEditingIcon
+                icon: RenameIcon
             }
         ]
     },

@@ -8,7 +8,7 @@ import Tab from "../tabs/Tab"
 import TemplateFactory from "../../factories/TemplateFactory"
 import { updateBlock } from "../../reducers/pageReducer"
 import { useDispatch } from "react-redux"
-import { usePage, usePageId } from "../../util/store"
+import { usePage } from "../../util/store"
 
 export default function CarouselConfigurer(props: any) {
 
@@ -41,7 +41,9 @@ export default function CarouselConfigurer(props: any) {
         // create carousel page
         let page = TemplateFactory.get("carousel")
         page.origin = activePage.id
-        page.pages = pages
+        page.config = {
+            pages: pages
+        }
 
         // replace configurer with carousel block tile
         let block = TemplateFactory.get('carousel-tile')

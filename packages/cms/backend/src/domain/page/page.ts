@@ -80,8 +80,15 @@ export class Page extends Entity<CreatePageProps> {
         return instance
     }
 
-    public getInnerPages(pageId: string){
+    public static toDomains(pages: UnmarsalledPage[]): Page[] {
+        let domains: Page[] = []
+        pages.forEach(page => {
+            let instance = new Page(page)
+            instance.validate(schema)
+            domains.push(instance)
+        })
 
+        return domains
     }
 
 

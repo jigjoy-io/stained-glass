@@ -6,11 +6,8 @@ function Page() {
 
     const page = usePage()
 
-    return <>{
-            <div>
-                {page != null && PageFactory.get(page)}
-            </div>
-    }</>
+    return <>{page != null && PageFactory.get(page)}</>
+
 }
 
 

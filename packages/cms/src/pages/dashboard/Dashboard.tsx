@@ -1,6 +1,9 @@
 import React, { useEffect } from "react"
 import Designer from "../designer/Designer"
 import { handleConfirmSignIn } from "../../api/authorize"
+import { useAuthorized } from "../../util/store"
+import { accountUpdated } from "../../reducers/authReducer"
+import { useDispatch } from "react-redux"
 
 export default function Dashboard() {
 
@@ -10,13 +13,57 @@ export default function Dashboard() {
     // Parse the query string using URLSearchParams
     const urlParams = new URLSearchParams(queryString)
 
+    const authorized = useAuthorized()
+    const dispatch = useDispatch()
     const email = urlParams.get('email')
     const token: any = urlParams.get('token')
 
+    async function authorize(email, token) {
+
+        if (!authorized) {
+
+            try {
+
+                const challengeResponse = await handleConfirmSignIn(email, token)
+                if (challengeResponse) {
+                    dispatch(accountUpdated({
+                        authorized: true,
+                        account: email
+                    }))
+
+                }
+            } catch (error) {
+                switch (error.name) {
+                    case 'UserAlreadyAuthenticatedException':
+                        dispatch(accountUpdated({
+                            authorized: true,
+                            account: email
+                        }))
+
+                        break
+                    default:
+                        dispatch(accountUpdated({
+                            authorized: false,
+                            account: null
+                        }))
+
+                }
+            }
+
+        } else {
+            dispatch(accountUpdated({
+                authorized: true,
+                account: email
+            }))
+
+        }
+
+
+    }
+
     useEffect(() => {
-        
-        const challengeResponse = handleConfirmSignIn(email, token)
-        console.log(challengeResponse)
+        authorize(email, token)
     }, [])
-    return <><Designer /></>
+
+    return <>{authorized && <Designer />}</>
 }

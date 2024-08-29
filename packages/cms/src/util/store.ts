@@ -3,11 +3,13 @@ import { configureStore } from '@reduxjs/toolkit'
 import pageReducer from '../reducers/pageReducer'
 import { useDispatch, useSelector } from "react-redux"
 import toolbarReducer from '../reducers/toolbarReducer'
+import authReducer from '../reducers/authReducer'
 
 export const store = configureStore({
     reducer: {
         toolbar: toolbarReducer,
-        page: pageReducer
+        page: pageReducer,
+        auth: authReducer
     }
 })
 
@@ -21,10 +23,11 @@ export const useAppSelector = useSelector.withTypes<RootState>()
 export const useBlocked = () => useAppSelector((state: any) => state.toolbar.blocked)
 export const useExpandedToolbar = () => useAppSelector((state: any) => state.toolbar.expandedToolbar)
 
-export const useEditorOptions = () => useAppSelector((state: any) => state.toolbar.editingOptions)
+export const useAuthorized = () => useAppSelector((state: any) => state.auth.authorized)
+export const useAccount = () => useAppSelector((state: any) => state.auth.account)
 
-export const usePageId = () => useAppSelector((state: any) => state.page.pageId)
 export const usePage = () => useAppSelector((state: any) => state.page.activePage)
+export const usePages = () => useAppSelector((state: any) => state.page.pages)
 export const useRootPage = () => useAppSelector((state: any) => state.page.rootPage)
 export const useMode = () => useAppSelector((state: any) => state.page.mode)
 export const useActiveBlock = () => useAppSelector((state: any) => state.page.activeBlock)

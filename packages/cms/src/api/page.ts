@@ -11,6 +11,11 @@ export async function getPage(id: string) {
     return (await res.json())
 }
 
+export async function getPages(origin: string) {
+    const res : any = await fetch(`${API_HOST}/pages/${origin}`)
+    return (await res.json())
+}
+
 /**
  * Creates a new page by sending a POST request to the API endpoint with the provided page data.
  * @param {any} page - The page data to be sent to the API.

@@ -11,7 +11,7 @@ import { useExpandedToolbar } from '../../util/store'
 import { useDispatch } from 'react-redux'
 import { blockingUpdated, expandedToolbarUpdated } from '../../reducers/toolbarReducer'
 import { AddNewBlock } from './builder/AddNewBlock'
-import { DuplicateBlockIcon } from '../../icons/DuplicateBlockIcon'
+import { DuplicateIcon } from '../../icons/DuplicateIcon'
 import DeleteBlockIcon from '../../icons/DeleteBlockIcon'
 import { insertBlock, removeBlock } from '../../reducers/pageReducer'
 import { duplicateBlock } from '../../util/traversals/duplcateBlock'
@@ -52,7 +52,7 @@ export default function Toolbar(props: any) {
         onClose()
 
         let block = duplicateBlock(props.block)
-        
+
         dispatch(insertBlock({
             referenceBlock: props.block.id,
             block: block
@@ -73,13 +73,11 @@ export default function Toolbar(props: any) {
                                             <OpenMenuIcon />
                                         </ToolbarButtonWrapper>
                                     </div>
-
                                 </PopoverTrigger>
-                                <PopoverContent>
+                                <PopoverContent position='left'>
                                     <Grid numberOfCols={1}>
-                                        <Item text="Duplicate block" icon={DuplicateBlockIcon} action={duplicate} />
+                                        <Item text="Duplicate block" icon={DuplicateIcon} action={duplicate} />
                                         <Item text="Delete block" textColor="red" icon={DeleteBlockIcon} action={deleteBlock} />
-
                                         {
                                             props.editingOptions.map((option: any, index) => <>
                                                 {index == 0 && <div className='border-b border-default-light' />}

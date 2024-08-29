@@ -1,7 +1,7 @@
 import React from "react"
 import AnswersEditingIcon from "../../../icons/AnswersEditingIcon"
 import OutcomeMessageEditingIcon from "../../../icons/OutcomeMessageEditingIcon"
-import TextEditingIcon from "../../../icons/TextEditingIcon"
+import { RenameIcon } from "../../../icons/RenameIcon"
 import QuestionAnswersEditor from "../editors/QuestionAnswersEditor"
 import QuestionContentEditor from "../editors/QuestionContentEditor"
 import QuestionOutcomesEditor from "../editors/QuestionOutcomesEditor"
@@ -13,7 +13,7 @@ export default class EditableQuestion extends EditableBlock {
 
     editingOptions = [{
         name: 'Edit question',
-        icon: TextEditingIcon,
+        icon: RenameIcon,
         editor: QuestionContentEditor,
         key: 'content'
     },{
