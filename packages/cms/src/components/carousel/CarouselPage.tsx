@@ -28,10 +28,6 @@ export default function CarouselPage(props: any) {
     }
 
     useEffect(() => {
-        dispatch(carouselPageSwitched(pages[0]))
-    }, [])
-
-    useEffect(() => {
         let current = pages.findIndex((p: any) => p.id == activeCarousel)
         if (current != -1) {
             setCurrent(current)

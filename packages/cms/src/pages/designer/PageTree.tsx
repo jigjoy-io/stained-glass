@@ -58,7 +58,7 @@ export default function PageTree() {
                     </div>
                     <div className="flex flex-col">
                         {
-                            pages.map((page) => <Node {...page} ident={0}/>)}
+                            pages.map((page) => <Node {...page} root={page} ident={0}/>)}
                     </div>
                 </div>
 

@@ -32,7 +32,9 @@ export function Node(props: any) {
 
     const dispatch = useDispatch()
 
-    const deletePage = () => {
+    const deletePage = (e: any) => {
+        e.stopPropagation()
+
 
     }
 
@@ -67,44 +69,37 @@ export function Node(props: any) {
     }
 
     useEffect(() => {
-        if(activePage.type =='blank'){
-            setSelected(activePage.id)
-        }else if(activePage.type == 'carousel'){
-            setSelected(activeCarousel)
-        }
+        setSelected(activePage.id)
     }, [activePage])
+
+    useEffect(() => {
+        setSelected(activeCarousel)
+    }, [activeCarousel])
 
     const loadPage = async (e: React.MouseEvent, selectedPage) => {
         e.stopPropagation()
 
+        dispatch(pageExpanded(props.id))
 
-        for (let index = 0; index < pages.length; index++) {
-            const page = pages[index]
+        if (props.root.id == selectedPage.id) {
+            dispatch(rootPageUpdated(props.root))
+            dispatch(pageUpdated(props.root))
+            return
+        }
 
-
-            if(page.id==selectedPage.id){
-                dispatch(rootPageUpdated(page))
-                dispatch(pageUpdated(page))
-                break
+        let parent = findParent(props.root, selectedPage)
+        
+        if (parent.type == "blank") {
+            dispatch(pageUpdated(selectedPage))
+            if(selectedPage.type=='carousel'){
+                dispatch(carouselPageSwitched(selectedPage.config.pages[0].id))
             }
-
-            let parent = findParent(page, selectedPage)
-
-            if(parent==null)
-                continue
-            else if(parent.type=="blank"){
-                if(selectedPage.type=='carousel'){
-                    dispatch(pageExpanded(props.id))
-                    dispatch(carouselPageSwitched(selectedPage.config.pages[0].id))
-                }
-                dispatch(pageUpdated(selectedPage))
-                break
-
-            }else if(parent.type=="carousel"){
-                dispatch(pageUpdated(parent))
+        } else if (parent.type == "carousel") {
+            dispatch(pageUpdated(parent))
+            if(selectedPage.type=='blank'){
                 dispatch(carouselPageSwitched(selectedPage.id))
-                break
             }
+            
         }
 
 
@@ -114,7 +109,7 @@ export function Node(props: any) {
         <div key={props.id}
             onClick={(e: React.MouseEvent) => loadPage(e, props)}
             className={`w-[100%] h-[30px] p-1 
-            ${(selected == props.id) ? ' bg-primary-light ': ''}
+            ${(selected == props.id) ? ' bg-primary-light ' : ''}
             hover:bg-primary-light hover:bg-opacity-60 rounded-sm flex flex-row items-center  
             ${expandedToolbar == props.id && 'bg-primary-light'}`}
             onMouseEnter={() => setHover(props.id)}
@@ -155,10 +150,10 @@ export function Node(props: any) {
 
         <div className="flex flex-col">
             {(expandedPages.includes(props.id) && props.config.buildingBlocks) && props.config.buildingBlocks.map((block) => <>
-                {(block.type == 'page-tile' || block.type == 'carousel-tile') && <Node {...block.page} ident={ident} />}
+                {(block.type == 'page-tile' || block.type == 'carousel-tile') && <Node {...block.page} ident={ident} root={props.root} />}
 
             </>)}
-            {(expandedPages.includes(props.id) && props.config.pages) && props.config.pages.map((page) => <Node {...page} ident={ident} />)}
+            {(expandedPages.includes(props.id) && props.config.pages) && props.config.pages.map((page) => <Node {...page} ident={ident} root={props.root} />)}
         </div>
 
     </div>
