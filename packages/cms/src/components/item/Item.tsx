@@ -9,7 +9,7 @@ export default function Item(props: any) {
 	}, [props.selected])
 
 	const callback = (e) => {
-		e.stopPropagation()
+		//e.stopPropagation()
 		props.action(props)
 	}
 

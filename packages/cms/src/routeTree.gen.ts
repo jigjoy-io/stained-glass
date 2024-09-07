@@ -18,6 +18,7 @@ import { Route as rootRoute } from './routes/__root'
 
 const DesignerLazyImport = createFileRoute('/designer')()
 const DashboardLazyImport = createFileRoute('/dashboard')()
+const PageIdLazyImport = createFileRoute('/$pageId')()
 const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
@@ -31,6 +32,11 @@ const DashboardLazyRoute = DashboardLazyImport.update({
   path: '/dashboard',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/dashboard.lazy').then((d) => d.Route))
+
+const PageIdLazyRoute = PageIdLazyImport.update({
+  path: '/$pageId',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/$pageId.lazy').then((d) => d.Route))
 
 const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
@@ -46,6 +52,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/$pageId': {
+      id: '/$pageId'
+      path: '/$pageId'
+      fullPath: '/$pageId'
+      preLoaderRoute: typeof PageIdLazyImport
       parentRoute: typeof rootRoute
     }
     '/dashboard': {
@@ -69,6 +82,7 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
+  PageIdLazyRoute,
   DashboardLazyRoute,
   DesignerLazyRoute,
 })
@@ -82,12 +96,16 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/$pageId",
         "/dashboard",
         "/designer"
       ]
     },
     "/": {
       "filePath": "index.lazy.tsx"
+    },
+    "/$pageId": {
+      "filePath": "$pageId.lazy.tsx"
     },
     "/dashboard": {
       "filePath": "dashboard.lazy.tsx"
