@@ -62,19 +62,22 @@ export const selectorOptions = [
             {
                 key: "image",
                 label: "Image",
-                description: "Upload an image or embed image link",
+                // description: "Upload an image or embed image link",
+                description: "Embed image link",
                 icon: ImageEditingIcon
             },
             {
                 key: "reel",
                 label: "Reel",
-                description: "Upload video file or embed video link",
+                // description: "Upload video file or embed video link",
+                description: "Embed video link",
                 icon: VideoEditingIcon
             },
             {
                 key: "audio",
                 label: "Audio",
-                description: "Upload an audio file or embed audio link",
+                // description: "Upload an audio file or embed audio link",
+                description: "Embed audio link",
                 icon: AudioEditingIcon
             }
         ]

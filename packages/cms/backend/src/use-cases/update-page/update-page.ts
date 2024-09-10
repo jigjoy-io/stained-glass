@@ -1,6 +1,5 @@
 import { Page } from "@domain/page/page"
 import {  ReturnPageDto, UpdatePageDto } from "@dto/page/page"
-import { EnvironmentType } from "@models/types"
 import { retrievePage } from "@repositories/retrieve-page-repository"
 import { updatePage } from "@repositories/update-page-repository/update-page-repository"
 
@@ -20,5 +19,5 @@ export async function updatePageUseCase(page: UpdatePageDto): Promise<ReturnPage
     // save new page
     let updatedPage = await updatePage(pageToUpdate)
 
-    return updatedPage.toOutputDto(EnvironmentType.Development)
+    return updatedPage.toOutputDto()
 }

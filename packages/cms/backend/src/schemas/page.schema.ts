@@ -1,13 +1,4 @@
 
- /**
-  * Schema definition for an object with specific properties based on the 'type' field.
-  * @type {object}
-  * @property {string} type - The type of the object.
-  * @property {object} discriminator - The property used for object type discrimination.
-  * @property {array} required - An array of required properties.
-  * @property {array} oneOf - An array of possible object structures based on 'type'.
-  * @returns None
-  */
  export const schema = {
 	type: 'object',
 	required: [
@@ -20,6 +11,9 @@
 				id: {
 					type: 'string',
 				},
+				name: {
+					type: 'string',
+				},
 				origin: {
 					type: 'string',
 				},
@@ -29,18 +23,17 @@
 				updated: {
 					type: 'string',
 				},
-				type: { enum: ['blank'] },
-				devConfig: {
-					type: 'object',
-					properties: {
-						buildingBlocks: {
-							type: 'array'
-						}
-					},
-					required: ['buildingBlocks']
+				type: { 
+					enum: ['blank'] 
 				},
-                prodConfig: {
-					type: ['object', 'null'],
+				environment: {
+					enum: ['production', 'development'] 
+				},
+				linkedPageId: {
+					type: ['string', 'null'],
+				},
+				config: {
+					type: 'object',
 					properties: {
 						buildingBlocks: {
 							type: 'array'
@@ -49,13 +42,16 @@
 					required: ['buildingBlocks']
 				}
 			},
-			required: ['devConfig', 'origin'],
+			required: ['config', 'origin'],
 		},
 		{
 			properties: {
 				id: {
 					type: 'string',
 				},
+				name: {
+					type: 'string',
+				},
 				origin: {
 					type: 'string',
 				},
@@ -65,21 +61,17 @@
 				updated: {
 					type: 'string',
 				},
-				type: { enum: ['carousel'] },
-				devConfig: {
-					type: 'object',
-					properties: {
-						pages: {
-							type: 'array',
-							items: {
-								type: 'string'
-							}
-						}
-					},
-					required: ['pages']
+				type: { 
+					enum: ['carousel'] 
 				},
-                prodConfig: {
-					type: ['object', 'null'],
+				environment: {
+					enum: ['production', 'development'] 
+				},
+				linkedPageId: {
+					type: ['string', 'null'],
+				},
+				config: {
+					type: 'object',
 					properties: {
 						pages: {
 							type: 'array',
@@ -91,7 +83,7 @@
 					required: ['pages']
 				}
 			},
-			required: ['devConfig', 'origin'],
+			required: ['config', 'origin'],
 		},
 	]
 }

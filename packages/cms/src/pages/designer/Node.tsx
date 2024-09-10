@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
-import { removePage, updatePage } from "../../api/page"
+import { createPage, removePage, updatePage } from "../../api/page"
 import Grid from "../../components/grid/Grid"
 import Item from "../../components/item/Item"
 import Popover from "../../components/popover/Popover"
@@ -18,7 +18,9 @@ import { blockingUpdated, expandedToolbarUpdated } from "../../reducers/toolbarR
 import { pageCollapsed, pageExpanded } from "../../reducers/treeReducer"
 import { useCurrentCarouselPage, useExpandedPages, useExpandedToolbar, usePage, usePages } from "../../util/store"
 import { deletePage } from "../../util/traversals/deletePage"
+import { duplicateBlock } from "../../util/traversals/duplcateBlock"
 import { findParent } from "../../util/traversals/findParent"
+import { replaceBlock } from "../../util/traversals/replaceBlock"
 
 export function Node(props: any) {
 
@@ -34,7 +36,8 @@ export function Node(props: any) {
 
     const dispatch = useDispatch()
 
-    const remove = async () => {
+    const remove = async (event) => {
+        event.stopPropagation()
 
         if (props.root.id == props.id) {
             removePage(props.id)
@@ -57,12 +60,46 @@ export function Node(props: any) {
 
     }
 
-    const duplicatePage = () => {
+    const duplicatePage = (event) => {
+        event.stopPropagation()
 
         if (props.root.id == props.id) {
-            // create new page
+            let page = pages.find((page)=> page.id ==props.id)
+            let clone = duplicateBlock(page)
+            let result = JSON.parse(JSON.stringify(pages))
+            result.push(clone)
+            createPage(clone)
+            dispatch(pagesUpdated(result))
             return
         }
+
+        let parent = findParent(props.root, props)
+        parent = JSON.parse(JSON.stringify(parent))
+
+        if (parent.type == "blank") {
+            let index = parent.config.buildingBlocks.findIndex((block) => block.page?.id==props.id)
+            let clone = duplicateBlock(parent.config.buildingBlocks[index])
+            parent.config.buildingBlocks.splice(index, 0, clone)
+        } else if (parent.type == "carousel") {
+            let index = parent.config.pages.findIndex((page) => page.id==props.id)
+            let clone = duplicateBlock(parent.config.pages[index])
+            parent.config.pages.splice(index, 0, clone)
+        }
+
+
+        let root = JSON.parse(JSON.stringify(props.root))
+        let newPage = replaceBlock(root, parent)
+        updatePage(newPage)
+
+        if(newPage.id==activePage.id){
+            dispatch(rootPageUpdated(newPage))
+            dispatch(pageUpdated(newPage))
+        }
+        let result = JSON.parse(JSON.stringify(pages))
+        let index = result.findIndex((page) => page.id == newPage.id)
+        result.splice(index, 1, newPage)
+        dispatch(pagesUpdated(result))
+
     }
 
     const renamePage = () => {
@@ -142,7 +179,7 @@ export function Node(props: any) {
 
             <ExpandPage id={props.id} type={props.type} expand={expandPage} hover={hover} />
 
-            <div className="ml-1 px-1 hover:cursor-pointer grow flex">Page</div>
+            <div className="ml-1 px-1 hover:cursor-pointer grow flex">{props.name}</div>
             {
                 (expandedToolbar == props.id || hover == props.id) && <>
 
@@ -164,9 +201,9 @@ export function Node(props: any) {
                             </Grid>
                         </PopoverContent>
                     </Popover>
-                    <ToolbarButtonWrapper tooltip="Add a page inside" tansformed={false}>
+                    {/* <ToolbarButtonWrapper tooltip="Add a page inside" tansformed={false}>
                         <AddBlockIcon />
-                    </ToolbarButtonWrapper>
+                    </ToolbarButtonWrapper> */}
                 </>
             }
         </div>

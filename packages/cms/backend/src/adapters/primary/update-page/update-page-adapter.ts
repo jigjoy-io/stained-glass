@@ -7,13 +7,6 @@ import { schemaValidator } from '@packages/schema-validator'
 import Responses from '@utils/api-responses'
 import { updatePageUseCase } from '@use-cases/update-page'
 
-
-/**
- * Handles updating a page based on the provided request body.
- * @param {APIGatewayProxyEvent} event - The API Gateway event containing the request body.
- * @returns {Promise<APIGatewayProxyResult>} A promise that resolves to an API Gateway response with the updated page information.
- * @throws {ValidationError} If the request body is missing or if the page id is not provided.
- */
 export async function updatePageHandler({
 	body,
 }: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {

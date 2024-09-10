@@ -83,7 +83,7 @@ export default function BlockSelector(props: any) {
         dispatch(expandedToolbarUpdated(null))
     }
 
-    const insert = (type: string) => {
+    const insert = (event, type: string) => {
         
         dispatch(focusBlock(null))
         let block = TemplateFactory.get(type)
@@ -118,7 +118,7 @@ export default function BlockSelector(props: any) {
                     options.map((option: any, index) => <div style={{ pointerEvents: 'auto', zIndex: 100 }}>
                         <>
                             {option.commands.map((command: any) => <div className="p-1">
-                                <Item icon={command.icon} text={command.label} action={() => insert(command.key)}><div className="mt-2 text-sm">{command.description}</div></Item>
+                                <Item icon={command.icon} text={command.label} action={(e) => insert(e, command.key)}><div className="mt-2 text-sm">{command.description}</div></Item>
                             </div>)
                             }
                             {options.length != index + 1 && <hr />}

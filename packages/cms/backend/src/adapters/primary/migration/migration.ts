@@ -8,13 +8,14 @@ const ddbDocClient = DynamoDBDocumentClient.from(client)
 const tableName = process.env.PAGE_TABLE
 import { v4 as uuid } from 'uuid'
 import { createPageUseCase } from '@use-cases/create-page'
+import { EnvironmentType } from '@models/types'
 
 export async function migrateNewPagesHandler({
     body,
 }: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
 
     try {
-        let pages = ["ivanauciteljica-17dc-4c64-93e2-f2dfhomehome", "ivanauciteljica-17dc-4c64-93e2-f2dfbkvpromo"]
+        let pages = ["ivanauciteljica-17dc-4c64-93e2-f2dfhomehome"]
 
         const createNewBlock = (block: any) => {
             let b = JSON.parse(JSON.stringify(block))
@@ -30,12 +31,16 @@ export async function migrateNewPagesHandler({
             p.id = uuid()
             p.type = page.type
             p.origin = page.origin ? page.origin : "username"
+            p.environment = EnvironmentType.Development
+            p.linkedPageId = null
 
             if (p.type == "blank") {
+                p.name = 'Blank Page'
                 p.config = {
                     buildingBlocks: page.buildingBlocks.map(createNewBlock)
                 }
             }else if (p.type =="carousel"){
+                p.name = 'Carousel'
                 p.config = {
                     pages: page.pages.map(createNewPage)
                 }
@@ -58,6 +63,8 @@ export async function migrateNewPagesHandler({
             let page = item.Item
 
             page = createNewPage(page)
+
+            console.log(page)
 
             await createPageUseCase(page)
         }

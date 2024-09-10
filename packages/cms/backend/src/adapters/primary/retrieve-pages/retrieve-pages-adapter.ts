@@ -2,7 +2,6 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
 import { ValidationError } from '@errors/validation-error'
 import { errorHandler } from '@packages/apigw-error-handler'
 import { ReturnPageDto } from '@dto/page/page'
-import { EnvironmentType } from '@models/types'
 import Responses from '@utils/api-responses'
 import { retrievePagesUseCase } from '@use-cases/retrieve-pages'
 
@@ -19,7 +18,7 @@ export async function retrievePagesHandler({
 
         console.log(`creator: ${origin} requested pages`)
 
-        const pages: ReturnPageDto [] = await retrievePagesUseCase(origin as string, EnvironmentType.Development)
+        const pages: ReturnPageDto [] = await retrievePagesUseCase(origin as string)
 
         console.log(`pages fetched: ${JSON.stringify(pages)}`)
 

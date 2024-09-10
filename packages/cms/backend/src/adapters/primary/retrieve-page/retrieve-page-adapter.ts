@@ -2,15 +2,9 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
 import { ValidationError } from '@errors/validation-error'
 import { errorHandler } from '@packages/apigw-error-handler'
 import { ReturnPageDto } from '@dto/page/page'
-import { EnvironmentType } from '@models/types'
 import Responses from '@utils/api-responses'
 import { retrievePageUseCase } from '@use-cases/retrieve-page'
 
-/**
- * Handles the API Gateway event to get a specific page based on the provided ID.
- * @param {APIGatewayProxyEvent} event - The API Gateway event object containing path parameters.
- * @returns {Promise<APIGatewayProxyResult>} A promise that resolves to an APIGatewayProxyResult.
- */
 export async function retrievePageHandler({
     pathParameters,
 }: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
@@ -21,9 +15,9 @@ export async function retrievePageHandler({
 
         const { id } = pathParameters
 
-        console.log(`reqiested page: ${id}`)
+        console.log(`reqested page: ${id}`)
 
-        const page: ReturnPageDto = await retrievePageUseCase(id, EnvironmentType.Development)
+        const page: ReturnPageDto = await retrievePageUseCase(id)
 
         console.log(`page fetched: ${JSON.stringify(page)}`)
 

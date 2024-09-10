@@ -4,7 +4,7 @@ import { getPages, publishPage } from "../../api/page"
 import Button from "../../components/button/Button"
 import { AddBlockIcon } from "../../icons/AddBlockIcon"
 import { modeUpdated, pagesUpdated, pageUpdated, rootPageUpdated } from "../../reducers/pageReducer"
-import { useAccount, usePage, usePages } from "../../util/store"
+import { useAccount, usePages, useRootPage } from "../../util/store"
 import { Node } from './Node'
 
 export default function PageTree() {
@@ -12,7 +12,7 @@ export default function PageTree() {
 
     const account = useAccount()
     const pages = usePages()
-    const page = usePage()
+    const page = useRootPage()
 
 
     const dispatch = useDispatch()
@@ -66,8 +66,9 @@ export default function PageTree() {
                 <div className="pt-4">
                     <div className="w-full py-2">
                         <div className="w-[100%] px-3 py-1 flex gap-x-2">
-                            <Button text="Preview" color="default" action={enterPreview} />
-                            <Button text="Share" color="default" />
+                            <div className="w-[50%]"><Button text="Preview" color="default" action={enterPreview} /></div>
+                            
+                            <a href={`/${page.id}`} target="_blank" className="bg-primary-light hover:opacity-80 flex justify-center items-center cursor-pointer rounded-md w-[50%] font-bold">Share</a>
                         </div>
                         <div className="w-[100%] px-3 py-1">
                             <Button text="Publish" action={publish} />

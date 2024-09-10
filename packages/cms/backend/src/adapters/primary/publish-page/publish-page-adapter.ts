@@ -17,13 +17,13 @@ export async function publishPageHandler({
 
         const { id } = pathParameters
 
-        console.log(`reqiested publish page: ${id}`)
+        console.log(`reqested publish page: ${id}`)
 
-        const result: ReturnPageDto = await publishPageUseCase(id)
+        const pages: ReturnPageDto [] = await publishPageUseCase(id)
 
-        console.log(`page published: ${JSON.stringify(result.id)}`)
+        console.log(`page published: ${JSON.stringify(pages)}`)
 
-        return Responses._201(result)
+        return Responses._201(pages)
 
     } catch (error) {
         return errorHandler(error)

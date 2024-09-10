@@ -1,11 +1,6 @@
 import { schemaValidator } from '@packages/schema-validator'
 import { v4 as uuid } from 'uuid'
 
-
-/**
- * Represents an abstract class Entity with generic type T.
- * @template T - The type of properties associated with the entity.
- */
 export abstract class Entity<T> {
 	private readonly _id: string
 	private readonly _created: string

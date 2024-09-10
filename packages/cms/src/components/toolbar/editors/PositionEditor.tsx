@@ -23,7 +23,7 @@ export default function PositionEditor(props: any) {
         dispatch(updateBlock(block))
     }
 
-    const select = (option) => {
+    const select = (event, option) => {
         setValue(option.id)
     }
 

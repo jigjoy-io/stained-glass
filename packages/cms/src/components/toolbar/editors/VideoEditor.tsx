@@ -22,9 +22,9 @@ export default function VideoEditor(props: any) {
         <video src={value} className="w-[100px] my-2 rounded-lg" />
 
         <Tabs>
-            <Tab key="Upload video">
+            {/* <Tab key="Upload video">
                 <Button text="Click to upload" color="default" />
-            </Tab>
+            </Tab> */}
 
             <Tab key="Embed link">
                 <input className="p-1 rounded-lg border w-[100%] mb-3" value={value} onChange={(e: any) => setValue(e.target.value)} />

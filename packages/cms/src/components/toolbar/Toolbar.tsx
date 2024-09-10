@@ -60,7 +60,7 @@ export default function Toolbar(props: any) {
     }
 
     return (<>
-        <div onMouseEnter={turnOnToolbar} onMouseLeave={turnOffToolbar} className="flex flex-col">
+        <div onMouseEnter={turnOnToolbar} onMouseLeave={turnOffToolbar} className="sticky flex flex-col">
             {(on || expandedToolbar == props.id || editingActive != null) &&
                 <div className="absolute -translate-x-[100%] px-2">
                     <div className='flex flex-row'>

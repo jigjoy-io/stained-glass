@@ -8,9 +8,8 @@ export default function Item(props: any) {
 		setSelected(props.selected)
 	}, [props.selected])
 
-	const callback = (e) => {
-		//e.stopPropagation()
-		props.action(props)
+	const callback = (event) => {
+		props.action(event, props)
 	}
 
     const handleKeyDown = (event: any) => {

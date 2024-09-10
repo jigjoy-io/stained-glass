@@ -1,19 +1,27 @@
 
 import { Page } from "@domain/page/page"
 import { ReturnPageDto } from "@dto/page/page"
-import { EnvironmentType } from "@models/types"
+import { PageProps } from "@models/types"
 import { retrievePage } from "@repositories/retrieve-page-repository"
-import { updatePage } from "@repositories/update-page-repository/update-page-repository"
+import { updatePages } from "@repositories/update-pages-repository"
 
-export async function publishPageUseCase(pageId: string): Promise<ReturnPageDto> {
+export async function publishPageUseCase(id: string): Promise<ReturnPageDto []> {
 
-    const page: Page = await retrievePage(pageId)
+    // throws error if page not exists
+    const retrievedPage: Page = await retrievePage(id)
+
 
     // update production config
-    let pageToUpdate: Page = Page.publish(page)
+    let pagesToPublish: Page [] = Page.publish(retrievedPage)
 
-    // save new page
-    let updatedPage = await updatePage(pageToUpdate)
 
-    return updatedPage.toOutputDto(EnvironmentType.Development)
+    const pages: Page [] = await updatePages(pagesToPublish)
+
+    let result: ReturnPageDto[] = []
+    pages.forEach(page => {
+        let dto = page.toOutputDto()
+        result.push(dto)
+    })
+
+    return result
 }

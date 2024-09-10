@@ -21,9 +21,11 @@ export type CreatePageProps = {
     created?: string
     updated?: string
     type: PageType
+    environment: EnvironmentType
+    linkedPageId: string | null
     origin: string
-    devConfig: BlankPageConfig | CarouselPageConfig
-    prodConfig: BlankPageConfig | CarouselPageConfig | null
+    name: string
+    config: BlankPageConfig | CarouselPageConfig
 }
 
 export type UpdatePageProps = {
@@ -31,9 +33,11 @@ export type UpdatePageProps = {
     created: string
     updated?: string
     type: PageType
+    environment: EnvironmentType
+    linkedPageId: string | null
+    name: string
     origin: string
-    devConfig: BlankPageConfig | CarouselPageConfig
-    prodConfig: BlankPageConfig | CarouselPageConfig | null
+    config: BlankPageConfig | CarouselPageConfig
 }
 
 export type PageProps = {
@@ -41,9 +45,11 @@ export type PageProps = {
     created: string
     updated: string
     type: PageType
+    environment: EnvironmentType
+    linkedPageId: string | null
+    name: string
     origin: string
-    devConfig: BlankPageConfig | CarouselPageConfig
-    prodConfig: BlankPageConfig | CarouselPageConfig | null
+    config: BlankPageConfig | CarouselPageConfig
 }
 
 export type UnmarsalledPage = {
@@ -51,9 +57,11 @@ export type UnmarsalledPage = {
     created: string
     updated: string
     type: PageType
+    environment: EnvironmentType
+    linkedPageId: string | null
+    name: string
     origin: string
-    devConfig: BlankPageConfig | CarouselPageConfig
-    prodConfig: BlankPageConfig | CarouselPageConfig | null
+    config: BlankPageConfig | CarouselPageConfig
 }
 
 

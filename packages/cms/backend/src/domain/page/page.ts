@@ -5,7 +5,7 @@ import { schema } from '@schemas/page.schema'
 
 
 /**
- * Represents a Page domain entity with methods to create, convert to input/output DTOs, and convert to domain object.
+ * Represents a Page domain entity.
  */
 export class Page extends Entity<CreatePageProps> {
 
@@ -20,8 +20,10 @@ export class Page extends Entity<CreatePageProps> {
         const pageProps: CreatePageProps = {
             type: props.type,
             origin: props.origin,
-            devConfig: props.config,
-            prodConfig: null
+            config: props.config,
+            environment: props.environment,
+            linkedPageId: props.linkedPageId,
+            name: props.name
         }
 
 
@@ -37,9 +39,11 @@ export class Page extends Entity<CreatePageProps> {
             id: page.id,
             created: page.created,
             type: newPage.type,
+            environment: newPage.environment,
+            linkedPageId: newPage.linkedPageId,
+            name: newPage.name,
             origin: newPage.origin,
-            devConfig: newPage.config,
-            prodConfig: page.props.prodConfig
+            config: newPage.config
         }
 
 
@@ -49,22 +53,22 @@ export class Page extends Entity<CreatePageProps> {
         return instance
     }
 
-    public static publish(page: Page): Page {
+    public static publish(page: Page): Page [] {
 
-        const pageProps: UpdatePageProps = {
-            id: page.id,
-            created: page.created,
+        const pageProps: CreatePageProps = {
             type: page.props.type,
+            environment: EnvironmentType.Production,
+            linkedPageId: page.id,
+            name: page.props.name,
             origin: page.props.origin,
-            devConfig: page.props.devConfig,
-            prodConfig: page.props.devConfig // coping dev config
+            config: page.props.config
         }
 
 
         const instance: Page = new Page(pageProps)
         instance.validate(schema)
-
-        return instance
+        page.props.linkedPageId = instance.props.id ? instance.props.id : null 
+        return [instance, page]
     }
 
     // create a dto based on the domain instance
@@ -75,19 +79,24 @@ export class Page extends Entity<CreatePageProps> {
             updated: this.updated,
             origin: this.props.origin,
             type: this.props.type,
-            devConfig: this.props.devConfig,
-            prodConfig: this.props.prodConfig
+            environment: this.props.environment,
+            linkedPageId: this.props.linkedPageId,
+            name: this.props.name,
+            config: this.props.config
         }
     }
 
-    public toOutputDto(environment: EnvironmentType): ReturnPageDto {
+    public toOutputDto(): ReturnPageDto {
         return {
             id: this.id,
             created: this.created,
             updated: this.updated,
             origin: this.props.origin,
             type: this.props.type,
-            config: environment == EnvironmentType.Development ? this.props.devConfig : this.props.prodConfig
+            environment: this.props.environment,
+            linkedPageId: this.props.linkedPageId,
+            name: this.props.name,
+            config: this.props.config
         }
     }
 

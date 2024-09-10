@@ -23,9 +23,9 @@ export default function AudioEditor(props: any) {
         <AudioButton source={value} />
 
         <Tabs>
-            <Tab key="Upload audio">
+            {/* <Tab key="Upload audio">
                 <Button text="Click to upload" color="default" />
-            </Tab>
+            </Tab> */}
 
             <Tab key="Embed link">
                 <input className="p-1 rounded-lg border w-[100%] mb-3" value={value} onChange={(e: any) => setValue(e.target.value)} />

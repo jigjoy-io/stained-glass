@@ -25,7 +25,7 @@ export default function ColorEditor(props: any) {
         dispatch(updateBlock(block))
     }
 
-    const select = (option) => {
+    const select = (event, option) => {
         setValue(option.id)
     }
 

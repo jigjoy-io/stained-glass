@@ -11,7 +11,7 @@ export default function Button(props: any) {
 			setColor("bg-primary text-[black]")
 
 		} else if (props.color == "default") {
-			setColor("bg-default-light bg-default")
+			setColor("bg-default-light")
 		}
 		else {
 			setColor("bg-default text-[white]")
