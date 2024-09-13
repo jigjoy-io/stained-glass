@@ -15,7 +15,7 @@ export async function migrateNewPagesHandler({
 }: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
 
     try {
-        let pages = ["ivanauciteljica-17dc-4c64-93e2-f2dfhomehome"]
+        let pages = ["srpskinaklik-17dc-4c64-93e2-f2dfhomehome"]
 
         const createNewBlock = (block: any) => {
             let b = JSON.parse(JSON.stringify(block))
