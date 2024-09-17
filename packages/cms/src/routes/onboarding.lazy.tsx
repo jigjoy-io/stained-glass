@@ -50,7 +50,7 @@ function Onboarding() {
             <CloseIcon />
         </div>
         <div className='flex flex-col mt-20 items-center justify-center'>
-            <Title text="Choose a project to start:"></Title>
+            <Title position="center" text="Choose a project to start:"></Title>
 
             <div className='flex flex-row gap-8'>
                 <div className='w-[400px] cursor-pointer hover:bg-primary-light hover:rounded-[20px] mt-10' onClick={() => create('blank')}>
