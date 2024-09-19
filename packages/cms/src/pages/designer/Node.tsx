@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { useDispatch } from "react-redux"
 import { createPage, removePage, updatePage } from "../../api/page"
 import Grid from "../../components/grid/Grid"
 import Item from "../../components/item/Item"
-import Popover from "../../components/popover/Popover"
-import PopoverContent from "../../components/popover/PopoverContent"
-import PopoverTrigger from "../../components/popover/PopoverTrigger"
 import ToolbarButtonWrapper from "../../components/toolbar/ToolbarButtonWrapper"
 import DeleteBlockIcon from "../../icons/DeleteBlockIcon"
 import { DuplicateIcon } from "../../icons/DuplicateIcon"
@@ -13,29 +10,41 @@ import { ExpandPage } from "../../icons/ExpandPage"
 import { MoreIcon } from "../../icons/MoreIcon"
 import { RenameIcon } from "../../icons/RenameIcon"
 import { carouselPageSwitched, pagesUpdated, pageUpdated, rootPageUpdated } from "../../reducers/pageReducer"
-import { blockingUpdated, expandedToolbarUpdated } from "../../reducers/toolbarReducer"
+import { blockingUpdated } from "../../reducers/toolbarReducer"
 import { pageCollapsed, pageExpanded } from "../../reducers/treeReducer"
 import { useCurrentCarouselPage, useExpandedPages, useExpandedToolbar, usePage, usePages } from "../../util/store"
 import { deletePage } from "../../util/traversals/deletePage"
 import { duplicateBlock } from "../../util/traversals/duplcateBlock"
 import { findParent } from "../../util/traversals/findParent"
 import { replaceBlock } from "../../util/traversals/replaceBlock"
+import { createPortal } from "react-dom"
+import ClickOutsideListener from "../../components/popover/ClickOutsideListener"
+import Button from "../../components/button/Button"
 
 export function Node(props: any) {
 
     const activePage = usePage()
     const activeCarousel = useCurrentCarouselPage()
     const [hover, setHover] = useState(null)
+    const [renameActive, setRenameActive] = useState(false)
+    const [dropdownActive, setDropdownActive] = useState(false)
     const [ident, setIdent] = useState(props.ident + 12)
     const pages = usePages()
     const [selected, setSelected] = useState(null)
 
-    const expandedToolbar = useExpandedToolbar()
+    const [pageToRename, setPageToRename] = useState({} as any)
+    const [renameValue, setRenameValue] = useState('')
+
+    const ref = useRef<HTMLDivElement>(null)
+
+    const [rect, setRect] = useState<null | any>(null)
+
     const expandedPages = useExpandedPages()
 
     const dispatch = useDispatch()
 
     const remove = async (event) => {
+        closeDropdown()
         event.stopPropagation()
 
         if (props.root.id == props.id) {
@@ -56,14 +65,14 @@ export function Node(props: any) {
         dispatch(pageUpdated(page))
 
 
-
     }
 
     const duplicatePage = (event) => {
+        closeDropdown()
         event.stopPropagation()
 
         if (props.root.id == props.id) {
-            let page = pages.find((page)=> page.id ==props.id)
+            let page = pages.find((page) => page.id == props.id)
             let clone = duplicateBlock(page)
             let result = JSON.parse(JSON.stringify(pages))
             result.push(clone)
@@ -76,11 +85,11 @@ export function Node(props: any) {
         parent = JSON.parse(JSON.stringify(parent))
 
         if (parent.type == "blank") {
-            let index = parent.config.buildingBlocks.findIndex((block) => block.page?.id==props.id)
+            let index = parent.config.buildingBlocks.findIndex((block) => block.page?.id == props.id)
             let clone = duplicateBlock(parent.config.buildingBlocks[index])
             parent.config.buildingBlocks.splice(index, 0, clone)
         } else if (parent.type == "carousel") {
-            let index = parent.config.pages.findIndex((page) => page.id==props.id)
+            let index = parent.config.pages.findIndex((page) => page.id == props.id)
             let clone = duplicateBlock(parent.config.pages[index])
             parent.config.pages.splice(index, 0, clone)
         }
@@ -90,7 +99,7 @@ export function Node(props: any) {
         let newPage = replaceBlock(root, parent)
         updatePage(newPage)
 
-        if(newPage.id==activePage.id){
+        if (newPage.id == activePage.id) {
             dispatch(rootPageUpdated(newPage))
             dispatch(pageUpdated(newPage))
         }
@@ -101,20 +110,66 @@ export function Node(props: any) {
 
     }
 
+    const openRenamePopup = (event, page) => {
+        closeDropdown()
+
+        setPageToRename(JSON.parse(JSON.stringify(page)))
+        setRenameValue(page.name)
+        event.stopPropagation()
+        dispatch(blockingUpdated(true))
+        setRenameActive(true)
+    }
+
     const renamePage = () => {
 
+        closeRename()
+
+        pageToRename.name = renameValue
+        
+        let parent = findParent(pageToRename.root, pageToRename)
+        parent = JSON.parse(JSON.stringify(parent))
+
+        console.log(parent)
+
+        let newPage: any = null
+        if(parent != null){
+            let root = JSON.parse(JSON.stringify(pageToRename.root))
+            newPage = replaceBlock(root, pageToRename)
+        }else{
+            newPage = pageToRename
+        }
+
+
+        updatePage(newPage)
+
+        let result = JSON.parse(JSON.stringify(pages))
+        let index = result.findIndex((page) => page.id == newPage.id)
+        result.splice(index, 1, newPage)
+        dispatch(pagesUpdated(result))
+
+
     }
 
-    const onClose = (e) => {
-        dispatch(expandedToolbarUpdated(null))
-        dispatch(blockingUpdated(false))
-    }
 
-    const expandToolbar = async (e: React.MouseEvent, id) => {
+    const expandDropdown = async (e: React.MouseEvent, id) => {
 
-        dispatch(expandedToolbarUpdated(id))
+        if (ref.current)
+            setRect(ref.current.getBoundingClientRect())
+
+        e.stopPropagation()
         dispatch(blockingUpdated(true))
+        setDropdownActive(true)
 
+    }
+
+    const closeDropdown = () => {
+        dispatch(blockingUpdated(false))
+        setDropdownActive(false)
+    }
+
+    const closeRename = () => {
+        dispatch(blockingUpdated(false))
+        setRenameActive(false)
     }
 
     const expandPage = () => {
@@ -169,8 +224,7 @@ export function Node(props: any) {
             onClick={(e: React.MouseEvent) => loadPage(e, props)}
             className={`w-[100%] h-[30px] p-1 
             ${(selected == props.id) ? ' bg-primary-light ' : ''}
-            hover:bg-primary-light hover:bg-opacity-60 rounded-sm flex flex-row items-center  
-            ${expandedToolbar == props.id && 'bg-primary-light'}`}
+            hover:bg-primary-light hover:bg-opacity-60 rounded-sm flex flex-row items-center`}
             onMouseEnter={() => setHover(props.id)}
             onMouseLeave={() => setHover(null)}
             style={{ paddingLeft: `${ident}px` }}
@@ -180,26 +234,15 @@ export function Node(props: any) {
 
             <div className="ml-1 px-1 hover:cursor-pointer grow flex">{props.name}</div>
             {
-                (expandedToolbar == props.id || hover == props.id) && <>
+                (hover == props.id) && <>
 
 
-                    <Popover onClose={onClose}>
-                        <PopoverTrigger >
-                            <div onClick={(e: React.MouseEvent) => expandToolbar(e, props.id)}>
-                                <ToolbarButtonWrapper tooltip="Delete, duplicate, and more..." transformed={false}>
-                                    <MoreIcon />
-                                </ToolbarButtonWrapper>
-                            </div>
-                        </PopoverTrigger>
-                        <PopoverContent position="right">
-                            <Grid numberOfCols={1}>
-                                <Item tabFocus={false} text="Rename" icon={RenameIcon} action={renamePage} />
-                                <Item tabFocus={false} text="Duplicate" icon={DuplicateIcon} action={duplicatePage} />
-                                <div className='border-b border-default-light' />
-                                <Item tabFocus={false} text="Delete" icon={DeleteBlockIcon} action={remove} />
-                            </Grid>
-                        </PopoverContent>
-                    </Popover>
+                    <div onClick={(e) => expandDropdown(e, props.id)} ref={ref}>
+                        <ToolbarButtonWrapper tooltip="Delete, duplicate, and more..." transformed={false}>
+                            <MoreIcon />
+                        </ToolbarButtonWrapper>
+                    </div>
+
                     {/* <ToolbarButtonWrapper tooltip="Add a page inside" tansformed={false}>
                         <AddBlockIcon />
                     </ToolbarButtonWrapper> */}
@@ -214,6 +257,40 @@ export function Node(props: any) {
             </div>)}
             {(expandedPages.includes(props.id) && props.config.pages) && props.config.pages.map((page) => <Node key={page.id} {...page} ident={ident} root={props.root} />)}
         </div>
+
+        {
+            (dropdownActive) && <>
+                {createPortal(<ClickOutsideListener callback={closeDropdown}>
+
+                    <div className={`fixed flex rounded-md p-1 shadow bg-[white]`}
+                        style={{ top: rect.top + rect.height, left: rect.x + rect.width - 20 }}>
+                        <Grid numberOfCols={1}>
+
+                            <Item text="Rename" icon={RenameIcon} action={(e) => openRenamePopup(e, props)} />
+
+                            <Item text="Duplicate" icon={DuplicateIcon} action={duplicatePage} />
+                            <div className='border-b border-default-light' />
+                            <Item text="Delete" icon={DeleteBlockIcon} action={remove} />
+                        </Grid>
+                    </div>
+                </ClickOutsideListener>, document.body)}
+            </>
+        }
+
+        {
+            (renameActive) && <>
+                {createPortal(<ClickOutsideListener callback={closeRename}>
+
+                    <div className={`fixed flex rounded-md p-1 shadow bg-[white]`}
+                        style={{ top: rect.top + rect.height, left: rect.x + rect.width }}>
+                        <div className="flex flex-row gap-2">
+                        <input className="p-1 rounded-md border w-[100%]" value={renameValue} onChange={(event) => setRenameValue(event.target.value)} autoFocus/><Button text="Rename" size="sm" action={renamePage} />
+                        </div>
+
+                    </div>
+                </ClickOutsideListener>, document.body)}
+            </>
+        }
 
     </div>
 

@@ -5,6 +5,7 @@ export default function Button(props: any) {
 
 	const [color, setColor] = useState("bg-default text-[white]")
 	const [width, setWidth] = useState("w-max")
+	const [size, setSize] = useState("lg")
 
 	const setTheme = () => {
 		if (props.color == "primary") {
@@ -23,8 +24,12 @@ export default function Button(props: any) {
 		setTheme()
 	}, [props.color])
 
+	useEffect(() => {
+		setSize(props.size)
+	}, [props.size])
+
 	return (
-		<button tabIndex={-1} className={`${color} p-3 w-[100%] rounded-lg ${!props.disabled && "cursor-pointer"} hover:opacity-80 font-bold`}
+		<button tabIndex={-1} className={`${color} ${props.size=='sm'? 'p-1 px-3 rounded-md': 'p-3 font-bold rounded-lg w-[100%]'} ${!props.disabled && "cursor-pointer"} hover:opacity-80`}
 			onClick={props.action} disabled={props.disabled} autoFocus={props.focus}>
 			{props.text}
 		</button>
