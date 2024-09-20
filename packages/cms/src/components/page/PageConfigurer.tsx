@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import CarouselIcon from "../../icons/CarouselIcon"
 import Button from "../button/Button"
 import Checkbox from "../checkbox/Checkbox"
@@ -9,19 +9,33 @@ import TemplateFactory from "../../factories/TemplateFactory"
 import { updateBlock } from "../../reducers/pageReducer"
 import { useDispatch } from "react-redux"
 import { usePage } from "../../util/store"
+import { blockingUpdated } from "../../reducers/toolbarReducer"
+import { createPortal } from "react-dom"
 
 export default function CarouselConfigurer(props: any) {
 
 
     const dispatch = useDispatch()
 
-    const [display, setDisplay] = useState(props.display)
+    const [display, setDisplay] = useState(false)
     const [accessType, setAccessType] = useState(props.accessType)
     const [description, setDescription] = useState(props.description)
     const [title, setHeadline] = useState(props.title)
     const activePage = usePage()
 
+    const [rect, setRect] = useState<null | any>(null)
+
     const ref = useRef<HTMLInputElement>(null)
+
+    useEffect(() => {
+        if (ref.current)
+            setRect(ref.current.getBoundingClientRect())
+    }, [display])
+
+    const openConfigurer = () => {
+        setDisplay(true)
+        dispatch(blockingUpdated(true))
+    }
 
     /**
      * Creates a new page block and replace page configurer block with newly created page tile.
@@ -46,11 +60,12 @@ export default function CarouselConfigurer(props: any) {
 
     return <div>
 
-        {display && <ClickOutsideListener callback={() => setDisplay(false)}><div
-            className="absolute rounded-md bg-[white] rounded-lg rounded-[5px] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.7)] -translate-x-[50%] left-[50%] z-50"
+        {display && createPortal(<ClickOutsideListener callback={() => setDisplay(false)}>
+            <div className="absolute rounded-md bg-[white] rounded-lg rounded-[5px] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.7)] -translate-x-[25%] left-[50%] z-50"
             style={{
                 width: 460,
-                pointerEvents: 'auto'
+                pointerEvents: 'auto',
+                top: rect?.top
             }}
         >
 
@@ -103,7 +118,7 @@ export default function CarouselConfigurer(props: any) {
 
             </div>
         </div>
-        </ClickOutsideListener>
+        </ClickOutsideListener>, document.body)
         }
         <div
             ref={ref}

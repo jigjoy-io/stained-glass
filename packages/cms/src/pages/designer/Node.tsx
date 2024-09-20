@@ -129,8 +129,6 @@ export function Node(props: any) {
         let parent = findParent(pageToRename.root, pageToRename)
         parent = JSON.parse(JSON.stringify(parent))
 
-        console.log(parent)
-
         let newPage: any = null
         if(parent != null){
             let root = JSON.parse(JSON.stringify(pageToRename.root))
