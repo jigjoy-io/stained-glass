@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react"
 import { useDispatch } from "react-redux"
 import TemplateFactory from "../../factories/TemplateFactory"
-import { blockingUpdated, expandedToolbarUpdated } from "../../reducers/toolbarReducer"
+import { expandedToolbarUpdated } from "../../reducers/toolbarReducer"
 import { focusBlock, insertBlock, updateBlock } from "../../reducers/pageReducer"
 import Item from "../item/Item"
 import ClickOutsideListener from "../popover/ClickOutsideListener"
@@ -18,18 +18,20 @@ export default function BlockSelector(props: any) {
     const [showMenu, setShowMenu] = useState(false)
     const [placeholder, setPlaceholder] = useState("Click or type to add element...")
     const activeBlock = useActiveBlock()
-    const ref = useRef<HTMLInputElement>(null)
-    const [rect, setRect] = useState<null | any>(null)
+    const inputRef = useRef<HTMLInputElement>(null)
+    const [top, setTop] = useState(-500)
+    const [left, setLeft] = useState()
+    const menuHeight = 500
 
     const dispatch = useDispatch()
 
     useEffect(() => {
-        ref.current?.focus()
+        inputRef.current?.focus()
     }, [])
 
     useEffect(() => {
         if (activeBlock == props.id)
-            ref.current?.focus()
+            inputRef.current?.focus()
     }, [activeBlock])
 
     const filterCommands = (option: any, value: any, index: number) => {
@@ -41,18 +43,55 @@ export default function BlockSelector(props: any) {
         return option
     }
 
+    function setMenuPosition() {
+
+        console.log(options.length)
+
+        if (inputRef.current) {
+            let rect: any = inputRef.current.getBoundingClientRect()
+
+            setLeft(rect.left + rect.width)
+
+            if (rect.top + menuHeight > window.innerHeight) {
+                setTop(rect.top)
+                return (rect.top)
+            }
+            else {
+
+                setTop(rect.bottom)
+                return (rect.bottom)
+            }
+
+        }
+
+
+    }
+
     useEffect(() => {
-        if (ref.current)
-            setRect(ref.current.getBoundingClientRect())
-    }, [showMenu])
+        setMenuPosition()
+    }, [options])
+
+    const calculateY = () => {
+
+        if (inputRef.current) {
+            let rect: any = inputRef.current.getBoundingClientRect()
+            if (rect.top + menuHeight > window.innerHeight) {
+                return 100
+            }
+            else {
+
+                return 0
+            }
+
+        }
+
+    }
+
 
     const handleChange = (event: any) => {
-
         setOption(event.target.value)
 
         if (event.target.value.startsWith("/")) {
-            dispatch(blockingUpdated(true))
-            setShowMenu(true)
 
             let comm = JSON.parse(JSON.stringify(allOptions))
             let temp = comm.map((option: any, index: number) => filterCommands(option, event.target.value, index))
@@ -60,6 +99,7 @@ export default function BlockSelector(props: any) {
             let result = temp.filter((option) => option.commands.length > 0)
 
             setOptions(result)
+            setShowMenu(true)
         } else {
             setShowMenu(false)
         }
@@ -85,7 +125,6 @@ export default function BlockSelector(props: any) {
     }
 
     const closeMenu = () => {
-        dispatch(blockingUpdated(false))
         setShowMenu(false)
         dispatch(expandedToolbarUpdated(null))
     }
@@ -106,46 +145,44 @@ export default function BlockSelector(props: any) {
         dispatch(focusBlock(null))
     }
 
-    return <div>
+    return <div >
+
+        {createPortal(<ClickOutsideListener callback={closeMenu}>
+            <div
+                style={{ top: top, left: left, transform: `translate(-100%, -${calculateY()}%)` }}
+                className={`${showMenu ? 'fixed' : 'hidden'} flex flex-col w-[400px] min-w-[400px] max-h-[${menuHeight}px] overflow-y-auto bg-white shadow rounded-lg p-1 -translate-x-[100%]`}
+            >
+                {
+                    options.map((option: any, index) => <div>
+                        <div>
+                            {option.commands.map((command: any) => <div className="p-1" key={command.label}>
+                                <Item icon={command.icon} text={command.label} tabFocus={true} action={(e: any) => insert(e, command.key)}><div className="mt-2 text-sm">{command.description}</div></Item>
+                            </div>)
+                            }
+                            {options.length != index + 1 && <hr />}
+                        </div>
+                    </div>)
+                }
+            </div>
+
+
+
+        </ClickOutsideListener>, document.body)
+
+        }
         <input
-            ref={ref}
+            ref={inputRef}
             type="text"
             value={option}
             onFocus={() => setPlaceholder("Click or type to add element...")}
-            className="w-[100%] h-[1.8rem] bg-primary-light rounded-md hover:bg-gray-300 flex items-center focus:outline-0 placeholder:text-[black] py-4 px-2 opacity-80"
+            className="w-[100%] h-[1.8rem] bg-primary-light rounded-md hover:bg-gray-300 flex items-center focus:outline-0 placeholder:text-[black] py-4 px-2 opacity-80 "
             placeholder={placeholder}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
             onBlur={handleLoseFocus}
         />
-        <div ref={ref}>
-            {
-                createPortal(<ClickOutsideListener callback={closeMenu}>
-
-                    {
-                        showMenu &&
 
 
-                        <div className="fixed w-[400px] min-w-[400px] max-h-[500px] h-auto overflow-y-auto bg-white shadow rounded-lg p-1 -translate-x-[100%]"
-                            style={{ top: rect.top + rect.height, left: rect.x + rect.width }}>
-                            {
-                                options.map((option: any, index) => <div>
-                                    <>
-                                        {option.commands.map((command: any) => <div className="p-1">
-                                            <Item icon={command.icon} text={command.label} tabFocus={true} action={(e: any) => insert(e, command.key)}><div className="mt-2 text-sm">{command.description}</div></Item>
-                                        </div>)
-                                        }
-                                        {options.length != index + 1 && <hr />}
-                                    </>
-                                </div>)
-                            }
-                        </div>
-                    }
-
-
-                </ClickOutsideListener>, document.body)
-            }
-        </div>
 
 
     </div>

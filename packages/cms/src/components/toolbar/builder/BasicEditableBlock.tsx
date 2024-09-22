@@ -15,6 +15,7 @@ export default class BasicEditableBlock extends EditableBlock {
 
         return this.setBlock(props)
                 .addToolbar(props)
+                .addGap(props)
                 .block
     }
 

@@ -236,7 +236,7 @@ export function Node(props: any) {
 
 
                     <div onClick={(e) => expandDropdown(e, props.id)} ref={ref}>
-                        <ToolbarButtonWrapper tooltip="Delete, duplicate, and more..." transformed={false}>
+                        <ToolbarButtonWrapper tooltip="Delete, duplicate, and more...">
                             <MoreIcon />
                         </ToolbarButtonWrapper>
                     </div>

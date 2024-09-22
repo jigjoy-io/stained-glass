@@ -1,17 +1,17 @@
 const gaps = {
-    "audio": 'my-0',
-    "text": 'my-0',
-    "heading": 'my-1',
-    "title": 'my-3',
-    "image": 'my-5',
-    "question": 'my-5',
-    "message": 'my-3',
-    "profile": 'my-5',
-    "carousel-tile": 'my-5',
-    "page-tile": 'my-5',
-    "block-selector": 'my-0',
-    "carousel-configurer": 'my-0',
-    "page-configurer": 'my-0'
+    "audio": 'py-3',
+    "text": 'py-1',
+    "heading": 'py-2',
+    "title": 'py-3',
+    "image": 'py-3',
+    "question": 'py-3',
+    "message": 'py-3',
+    "profile": 'py-3',
+    "carousel-tile": 'py-3',
+    "page-tile": 'py-3',
+    "block-selector": 'py-1',
+    "carousel-configurer": 'py-1',
+    "page-configurer": 'py-1'
 }
 
 export default gaps

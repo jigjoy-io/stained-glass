@@ -36,7 +36,7 @@ export function AddNewBlock(props) {
 
 
     return <div onClick={addSelector}>
-        <ToolbarButtonWrapper tooltip={tooltip} transformed={true}>
+        <ToolbarButtonWrapper tooltip={tooltip}>
             <AddBlockIcon />
         </ToolbarButtonWrapper>
     </div>

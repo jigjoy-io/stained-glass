@@ -17,7 +17,7 @@ export default function CarouselConfigurer(props: any) {
 
     const dispatch = useDispatch()
 
-    const [display, setDisplay] = useState(false)
+    const [display, setDisplay] = useState(true)
     const [accessType, setAccessType] = useState(props.accessType)
     const [numberOfPages, setNumberOfPages] = useState(props.numberOfPages)
     const [description, setDescription] = useState(props.description)
@@ -76,7 +76,7 @@ export default function CarouselConfigurer(props: any) {
 
     return <div>
 
-        {display && createPortal(<ClickOutsideListener callback={() => setDisplay(false)}>
+        {display && createPortal(<ClickOutsideListener callback={() => {dispatch(blockingUpdated(false));setDisplay(false)}}>
             <div
                 className="fixed rounded-md bg-[white] rounded-lg rounded-[5px] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.7)]  left-[50%] z-50 -translate-x-[25%]"
                 style={{

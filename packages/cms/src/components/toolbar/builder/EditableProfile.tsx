@@ -9,6 +9,7 @@ import TextAreaEditor from "../editors/TextAreaEditor"
 import TextEditor from "../editors/TextEditor"
 import Toolbar from "../Toolbar"
 import EditableBlock from "./EditableBlock"
+import ProfileIcon from "../../../icons/ProfileIcon"
 
 export default class EditableProfile extends EditableBlock {
 
@@ -16,6 +17,11 @@ export default class EditableProfile extends EditableBlock {
         name: 'Rename',
         icon: RenameIcon,
         key: 'headline',
+        editor: TextEditor
+    },{
+        name: 'Edit username',
+        icon: ProfileIcon,
+        key: 'username',
         editor: TextEditor
     },{
         name: 'Edit image',

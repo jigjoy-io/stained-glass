@@ -28,6 +28,7 @@ export default class EditableText extends EditableBlock {
     get(props: any): any {
         return this.setBlock(props)
             .addToolbar(props)
+            .addGap(props)
             .block
     }
 

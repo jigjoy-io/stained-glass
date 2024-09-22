@@ -70,7 +70,7 @@ export default function Toolbar(props: any) {
                             <Popover onClose={onClose}>
                                 <PopoverTrigger >
                                     <div onClick={() => expandToolbar()}>
-                                        <ToolbarButtonWrapper tooltip={<div className='text-center text-[14px]'>Open menu</div>} transformed={true}>
+                                        <ToolbarButtonWrapper tooltip={<div className='text-center text-[14px]'>Open menu</div>}>
                                             <OpenMenuIcon />
                                         </ToolbarButtonWrapper>
                                     </div>
@@ -86,7 +86,7 @@ export default function Toolbar(props: any) {
                                                     <PopoverTrigger>
                                                         <Item text={option.name} tabFocus={false} icon={option.icon} action={() => setEditingActive(index)} />
                                                     </PopoverTrigger>
-                                                    <PopoverContent isOpen={editingActive === index}>
+                                                    <PopoverContent isOpen={editingActive === index} position="right">
                                                         <option.editor id={props.id} tabFocus={false} block={props.block} attribute={option.key} value={props.block[option.key]} />
                                                     </PopoverContent>
                                                 </Popover>
