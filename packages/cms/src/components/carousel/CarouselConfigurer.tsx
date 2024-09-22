@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react"
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react"
 import CarouselIcon from "../../icons/CarouselIcon"
 import Button from "../button/Button"
 import Checkbox from "../checkbox/Checkbox"
@@ -24,39 +24,30 @@ export default function CarouselConfigurer(props: any) {
     const [title, setHeadline] = useState(props.title)
     const activePage = usePage()
 
-    const [top, setTop] = useState(0)
+    const [top, setTop] = useState(window.innerHeight / 2)
     const [y, setY] = useState(0)
 
     const ref = useRef<HTMLInputElement>(null)
 
 
-    useEffect(() => {
+
+    useLayoutEffect(() => {
 
         if (ref.current) {
             let contentRect = ref.current.getBoundingClientRect()
-            setTop(contentRect.top)
+
+            if (contentRect.top + window.innerHeight / 2 > window.innerHeight) {
+                setY(-100)
+                setTop(contentRect.top)
+            }
+            else {
+                setY(0)
+                setTop(contentRect.top)
+            }
         }
 
 
     }, [display])
-
-
-    const calculateY = () => {
-
-        if (top + 460 > window.innerHeight) {
-            setY(-100) 
-        }
-        else {
-            setY(0)
-        }
-
-    }
-
-    useEffect(() => {
-
-        calculateY()
-
-    }, [top])
 
 
     const openConfigurer = () => {
@@ -112,7 +103,7 @@ export default function CarouselConfigurer(props: any) {
                     transform: `translate(-25%, ${y}%)`
                 }}
 
-                className="fixed rounded-md bg-[white] rounded-lg rounded-[5px] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.7)]  left-[50%] z-50 -translate-x-[25%]"
+                className="fixed rounded-md bg-[white] rounded-lg rounded-[5px] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.7)] z-50 -translate-x-[25%] left-[50%]"
 
             >
 

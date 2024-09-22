@@ -21,7 +21,6 @@ export default function BlockSelector(props: any) {
     const inputRef = useRef<HTMLInputElement>(null)
     const [top, setTop] = useState(-500)
     const [left, setLeft] = useState()
-    const menuHeight = 500
 
     const dispatch = useDispatch()
 
@@ -50,7 +49,7 @@ export default function BlockSelector(props: any) {
 
             setLeft(rect.left + rect.width)
 
-            if (rect.top + menuHeight > window.innerHeight) {
+            if (rect.top + window.innerHeight / 2 > window.innerHeight) {
                 setTop(rect.top)
                 return (rect.top)
             }
@@ -73,7 +72,7 @@ export default function BlockSelector(props: any) {
 
         if (inputRef.current) {
             let rect: any = inputRef.current.getBoundingClientRect()
-            if (rect.top + menuHeight > window.innerHeight) {
+            if (rect.top + window.innerHeight / 2 > window.innerHeight) {
                 return 100
             }
             else {
