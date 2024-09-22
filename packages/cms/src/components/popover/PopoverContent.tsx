@@ -17,8 +17,6 @@ export default function PopoverContent(props: any) {
 
 	useEffect(() => {
 
-
-
 		if (props.rect != null) {
 
 			let top = props.rect.top 

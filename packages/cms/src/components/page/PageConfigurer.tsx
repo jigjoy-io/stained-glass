@@ -23,13 +23,19 @@ export default function CarouselConfigurer(props: any) {
     const [title, setHeadline] = useState(props.title)
     const activePage = usePage()
 
-    const [rect, setRect] = useState<null | any>(null)
+    const [top, setTop] = useState(0)
+    const [y, setY] = useState(0)
 
     const ref = useRef<HTMLInputElement>(null)
 
     useEffect(() => {
-        if (ref.current)
-            setRect(ref.current.getBoundingClientRect())
+
+        if (ref.current) {
+            let contentRect = ref.current.getBoundingClientRect()
+            setTop(contentRect.top)
+        }
+
+
     }, [display])
 
     const openConfigurer = () => {
@@ -60,66 +66,84 @@ export default function CarouselConfigurer(props: any) {
 
     }
 
+    const calculateY = () => {
+
+        if (top + 460 > window.innerHeight) {
+            setY(-100)
+        }
+        else {
+            setY(0)
+        }
+
+    }
+
+    useEffect(() => {
+
+        calculateY()
+
+    }, [top])
+
     return <div>
 
-        {display && createPortal(<ClickOutsideListener callback={() => {dispatch(blockingUpdated(false));setDisplay(false)}}>
-            <div className="absolute rounded-md bg-[white] rounded-lg rounded-[5px] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.7)] -translate-x-[25%] left-[50%] z-50"
-            style={{
-                width: 460,
-                pointerEvents: 'auto',
-                top: rect?.top
-            }}
-        >
+        {display && createPortal(<ClickOutsideListener callback={() => { dispatch(blockingUpdated(false)); setDisplay(false) }}>
+            <div className="fixed rounded-md bg-[white] rounded-lg rounded-[5px] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.7)] -translate-x-[25%] left-[50%] z-50"
+                style={{
+                    width: 460,
+                    pointerEvents: 'auto',
+                    top: top,
+                    transform: `translate(-25%, ${y}%)`
+                }}
+            >
 
-            <div className="p-[5%]">
-                <div>
-                    <Tabs>
-                        <Tab key="Carousel Settings">
-                            <div className="w-[100%] mt-[1rem]">
-                                <div className="flex flex-row w-full">
-                                    <label
-                                        className="flex-none flex items-center w-[33%]"
-                                        htmlFor="headline"
-                                    >
-                                        Title:
-                                    </label>
-                                    <input className="ml-4 p-1 rounded-lg border w-[100%]" value={title} onChange={(e: any) => setHeadline(e.target.value)} />
+                <div className="p-[5%]">
+                    <div>
+                        <Tabs>
+                            <Tab key="Carousel Settings">
+                                <div className="w-[100%] mt-[1rem]">
+                                    <div className="flex flex-row w-full">
+                                        <label
+                                            className="flex-none flex items-center w-[33%]"
+                                            htmlFor="headline"
+                                        >
+                                            Title:
+                                        </label>
+                                        <input className="ml-4 p-1 rounded-lg border w-[100%]" value={title} onChange={(e: any) => setHeadline(e.target.value)} />
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div className="w-[100%] mt-[1rem]">
-                                <div className="flex flex-row w-full">
-                                    <label
-                                        className="flex-none flex items-center w-[33%]"
-                                        htmlFor="headline"
-                                    >
-                                        Description:
-                                    </label>
-                                    <input className="ml-4 p-1 rounded-lg border w-[100%]" value={description} onChange={(e: any) => setDescription(e.target.value)} />
+                                <div className="w-[100%] mt-[1rem]">
+                                    <div className="flex flex-row w-full">
+                                        <label
+                                            className="flex-none flex items-center w-[33%]"
+                                            htmlFor="headline"
+                                        >
+                                            Description:
+                                        </label>
+                                        <input className="ml-4 p-1 rounded-lg border w-[100%]" value={description} onChange={(e: any) => setDescription(e.target.value)} />
+                                    </div>
                                 </div>
-                            </div>
 
-                        </Tab>
+                            </Tab>
 
-                        <Tab key="Access Type">
-                            <div className="w-[100%]">
-                                <div className="opacity-40">Coming soon!</div>
-                                <div className="flex flex-row w-full mt-3 gap-3">
-                                    <Checkbox disabled={true} selected={accessType == 'freebie'} onChange={() => setAccessType('freebie')}>Freebie</Checkbox>
-                                    <Checkbox disabled={true} selected={accessType == 'lead magnet'} onChange={() => setAccessType('lead magnet')}>Lead magnet</Checkbox>
-                                    <Checkbox disabled={true} selected={accessType == 'paid'} onChange={() => setAccessType('paid')}>Paid</Checkbox>
+                            <Tab key="Access Type">
+                                <div className="w-[100%]">
+                                    <div className="opacity-40">Coming soon!</div>
+                                    <div className="flex flex-row w-full mt-3 gap-3">
+                                        <Checkbox disabled={true} selected={accessType == 'freebie'} onChange={() => setAccessType('freebie')}>Freebie</Checkbox>
+                                        <Checkbox disabled={true} selected={accessType == 'lead magnet'} onChange={() => setAccessType('lead magnet')}>Lead magnet</Checkbox>
+                                        <Checkbox disabled={true} selected={accessType == 'paid'} onChange={() => setAccessType('paid')}>Paid</Checkbox>
+                                    </div>
                                 </div>
-                            </div>
-                        </Tab>
-                    </Tabs>
+                            </Tab>
+                        </Tabs>
 
-                    <div className="mt-[1rem]">
-                        <Button text="Create" action={create} />
+                        <div className="mt-[1rem]">
+                            <Button text="Create" action={create} />
+                        </div>
                     </div>
-                </div>
 
+                </div>
             </div>
-        </div>
         </ClickOutsideListener>, document.body)
         }
         <div
