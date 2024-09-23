@@ -67,7 +67,7 @@ export default function PageTree() {
 
     return <div className="h-[100dvh] w-[260px] bg-[#F2EEF0] bg-opacity-40 border-r border-light shadow-lg flex flex-col">
 
-            <div className="m-1 px-3 py-2 flex flex-row items-center hover:bg-primary-light hover:bg-opacity-60 rounded-sm cursor-pointer" onClick={createNewPage}>
+            <div className="m-1 mt-20 px-3 py-2 flex flex-row items-center hover:bg-primary-light hover:bg-opacity-60 rounded-sm cursor-pointer" onClick={createNewPage}>
                 <AddBlockIcon /><div className="font-bold">Start New Project</div>
             </div>
 
@@ -76,7 +76,7 @@ export default function PageTree() {
 
 
 
-                <div className="w-full flex-grow mt-10 overflow-y-auto">
+                <div className="w-full flex-grow overflow-y-auto">
                     <div className='border-b border-primary mx-3' />
                     <div className="px-3 py-2 font-bold text-sm">
                         Drafts
