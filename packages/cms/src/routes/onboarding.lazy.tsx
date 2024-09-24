@@ -7,13 +7,18 @@ import Heading from '../components/heading/Heading'
 import CloseIcon from '../icons/CloseIcon'
 import TemplateFactory from '../factories/TemplateFactory'
 import { createPage } from '../api/page'
-import { v4 as uuid } from 'uuid'
+import { useNavigate } from '@tanstack/react-router'
+import { pageUpdated, rootPageUpdated } from '../reducers/pageReducer'
+import { useDispatch } from 'react-redux'
 
 export const Route = createLazyFileRoute('/onboarding')({
     component: Onboarding
 })
 
 function Onboarding() {
+
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const create = async (type) => {
         const userAttributes = await fetchUserAttributes()
@@ -24,7 +29,8 @@ function Onboarding() {
             // create carousel inner pages
             for (let i = 0; i < 3; i++) {
                 let page = TemplateFactory.get("blank")
-                page.id = uuid()
+                let selector = TemplateFactory.get("block-selector")
+                page.config.buildingBlocks.push(selector)
                 pages.push(page)
             }
 
@@ -38,15 +44,17 @@ function Onboarding() {
 
         } else {
             page = TemplateFactory.get("blank")
+            let selector = TemplateFactory.get("block-selector")
+            page.config.buildingBlocks.push(selector)
             page.origin = userAttributes.email
         }
 
-        await createPage(page)
-        window.location.href = '/dashboard'
+        let created = await createPage(page)
+        navigate({ to: `/dashboard?select=${created.id}` })
     }
 
     return <div>
-        <div className='absolute top-10 right-10 w-max bg-primary-light border-2 border-primary p-1 rounded-md cursor-pointer' onClick={() => window.location.href = '/dashboard'}>
+        <div className='absolute top-10 right-10 w-max bg-primary-light border-2 border-primary p-1 rounded-md cursor-pointer' onClick={() => navigate({ to: '/dashboard' })}>
             <CloseIcon />
         </div>
         <div className='flex flex-col mt-20 items-center justify-center'>
