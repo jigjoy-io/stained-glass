@@ -61,10 +61,6 @@ export function Node(props: any) {
         dispatch(expandedToolbarUpdated(props.id))
     }
 
-    const test = () => {
-        console.log("TRALALALALLA")
-    }
-
     const remove = async (event) => {
         closeDropdown()
         event.stopPropagation()
@@ -75,6 +71,9 @@ export function Node(props: any) {
             if (result.length > 0) {
                 dispatch(rootPageUpdated(result[0]))
                 dispatch(pageUpdated(result[0]))
+            } else {
+                dispatch(rootPageUpdated(null))
+                dispatch(pageUpdated(null))
             }
             dispatch(pagesUpdated(result))
 
