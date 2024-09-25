@@ -170,6 +170,8 @@ export function Node(props: any) {
         let result = JSON.parse(JSON.stringify(pages))
         let index = result.findIndex((page) => page.id == newPage.id)
         result.splice(index, 1, newPage)
+        dispatch(pagesUpdated(result))
+        
         if (newPage.id == activePage.id) {
             dispatch(rootPageUpdated(newPage))
             dispatch(pageUpdated(newPage))
