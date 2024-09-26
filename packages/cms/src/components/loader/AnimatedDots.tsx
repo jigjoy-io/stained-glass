@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
 const AnimatedDots = () => {
-    const [dots, setDots] = useState('');
+    const [activeDotIndex, setActiveDotIndex] = useState(0);
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setDots((prevDots) => {
-                if (prevDots.length >= 3) return '.';
-                return prevDots + '.';
-            });
+            setActiveDotIndex((prevIndex) => (prevIndex + 1) % 4);
         }, 500);
         return () => clearInterval(interval);
     }, []);
@@ -28,7 +25,7 @@ const AnimatedDots = () => {
             transition-opacity 
             duration-300 
             ease-in-out 
-            ${index < dots.length ? 'opacity-100' : 'opacity-20'}
+            ${index < activeDotIndex ? 'opacity-100' : 'opacity-20'}
           `}
                 />
             ))}

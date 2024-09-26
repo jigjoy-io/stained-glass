@@ -94,13 +94,13 @@ function Onboarding() {
 
     }
         {
-            mode == "loading" && <>
+            mode == "loading" && <div className='flex flex-col items-center justify-center'>
                 <Loader />
-                <div className="translate-y-7 flex flex-row items-end gap-1">
+                <div className="flex flex-row items-end gap-1">
                     <Text text="Page creation in progress" />
                     <AnimatedDots />
                 </div>
-            </>
+            </div>
         }
 
     </div>
