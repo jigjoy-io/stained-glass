@@ -52,17 +52,6 @@ export function Node(props: any) {
     const portalRef = useRef(null)
 
     const dispatch = useDispatch()
-    const navigate = useNavigate()
-
-    const onClose = () => {
-        dispatch(blockingUpdated(false))
-        dispatch(expandedToolbarUpdated(null))
-    }
-
-    const expandToolbar = () => {
-        dispatch(blockingUpdated(true))
-        dispatch(expandedToolbarUpdated(props.id))
-    }
 
     const pageId = useSearch({
         from: '/dashboard',
