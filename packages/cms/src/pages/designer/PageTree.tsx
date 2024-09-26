@@ -11,6 +11,7 @@ import { Node } from './Node'
 import { useNavigate, useSearch } from '@tanstack/react-router'
 import Loader from "../../components/loader/Loader"
 import Text from "../../components/text/Text"
+import AnimatedDots from "../../components/loader/AnimatedDots"
 
 export default function PageTree() {
     const navigate = useNavigate()
@@ -97,25 +98,26 @@ export default function PageTree() {
                                 {isLoading && (
                                     <div className="px-3 transform -translate-y-10">
                                         <Loader />
-                                        <div className="translate-y-7">
-                                            <Text text="Page publishing in progress..."/>
+                                        <div className="translate-y-7 flex flex-row items-end gap-1">
+                                            <Text text="Page publishing in progress" />
+                                            <AnimatedDots />
                                         </div>
                                     </div>
                                 )}
                                 {showSuccess && (
                                     <div className="px-3">
-                                        <Alert 
-                                            type="success" 
-                                            title="Project published" 
+                                        <Alert
+                                            type="success"
+                                            title="Project published"
                                             message="Click `Share` to get a link with applied changes"
                                         />
                                     </div>
                                 )}
                                 {showError && (
                                     <div className="px-3">
-                                        <Alert 
-                                            type="danger" 
-                                            title="Error" 
+                                        <Alert
+                                            type="danger"
+                                            title="Error"
                                             message="Something went wrong. The page was not published. Please try again later or contact JigJoy support."
                                         />
                                     </div>
