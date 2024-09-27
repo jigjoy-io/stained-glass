@@ -10,9 +10,7 @@ import {
 } from '../reducers/pageReducer'
 import Title from '../components/title/Title'
 import { Logo } from '../icons/Logo'
-import Loader from '../components/loader/Loader'
-import Text from '../components/text/Text'
-import AnimatedDots from '../components/loader/AnimatedDots'
+import LoaderBox from '../components/loader/LoaderBlock'
 
 export class NotFoundError extends Error { }
 
@@ -33,11 +31,7 @@ export const Route = createFileRoute('/$pageId')({
 function LoaderComponent() {
 	return (
 		<div className='flex flex-col items-center justify-center'>
-			<Loader />
-			<div className="flex flex-row items-end gap-1">
-				<Text text="Page loding in progress" />
-				<AnimatedDots />
-			</div>
+			<LoaderBox text="Page loading in progress" />
 		</div>
 	)
 }
