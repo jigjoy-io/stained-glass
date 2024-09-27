@@ -34,9 +34,7 @@ export function Node(props: any) {
     const pages = usePages()
     const [selected, setSelected] = useState<string | null>()
 
-    const [pageToRename, setPageToRename] = useState({} as any)
     const [renameValue, setRenameValue] = useState('')
-
     const [deleteActive, setDeleteActive] = useState(false)
 
     const ref = useRef<HTMLDivElement>(null)
@@ -124,11 +122,10 @@ export function Node(props: any) {
 
     }
 
-    const openRenamePopup = (event, page) => {
+    const openRenamePopup = (event) => {
         closeDropdown()
 
-        setPageToRename(JSON.parse(JSON.stringify(page)))
-        setRenameValue(page.name)
+        setRenameValue(props.name)
         event.stopPropagation()
         dispatch(blockingUpdated(true))
         setRenameActive(true)
@@ -146,6 +143,7 @@ export function Node(props: any) {
 
         closeRename()
 
+        let pageToRename = JSON.parse(JSON.stringify(props))
         pageToRename.name = renameValue
 
         let parent = findParent(pageToRename.root, pageToRename)
@@ -305,7 +303,7 @@ export function Node(props: any) {
                         style={{ top: rect.top + rect.height, left: rect.x + rect.width - 20 }} ref={portalRef}>
                         <Grid numberOfCols={1}>
 
-                            <Item text="Rename" icon={RenameIcon} action={(e) => openRenamePopup(e, props)} />
+                            <Item text="Rename" icon={RenameIcon} action={(e) => openRenamePopup(e)} />
                             <Item text="Duplicate" icon={DuplicateIcon} action={duplicatePage} />
                             <div className='border-b border-default-light' />
                             <Item text="Delete" icon={DeleteBlockIcon} action={(e) => openDeletePopup(e)} />

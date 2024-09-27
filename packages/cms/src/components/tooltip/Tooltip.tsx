@@ -11,13 +11,13 @@ export default function Tooltip(props: any) {
     const toggle = (e) => {
         const rect = e.target.getBoundingClientRect()
         setTop(rect.top)
-        setLeft(rect.left)
+        setLeft(rect.left + rect.width/2)
         toggleTooltip(!on)
     }
 
     return <div>
                 {
-            on && createPortal(<div className="fixed w-max"  style={{ top: top, left: left, transform: 'translateY(32px)' }}>
+            on && createPortal(<div className="fixed w-max"  style={{ top: top, left: left, transform: 'translateY(36px)' }}>
                 <div className="-translate-x-[50%] p-1 px-3 rounded-md bg-[black] !text-[white] shadow">
                     <div>{props.message}</div>
                 </div>

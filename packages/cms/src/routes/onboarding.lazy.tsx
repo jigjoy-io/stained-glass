@@ -11,7 +11,7 @@ import { useNavigate } from '@tanstack/react-router'
 import { useDispatch } from 'react-redux'
 import { useMode } from '../util/store'
 import { modeUpdated } from '../reducers/pageReducer'
-import LoaderBox from '../components/loader/LoaderBlock'
+import Loader from '../components/loader/Loader'
 
 export const Route = createLazyFileRoute('/onboarding')({
     component: Onboarding
@@ -92,9 +92,7 @@ function Onboarding() {
 
     }
         {
-            mode == "loading" && <div className='flex flex-col items-center justify-center'>
-                <LoaderBox text="Page creation in progress" />
-            </div>
+            mode == "loading" && <Loader message="Page creation in progress" />
         }
 
     </div>

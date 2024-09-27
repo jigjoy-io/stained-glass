@@ -10,7 +10,7 @@ import {
 } from '../reducers/pageReducer'
 import Title from '../components/title/Title'
 import { Logo } from '../icons/Logo'
-import LoaderBox from '../components/loader/LoaderBlock'
+import Loader from '../components/loader/Loader'
 
 export class NotFoundError extends Error { }
 
@@ -24,17 +24,9 @@ export const Route = createFileRoute('/$pageId')({
 		}
 	},
 	errorComponent: PostErrorComponent,
-	pendingComponent: LoaderComponent,
+	pendingComponent: () => <Loader message="The page is loading" />,
 	component: PageOverview
 })
-
-function LoaderComponent() {
-	return (
-		<div className='flex flex-col items-center justify-center'>
-			<LoaderBox text="Page loading in progress" />
-		</div>
-	)
-}
 
 function PostErrorComponent({ error }: ErrorComponentProps) {
 	if (error instanceof NotFoundError) {
