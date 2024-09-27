@@ -1,12 +1,12 @@
 import React from 'react';
 import Text from "../text/Text";
-import Loader from "./Loader";
+import Spinner from "./Spinner";
 import AnimatedDots from "./AnimatedDots";
 
 const LoaderBox = (props: any) => {
     return (
         <>
-            <Loader />
+            <Spinner />
             <div className={`flex flex-row items-end gap-1 ${props.textDown && "translate-y-7"}`}>
                 <Text text={props.text} />
                 <AnimatedDots />
