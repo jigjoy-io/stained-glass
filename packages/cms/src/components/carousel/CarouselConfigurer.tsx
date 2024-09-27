@@ -17,7 +17,7 @@ export default function CarouselConfigurer(props: any) {
 
     const dispatch = useDispatch()
 
-    const [display, setDisplay] = useState(true)
+    const [display, setDisplay] = useState(props.display ?? true)
     const [accessType, setAccessType] = useState(props.accessType)
     const [numberOfPages, setNumberOfPages] = useState(props.numberOfPages)
     const [description, setDescription] = useState(props.description)
@@ -28,8 +28,6 @@ export default function CarouselConfigurer(props: any) {
     const [y, setY] = useState(0)
 
     const ref = useRef<HTMLInputElement>(null)
-
-
 
     useLayoutEffect(() => {
 
