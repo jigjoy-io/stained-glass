@@ -6,7 +6,7 @@ import Alert from "../../components/alert/Alert"
 import Button from "../../components/button/Button"
 import { AddBlockIcon } from "../../icons/AddBlockIcon"
 import { modeUpdated, pagesUpdated, pageUpdated, rootPageUpdated } from "../../reducers/pageReducer"
-import { usePages, useRootPage } from "../../util/store"
+import { usePages, useRootPage, useSidebarVisible } from "../../util/store"
 import { Node } from './Node'
 import { useNavigate, useSearch } from '@tanstack/react-router'
 import AnalyticsIcon from "../../icons/AnalyticsIcon"
@@ -20,6 +20,8 @@ export default function LeftSideMenu() {
     const [isLoading, setIsLoading] = useState(false)
     const [showSuccess, setShowSuccess] = useState(false)
     const [showError, setShowError] = useState(false)
+
+    const sidebarVisible = useSidebarVisible()
     const dispatch = useDispatch()
 
     const pageId = useSearch({
@@ -102,7 +104,7 @@ export default function LeftSideMenu() {
                 <div className="px-3 py-2 text-sm font-bold">
                     Options
                 </div>
-                <div className="flex flex-col pl-4 hover:cursor-pointer hover:bg-primary-light h-[30px] items-center" onClick={() => dispatch(sidebarExpanded(true))}>
+                <div className="flex flex-col pl-4 hover:cursor-pointer hover:bg-primary-light h-[30px] items-center" onClick={() => dispatch(sidebarExpanded(!sidebarVisible))}>
                     <div className="flex flex-row w-[100%] h-[100%]">
                         <div className="pl-1 pr-2 flex items-center"><AnalyticsIcon /></div>
                         <div className="flex items-center">View Analytics</div>
