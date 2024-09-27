@@ -10,12 +10,6 @@ import { useSearch } from "@tanstack/react-router"
 
 export default function Dashboard() {
 
-    // Get the query string part of the URL
-    const queryString = window.location.search;
-
-    // Parse the query string using URLSearchParams
-    const urlParams = new URLSearchParams(queryString)
-
     const authorized = useAuthorized()
     const dispatch = useDispatch()
     const mode = useMode()

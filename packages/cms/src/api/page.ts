@@ -1,4 +1,4 @@
-import { NotFoundError } from "../routes/$pageId"
+import { NotFoundError } from "../util/errors/NotFoundError"
 
 export const API_HOST = process.env.REACT_APP_API
 
