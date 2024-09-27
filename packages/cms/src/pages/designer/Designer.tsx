@@ -68,7 +68,7 @@ export default function Designer() {
             <AnimatePresence>{
                 sidebarVisible && <m.div variants={animation} initial="hidden" animate="show" exit="exit" transition={transition}>
 
-                    <div className="border-l border-light shadow-lg fixed right-0 bottom-0 h-[100dvh] w-[30%]">
+                    <div className="border-l border-light shadow-lg fixed right-0 bottom-0 h-[100dvh] w-[30%] bg-[white]">
 
                         <div className="h-[24px] w-[24px] m-2" onClick={() => dispatch(sidebarExpanded(false))}>
                             <ToolbarButtonWrapper tooltip="Close panel">
