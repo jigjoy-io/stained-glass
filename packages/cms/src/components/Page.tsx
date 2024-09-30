@@ -1,5 +1,5 @@
 import React from "react"
-import { usePage } from "../util/store"
+import { usePage, useMode } from "../util/store"
 import { PageFactory } from "../factories/PageFactory"
 
 function Page() {
