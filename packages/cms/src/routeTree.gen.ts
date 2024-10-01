@@ -21,9 +21,36 @@ import { useAuthorized } from './util/store'
 import { isAuthenticated } from './util/auth'
 
 const OnboardingLazyImport = createFileRoute('/onboarding')()
-const DesignerLazyImport = createFileRoute('/designer')()
-const DashboardLazyImport = createFileRoute('/dashboard')()
-const IndexLazyImport = createFileRoute('/')()
+const DesignerLazyImport = createFileRoute('/designer')({
+  beforeLoad: async () => {
+    const isAuth = await isAuthenticated();
+    if(!isAuth) {
+      throw redirect({
+        to: '/'
+      })
+    }
+  }
+})
+const DashboardLazyImport = createFileRoute('/dashboard')({ 
+  beforeLoad: async () => {
+    const isAuth = await isAuthenticated();
+    if(!isAuth) {
+      throw redirect({
+        to: '/'
+      })
+    }
+  }
+})
+const IndexLazyImport = createFileRoute('/')({ 
+  beforeLoad: async () => {
+    const isAuth = await isAuthenticated();
+    if(isAuth) {
+      throw redirect({
+        to: '/dashboard'
+      })
+    }
+  }
+})
 
 // Create/Update Routes
 
