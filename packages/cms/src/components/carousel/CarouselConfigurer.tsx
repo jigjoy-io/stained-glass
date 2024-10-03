@@ -75,7 +75,8 @@ export default function CarouselConfigurer(props: any) {
         let page = TemplateFactory.get("carousel")
         page.origin = activePage.id
         page.config = {
-            pages: pages
+            pages: pages,
+            buttons: {}
         }
 
         // replace configurer with carousel block tile
