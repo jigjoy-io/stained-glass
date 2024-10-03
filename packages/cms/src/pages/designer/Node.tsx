@@ -299,7 +299,7 @@ export function Node(props: any) {
         </div>
 
         {
-            (dropdownActive) && <>
+            dropdownActive && <>
                 {createPortal(<ClickOutsideListener callback={closeDropdown}>
 
                     <div className={`fixed flex rounded-md p-1 shadow bg-[white]`}
@@ -317,7 +317,7 @@ export function Node(props: any) {
         }
 
         {
-            (deleteActive) && <>
+            deleteActive && <>
                 {createPortal(<ClickOutsideListener callback={closeDelete}>
                     <div
                         className="fixed flex rounded-md p-3 shadow bg-white w-[250px]"
@@ -336,7 +336,7 @@ export function Node(props: any) {
         }
 
         {
-            (renameActive) && <>
+            renameActive && <>
                 {createPortal(<ClickOutsideListener callback={closeRename}>
 
                     <div className={`fixed flex rounded-md p-1 shadow bg-[white]`}
