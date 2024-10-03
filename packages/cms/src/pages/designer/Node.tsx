@@ -28,14 +28,18 @@ export function Node(props: any) {
     const activePage = usePage()
     const activeCarousel = useCurrentCarouselPage()
     const [hover, setHover] = useState(null)
+
     const [renameActive, setRenameActive] = useState(false)
     const [dropdownActive, setDropdownActive] = useState(false)
+    const [deleteActive, setDeleteActive] = useState(false)
+    const [addingActive, setAddingActive] = useState(false)
+
     const [ident, setIdent] = useState(props.ident + 12)
     const pages = usePages()
     const [selected, setSelected] = useState<string | null>()
 
     const [renameValue, setRenameValue] = useState('')
-    const [deleteActive, setDeleteActive] = useState(false)
+    const [pageToCreate, setPageToCreate] = useState('blank')
 
     const ref = useRef<HTMLDivElement>(null)
 
@@ -71,7 +75,7 @@ export function Node(props: any) {
             return
         }
 
-        let root  = JSON.parse(JSON.stringify(props.root))
+        let root = JSON.parse(JSON.stringify(props.root))
         let page = deletePage(root, props.id)
 
         updatePage(page)
@@ -202,6 +206,11 @@ export function Node(props: any) {
         dispatch(blockingUpdated(false))
     }
 
+    const closeAdding = () => {
+        setAddingActive(false)
+        dispatch(blockingUpdated(false))
+    }
+
     const expandPage = () => {
         const expanded = expandedPages.includes(props.id)
 
@@ -265,14 +274,14 @@ export function Node(props: any) {
 
         let parent = findParent(props.root, props)
 
-        if(parent && parent.type=='carousel'){
+        if (parent && parent.type == 'carousel') {
             return <div className="text-center text-[14px]">
                 <div>
                     <span className="font-extrabold">Click</span> to add below
                 </div>
                 <span className="font-extrabold">Ctrl-click</span> to add page above
             </div>
-        } 
+        }
 
         return <div className="text-center text-[14px]">Add page inside</div>
 
@@ -283,26 +292,36 @@ export function Node(props: any) {
 
         let parent = findParent(props.root, props)
 
-        if(parent && parent.type=='carousel'){
-            
+        if (parent && parent.type == 'carousel') {
+
             if (e.ctrlKey) {
                 alert('blank page above')
-            }else{
+            } else {
                 alert('blank page below')
             }
             return
-        } 
+        }
 
-        if(props.type=="carousel"){
+        if (props.type == "carousel") {
             alert('blank page at the end of carousel')
 
             return
         }
 
+        if (ref.current)
+            setRect(ref.current.getBoundingClientRect())
 
-        alert('ask for creating blank or carousel page')
+        setAddingActive(true)
 
 
+    }
+
+    const createNewPage = () => {
+
+    }
+
+    const handlePageToCreate = (e) => {
+        setPageToCreate(e.target.value)
     }
 
 
@@ -333,7 +352,7 @@ export function Node(props: any) {
                     <div onClick={addPage}>
                         <ToolbarButtonWrapper tooltip={addTooltip()} >
                             <AddBlockIcon />
-                        </ToolbarButtonWrapper> 
+                        </ToolbarButtonWrapper>
                     </div>
 
                 </>
@@ -378,6 +397,27 @@ export function Node(props: any) {
                             <div className="flex gap-2 mt-3">
                                 <Button size="sm" color="white" text="Yes" action={remove} />
                                 <Button size="sm" color="default" text="No" action={closeDelete} />
+                            </div>
+                        </div>
+                    </div>
+                </ClickOutsideListener>, document.body)}
+            </>
+        }
+
+        {
+            (addingActive) && <>
+                {createPortal(<ClickOutsideListener callback={closeAdding}>
+                    <div
+                        className="fixed flex rounded-md p-3 shadow bg-white w-[250px]"
+                        style={{ top: rect.top + rect.height, left: rect.x + rect.width }}>
+                        <div className="flex flex-col gap-2 w-full" onClick={(e) => e.stopPropagation()}>
+                            <p className="font-bold">Choose Page Type</p>
+                            <select name="pageType" id="pageType" className="p-2 rounded-md w-full focus:outline-0"  onChange={handlePageToCreate} value={pageToCreate}>
+                                <option value="blank">Blank Page</option>
+                                <option value="carousel">Carousel</option>
+                            </select>
+                            <div className="flex mt-3">
+                                <Button size="sm" color="white" text="Create" action={createNewPage} />
                             </div>
                         </div>
                     </div>
