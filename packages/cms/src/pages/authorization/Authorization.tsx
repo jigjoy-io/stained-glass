@@ -6,7 +6,6 @@ import { Logo } from '../../icons/Logo'
 import Title from '../../components/title/Title'
 import { LazyMotion, m } from 'framer-motion'
 import { createSingInChallenge } from '../../api/authorize'
-import { useAuthorized } from '../../util/store'
 import { useNavigate } from '@tanstack/react-router'
 import { getCurrentUser } from 'aws-amplify/auth';
 
@@ -35,7 +34,6 @@ export default function Authorization(props: any) {
 
 	const [email, setEmail] = useState('')
 
-	const authorized = useAuthorized()
 	const navigate = useNavigate()
 
 	useEffect(() => {
