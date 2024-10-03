@@ -108,7 +108,7 @@ export default function CarouselConfigurer(props: any) {
 
         window.onbeforeunload = function () {
             turnOffPopup()
-            return null
+            return true
         }
 
         return () => {
