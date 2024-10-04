@@ -85,7 +85,7 @@ export async function putPages(pages: PageDto[]): Promise<PageDto[]> {
 
 
 
-export async function deletePage(pageId: any): Promise<void> {
+export async function deletePage(pageId: any, linkedPageId?: any): Promise<void> {
 
 	var params = {
 		TableName: tableName,
@@ -93,6 +93,16 @@ export async function deletePage(pageId: any): Promise<void> {
 	}
 
 	await ddbDocClient.send(new DeleteCommand(params))
+
+	if(linkedPageId) {
+		const prodParams = {
+			TableName: tableName,
+			Key: { id: linkedPageId },
+		};
+		
+		await ddbDocClient.send(new DeleteCommand(prodParams));
+	}
+	
 
 }
 
