@@ -24,6 +24,7 @@ import Button from "../../components/button/Button"
 import { useSearch } from '@tanstack/react-router'
 import TemplateFactory from "../../factories/TemplateFactory"
 import { pushBlock } from "../../util/traversals/pushBlock"
+import { addBlock } from "../../util/traversals/addBlock"
 
 export function Node(props: any) {
 
@@ -289,23 +290,41 @@ export function Node(props: any) {
 
     }
 
+    const addBlankPageToCarousel = (carousel, position) => {
+        let blankPage = TemplateFactory.createBlankPage(props.id)
+
+        carousel.config.pages.splice(position, 0, blankPage)
+
+        let root = JSON.parse(JSON.stringify(props.root))
+        let newRoot = replaceBlock(root, carousel)
+
+        dispatch(rootPageUpdated(newRoot))
+        updatePage(newRoot)
+
+        let allPages = JSON.parse(JSON.stringify(pages))
+        let index = allPages.findIndex((page) => page.id == newRoot.id)
+        allPages.splice(index, 1, newRoot)
+    }
+
     const addPage = (e: React.MouseEvent) => {
         e.stopPropagation()
 
         let parent = findParent(props.root, props)
+        parent = JSON.parse(JSON.stringify(parent))
+
 
         if (parent && parent.type == 'carousel') {
-
-            if (e.ctrlKey) {
-                alert('blank page above')
-            } else {
-                alert('blank page below')
-            }
+            let pageIndex = parent.config.pages.findIndex((p: any) => p.id == props.id)
+            let position = e.ctrlKey ? pageIndex : pageIndex + 1
+            addBlankPageToCarousel(parent, position)
             return
         }
 
         if (props.type == "carousel") {
-            alert('blank page at the end of carousel')
+            let carousel = JSON.parse(JSON.stringify(props))
+            let position = carousel.config.pages.length
+
+            addBlankPageToCarousel(carousel, position)
 
             return
         }

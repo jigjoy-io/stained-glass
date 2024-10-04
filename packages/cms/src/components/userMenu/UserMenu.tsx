@@ -67,7 +67,7 @@ const UserMenu = () => {
                     onClick={handleOpen}
                     className="p-2 flex items-center justify-between text-gray-800 hover:bg-black-50 transition-colors duration-200"
                 >
-                    {userEmail && <div className="flex flex-row items-center space-x-2 hover:bg-primary-light hover:bg-opacity-60 p-2 rounded-md" ref={ref}>
+                    {userEmail && <div className="flex flex-row items-center space-x-2 hover:bg-primary-light hover:bg-opacity-60 p-1 rounded-md" ref={ref}>
                         <InitialIcon initials={userEmail[0].toUpperCase()}/>
                         <ExpandDownIcon />
                     </div>}
