@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router"
-import Dashboard from "../pages/dashboard/Dashboard"
+import Dashboard from "../pages/dashboard/dashboard"
 
 type DashboardRoute = {
     email?: string | null

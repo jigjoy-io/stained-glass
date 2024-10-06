@@ -2,14 +2,14 @@ import { createFileRoute } from '@tanstack/react-router'
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { accessPage } from '../api/page'
-import Page from '../components/Page'
+import Page from '../components/page'
 import {
 	modeUpdated,
 	pageUpdated,
 	rootPageUpdated,
-} from '../reducers/pageReducer'
-import Loader from '../components/loader/Loader'
-import { PostError } from '../util/errors/PostError'
+} from '../reducers/page-reducer'
+import Loader from '../components/loader/loader'
+import { PostError } from '../util/errors/post-error'
 
 export const Route = createFileRoute('/$pageId' as never)({
 	loader: async ({ params: { pageId } }) => {

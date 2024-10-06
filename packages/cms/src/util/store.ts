@@ -1,11 +1,11 @@
 
 import { configureStore } from '@reduxjs/toolkit'
-import pageReducer from '../reducers/pageReducer'
+import pageReducer from '../reducers/page-reducer'
 import { useDispatch, useSelector } from "react-redux"
-import toolbarReducer from '../reducers/toolbarReducer'
-import authReducer from '../reducers/authReducer'
-import treeReducer from '../reducers/treeReducer'
-import sidebarReducer from '../reducers/sidebarReducer'
+import toolbarReducer from '../reducers/toolbar-reducer'
+import authReducer from '../reducers/auth-reducer'
+import treeReducer from '../reducers/tree-reducer'
+import sidebarReducer from '../reducers/sidebar-reducer'
 
 export const store = configureStore({
     reducer: {

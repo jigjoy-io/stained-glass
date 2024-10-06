@@ -1,4 +1,4 @@
-import { NotFoundError } from "../util/errors/NotFoundError"
+import { NotFoundError } from "../util/errors/not-found-error"
 
 export const API_HOST = process.env.REACT_APP_API
 
