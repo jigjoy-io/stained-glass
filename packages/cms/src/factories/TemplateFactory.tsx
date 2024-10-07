@@ -45,7 +45,12 @@ export default class TemplateFactory extends React.Component {
 
 
         page.config = {
-            pages: pages
+            pages: pages,
+            buttons: {
+                previous: 'Previous',
+                next: "Next",
+                home: "Back to home"
+            }
         }
 
         return page
@@ -55,11 +60,11 @@ export default class TemplateFactory extends React.Component {
 
         if (type == 'carousel')
             return this.createCarouselPage(origin)
-        
+
         if (type == 'blank')
             return this.createBlankPage(origin)
 
-        throw('Page not supported')
+        throw ('Page not supported')
     }
 
     static createCarouselTileBlock(origin, numberOfPages = 3) {
@@ -88,9 +93,9 @@ export default class TemplateFactory extends React.Component {
             throw ('Page not supported')
 
         let block: any = null
-        if(type == 'carousel-tile')
+        if (type == 'carousel-tile')
             block = this.createCarouselTileBlock(origin)
-        
+
         if (type == 'page-tile')
             block = this.createPageTileBlock(origin)
 
@@ -100,5 +105,5 @@ export default class TemplateFactory extends React.Component {
 
         return block
     }
-    
+
 }

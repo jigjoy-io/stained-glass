@@ -9,6 +9,8 @@ import Toolbar from "../Toolbar"
 import EditableBlock from "./EditableBlock"
 import ImageEditingIcon from "../../../icons/ImageEditingIcon"
 import ImageEditor from "../editors/ImageEditor"
+import ButtonEditor from "../editors/ButtonsEditor"
+import NavigationArrowIcon from "../../../icons/NavigationArrow"
 
 export default class EditableCarouselTile extends EditableBlock {
 
@@ -17,22 +19,27 @@ export default class EditableCarouselTile extends EditableBlock {
         icon: RenameIcon,
         key: 'title',
         editor: TextEditor
-    },{
+    }, {
         name: 'Edit image',
         icon: ImageEditingIcon,
         key: 'image',
         editor: ImageEditor
-    },{
+    }, {
         name: 'Edit description',
         icon: DescriptionEditingIcon,
         key: 'description',
         editor: TextEditor
-    },{
+    }, {
+        name: 'Edit navigation buttons',
+        icon: NavigationArrowIcon,
+        key: 'buttons',
+        editor: ButtonEditor
+    }, {
         name: 'Edit call to action',
         icon: CTAEditingIcon,
         key: 'cta',
         editor: TextEditor
-    },{
+    }, {
         name: 'Edit color',
         icon: ColorEditingIcon,
         key: 'color',
@@ -47,9 +54,9 @@ export default class EditableCarouselTile extends EditableBlock {
     get(props: any): any {
 
         return this.setBlock(props)
-                .addToolbar(props)
-                .addGap(props)
-                .block
+            .addToolbar(props)
+            .addGap(props)
+            .block
     }
 
 
