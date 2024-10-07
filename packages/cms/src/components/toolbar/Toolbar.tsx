@@ -60,7 +60,9 @@ export default function Toolbar(props: any) {
     }
 
     const turnOffToolbar = () => {
-        setOn(false)
+        setTimeout(() => {
+            setOn(false)
+        }, 500);
     }
 
     const handleToolbarOpen = () => {
