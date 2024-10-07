@@ -52,7 +52,7 @@ export async function updatePage(page: any) {
 export async function removePage(id: any) {
 
     const options = {
-        method: 'DELETE',
+        method: 'DELETE'
     }
 
     const res = await fetch(`${API_HOST}/${id}`, options)

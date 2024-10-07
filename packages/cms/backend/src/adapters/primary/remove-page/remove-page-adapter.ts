@@ -16,7 +16,7 @@ export async function removePageHandler({
 
         console.log(`Page to delete: ${id}`)
 
-        removePageUseCase(id)
+        await removePageUseCase(id)
 
         console.log(`Page deleted: ${JSON.stringify(id)}`)
 
