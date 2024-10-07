@@ -29,9 +29,9 @@ export async function migrateNavigationButtonsHandler({
                 }
             }else if (p.type =="carousel"){
                 p.config.buttons = {
-                    previous: 'Test 2',
-                    next: "Test",
-                    home: "Test 3"
+                    previous: 'Previous',
+                    next: "Next",
+                    home: "Back to home"
                 }
             }
 
