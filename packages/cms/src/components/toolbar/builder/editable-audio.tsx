@@ -1,48 +1,58 @@
 import React from "react"
 import AudioEditingIcon from "../../../icons/audio-editing-icon"
-import PositionEditingIcon from "../../../icons/position-editingI-icon"
+import PositionEditingIcon from "../../../icons/position-editing-icon"
 import AudioEditor from "../editors/audio-editor"
 import PositionEditor from "../editors/position-editor"
 import Toolbar from "../toolbar"
 import EditableBlock from "./editable-block"
 import LocalizedStrings from "react-localization"
+import { store } from "../../../util/store"
 
 let localization = new LocalizedStrings({
     en: {
-        editAudio: "Edit audio",
-        editPosition: "Edit position"
+        editAudio: "Audio",
+        editPosition: "Position"
     },
     sr: {
-        editAudio: "Izmeni zvuk",
-        editPosition: "Izmeni poziciju"
+        editAudio: "Zvuk",
+        editPosition: "Pozicija"
     }
 })
 
-localization.setLanguage('sr')
+
 export default class EditableAudio extends EditableBlock {
 
-    editingOptions = [{
-        name: localization.editAudio,
-        icon: AudioEditingIcon,
-        editor: AudioEditor,
-        key: 'source'
-    }, {
-        name: localization.editPosition,
-        icon: PositionEditingIcon,
-        editor: PositionEditor,
-        key: 'position'
-    }]
+    getEditingOptions() {
+        return [{
+            name: localization.editAudio,
+            icon: AudioEditingIcon,
+            editor: AudioEditor,
+            key: 'source'
+        }, {
+            name: localization.editPosition,
+            icon: PositionEditingIcon,
+            editor: PositionEditor,
+            key: 'position'
+        }]
+    }
 
     addToolbar(props: any) {
-        this.block = <Toolbar id={props.id} block={props} editingOptions={this.editingOptions}>{this.block}</Toolbar>
+
+        const state = store.getState()
+        localization.setLanguage(state.localization.language)
+
+        this.block = <Toolbar id={props.id} block={props} editingOptions={this.getEditingOptions()}>{this.block}</Toolbar>
         return this
     }
 
     get(props: any): any {
 
+
+
+
         return this.setBlock(props)
-                .addToolbar(props)
-                .block
+            .addToolbar(props)
+            .block
     }
 
 

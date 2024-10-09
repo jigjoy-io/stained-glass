@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react'
 import React from 'react'
 import Input from '../../components/input/input'
 import Button from '../../components/button/button'
-import { Logo } from '../../icons/logo'
 import Title from '../../components/title/title'
 import { LazyMotion, m } from 'framer-motion'
 import { createSingInChallenge } from '../../api/authorize'
 import { useNavigate } from '@tanstack/react-router'
 import { getCurrentUser } from 'aws-amplify/auth'
-import LocalizedStrings from 'react-localization'
+import { Logo } from '../../icons/logo'
+import { useLanguage } from '../../util/store'
+import localization from './authorization.localization'
 
 
 const animation = {
@@ -30,46 +31,23 @@ const item = {
 const loadFeatures = () => import("../../util/animations").then(res => res.default)
 
 
-let localization = new LocalizedStrings({
-    en: {
-		welcomeMessage: "Welcome to JigJoy 👏",
-        emailPlaceholder: 'Enter Your Email',
-		authButton: 'Log in or Sign up',
-		postLoginMessage: 'Log in link has been sent to provided email'
-    },
-    sr: {
-		welcomeMessage: "Dobrodošli na JigJoy platformu 👏",
-        emailPlaceholder: 'Unesite mejl',
-		authButton: 'Prijavi se ili Registruj',
-		postLoginMessage: 'Link za logovanje je poslat na mejl.'
-    }
-})
-
-localization.setLanguage('sr')
-
 export default function Authorization(props: any) {
 
 	const [message, setMessage] = useState('')
-
 	const [email, setEmail] = useState('')
-
 	const navigate = useNavigate()
+	const lang = useLanguage()
 
-	useEffect(() => {
-		const checkUser = async () => {
-			try {
-				const user = await getCurrentUser();
-				if (user) {
-					navigate({ to: '/dashboard' })
-				}
-			} catch (error) {
-				console.error("Error checking user authentication:", error)
+	const checkUser = async () => {
+		try {
+			const user = await getCurrentUser()
+			if (user) {
+				navigate({ to: '/interactive-content-designer' })
 			}
+		} catch (error) {
+			console.error("Error checking user authentication:", error)
 		}
-
-		checkUser()
-	}, [])
-
+	}
 
 
 	async function authorize() {
@@ -90,8 +68,13 @@ export default function Authorization(props: any) {
 	}
 
 	useEffect(() => {
+		checkUser()
 		resetFields()
 	}, [])
+
+	useEffect(() => {
+        localization.setLanguage(lang)
+    }, [lang])
 
 
 	const handleEmailChange = (email) => {

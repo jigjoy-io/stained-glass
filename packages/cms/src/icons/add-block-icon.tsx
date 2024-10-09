@@ -1,6 +1,6 @@
 import React from "react"
 
-export function AddBlockIcon() {
+export default function AddBlockIcon() {
 
     return <div className="flex items-center justify-center w-[24px] h-[24px] rounded-[4px]">
         <svg viewBox="0 0 16 16" className="w-[16px] h-[100%] block">

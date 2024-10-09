@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { updateBlock } from "../../../reducers/page-reducer"
 import AudioButton from "../../audio/audio-button"
@@ -6,6 +6,7 @@ import Button from "../../button/button"
 import Tab from "../../tabs/tab"
 import Tabs from "../../tabs/tabs"
 import LocalizedStrings from "react-localization"
+import { useLanguage } from "../../../util/store"
 
 let localization = new LocalizedStrings({
     en: {
@@ -18,10 +19,15 @@ let localization = new LocalizedStrings({
     }
 })
 
-localization.setLanguage('sr')
-
 export default function AudioEditor(props: any) {
 
+
+    const lang = useLanguage()
+
+    useEffect(() => {
+        localization.setLanguage(lang)
+    }, [])
+    
     const [value, setValue] = useState(props.value)
 
     const dispatch = useDispatch()

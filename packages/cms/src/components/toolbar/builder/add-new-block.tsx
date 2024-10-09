@@ -1,10 +1,11 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { useDispatch } from "react-redux"
-import TemplateFactory from "../../../factories/template-factory"
-import { AddBlockIcon } from "../../../icons/add-block-icon"
-import { insertBlock } from "../../../reducers/page-reducer"
 import ToolbarButtonWrapper from "../toolbar-button-wrapper"
 import LocalizedStrings from "react-localization"
+import { insertBlock } from "../../../reducers/page-reducer"
+import AddBlockIcon from "../../../icons/add-block-icon"
+import TemplateFactory from "../../../factories/templates/template-factory"
+import { useLanguage } from "../../../util/store"
 
 let localization = new LocalizedStrings({
     en: {
@@ -21,12 +22,14 @@ let localization = new LocalizedStrings({
     }
 })
 
-localization.setLanguage('sr')
-
 export function AddNewBlock(props) {
 
-
+    const lang = useLanguage()
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        localization.setLanguage(lang)
+    }, [])
 
     const tooltip = <div className="text-center text-[14px]">
         <div>

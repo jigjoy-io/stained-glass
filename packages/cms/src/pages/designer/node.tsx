@@ -8,12 +8,10 @@ import DeleteBlockIcon from "../../icons/delete-block-icon"
 import { DuplicateIcon } from "../../icons/duplicate-icon"
 import { ExpandPage } from "../../icons/expand-page"
 import { MoreIcon } from "../../icons/more-icon"
-import { RenameIcon } from "../../icons/rename-icon"
-import { AddBlockIcon } from "../../icons/add-block-icon"
 import { carouselPageSwitched, pagesUpdated, pageUpdated, rootPageUpdated } from "../../reducers/page-reducer"
 import { blockingUpdated } from "../../reducers/toolbar-reducer"
 import { pageCollapsed, pageExpanded } from "../../reducers/tree-reducer"
-import { useCurrentCarouselPage, useExpandedPages, usePage, usePages } from "../../util/store"
+import { useCurrentCarouselPage, useExpandedPages, useLanguage, usePage, usePages } from "../../util/store"
 import { deletePage } from "../../util/traversals/delete-page"
 import { duplicateBlock } from "../../util/traversals/duplcate-block"
 import { findParent } from "../../util/traversals/find-parent"
@@ -22,9 +20,12 @@ import { createPortal } from "react-dom"
 import ClickOutsideListener from "../../components/popover/click-outside-listener"
 import Button from "../../components/button/button"
 import { useSearch } from '@tanstack/react-router'
-import TemplateFactory from "../../factories/template-factory"
+import TemplateFactory from "../../factories/templates/template-factory"
 import { pushBlock } from "../../util/traversals/push-block"
 import LocalizedStrings from "react-localization"
+import AddBlockIcon from "../../icons/add-block-icon"
+import RenameIcon from "../../icons/rename-icon"
+import { languageUpdated } from "../../reducers/localization-reducer"
 
 let localization = new LocalizedStrings({
     en: {
@@ -67,8 +68,6 @@ let localization = new LocalizedStrings({
     }
 })
 
-localization.setLanguage('sr')
-
 export function Node(props: any) {
 
     const activePage = usePage()
@@ -81,24 +80,25 @@ export function Node(props: any) {
     const [addingActive, setAddingActive] = useState(false)
 
     const [ident, setIdent] = useState(props.ident + 12)
-    const pages = usePages()
+
     const [selected, setSelected] = useState<string | null>()
 
     const [renameValue, setRenameValue] = useState('')
     const [tileToAdd, setTileToAdd] = useState('page-tile')
 
     const ref = useRef<HTMLDivElement>(null)
+    const portalRef = useRef(null)
 
     const [rect, setRect] = useState<null | any>(null)
 
+    const pages = usePages()
     const expandedPages = useExpandedPages()
-
-    const portalRef = useRef(null)
+    const lang = useLanguage()
 
     const dispatch = useDispatch()
 
     const pageId = useSearch({
-        from: '/dashboard',
+        from: '/interactive-content-designer',
         select: (search: any) => search.pageId,
     })
 
@@ -268,7 +268,6 @@ export function Node(props: any) {
     }
 
     useEffect(() => {
-
         if (pageId == props.id) {
             setSelected(pageId)
             dispatch(rootPageUpdated(props.root))
@@ -285,6 +284,12 @@ export function Node(props: any) {
     useEffect(() => {
         setSelected(activeCarousel)
     }, [activeCarousel])
+
+
+    useEffect(() => {
+        localization.setLanguage(lang)
+        dispatch(languageUpdated(lang))
+    }, [lang])
 
     const loadPage = async (e: React.MouseEvent, selectedPage) => {
         e.stopPropagation()

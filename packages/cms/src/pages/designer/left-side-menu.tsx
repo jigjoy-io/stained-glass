@@ -4,11 +4,10 @@ import { useDispatch } from "react-redux"
 import { getPages, publishPage } from "../../api/page"
 import Alert from "../../components/alert/alert"
 import Button from "../../components/button/button"
-import { AddBlockIcon } from "../../icons/add-block-icon"
-import { modeUpdated, pagesUpdated, pageUpdated, rootPageUpdated } from "../../reducers/page-reducer"
-import { usePages, useRootPage, useSidebarVisible } from "../../util/store"
+import { pagesUpdated, pageUpdated, rootPageUpdated } from "../../reducers/page-reducer"
+import { useLanguage, usePages, useRootPage, useSidebarVisible } from "../../util/store"
 import { Node } from './node'
-import { useNavigate, useSearch } from '@tanstack/react-router'
+import { Link, useNavigate, useSearch } from '@tanstack/react-router'
 import AnalyticsIcon from "../../icons/analytics-icon"
 import { sidebarExpanded } from "../../reducers/sidebar-reducer"
 import Loader from "../../components/loader/loader"
@@ -16,6 +15,7 @@ import UserMenu from "../../components/user-menu/user-menu"
 import localization from './left-side-menu.localization'
 import { HelpIcon } from "../../icons/help-icon"
 import { LogoIcon } from "../../icons/logo-icon"
+import AddBlockIcon from "../../icons/add-block-icon"
 
 export default function LeftSideMenu() {
     const navigate = useNavigate()
@@ -27,9 +27,10 @@ export default function LeftSideMenu() {
 
     const sidebarVisible = useSidebarVisible()
     const dispatch = useDispatch()
+    const lang = useLanguage()
 
     const pageId = useSearch({
-        from: '/dashboard',
+        from: '/interactive-content-designer',
         select: (search: any) => search.pageId,
     })
 
@@ -49,8 +50,12 @@ export default function LeftSideMenu() {
         fetchData()
     }, [])
 
+    useEffect(() => {
+        localization.setLanguage(lang)
+    }, [lang])
+
     const enterPreview = () => {
-        dispatch(modeUpdated("visiting"))
+        navigate({ to: "/preview" })
     }
 
     const publish = async () => {
@@ -173,7 +178,7 @@ export default function LeftSideMenu() {
                         )}
                         <div className="w-[100%] px-3 py-1 flex gap-x-2">
                             <div className="w-[50%]"><Button text={localization.preveiw} color="default" action={enterPreview} /></div>
-                            <a href={`/${page.id}`} target="_blank" className="bg-primary-light hover:opacity-80 flex justify-center items-center cursor-pointer rounded-md w-[50%] font-bold">{localization.share}</a>
+                            <Link to={`/${page.id}?lang=${lang}`} target="_blank" className="bg-primary-light hover:opacity-80 flex justify-center items-center cursor-pointer rounded-md w-[50%] font-bold">{localization.share}</Link>
                         </div>
                         <div className="w-[100%] px-3 py-1">
                             <Button text={localization.publish} action={publish} />

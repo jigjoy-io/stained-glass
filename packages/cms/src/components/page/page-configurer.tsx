@@ -5,10 +5,10 @@ import Checkbox from "../checkbox/checkbox"
 import Tabs from "../tabs/tabs"
 import ClickOutsideListener from "../popover/click-outside-listener"
 import Tab from "../tabs/tab"
-import TemplateFactory from "../../factories/template-factory"
+import TemplateFactory from "../../factories/templates/template-factory"
 import { updateBlock } from "../../reducers/page-reducer"
 import { useDispatch } from "react-redux"
-import { usePage } from "../../util/store"
+import { useLanguage, usePage } from "../../util/store"
 import { blockingUpdated } from "../../reducers/toolbar-reducer"
 import { createPortal } from "react-dom"
 import LocalizedStrings from "react-localization"
@@ -40,7 +40,8 @@ let localization = new LocalizedStrings({
     }
 })
 
-localization.setLanguage('sr')
+
+
 
 export default function CarouselConfigurer(props: any) {
 
@@ -52,6 +53,7 @@ export default function CarouselConfigurer(props: any) {
     const [description, setDescription] = useState(props.description)
     const [title, setHeadline] = useState(props.title)
     const activePage = usePage()
+    const lang = useLanguage()
 
     const [top, setTop] = useState<number>()
     const [y, setY] = useState<number>()
@@ -60,6 +62,8 @@ export default function CarouselConfigurer(props: any) {
 
     useEffect(() => {
 
+        localization.setLanguage(lang)
+        
         window.onbeforeunload = function () {
             turnOffPopup()
             return true

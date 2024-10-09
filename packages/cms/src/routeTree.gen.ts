@@ -13,31 +13,33 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as InteractiveContentDesignerImport } from './routes/interactive-content-designer'
 import { Route as PageIdImport } from './routes/$pageId'
 
 // Create Virtual Routes
 
+const PreviewLazyImport = createFileRoute('/preview')()
 const OnboardingLazyImport = createFileRoute('/onboarding')()
-const DesignerLazyImport = createFileRoute('/designer')()
-const DashboardLazyImport = createFileRoute('/dashboard')()
 const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
+
+const PreviewLazyRoute = PreviewLazyImport.update({
+  path: '/preview',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/preview.lazy').then((d) => d.Route))
 
 const OnboardingLazyRoute = OnboardingLazyImport.update({
   path: '/onboarding',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/onboarding.lazy').then((d) => d.Route))
 
-const DesignerLazyRoute = DesignerLazyImport.update({
-  path: '/designer',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/designer.lazy').then((d) => d.Route))
-
-const DashboardLazyRoute = DashboardLazyImport.update({
-  path: '/dashboard',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/dashboard').then((d) => d.Route))
+const InteractiveContentDesignerRoute = InteractiveContentDesignerImport.update(
+  {
+    path: '/interactive-content-designer',
+    getParentRoute: () => rootRoute,
+  } as any,
+)
 
 const PageIdRoute = PageIdImport.update({
   path: '/$pageId',
@@ -67,18 +69,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PageIdImport
       parentRoute: typeof rootRoute
     }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/designer': {
-      id: '/designer'
-      path: '/designer'
-      fullPath: '/designer'
-      preLoaderRoute: typeof DesignerLazyImport
+    '/interactive-content-designer': {
+      id: '/interactive-content-designer'
+      path: '/interactive-content-designer'
+      fullPath: '/interactive-content-designer'
+      preLoaderRoute: typeof InteractiveContentDesignerImport
       parentRoute: typeof rootRoute
     }
     '/onboarding': {
@@ -86,6 +81,13 @@ declare module '@tanstack/react-router' {
       path: '/onboarding'
       fullPath: '/onboarding'
       preLoaderRoute: typeof OnboardingLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/preview': {
+      id: '/preview'
+      path: '/preview'
+      fullPath: '/preview'
+      preLoaderRoute: typeof PreviewLazyImport
       parentRoute: typeof rootRoute
     }
   }
@@ -96,51 +98,67 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
   '/$pageId': typeof PageIdRoute
-  '/dashboard': typeof DashboardLazyRoute
-  '/designer': typeof DesignerLazyRoute
+  '/interactive-content-designer': typeof InteractiveContentDesignerRoute
   '/onboarding': typeof OnboardingLazyRoute
+  '/preview': typeof PreviewLazyRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
   '/$pageId': typeof PageIdRoute
-  '/dashboard': typeof DashboardLazyRoute
-  '/designer': typeof DesignerLazyRoute
+  '/interactive-content-designer': typeof InteractiveContentDesignerRoute
   '/onboarding': typeof OnboardingLazyRoute
+  '/preview': typeof PreviewLazyRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexLazyRoute
   '/$pageId': typeof PageIdRoute
-  '/dashboard': typeof DashboardLazyRoute
-  '/designer': typeof DesignerLazyRoute
+  '/interactive-content-designer': typeof InteractiveContentDesignerRoute
   '/onboarding': typeof OnboardingLazyRoute
+  '/preview': typeof PreviewLazyRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/$pageId' | '/dashboard' | '/designer' | '/onboarding'
+  fullPaths:
+    | '/'
+    | '/$pageId'
+    | '/interactive-content-designer'
+    | '/onboarding'
+    | '/preview'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$pageId' | '/dashboard' | '/designer' | '/onboarding'
-  id: '__root__' | '/' | '/$pageId' | '/dashboard' | '/designer' | '/onboarding'
+  to:
+    | '/'
+    | '/$pageId'
+    | '/interactive-content-designer'
+    | '/onboarding'
+    | '/preview'
+  id:
+    | '__root__'
+    | '/'
+    | '/$pageId'
+    | '/interactive-content-designer'
+    | '/onboarding'
+    | '/preview'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
   PageIdRoute: typeof PageIdRoute
-  DashboardLazyRoute: typeof DashboardLazyRoute
-  DesignerLazyRoute: typeof DesignerLazyRoute
+  InteractiveContentDesignerRoute: typeof InteractiveContentDesignerRoute
   OnboardingLazyRoute: typeof OnboardingLazyRoute
+  PreviewLazyRoute: typeof PreviewLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
   PageIdRoute: PageIdRoute,
-  DashboardLazyRoute: DashboardLazyRoute,
-  DesignerLazyRoute: DesignerLazyRoute,
+  InteractiveContentDesignerRoute: InteractiveContentDesignerRoute,
   OnboardingLazyRoute: OnboardingLazyRoute,
+  PreviewLazyRoute: PreviewLazyRoute,
 }
 
 export const routeTree = rootRoute
@@ -157,9 +175,9 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/$pageId",
-        "/dashboard",
-        "/designer",
-        "/onboarding"
+        "/interactive-content-designer",
+        "/onboarding",
+        "/preview"
       ]
     },
     "/": {
@@ -168,14 +186,14 @@ export const routeTree = rootRoute
     "/$pageId": {
       "filePath": "$pageId.tsx"
     },
-    "/dashboard": {
-      "filePath": "dashboard.lazy.tsx"
-    },
-    "/designer": {
-      "filePath": "designer.lazy.tsx"
+    "/interactive-content-designer": {
+      "filePath": "interactive-content-designer.tsx"
     },
     "/onboarding": {
       "filePath": "onboarding.lazy.tsx"
+    },
+    "/preview": {
+      "filePath": "preview.lazy.tsx"
     }
   }
 }

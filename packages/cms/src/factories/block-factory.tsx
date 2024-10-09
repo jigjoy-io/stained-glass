@@ -11,10 +11,10 @@ const CarouselTile = lazy(() => import('../components/carousel/carousel-tile'))
 const Message = lazy(() => import('../components/message/message'))
 const Reel = lazy(() => import('../components/reel/reel'))
 const Profile = lazy(() => import('../components/profile/profile'))
-const BlockSelector = lazy(() => import('../components/toolbar/block-selector'))
 const CarouselConfigurer = lazy(() => import('../components/carousel/carousel-configurer'))
 const PageTile = lazy(() => import('../components/page/page-tile'))
 const PageConfigurer = lazy(() => import('../components/page/page-configurer'))
+const BlockSelector = lazy(() => import('../components/toolbar/block-selector/block-selector'))
 
 export default class BlockFactory extends React.Component {
 
@@ -67,6 +67,7 @@ export default class BlockFactory extends React.Component {
     }
     
     static get(props: any ) {
+        console.log(props)
         let block : any = this.buildingBlocks[props.type]
         return <Suspense><block.component {...props}/></Suspense>
     }

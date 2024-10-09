@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
 import ToolbarButtonWrapper from './toolbar-button-wrapper'
 import Item from '../item/item'
@@ -15,6 +15,7 @@ import { createPortal } from 'react-dom'
 import ClickOutsideListener from '../popover/click-outside-listener'
 import { AnimatePresence, LazyMotion, m } from 'framer-motion'
 import LocalizedStrings from 'react-localization'
+import { useLanguage } from '../../util/store'
 
 const animation = {
     hidden: {
@@ -47,8 +48,6 @@ let localization = new LocalizedStrings({
     }
 })
 
-localization.setLanguage('sr')
-
 const loadFeatures = () => import("../../util/animations").then(res => res.default)
 
 export default function Toolbar(props: any) {
@@ -71,6 +70,12 @@ export default function Toolbar(props: any) {
     const [editorLeft, setEditorLeft] = useState<number>()
 
     const dispatch = useDispatch()
+    const lang = useLanguage()
+
+    useEffect(() => {
+        localization.setLanguage(lang)
+    }, [])
+    
 
     const turnOnToolbar = (e: any) => {
         setOn(true)

@@ -7,8 +7,9 @@ import { blockingUpdated } from '../../reducers/toolbar-reducer'
 import { useDispatch } from 'react-redux'
 import { InitialIcon } from '../../icons/initial-icon'
 import LogoutButton from '../../pages/authorization/logout/logout'
+import { languageUpdated } from '../../reducers/localization-reducer'
 
-const UserMenu = () => {
+export default function UserMenu() {
     const [isOpen, setIsOpen] = useState(false)
     const [userEmail, setUserEmail] = useState('')
     const ref = useRef<HTMLDivElement>(null)
@@ -49,6 +50,11 @@ const UserMenu = () => {
 
     }
 
+    const switchLanguage = () => {
+        handleClose()
+        dispatch(languageUpdated('sr'))
+    }
+
     return (
         <div>
             <div>
@@ -71,6 +77,7 @@ const UserMenu = () => {
                             <div className="flex flex-col gap-1 w-full">
                                 <span className="p-1 px-2 font-medium text-sm truncate">{userEmail}</span>
                                 <div className='border-b border-primary' />
+                                <button onClick={switchLanguage}>Serbian language</button>
                                 <LogoutButton />
                             </div>
 
@@ -81,5 +88,3 @@ const UserMenu = () => {
         </div>
     )
 }
-
-export default UserMenu

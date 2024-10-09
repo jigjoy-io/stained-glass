@@ -1,24 +1,17 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { signOut } from 'aws-amplify/auth'
 import { useNavigate } from '@tanstack/react-router'
 import { useDispatch } from 'react-redux'
 import { accountUpdated } from '../../../reducers/auth-reducer'
-import LocalizedStrings from 'react-localization'
+import localization from './logout.localization'
+import { useLanguage } from '../../../util/store'
 
-let localization = new LocalizedStrings({
-    en: {
-        logout: "Logoout"
-    },
-    sr: {
-        logout: "Odjavi se"
-    }
-})
+export default function LogoutButton(){
 
-localization.setLanguage('sr')
-
-const LogoutButton = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
+	const lang = useLanguage()
+    const [logoutText, setLogoutText] = useState('')
 
     const handleLogout = async () => {
         try {
@@ -32,12 +25,15 @@ const LogoutButton = () => {
             console.error('LOG Error signing out: ', error)
         }
     }
-    return (
-        <button
-            className="p-1 px-2 text-left text-sm text-gray-700 transition-colors duration-200 hover:bg-primary-light rounded-md" onClick={handleLogout}>
-            {localization.logout}
-        </button>
-    )
-}
 
-export default LogoutButton
+    useEffect(() => {
+        localization.setLanguage(lang)
+        setLogoutText(localization.logout)
+        
+    }, [])
+    
+    return lang && <button
+        className="p-1 px-2 text-left text-sm text-gray-700 transition-colors duration-200 hover:bg-primary-light rounded-md" onClick={handleLogout}>
+        {logoutText}
+    </button>
+}

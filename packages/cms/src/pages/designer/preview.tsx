@@ -1,8 +1,10 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import Page from "../../components/page"
 import { modeUpdated } from "../../reducers/page-reducer"
 import LocalizedStrings from "react-localization"
+import { store, useLanguage } from "../../util/store"
+import { useNavigate } from "@tanstack/react-router"
 
 let localization = new LocalizedStrings({
     en: {
@@ -17,19 +19,26 @@ let localization = new LocalizedStrings({
     }
 })
 
-localization.setLanguage('sr')
+const state = store.getState()
+localization.setLanguage(state.localization.language)
 
-export function Preview() {
+export default function Preview() {
 
     const dispatch = useDispatch()
+    const lang = useLanguage()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        dispatch(modeUpdated('visiting'))
+    }, [])
 
     const turnOffPreview = () => {
-        dispatch(modeUpdated("editing"))
+        navigate({ to: '/interactive-content-designer' })
     }
 
-    return <div className="flex flex-col">
-        <div className="absolute top-0 h-[50px] bg-[#74EDDF] flex items-center justify-center w-[100%] z-50">
-            {localization.previewMessagePart1}<span className="font-bold cursor-pointer" onClick={turnOffPreview}>&nbsp;{localization.previewMessagePart2}&nbsp;</span> {localization.previewMessagePart3}</div>
+    return <div className="flex flex-col" key={localization.getLanguage()}>
+        {lang && <div className="absolute top-0 h-[50px] bg-[#74EDDF] flex items-center justify-center w-[100%] z-50">
+            {localization.previewMessagePart1}<span className="font-bold cursor-pointer" onClick={turnOffPreview}>&nbsp;{localization.previewMessagePart2}&nbsp;</span> {localization.previewMessagePart3}</div>}
         <Page />
     </div>
 }

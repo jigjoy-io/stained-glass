@@ -1,33 +1,39 @@
 import React from "react"
-import PositionEditingIcon from "../../../icons/position-editingI-icon"
 import ContentEditingText from "../editors/content-editing-text"
 import PositionEditor from "../editors/position-editor"
 import Toolbar from "../toolbar"
 import EditableBlock from "./editable-block"
 import LocalizedStrings from "react-localization"
+import PositionEditingIcon from "../../../icons/position-editing-icon"
+import { store } from "../../../util/store"
 
 let localization = new LocalizedStrings({
     en: {
-        editPosition: "Edit position"
+        editPosition: "Position"
     },
     sr: {
-        editPosition: "Izmeni poziciju"
+        editPosition: "Pozicija"
     }
 })
 
-localization.setLanguage('sr')
 export default class EditableText extends EditableBlock {
 
+    getEditingOptions() {
+        return [{
+            name: localization.editPosition,
+            icon: PositionEditingIcon,
+            editor: PositionEditor,
+            key: 'position'
+        }]
 
-    editingOptions = [{
-        name: localization.editPosition,
-        icon: PositionEditingIcon,
-        editor: PositionEditor,
-        key: 'position'
-    }]
+    }
 
     addToolbar(props: any) {
-        this.block = <Toolbar id={props.id} block={props} editingOptions={this.editingOptions}>{this.block}</Toolbar>
+
+        const state = store.getState()
+        localization.setLanguage(state.localization.language)
+
+        this.block = <Toolbar id={props.id} block={props} editingOptions={this.getEditingOptions()}>{this.block}</Toolbar>
         return this
     }
 

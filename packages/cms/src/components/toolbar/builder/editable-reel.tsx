@@ -4,28 +4,35 @@ import VideoEditor from "../editors/video-editor"
 import Toolbar from "../toolbar"
 import EditableBlock from "./editable-block"
 import LocalizedStrings from "react-localization"
+import { store } from "../../../util/store"
 
 let localization = new LocalizedStrings({
     en: {
-        editVideo: "Edit video"
+        editVideo: "Video"
     },
     sr: {
-        editVideo: "Izmeni video"
+        editVideo: "Snimak"
     }
 })
 
-localization.setLanguage('sr')
 export default class EditableReel extends EditableBlock {
 
-    editingOptions = [{
-        name: localization.editVideo,
-        icon: VideoEditingIcon,
-        editor: VideoEditor,
-        key: 'source'
-    }]
+    getEditingOptions() {
+        return [{
+            name: localization.editVideo,
+            icon: VideoEditingIcon,
+            editor: VideoEditor,
+            key: 'source'
+        }]
+
+    }
 
     addToolbar(props: any) {
-        this.block = <Toolbar id={props.id} block={props} editingOptions={this.editingOptions}>{this.block}</Toolbar>
+        
+        const state = store.getState()
+        localization.setLanguage(state.localization.language)
+
+        this.block = <Toolbar id={props.id} block={props} editingOptions={this.getEditingOptions()}>{this.block}</Toolbar>
         return this
     }
 

@@ -1,12 +1,12 @@
 import { AnimatePresence, LazyMotion, m } from "framer-motion"
-import { AppDispatch, useSidebarVisible } from "../../util/store"
-import React from "react"
+import { AppDispatch, useLanguage, useSidebarVisible } from "../../util/store"
+import React, { useEffect } from "react"
 import ToolbarButtonWrapper from "../../components/toolbar/toolbar-button-wrapper"
 import { useDispatch } from "react-redux"
-import { sidebarExpanded } from "../../reducers/sidebar-reducer"
 import Text from "../../components/text/text"
 import Heading from "../../components/heading/heading"
 import LocalizedStrings from "react-localization"
+import { sidebarExpanded } from "../../reducers/sidebar-reducer"
 
 
 const animation = {
@@ -41,14 +41,17 @@ let localization = new LocalizedStrings({
     }
 })
 
-localization.setLanguage('sr')
-
 export function RightSideMenu() {
 
 
     const sidebarVisible = useSidebarVisible()
     
     const dispatch = useDispatch<AppDispatch>()
+    const lang = useLanguage()
+
+    useEffect(() => {
+        localization.setLanguage(lang)
+    }, [])
     
     return <LazyMotion features={loadFeatures}>
         <AnimatePresence>{

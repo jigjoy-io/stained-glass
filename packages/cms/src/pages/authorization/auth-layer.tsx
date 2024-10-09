@@ -1,22 +1,18 @@
-import React, { useEffect } from "react"
-import Designer from "../designer/designer"
+import { useEffect } from "react"
 import { handleConfirmSignIn } from "../../api/authorize"
-import { useAuthorized, useMode } from "../../util/store"
+import { useAuthorized } from "../../util/store"
 import { accountUpdated } from "../../reducers/auth-reducer"
 import { useDispatch } from "react-redux"
-import { modeUpdated } from "../../reducers/page-reducer"
-import { Preview } from "../designer/preview"
 import { useNavigate, useSearch } from "@tanstack/react-router"
 
-export default function Dashboard() {
+export default function AuthLayer(props: any) {
 
     const authorized = useAuthorized()
     const dispatch = useDispatch()
-    const mode = useMode()
     const navigate = useNavigate()
 
     const { email, token } = useSearch({
-        from: '/dashboard',
+        from: '/interactive-content-designer',
         select: (search: any) => {
             return {
                 email: search.email,
@@ -26,7 +22,7 @@ export default function Dashboard() {
     })
 
     useEffect(() => {
-        dispatch(modeUpdated("editing"))
+        authorize(email, token)
     }, [])
 
     async function authorize(email, token) {
@@ -74,13 +70,5 @@ export default function Dashboard() {
 
     }
 
-    useEffect(() => {
-        authorize(email, token)
-    }, [])
-
-    return <>{authorized && <>
-        {(mode == 'editing' && authorized) && <Designer />}
-        {mode == 'visiting' && <Preview />}
-    </>}
-    </>
+    return authorized && props.children
 }

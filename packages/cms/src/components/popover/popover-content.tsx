@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import ClickOutsideListener from './ClickOutsideListener'
+import ClickOutsideListener from './click-outside-listener'
 
 export default function PopoverContent(props: any) {
 

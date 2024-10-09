@@ -6,22 +6,6 @@ import Button from "../button/button"
 import Progress from "../progress/progress"
 import Content from "../page-content"
 import { useCurrentCarouselPage, usePage, useRootPage } from "../../util/store"
-import LocalizedStrings from "react-localization"
-
-let localization = new LocalizedStrings({
-    en: {
-        previous: "Previous",
-        next: "Next",
-        backToHome: "Back to Home"
-    },
-    sr: {
-        previous: "Nazad",
-        next: "Napred",
-        backToHome: "Povratak na početnu"
-    }
-})
-
-localization.setLanguage('sr')
 
 export default function CarouselPage(props: any) {
 
@@ -33,6 +17,7 @@ export default function CarouselPage(props: any) {
     const page = usePage()
     const rootPage = useRootPage()
     const dispatch = useDispatch()
+    const { previous, next, home  } = props.config.buttons
 
     const backToHome = async (page: any) => {
         dispatch(pageUpdated(rootPage))
@@ -88,16 +73,17 @@ export default function CarouselPage(props: any) {
 
             {
                 (current != pages.length - 1) && <div className="flex flex-row fixed bottom-0 gap-3 p-3 mt-3 bg-white w-[100%] max-w-[400px]">
-                    <Button text={localization.previous} action={previousPage} /> <Button text={localization.next} action={nextPage} />
+                    <Button text={previous} action={previousPage} /> <Button text={next} action={nextPage} />
                 </div>
             }
             {
                 (current == pages.length - 1) && <div className="flex flex-row fixed bottom-0 gap-3 p-3 mt-3 bg-white w-[100%] max-w-[400px]">
-                    <Button text={localization.backToHome} action={() => backToHome(origin)} />
-                </div>
+
+                    <Button text={home} action={() => backToHome(origin)} />
+                </div >
             }
 
-        </div>
+        </div >
         }
     </>
 }

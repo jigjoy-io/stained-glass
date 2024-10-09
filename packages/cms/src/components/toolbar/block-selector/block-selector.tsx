@@ -1,16 +1,16 @@
 import React, { useEffect, useRef, useState } from "react"
 import { useDispatch } from "react-redux"
-import TemplateFactory from "../../factories/template-factory"
-import { blockingUpdated } from "../../reducers/toolbar-reducer"
-import { focusBlock, insertBlock, updateBlock } from "../../reducers/page-reducer"
-import Item from "../item/item"
-import ClickOutsideListener from "../popover/click-outside-listener"
-import { useActiveBlock, usePage } from "../../util/store"
-import { selectorOptions } from "../../util/selector-options"
+import TemplateFactory from "../../../factories/templates/template-factory"
+import { blockingUpdated } from "../../../reducers/toolbar-reducer"
+import { focusBlock, insertBlock, updateBlock } from "../../../reducers/page-reducer"
+import Item from "../../item/item"
+import ClickOutsideListener from "../../popover/click-outside-listener"
+import { useActiveBlock, useLanguage, usePage } from "../../../util/store"
 import { createPortal } from 'react-dom'
-import { moveCursorToEnd } from "../../util/move-cursor-to-end"
-import { splitTextAtCursor } from "../../util/split-text-at-cursor"
+import { moveCursorToEnd } from "../../../util/move-cursor-to-end"
+import { splitTextAtCursor } from "../../../util/split-text-at-cursor"
 import LocalizedStrings from "react-localization"
+import { SelectorOptions } from "./selector-options"
 
 
 let localization = new LocalizedStrings({
@@ -22,14 +22,15 @@ let localization = new LocalizedStrings({
     }
 })
 
-localization.setLanguage('sr')
-
 export default function BlockSelector(props: any) {
 
+
     const page = usePage()
+    const lang = useLanguage()
+    
     const [option, setOption] = useState("")
-    const [options, setOptions] = useState(page.type != 'blank' ? selectorOptions.filter((opt: any) => opt.key != 'important') : selectorOptions)
-    const [allOptions, setAllOptions] = useState(page.type != 'blank' ? selectorOptions.filter((opt: any) => opt.key != 'important') : selectorOptions)
+    const [options, setOptions] = useState([] as any)
+    const [allOptions, setAllOptions] = useState([] as any)
     const [showMenu, setShowMenu] = useState(false)
     const [placeholder, setPlaceholder] = useState(localization.selectorText)
     const activeBlock = useActiveBlock()
@@ -40,6 +41,12 @@ export default function BlockSelector(props: any) {
     const dispatch = useDispatch()
 
     useEffect(() => {
+        localization.setLanguage(lang)
+        const selectorOptions = SelectorOptions.getOptions(lang)
+
+        setOptions(page.type != 'blank' ? selectorOptions.filter((opt: any) => opt.key != 'pages') : selectorOptions)
+        setAllOptions(page.type != 'blank' ? selectorOptions.filter((opt: any) => opt.key != 'pages') : selectorOptions)
+
         inputRef.current?.focus()
     }, [])
 

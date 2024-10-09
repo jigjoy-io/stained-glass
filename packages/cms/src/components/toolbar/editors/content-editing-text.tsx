@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import TemplateFactory from '../../../factories/template-factory'
+import TemplateFactory from '../../../factories/templates/template-factory'
 import { focusBlock, insertBlock, updateBlock } from '../../../reducers/page-reducer'
 import alignmentVariations from '../../../util/alignment-variations'
 import { useActiveBlock } from '../../../util/store'

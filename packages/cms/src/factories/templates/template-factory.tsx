@@ -1,26 +1,15 @@
-import React from "react"
 import { v4 as uuidv4 } from 'uuid'
-import { templates } from "../util/templates"
-import LocalizedStrings from "react-localization"
+import { TemplatesStorage } from "./templates"
 
-let localization = new LocalizedStrings({
-    en: {
-        titile: "Title",
-        description: "Description..."
-    },
-    sr: {
-        titile: "Naslov",
-        description: "Opis..."
-    }
-})
-
-localization.setLanguage('sr')
-
-export default class TemplateFactory extends React.Component {
-
+export default class TemplateFactory {
 
     static create(type: string) {
+        let templates = TemplatesStorage.getTemplates()
+        
         let block: any = templates[type]
+        
+        console.log(type)
+        console.log(block)
         let template = JSON.parse(JSON.stringify(block))
         template.id = uuidv4()
         return template
@@ -58,9 +47,7 @@ export default class TemplateFactory extends React.Component {
         }
 
 
-        page.config = {
-            pages: pages
-        }
+        page.config.pages = pages
 
         return page
     }
@@ -69,11 +56,11 @@ export default class TemplateFactory extends React.Component {
 
         if (type == 'carousel')
             return this.createCarouselPage(origin)
-        
+
         if (type == 'blank')
             return this.createBlankPage(origin)
 
-        throw('Page not supported')
+        throw ('Page not supported')
     }
 
     static createCarouselTileBlock(origin, numberOfPages = 3) {
@@ -102,17 +89,13 @@ export default class TemplateFactory extends React.Component {
             throw ('Page not supported')
 
         let block: any = null
-        if(type == 'carousel-tile')
+        if (type == 'carousel-tile')
             block = this.createCarouselTileBlock(origin)
-        
+
         if (type == 'page-tile')
             block = this.createPageTileBlock(origin)
 
-
-        block.title = localization.titile
-        block.description = localization.description
-
         return block
     }
-    
+
 }

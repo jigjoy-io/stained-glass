@@ -15,6 +15,7 @@ export default class VistorFactory extends React.Component {
     }
 
     static getVisitingBlock(mode: any, blockConfig: any) {
+
         let block: any = this.blocks[mode]
 
         return <Suspense>
