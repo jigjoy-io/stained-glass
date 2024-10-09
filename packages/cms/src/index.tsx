@@ -29,8 +29,8 @@ const rootDiv = ReactDOM.createRoot(root)
 
 const dashboardRoute = createRouteMask({
 	routeTree,
-	from: '/dashboard',
-	to: '/dashboard',
+	from: '/interactive-content-designer',
+	to: '/interactive-content-designer',
 	params: (prev) => ({
 		pageId: undefined,
 		token: undefined,
