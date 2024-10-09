@@ -1,0 +1,26 @@
+import LocalizedStrings from "react-localization"
+import { store } from "../../util/store"
+
+const localization = new LocalizedStrings({
+    en: {
+        chooseProject: "Choose project to start.",
+        blankPageHeading: 'Blank Page',
+        blankPageDescription: 'Create an app from scratch.',
+        carouselHeading: 'Carousel',
+        carouselDescription: 'Create a quiz or micro-lesson.',
+        loadingMessage: 'Project initialization in progress'
+    },
+    sr: {
+        chooseProject: "Odaberi tip projekta.",
+        blankPageHeading: 'Prazna stranica',
+        blankPageDescription: 'Kreiraj aplikaciju od početka.',
+        carouselHeading: 'Karusel',
+        carouselDescription: 'Kreiraj mikro-lekciju ili kviz.',
+        loadingMessage: 'Priprema projekta u toku'
+    }
+})
+
+const state = store.getState()
+localization.setLanguage(state.localization.language)
+
+export default localization
