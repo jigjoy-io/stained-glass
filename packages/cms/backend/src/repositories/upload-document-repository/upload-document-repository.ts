@@ -10,12 +10,15 @@ const s3 = new S3({
  * @param {string} file.filename - The name of the file.
  * @param {Buffer} file.content - The file content.
  * @param {string} file.mimetype - The file's MIME type.
+ * @param {string} file.rootPageId - The root page id.
  * @returns {Promise<string>} The URL of the uploaded file.
  */
-export async function uploadDocument(file: { filename: string; content: Buffer; mimetype: string }): Promise<string> {
+export async function uploadDocument(file: { filename: string; content: Buffer; mimetype: string, rootPageId: string }): Promise<string> {
+  const folderPath = `assets/${file.rootPageId}/`;
+
   const params = {
     Bucket: 'jigjoy-dev',
-    Key: file.filename,
+    Key: `${folderPath}${file.filename}`,
     Body: file.content,
     ContentType: file.mimetype,
   };

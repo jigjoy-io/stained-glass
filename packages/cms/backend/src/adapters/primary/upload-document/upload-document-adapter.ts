@@ -10,9 +10,9 @@ export async function uploadDocumentHandler(event: APIGatewayProxyEvent): Promis
       throw new ValidationError(`PUT method only accepts PUT requests. You tried: ${event.httpMethod}`);
     }
 
-    const { file, name, app: slug, type } = JSON.parse(event.body || '{}');
+    const { file, name, type, rootPageId } = JSON.parse(event.body || '{}');
 
-    if (!file || !name || !slug || !type) {
+    if (!file || !name || !type) {
       throw new ValidationError('Missing required fields: file, name, app (slug), or type.');
     }
 
@@ -22,6 +22,7 @@ export async function uploadDocumentHandler(event: APIGatewayProxyEvent): Promis
       filename: name,
       content: fileContent,
       mimetype: type,
+      rootPageId: rootPageId
     };
 
     const fileUrl = await uploadDocumentUseCase(fileData);
