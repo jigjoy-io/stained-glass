@@ -1,11 +1,12 @@
 
 import { configureStore } from '@reduxjs/toolkit'
-import pageReducer from '../reducers/pageReducer'
+import pageReducer from '../reducers/page-reducer'
 import { useDispatch, useSelector } from "react-redux"
-import toolbarReducer from '../reducers/toolbarReducer'
-import authReducer from '../reducers/authReducer'
-import treeReducer from '../reducers/treeReducer'
-import sidebarReducer from '../reducers/sidebarReducer'
+import toolbarReducer from '../reducers/toolbar-reducer'
+import authReducer from '../reducers/auth-reducer'
+import localizationReducer from '../reducers/localization-reducer'
+import treeReducer from '../reducers/tree-reducer'
+import sidebarReducer from '../reducers/sidebar-reducer'
 
 export const store = configureStore({
     reducer: {
@@ -13,7 +14,8 @@ export const store = configureStore({
         tree: treeReducer,
         page: pageReducer,
         auth: authReducer,
-        sidebar: sidebarReducer
+        sidebar: sidebarReducer,
+        localization: localizationReducer
     }
 })
 
@@ -38,3 +40,4 @@ export const usePages = () => useAppSelector((state: any) => state.page.pages)
 export const useRootPage = () => useAppSelector((state: any) => state.page.rootPage)
 export const useMode = () => useAppSelector((state: any) => state.page.mode)
 export const useActiveBlock = () => useAppSelector((state: any) => state.page.activeBlock)
+export const useLanguage = () => useAppSelector((state: any) => state.localization.language)
