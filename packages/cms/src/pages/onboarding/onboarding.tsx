@@ -1,0 +1,97 @@
+import { fetchUserAttributes, getCurrentUser } from '@aws-amplify/auth'
+import { useNavigate } from '@tanstack/react-router'
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { useLanguage, useMode } from '../../util/store'
+import localization from './onboarding.localization'
+import { modeUpdated } from '../../reducers/page-reducer'
+import TemplateFactory from '../../factories/templates/template-factory'
+import { createPage } from '../../api/page'
+import Loader from '../../components/loader/loader'
+import CloseIcon from '../../icons/close-icon'
+import Title from '../../components/title/title'
+import Tile from '../../components/tile/tile'
+import Heading from '../../components/heading/heading'
+
+
+
+export default function Onboarding() {
+
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const mode = useMode()
+
+    const lang = useLanguage()
+
+
+    const checkUser = async () => {
+        try {
+            const user = await getCurrentUser()
+            if (!user) {
+                navigate({ to: '/' })
+            }
+        } catch (error) {
+            navigate({ to: '/' })
+            console.error("Error checking user authentication:", error)
+        }
+    }
+
+    useEffect(() => {
+        checkUser()
+    }, [])
+
+    useEffect(() => {
+        localization.setLanguage(lang)
+    }, [lang])
+
+
+    const create = async (type) => {
+
+        dispatch(modeUpdated("loading"))
+
+        const userAttributes = await fetchUserAttributes()
+
+
+        console.log(lang)
+        let page = TemplateFactory.createPage(type, userAttributes.email)
+
+        let createdPage = await createPage(page)
+
+        dispatch(modeUpdated("editing"))
+
+        navigate({
+            to: `/interactive-content-designer`,
+            search: { pageId: createdPage.id }
+        })
+    }
+
+    return <>
+        {
+            mode == "loading" ? <Loader message={localization.loadingMessage} /> : <div>
+                <div className='absolute top-10 right-10 w-max bg-primary-light border-2 border-primary p-1 rounded-md cursor-pointer' onClick={() => navigate({ to: '/interactive-content-designer' })}>
+                    <CloseIcon />
+                </div>
+                <div className='flex flex-col mt-20 items-center justify-center'>
+                    <Title position="center" text={localization.chooseProject}></Title>
+
+                    <div className='flex flex-row gap-8'>
+                        <div className='w-[400px] cursor-pointer hover:bg-primary-light hover:rounded-[20px] mt-10' onClick={() => create('blank')}>
+                            <Tile>
+                                <Heading text={localization.blankPageHeading} />
+                                <p className='mt-4'>{localization.blankPageDescription}</p>
+                            </Tile>
+                        </div>
+                        <div className='w-[400px] cursor-pointer hover:bg-primary-light hover:rounded-[20px] mt-10' onClick={() => create('carousel')}>
+                            <Tile>
+                                <Heading text={localization.carouselHeading} />
+                                <p className='mt-4'>{localization.carouselDescription}</p>
+                            </Tile>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        }
+
+    </>
+}

@@ -1,11 +1,11 @@
-import { NotFoundError } from "../util/errors/NotFoundError"
+import { NotFoundError } from "../util/errors/not-found-error"
 
 export const API_HOST = process.env.REACT_APP_API
 
-export async function accessPage(id: string) {
+export async function accessPage(id: string, pageNotFoundMessage) {
     const res: any = await fetch(`${API_HOST}/access/${id}`)
     if (res.status == 404)
-        throw new NotFoundError(`Page not found or is not published yet.`)
+        throw new NotFoundError(pageNotFoundMessage)
     return (await res.json())
 
 

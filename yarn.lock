@@ -4296,7 +4296,7 @@ faye-websocket@^0.11.3:
 
 fflate@^0.4.8:
   version "0.4.8"
-  resolved "https://registry.yarnpkg.com/fflate/-/fflate-0.4.8.tgz#f90b82aefbd8ac174213abb338bd7ef848f0f5ae"
+  resolved "https://registry.npmjs.org/fflate/-/fflate-0.4.8.tgz"
   integrity sha512-FJqqoDBR00Mdj9ppamLa/Y7vxm+PRmNWA67N846RvsoYVMKB4q3y/de5PA7gUmRMYK/8CMz2GDZQmCRN1wBcWA==
 
 fill-range@^7.0.1:
@@ -4982,6 +4982,11 @@ loader-runner@^4.2.0:
   version "4.3.0"
   resolved "https://registry.npmjs.org/loader-runner/-/loader-runner-4.3.0.tgz"
   integrity sha512-3R/1M+yS3j5ou80Me59j7F9IMs4PXs3VqRrm0TU3AbKPxlmpoY1TNscJV/oGJXo8qCatFGTfDbY6W6ipGOYXfg==
+
+localized-strings@^0.2.0:
+  version "0.2.4"
+  resolved "https://registry.npmjs.org/localized-strings/-/localized-strings-0.2.4.tgz"
+  integrity sha512-TKDhqFPkIIN/if2FSvVVZTaM/GP9TzfgdQ2uY65mr32xgFu5nqkKXprXbzy5rfx32DF5LDvS/y1UqYF/mAscYA==
 
 locate-path@^3.0.0:
   version "3.0.0"
@@ -5840,7 +5845,7 @@ postcss@^8.4.23, postcss@^8.4.33, postcss@^8.4.38:
 
 posthog-js@^1.166.1:
   version "1.166.1"
-  resolved "https://registry.yarnpkg.com/posthog-js/-/posthog-js-1.166.1.tgz#94524d9d8b696b8e99f7f746b69c5741d334de03"
+  resolved "https://registry.npmjs.org/posthog-js/-/posthog-js-1.166.1.tgz"
   integrity sha512-K8IpV8FJTCdwhsXFSbKj5vZ6IXNV079lukpG3cRtst2q5vMmUXRQiks7W3lOZLrjWyuJLKZDUiCeeDIUFORRuQ==
   dependencies:
     fflate "^0.4.8"
@@ -5848,9 +5853,9 @@ posthog-js@^1.166.1:
     web-vitals "^4.0.1"
 
 preact@^10.19.3:
-  version "10.24.1"
-  resolved "https://registry.yarnpkg.com/preact/-/preact-10.24.1.tgz#501e206d0a46667b6d0d8b780c7a65172239b2d0"
-  integrity sha512-PnBAwFI3Yjxxcxw75n6VId/5TFxNW/81zexzWD9jn1+eSrOP84NdsS38H5IkF/UH3frqRPT+MvuCoVHjTDTnDw==
+  version "10.24.2"
+  resolved "https://registry.npmjs.org/preact/-/preact-10.24.2.tgz"
+  integrity sha512-1cSoF0aCC8uaARATfrlz4VCBqE8LwZwRfLgkxJOQwAlQt6ayTmi0D9OF7nXid1POI5SZidFuG9CnlXbDfLqY/Q==
 
 prettier@^3.3.3:
   version "3.3.3"
@@ -5932,6 +5937,13 @@ react-dom@^18.3.1:
   dependencies:
     loose-envify "^1.1.0"
     scheduler "^0.23.2"
+
+react-localization@^1.0.19:
+  version "1.0.19"
+  resolved "https://registry.npmjs.org/react-localization/-/react-localization-1.0.19.tgz"
+  integrity sha512-f4E6T8xRis19K8qMOnnhjGV2quy1YH2lrSsnAiytvgt7uOSp6WgDhrZH6XZEaEFqupTOCFSf8uagIoIAkjl4JA==
+  dependencies:
+    localized-strings "^0.2.0"
 
 react-redux@^9.1.2:
   version "9.1.2"
@@ -6898,7 +6910,7 @@ wbuf@^1.1.0, wbuf@^1.7.3:
 
 web-vitals@^4.0.1:
   version "4.2.3"
-  resolved "https://registry.yarnpkg.com/web-vitals/-/web-vitals-4.2.3.tgz#270c4baecfbc6ec6fc15da1989e465e5f9b94fb7"
+  resolved "https://registry.npmjs.org/web-vitals/-/web-vitals-4.2.3.tgz"
   integrity sha512-/CFAm1mNxSmOj6i0Co+iGFJ58OS4NRGVP+AWS/l509uIK5a1bSoIVaHz/ZumpHTfHSZBpgrJ+wjfpAOrTHok5Q==
 
 webpack-cli@^5.1.4:
