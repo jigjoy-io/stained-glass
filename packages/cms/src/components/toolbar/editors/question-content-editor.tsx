@@ -10,7 +10,7 @@ let localization = new LocalizedStrings({
         update: "Update",
         displayQuestion: "Display question text",
         displayImage: "Display question image",
-        embedLink: "Unesi link"
+        embedLink: "Embed link"
     },
     RS: {
         update: "Promeni",
