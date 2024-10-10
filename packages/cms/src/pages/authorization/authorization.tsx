@@ -5,13 +5,10 @@ import Button from '../../components/button/button'
 import Title from '../../components/title/title'
 import { LazyMotion, m } from 'framer-motion'
 import { createSingInChallenge } from '../../api/authorize'
-import { useNavigate } from '@tanstack/react-router'
+import { useNavigate, useSearch } from '@tanstack/react-router'
 import { getCurrentUser } from 'aws-amplify/auth'
 import { Logo } from '../../icons/logo'
 import { useLanguage } from '../../util/store'
-import ReactFlagsSelect from "react-flags-select"
-import { languageUpdated } from '../../reducers/localization-reducer'
-import { useDispatch } from 'react-redux'
 import localization from './authorization.localization'
 import LanguageSwitcher from '../../shared/language-switcher/language-switcher'
 
@@ -40,7 +37,17 @@ export default function Authorization(props: any) {
 	const [message, setMessage] = useState('')
 	const [email, setEmail] = useState('')
 	const navigate = useNavigate()
-	const lang = useLanguage()
+
+	const { langParam } = useSearch({
+		from: `/`,
+		select: (search: any) => {
+			return {
+				langParam: search.lang ? search.lang.toUpperCase() : null,
+			}
+		},
+	})
+
+	const lang = langParam || useLanguage()
 	localization.setLanguage(lang)
 
 	const checkUser = async () => {
