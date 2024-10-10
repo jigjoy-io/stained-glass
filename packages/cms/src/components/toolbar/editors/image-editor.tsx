@@ -12,13 +12,15 @@ let localization = new LocalizedStrings({
         update: "Update",
         embedLink: "Embed link",
         uploadImage: "Upload image",
-        clickToUpload: "Click to upload image"
+        clickToUpload: "Click to upload image",
+        maxFileUpload: "Maximum file size is 5mb"
     },
     RS: {
         update: "Promeni",
         embedLink: "Unesi link",
         uploadImage: "Promeni sliku",
-        clickToUpload: "Klikni da ubaciš sliku" 
+        clickToUpload: "Klikni da ubaciš sliku",
+        maxFileUpload: "Maksimalna velicina fajla je 5mb"
     }
 })
 
@@ -62,6 +64,7 @@ export default function ImageEditor(props: any) {
                     />
                     <Button text={localization.clickToUpload} color="default" action={triggerFileInput} />
                     {fileName && <p className="mt-2 text-sm">{fileName}</p>}
+                    <p className="mt-2 text-sm text-text-danger">{localization.maxFileUpload}</p>
                 </Tab>
                 <Tab key={localization.embedLink}>
                     <input className="p-1 rounded-lg border w-[100%] mb-3" value={value} onChange={(e: any) => setValue(e.target.value)} />

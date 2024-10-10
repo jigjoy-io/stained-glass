@@ -18,7 +18,8 @@ module.exports = {
       'white': '#FFFFFF',
       'yellow': '#FEF7EA',
       'blue': '#E5EFFA',
-      'red': '#fdd0df'
+      'red': '#fdd0df',
+      'text-danger': '#ed5249'
     },
 
 
