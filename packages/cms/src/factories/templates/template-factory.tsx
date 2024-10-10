@@ -4,11 +4,6 @@ import isValidEmail from '../../util/is-valid-email'
 
 export default class TemplateFactory {
 
-    // static isValidEmail(email: string): boolean {
-    //     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    //     return emailRegex.test(email);
-    // }
-
     static create(type: string) {
         let templates = TemplatesStorage.getTemplates()
 

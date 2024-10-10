@@ -32,7 +32,6 @@ export async function migrateNavigationButtonsHandler({
                     previous: 'Previous',
                     next: "Next",
                     home: "Back to home",
-                    start: "Start"
                 }
             }
 
