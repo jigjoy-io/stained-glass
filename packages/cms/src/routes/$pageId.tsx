@@ -47,7 +47,7 @@ function PendingComponent() {
     from: `/$pageId`,
     select: (search: any) => {
       return {
-        langParam: search.lang,
+        langParam: search.lang ? search.lang.toUpperCase() : null,
       }
     },
   })
