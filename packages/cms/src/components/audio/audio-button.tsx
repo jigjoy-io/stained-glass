@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import SpeakerOnIcon from "../../icons/speaker-on-icon"
 import SpeakerOffIcon from "../../icons/speaker-off-icon";
 import AudioPlayer from "../../util/audio-player";
+import { v4 as uuid } from 'uuid'
 
 interface AudioButtonProps {
     position: string;
@@ -10,15 +11,22 @@ interface AudioButtonProps {
 
 function AudioButton({ position, source }: AudioButtonProps) {
     const [isPlaying, setIsPlaying] = useState(false)
+    const buttonId = useRef(uuid())
 
     const togglePlay = () => {
-        AudioPlayer.getInstance().playAudio(source)
-        setIsPlaying(AudioPlayer.getInstance().getIsPlaying() && AudioPlayer.getInstance().getCurrentSource() === source)
+        AudioPlayer.getInstance().playAudio(source, buttonId.current)
+        setIsPlaying(AudioPlayer.getInstance().getIsPlaying() &&
+            AudioPlayer.getInstance().getCurrentSource() === source &&
+            AudioPlayer.getInstance().getCurrentButtonId() === buttonId.current
+        )
     }
 
     useEffect(() => {
         const checkPlayingStatus = () => {
-            setIsPlaying(AudioPlayer.getInstance().getIsPlaying() && AudioPlayer.getInstance().getCurrentSource() === source)
+            setIsPlaying(AudioPlayer.getInstance().getIsPlaying() &&
+                AudioPlayer.getInstance().getCurrentSource() === source &&
+                AudioPlayer.getInstance().getCurrentButtonId() === buttonId.current
+            )
         }
 
         const intervalId = setInterval(checkPlayingStatus, 100)

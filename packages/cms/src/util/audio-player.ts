@@ -2,6 +2,7 @@ class AudioPlayer {
     private static instance: AudioPlayer | null = null;
     private currentPlayer: HTMLAudioElement | null = null;
     private currentSource: string | null = null;
+    private currentButtonId: string | null = null;
     private isPlaying: boolean = false;
 
     private constructor() {}
@@ -13,8 +14,8 @@ class AudioPlayer {
         return this.instance;
     }
 
-    public playAudio(source: string): void {
-        if (this.currentSource === source) {
+    public playAudio(source: string, buttonId: string): void {
+        if (this.currentSource === source && this.currentButtonId === buttonId) {
             if (this.isPlaying) {
                 this.pauseAudio();
             } else {
@@ -26,6 +27,7 @@ class AudioPlayer {
             }
             this.currentPlayer = new Audio(source);
             this.currentSource = source;
+            this.currentButtonId = buttonId;
             this.currentPlayer.play();
             this.isPlaying = true;
         }
@@ -33,6 +35,7 @@ class AudioPlayer {
 
     public pauseAudio(): void {
         if (this.currentPlayer && this.isPlaying) {
+            this.currentPlayer.currentTime = 0;
             this.currentPlayer.pause();
             this.isPlaying = false;
         }
@@ -40,6 +43,7 @@ class AudioPlayer {
 
     private resumeAudio(): void {
         if (this.currentPlayer && !this.isPlaying) {
+            this.currentPlayer.currentTime = 0;
             this.currentPlayer.play();
             this.isPlaying = true;
         }
@@ -51,6 +55,10 @@ class AudioPlayer {
 
     public getCurrentSource(): string | null {
         return this.currentSource;
+    }
+
+    public getCurrentButtonId(): string | null {
+        return this.currentButtonId;
     }
 }
 
