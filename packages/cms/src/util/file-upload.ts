@@ -24,6 +24,7 @@ const useFileUpload = (setValue: (value: string) => void, acceptedFileType: stri
                 rootPageId: rootPage.id,
             })
             setValue(response.filePath)
+            return response.filePath
         } catch (error) {
             console.error(`Failed to upload ${acceptedFileType} file:`, error)
             alert(`Error uploading ${acceptedFileType} file.`)

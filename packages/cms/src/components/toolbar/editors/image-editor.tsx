@@ -14,59 +14,84 @@ let localization = new LocalizedStrings({
         embedLink: "Embed link",
         uploadImage: "Upload image",
         clickToUpload: "Click to upload image",
-        maxFileUpload: "Maximum file size is 5mb",
-        fileTooLarge: "File is too large. Please upload a file smaller than 5MB.",
-        fileUploadSuccess: "Your image is ready for upload!",
+        maxFileUpload: "Maximum image size is 5mb",
+        fileTooLarge: "Image is too large. Please upload a image smaller than 5MB.",
+        fileLoadSuccess: "You can start uploading your image.",
+        fileUploadedSuccessfully: "Your image upload has finished!",
+        uploadInProgress: "Upload in progress...",
+        uploadError: "Error has occured during the upload!"
     },
     RS: {
         update: "Promeni",
         embedLink: "Unesi link",
         uploadImage: "Promeni sliku",
         clickToUpload: "Klikni da ubaciš sliku",
-        maxFileUpload: "Maksimalna velicina fajla je 5mb",
-        fileTooLarge: "Fajl je prevelik. Molimo vas da otpremite fajl manji od 5MB.",
-        fileUploadSuccess: "Vaša slika je spreman za otpremljivanje!"
+        maxFileUpload: "Maksimalna velicina slike je 5mb",
+        fileTooLarge: "Slika je prevelika. Molimo vas da otpremite sliku manju od 5MB.",
+        fileLoadSuccess: "Možete započeti otpremanje slike.",
+        fileUploadedSuccessfully: "Vaša slika je uspešno otpremljena!",
+        uploadInProgress: "Otpremljivanje je u toku...",
+        uploadError: "Greška prilikom otpremljivanja!",
     }
 })
 
 export default function ImageEditor(props: any) {
     const [value, setValue] = useState(props.value)
     const fileInputRef = useRef<HTMLInputElement>(null)
+    const [file, setFile] = useState<File | null>(null)
     const [fileAlert, setFileAlert] = useState({ type: "info", message: localization.maxFileUpload })
+    const [loading, setLoading] = useState(false)
+    const [fileUrl, setFileUrl] = useState<string | null>(null)
 
     const dispatch = useDispatch()
     localization.setLanguage(props.lang)
 
-    const { fileName, uploading, handleFileUpload, setFileName } = useFileUpload(setValue, 'image')
-
-
-    const update = () => {
-        let block = JSON.parse(JSON.stringify(props.block))
-        block[props.attribute] = value
-        dispatch(updateBlock(block))
-    }
+    const { handleFileUpload } = useFileUpload(setValue, 'image')
 
     const triggerFileInput = () => {
         fileInputRef.current?.click()
     }
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0]
-        if (file) {
-            if (file.size > 5 * 1024 * 1024) {
+        const selectedFile = event.target.files?.[0]
+        if (selectedFile) {
+            if (selectedFile.size > 5 * 1024 * 1024) {
                 setFileAlert({ type: "danger", message: localization.fileTooLarge })
             } else {
-                setFileAlert({ type: "success", message: localization.fileUploadSuccess })
-                handleFileUpload(file)
+                setFile(selectedFile)
+                setFileAlert({ type: "info", message: localization.fileLoadSuccess })
             }
         }
     }
 
-    useEffect(() => {
-        if (!uploading && fileName) {
-            setFileAlert({ type: "success", message: localization.fileUploadSuccess })
+    const update = async () => {
+        setLoading(true)
+        try {
+            let uploadedFileUrl = fileUrl
+
+            if (file && !fileUrl) {
+                setFileAlert({ type: "info", message: localization.uploadInProgress })
+                uploadedFileUrl = await handleFileUpload(file)
+                setFileUrl(uploadedFileUrl)
+                setFileAlert({ type: "success", message: localization.fileUploadedSuccessfully })
+            }
+
+            const block = { ...props.block }
+            block[props.attribute] = uploadedFileUrl || value
+            dispatch(updateBlock(block))
+
+        } catch (error) {
+            setFileAlert({ type: "danger", message: localization.uploadError })
+        } finally {
+            setLoading(false)
         }
-    }, [uploading, fileName])
+    }
+
+    useEffect(() => {
+        if (!loading && fileUrl) {
+            setFileAlert({ type: "success", message: localization.fileUploadedSuccessfully })
+        }
+    }, [loading, fileUrl])
 
     return (
         <div className="flex flex-col p-2 w-[300px] mt-4">
@@ -84,7 +109,7 @@ export default function ImageEditor(props: any) {
                         style={{ display: 'none' }}
                     />
                     <Button text={localization.clickToUpload} color="default" action={triggerFileInput} />
-                    {fileName && <p className="mt-2 text-sm">{fileName}</p>}
+                    {file && !loading && <p className="mt-2 text-sm">{file.name}</p>}
                 </Tab>
                 <Tab key={localization.embedLink}>
                     <input className="p-1 rounded-lg border w-[100%] mb-3" value={value} onChange={(e: any) => setValue(e.target.value)} />

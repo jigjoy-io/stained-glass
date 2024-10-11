@@ -38,9 +38,11 @@ export default function Alert(props: any) {
     return (
         <div className={`${bg} p-4 rounded-lg`}>
             <div className='flex items-center'>
-                {
-                    (icon != null) && renderIcon()
-                }
+                <div style={{ width: '24px', height: '24px' }}>
+                    {
+                        (icon != null) && renderIcon()
+                    }
+                </div>
                 <div className='pl-3'>
                     <div className='font-bold'>{props.title}</div>
                     <div className={props.small ? 'text-sm' : ''}>{props.message}</div>
