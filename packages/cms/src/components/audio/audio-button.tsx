@@ -1,25 +1,41 @@
 import React, { useEffect, useState } from "react"
 import SpeakerOnIcon from "../../icons/speaker-on-icon"
+import SpeakerOffIcon from "../../icons/speaker-off-icon";
+import AudioPlayer from "../../util/audio-player";
 
-function AudioButton(props: any) {
+interface AudioButtonProps {
+    position: string;
+    source: string;
+}
 
+function AudioButton({ position, source }: AudioButtonProps) {
+    const [isPlaying, setIsPlaying] = useState(false)
 
-    const [position, setPosition] = useState(props.position)
-
-    const play = ((audio: string) => {
-        new Audio(audio).play()
-    })
+    const togglePlay = () => {
+        AudioPlayer.getInstance().playAudio(source)
+        setIsPlaying(AudioPlayer.getInstance().getIsPlaying() && AudioPlayer.getInstance().getCurrentSource() === source)
+    }
 
     useEffect(() => {
-        setPosition(props.position)
-    }, [props.position])
+        const checkPlayingStatus = () => {
+            setIsPlaying(AudioPlayer.getInstance().getIsPlaying() && AudioPlayer.getInstance().getCurrentSource() === source)
+        }
 
-    return <div className="flex w-full" style={{ justifyContent: position }} >
-        <div className='w-max hover:bg-primary-light border-2 border-[transparent] p-1 rounded-md cursor-pointer'
-            onClick={() => play(props.source)}>
-            <SpeakerOnIcon />
+        const intervalId = setInterval(checkPlayingStatus, 100)
+
+        return () => clearInterval(intervalId)
+    }, [source])
+
+    return (
+        <div className="flex w-full" style={{ justifyContent: position }}>
+            <div
+                className='w-max hover:bg-primary-light border-2 border-[transparent] p-1 rounded-md cursor-pointer'
+                onClick={togglePlay}
+            >
+                {isPlaying ? <SpeakerOnIcon /> : <SpeakerOffIcon />}
+            </div>
         </div>
-    </div>
+    )
 }
 
 export default AudioButton
