@@ -95,7 +95,7 @@ export default function VideoEditor(props: any) {
 
     return (
         <div className="flex flex-col p-2 w-[300px] mt-4">
-            <video src={value} className="w-[100px] my-2 rounded-lg" controls />
+            <video src={value} className="w-[100px] my-2 rounded-lg" />
             <Tabs>
                 <Tab key={localization.uploadVideo}>
                     <div className="mb-2">
