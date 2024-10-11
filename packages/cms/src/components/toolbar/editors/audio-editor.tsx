@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useRef, useState } from "react"
 import { useDispatch } from "react-redux"
 import { updateBlock } from "../../../reducers/page-reducer"
 import AudioButton from "../../audio/audio-button"
@@ -104,7 +104,7 @@ export default function AudioEditor(props: any) {
                         style={{ display: 'none' }}
                     />
                     <Button text={localization.clickToUpload} color="default" action={triggerFileInput} />
-                    {file && !loading && <p className="mt-2 text-sm">{file.name}</p>}
+                    {file && !loading && <p className="mt-2 text-sm text-ellipsis overflow-hidden">{file.name}</p>}
                 </Tab>
                 <Tab key={localization.embedLink}>
                     <input className="p-1 rounded-lg border w-[100%] mb-3" value={value} onChange={(e: any) => setValue(e.target.value)} />

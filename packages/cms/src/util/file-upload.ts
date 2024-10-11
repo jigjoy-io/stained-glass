@@ -1,11 +1,8 @@
-import { useState } from "react"
 import { uploadDocument } from "../api/upload"
 import { fileToBase64 } from "./file-to-base64"
 import { useRootPage } from "./store"
 
 const useFileUpload = (setValue: (value: string) => void, acceptedFileType: string) => {
-    const [fileName, setFileName] = useState("")
-    const [uploading, setUploading] = useState(false)
     const rootPage = useRootPage()
 
     const handleFileUpload = async (file: File) => {
@@ -13,8 +10,6 @@ const useFileUpload = (setValue: (value: string) => void, acceptedFileType: stri
             alert(`Please select a valid ${acceptedFileType} file.`)
             return
         }
-        setFileName(file.name)
-        setUploading(true)
         try {
             const base64 = await fileToBase64(file)
             const response = await uploadDocument({
@@ -28,12 +23,10 @@ const useFileUpload = (setValue: (value: string) => void, acceptedFileType: stri
         } catch (error) {
             console.error(`Failed to upload ${acceptedFileType} file:`, error)
             alert(`Error uploading ${acceptedFileType} file.`)
-        } finally {
-            setUploading(false)
         }
     }
 
-    return { fileName, uploading, handleFileUpload, setFileName }
+    return { handleFileUpload }
 }
 
 export default useFileUpload
