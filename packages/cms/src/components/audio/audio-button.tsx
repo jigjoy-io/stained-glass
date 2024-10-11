@@ -1,38 +1,24 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useState } from "react"
 import SpeakerOnIcon from "../../icons/speaker-on-icon"
-import SpeakerOffIcon from "../../icons/speaker-off-icon";
-import AudioPlayer from "../../util/audio-player";
-import { v4 as uuid } from 'uuid'
+import SpeakerOffIcon from "../../icons/speaker-off-icon"
+import AudioPlayer from "../../util/audio-player"
 
 interface AudioButtonProps {
-    position: string;
-    source: string;
+    id: string,
+    position?: string
+    source: string
 }
 
-function AudioButton({ position, source }: AudioButtonProps) {
+function AudioButton({ id, position, source }: AudioButtonProps) {
     const [isPlaying, setIsPlaying] = useState(false)
-    const buttonId = useRef(uuid())
+    const audioPlayer = AudioPlayer.getInstance()
 
     const togglePlay = () => {
-        AudioPlayer.getInstance().playAudio(source, buttonId.current)
-        setIsPlaying(AudioPlayer.getInstance().getIsPlaying() &&
-            AudioPlayer.getInstance().getCurrentSource() === source &&
-            AudioPlayer.getInstance().getCurrentButtonId() === buttonId.current
-        )
+
+        audioPlayer.play(id, source)
+        audioPlayer.onStart(() => setIsPlaying(true))
+        audioPlayer.onEnd(() => setIsPlaying(false))
     }
-
-    useEffect(() => {
-        const checkPlayingStatus = () => {
-            setIsPlaying(AudioPlayer.getInstance().getIsPlaying() &&
-                AudioPlayer.getInstance().getCurrentSource() === source &&
-                AudioPlayer.getInstance().getCurrentButtonId() === buttonId.current
-            )
-        }
-
-        const intervalId = setInterval(checkPlayingStatus, 100)
-
-        return () => clearInterval(intervalId)
-    }, [source])
 
     return (
         <div className="flex w-full" style={{ justifyContent: position }}>
