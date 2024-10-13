@@ -21,7 +21,7 @@ let localization = new LocalizedStrings({
         editImage: "Image",
         editDescription: "Description",
         editCta: "Call-to-acition",
-        editColor: "Position",
+        editColor: "Color",
         editButtons: "Navigation Buttons"
     },
     RS: {

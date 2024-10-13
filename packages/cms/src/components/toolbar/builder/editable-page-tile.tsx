@@ -19,7 +19,7 @@ let localization = new LocalizedStrings({
         editImage: "Image",
         editDescription: "Description",
         editCta: "Call-to-acition",
-        editColor: "Edit position"
+        editColor: "Color"
     },
     RS: {
         rename: "Preimenuj",
