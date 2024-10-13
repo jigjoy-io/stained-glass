@@ -8,6 +8,7 @@ import { replaceBlock } from "../../util/traversals/replace-block"
 import LeftSideMenu from "./left-side-menu"
 import { RightSideMenu } from "./right-side-menu"
 import AuthLayer from "../authorization/auth-layer"
+import { blockingUpdated } from "../../reducers/toolbar-reducer"
 
 export default function Designer() {
 
@@ -33,6 +34,7 @@ export default function Designer() {
     }
 
     useEffect(() => {
+        dispatch(blockingUpdated(false))
         dispatch(modeUpdated("editing"))
     }, [])
 

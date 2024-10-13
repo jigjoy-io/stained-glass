@@ -80,8 +80,8 @@ export default function UserMenu() {
     }
 
     const handleSettingsClose = () => {
-        setSettingsOpen(false)
         dispatch(blockingUpdated(false))
+        setSettingsOpen(false)
     }
 
     return (
