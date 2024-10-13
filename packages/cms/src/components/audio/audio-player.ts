@@ -27,8 +27,8 @@ export default class AudioPlayer implements Player {
     }
     
     stop() {
-        this.audio.pause()
         this.onEnd()
+        this.audio.pause()
     }
 
 
