@@ -14,7 +14,7 @@ let localization = new LocalizedStrings({
         embedLink: "Embed link",
         uploadImage: "Upload image",
         clickToUpload: "Click to upload image",
-        maxFileUpload: "Maximum image size is 5mb",
+        maxFileUpload: "Maximum image size is 5mb.",
         fileTooLarge: "Image is too large. Please upload a image smaller than 5MB.",
         fileLoadSuccess: "You can start uploading your image.",
         fileUploadedSuccessfully: "Your image upload has finished!",
@@ -26,7 +26,7 @@ let localization = new LocalizedStrings({
         embedLink: "Unesi link",
         uploadImage: "Promeni sliku",
         clickToUpload: "Klikni da ubaciš sliku",
-        maxFileUpload: "Maksimalna velicina slike je 5mb",
+        maxFileUpload: "Maksimalna velicina slike je 5mb.",
         fileTooLarge: "Slika je prevelika. Molimo vas da otpremite sliku manju od 5MB.",
         fileLoadSuccess: "Možete započeti otpremanje slike.",
         fileUploadedSuccessfully: "Vaša slika je uspešno otpremljena!",
@@ -93,7 +93,7 @@ export default function ImageEditor(props: any) {
             <Tabs>
                 <Tab key={localization.uploadImage}>
                     <div className="mb-2">
-                        <Alert type={fileAlert.type} message={fileAlert.message} small={true} />
+                        <Alert type={fileAlert.type} message={fileAlert.message} />
                     </div>
                     <input
                         type="file"

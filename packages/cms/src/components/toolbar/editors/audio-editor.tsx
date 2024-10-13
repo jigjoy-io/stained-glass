@@ -15,7 +15,7 @@ let localization = new LocalizedStrings({
         embedLink: "Embed link",
         uploadAudio: "Upload audio",
         clickToUpload: "Click to upload audio",
-        maxFileUpload: "Maximum audio size is 5mb",
+        maxFileUpload: "Maximum audio file size is 5mb.",
         fileTooLarge: "Audio is too large. Please upload a audio smaller than 5MB.",
         fileLoadSuccess: "You can start uploading your audio.",
         uploadInProgress: "Upload in progress...",
@@ -27,7 +27,7 @@ let localization = new LocalizedStrings({
         embedLink: "Unesi link",
         uploadAudio: "Promeni zvuk",
         clickToUpload: "Klikni da ubaciš zvuk",
-        maxFileUpload: "Maksimalna velicina audi-a je 5mb",
+        maxFileUpload: "Maksimalna veličina audio fajla je 5mb.",
         fileTooLarge: "Audio je prevelik. Molimo vas da otpremite audio manji od 5MB.",
         fileLoadSuccess: "Možete započeti otpremanje audio datoteke.",
         uploadInProgress: "Otpremljivanje je u toku...",
@@ -40,12 +40,13 @@ export default function AudioEditor(props: any) {
     const [value, setValue] = useState(props.value)
     const fileInputRef = useRef<HTMLInputElement>(null)
     const [file, setFile] = useState<File | null>(null)
-    const [fileAlert, setFileAlert] = useState({ type: "info", message: localization.maxFileUpload })
     const [loading, setLoading] = useState(false)
     const [fileUrl, setFileUrl] = useState<string | null>(null)
 
     const dispatch = useDispatch()
     localization.setLanguage(props.lang)
+    
+    const [fileAlert, setFileAlert] = useState({ type: "info", message: localization.maxFileUpload })
 
     const { handleFileUpload } = useFileUpload(setValue, 'audio')
 
@@ -94,7 +95,7 @@ export default function AudioEditor(props: any) {
             <Tabs>
                 <Tab key={localization.uploadAudio}>
                     <div className="mb-2">
-                        <Alert type={fileAlert.type} message={fileAlert.message} small={true} />
+                        <Alert type={fileAlert.type} message={fileAlert.message} />
                     </div>
                     <input
                         type="file"
