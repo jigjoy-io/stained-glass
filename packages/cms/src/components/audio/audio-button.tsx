@@ -1,7 +1,8 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import SpeakerOnIcon from "../../icons/speaker-on-icon"
 import SpeakerOffIcon from "../../icons/speaker-off-icon"
-import AudioPlayer from "../../util/audio-player"
+import MediaLibrary from "./media-library"
+import AudioPlayer from "./audio-player"
 
 interface AudioButtonProps {
     id: string,
@@ -9,15 +10,28 @@ interface AudioButtonProps {
     source: string
 }
 
-function AudioButton({ id, position, source }: AudioButtonProps) {
+function AudioButton({ id, position, source }: AudioButtonProps){
     const [isPlaying, setIsPlaying] = useState(false)
-    const audioPlayer = AudioPlayer.getInstance()
+
+    let params = {
+        id: id,
+        source: source,
+        onStart: () => setIsPlaying(true),
+        onEnd: () => setIsPlaying(false)
+    }
+
+    const audioPlayer : AudioPlayer = new AudioPlayer(params)
+    const mediaLibrary = MediaLibrary.getInstance()
+
+    mediaLibrary.addPlayer(audioPlayer)
+
+    useEffect(() => {
+        return () => mediaLibrary.removePlayer(audioPlayer)
+    }, [])
 
     const togglePlay = () => {
 
-        audioPlayer.play(id, source)
-        audioPlayer.onStart(() => setIsPlaying(true))
-        audioPlayer.onEnd(() => setIsPlaying(false))
+        mediaLibrary.play(audioPlayer)
     }
 
     return (
