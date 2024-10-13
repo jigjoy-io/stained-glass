@@ -5,6 +5,9 @@ import ImageEditingIcon from "../../../icons/image-editing-icon"
 import AudioEditingIcon from "../../../icons/audio-editing-icon"
 import VideoEditingIcon from "../../../icons/video-editing-icon"
 import localization from "./selector-options.localization"
+import MessageIcon from "../../../icons/message-icon"
+import QuestionIcon from "../../../icons/question-icon"
+import { PageIcon } from "../../../icons/page-icon"
 
 export class SelectorOptions {
 
@@ -31,7 +34,7 @@ export class SelectorOptions {
                         key: "page-configurer",
                         label: localization.blankPage,
                         description: localization.blankPageDescription,
-                        icon: CarouselIcon
+                        icon: PageIcon
                     },
                     {
                         key: "carousel-configurer",
@@ -98,13 +101,13 @@ export class SelectorOptions {
                         key: "question",
                         label: localization.question,
                         description: localization.questionDescription,
-                        icon: ImageEditingIcon
+                        icon: QuestionIcon
                     },
                     {
                         key: "message",
                         label: localization.message,
                         description: localization.messageDescription,
-                        icon: VideoEditingIcon
+                        icon: MessageIcon
                     }
                 ]
             }
