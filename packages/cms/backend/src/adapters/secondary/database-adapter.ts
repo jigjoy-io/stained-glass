@@ -89,23 +89,23 @@ export async function deletePage(pageId: any): Promise<void> {
     TableName: tableName,
     Key: { id: pageId },
     ReturnValues: "ALL_OLD",
-  };
+  }
 
-  const result = await ddbDocClient.send(new DeleteCommand(params));
+  const result = await ddbDocClient.send(new DeleteCommand(params))
 
   if (result.Attributes && result.Attributes.linkedPageId) {
-    const linkedPageId = result.Attributes.linkedPageId;
+    const linkedPageId = result.Attributes.linkedPageId
 
     const prodParams: DeleteCommandInput = {
       TableName: tableName,
       Key: { id: linkedPageId },
-    };
+    }
 
-    await ddbDocClient.send(new DeleteCommand(prodParams));
+    await ddbDocClient.send(new DeleteCommand(prodParams))
   }
 
-  const folderPath = `assets/${pageId}/`;
-  await deleteAssets(folderPath);
+  const folderPath = `assets/${pageId}/`
+  await deleteAssets(folderPath)
 }
 
 export async function getPages(origin: string): Promise<PageDto[]> {

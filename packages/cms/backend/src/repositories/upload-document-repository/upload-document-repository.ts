@@ -1,7 +1,7 @@
-import { S3, PutObjectCommand } from '@aws-sdk/client-s3';
+import { S3, PutObjectCommand } from '@aws-sdk/client-s3'
 
-const s3 = new S3();
-const bucketName = process.env.BUCKET_NAME
+const s3 = new S3()
+const assetsBucket = process.env.ASSETS_BUCKET
 
 /**
  * Uploads a file to S3 and returns the file URL.
@@ -13,22 +13,22 @@ const bucketName = process.env.BUCKET_NAME
  * @returns {Promise<string>} The URL of the uploaded file.
  */
 export async function uploadDocument(file: { filename: string; content: Buffer; mimetype: string, rootPageId: string }): Promise<string> {
-  const folderPath = `assets/${file.rootPageId}/`;
+	const folderPath = `assets/${file.rootPageId}/`
 
-  const params = {
-    Bucket: bucketName,
-    Key: `${folderPath}${file.filename}`,
-    Body: file.content,
-    ContentType: file.mimetype,
-  };
+	const params = {
+		Bucket: assetsBucket,
+		Key: `${folderPath}${file.filename}`,
+		Body: file.content,
+		ContentType: file.mimetype,
+	}
 
-  try {
-    const result = await s3.send(new PutObjectCommand(params));
-    const fileUrl = `https://${params.Bucket}.s3.amazonaws.com/${params.Key}`;
-    console.log('Upload result:', result);
-    return fileUrl;
-  } catch (error) {
-    console.error('S3 file upload error:', error);
-    throw new Error('S3 file upload failed');
-  }
+	try {
+		const result = await s3.send(new PutObjectCommand(params))
+		const fileUrl = `https://${params.Bucket}.s3.amazonaws.com/${params.Key}`
+		console.log('Upload result:', result)
+		return fileUrl
+	} catch (error) {
+		console.error('S3 file upload error:', error)
+		throw new Error('S3 file upload failed')
+	}
 }
