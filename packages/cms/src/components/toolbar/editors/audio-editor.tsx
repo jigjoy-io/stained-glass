@@ -45,7 +45,6 @@ export default function AudioEditor(props: any) {
 
     const dispatch = useDispatch()
     localization.setLanguage(props.lang)
-    
     const [fileAlert, setFileAlert] = useState({ type: "info", message: localization.maxFileUpload })
 
     const { handleFileUpload } = useFileUpload(setValue, 'audio')

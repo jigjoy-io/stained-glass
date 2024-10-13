@@ -7,10 +7,10 @@ import Toolbar from "../toolbar"
 import EditableBlock from "./editable-block"
 import LocalizedStrings from "react-localization"
 import PositionEditingIcon from "../../../icons/position-editing-icon"
-import ImageEditingIcon from "../../../icons/image-editing-icon"
 import AudioEditingIcon from "../../../icons/audio-editing-icon"
 import ColorEditingIcon from "../../../icons/color-editing-icon"
 import { store } from "../../../util/store"
+import MessageIcon from "../../../icons/message-icon"
 
 
 let localization = new LocalizedStrings({
@@ -34,7 +34,7 @@ export default class EditableMessage extends EditableBlock {
         return [{
             name: localization.editMessage,
             key: 'message',
-            icon: ImageEditingIcon,
+            icon: MessageIcon,
             editor: TextAreaEditor
         }, {
             name: localization.editAudio,
