@@ -489,7 +489,7 @@ export function Node(props: any) {
                     <div className="flex flex-col gap-2" onClick={(e) => e.stopPropagation()}>
                         <p className="font-bold">{localization.deletePage}</p>
                         <div>{localization.areYouSure}</div>
-                        <div className="flex gap-2 mt-3">
+                        <div className="flex gap-2 mt-3 justify-end">
                             <Button size="sm" color="white" text={localization.yes} action={remove} />
                             <Button size="sm" color="default" text={localization.no} action={closeDelete} />
                         </div>
