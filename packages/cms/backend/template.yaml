@@ -404,7 +404,7 @@ Resources:
       Description: Upload user document to S3
       Environment:
         Variables:
-          BUCKET_NAME: '{{resolve:secretsmanager:vars:SecretString:BucketName}}'
+          ASSETS_BUCKET: '{{resolve:secretsmanager:vars:SecretString:AssetsBucket}}'
       Events:
         Api:
           Type: Api
@@ -498,6 +498,7 @@ Resources:
       Environment:
         Variables:
           PAGE_TABLE: !Ref PageTable
+          ASSETS_BUCKET: '{{resolve:secretsmanager:vars:SecretString:AssetsBucket}}'
       Events:
         Api:
           Type: Api
