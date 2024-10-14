@@ -28,11 +28,11 @@ jobs:
         run: npm run build
 
       - name: Config AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with: 
+        uses: aws-actions/configure-aws-credentials@v4
+        env: 
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          aws-region: eu-west-1
       
       - name: Deploy to AWS S3
         run: aws s3 sync dist s3://${{ secrets.BUCKET_NAME }}
