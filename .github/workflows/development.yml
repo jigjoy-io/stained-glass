@@ -7,14 +7,14 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./packages/cms
     environment: env
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        
-      - name: Switch to Frontend Directory
-        run: cd packages/cms
 
       - name: NodeJs Setup
         uses: actions/setup-node@v4
@@ -35,4 +35,4 @@ jobs:
           aws-region: eu-west-1
       
       - name: Deploy to AWS S3
-        run: aws s3 sync build/ s3://${{ secrets.BUCKET_NAME }} 
+        run: aws s3 sync dist/ s3://${{ secrets.BUCKET_NAME }} 
