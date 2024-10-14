@@ -15,8 +15,16 @@ let localization = new LocalizedStrings({
 
 export default function LimitedTextEditor(props: any) {
     const [value, setValue] = useState(props.value);
+    const [limit, setLimit] = useState(0)
+
     const dispatch = useDispatch();
     localization.setLanguage(props.lang);
+
+    const getLimit = () => {
+        if (props.attribute === 'headline') return 30
+        if (props.attribute === 'username') return 20
+        return 30
+    }
 
     const update = () => {
         let block = JSON.parse(JSON.stringify(props.block));
@@ -25,8 +33,7 @@ export default function LimitedTextEditor(props: any) {
     };
 
     useEffect(() => {
-        console.log("LIMIT", props.limit)
-        console.log("PROPS", props)
+        setLimit(getLimit())
     }, [])
 
     return (
@@ -34,11 +41,13 @@ export default function LimitedTextEditor(props: any) {
             <input
                 className="p-2 rounded-lg border w-[100%] mb-2"
                 value={value}
-                maxLength={props.limit}
+                maxLength={limit}
                 onChange={(event) => setValue(event.target.value)}
             />
-            <div className="text-sm mb-2">
-                {value.length} / {props.limit}
+            <div className="text-xs mb-2 gray-400">
+                <span className="float-right">
+                    {value.length} / {limit}
+                </span>
             </div>
             <Button text={localization.update} action={update} />
         </div>
