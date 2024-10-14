@@ -25,6 +25,10 @@ jobs:
         run: npm install
 
       - name: Build
+        env:
+          REACT_APP_API: ${{ vars.REACT_APP_API }}
+          REACT_APP_USER_POOL_ID: ${{ vars.REACT_APP_USER_POOL_ID }}
+          REACT_APP_USER_POOL_WEB_CLIENT_ID: ${{ vars.REACT_APP_USER_POOL_WEB_CLIENT_ID }}
         run: npm run build
 
       - name: Config AWS Credentials
