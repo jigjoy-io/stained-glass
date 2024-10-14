@@ -1,4 +1,4 @@
-name: Deploy to AWS S3
+name: Deploy Frontend
 on:
   push:
     branches:
@@ -10,7 +10,7 @@ jobs:
     defaults:
       run:
         working-directory: ./packages/cms
-    environment: env
+    environment: development
 
     steps:
       - name: Checkout
