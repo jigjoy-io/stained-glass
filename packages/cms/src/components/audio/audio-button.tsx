@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useState } from "react"
 import SpeakerOnIcon from "../../icons/speaker-on-icon"
 import SpeakerOffIcon from "../../icons/speaker-off-icon"
 import MediaLibrary from "./media-library"
@@ -13,57 +13,43 @@ interface AudioButtonProps {
 function AudioButton({ id, position, source }: AudioButtonProps) {
     const [isPlaying, setIsPlaying] = useState(false)
     const [animationState, setAnimationState] = useState(0)
-    const animationInterval = useRef<NodeJS.Timeout | null>(null)
 
     let params = {
         id: id,
         source: source,
         onStart: () => {
             setIsPlaying(true)
-            startAnimation()
         },
         onEnd: () => {
             setIsPlaying(false)
-            stopAnimation()
         }
     }
 
     const audioPlayer: AudioPlayer = new AudioPlayer(params)
     const mediaLibrary = MediaLibrary.getInstance()
-
     mediaLibrary.addPlayer(audioPlayer)
 
     useEffect(() => {
+        let intervalId: NodeJS.Timeout | null = null;
+        if (isPlaying) {
+            intervalId = setInterval(() => {
+                setAnimationState((prevState) => (prevState + 1) % 3)
+            }, 500)
+        } else {
+            setAnimationState(0)
+        }
+
         return () => {
-            mediaLibrary.removePlayer(audioPlayer)
-            if (isPlaying) {
-                stopAnimation()
-            } else {
-                startAnimation()
-            }
+            if (intervalId) clearInterval(intervalId)
         }
     }, [isPlaying])
 
+    useEffect(() => {
+        return () => mediaLibrary.removePlayer(audioPlayer)
+    }, [])
+
     const togglePlay = () => {
-
         mediaLibrary.play(audioPlayer)
-        setIsPlaying(!isPlaying)
-    }
-
-    const startAnimation = () => {
-        if (animationInterval.current === null) {
-            animationInterval.current = setInterval(() => {
-                setAnimationState((prevState) => (prevState + 1) % 3)
-            }, 500)
-        }
-    }
-
-    const stopAnimation = () => {
-        if (animationInterval.current !== null) {
-            clearInterval(animationInterval.current)
-            animationInterval.current = null
-            setAnimationState(0)
-        }
     }
 
     const renderIcon = () => {
