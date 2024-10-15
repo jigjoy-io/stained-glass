@@ -52,7 +52,7 @@ export function RightSideMenu() {
         <AnimatePresence>{
             sidebar.visible && <m.div variants={animation} initial="hidden" animate="show" exit="exit" transition={transition}>
 
-                <div className="border-l border-light shadow-lg fixed right-0 bottom-0 h-[100dvh] w-[30%] bg-[white]">
+                <div className="border-l border-light shadow-lg fixed right-0 bottom-0 h-[100dvh] w-[50%] bg-[white] flex flex-col">
 
                     <div className="h-[24px] w-[24px] m-2" onClick={() => dispatch(sidebarExpanded({ expanded: false, component: null }))}>
                         <ToolbarButtonWrapper tooltip={<div className="text-[14px]">{localization.closePanel}</div>}>
