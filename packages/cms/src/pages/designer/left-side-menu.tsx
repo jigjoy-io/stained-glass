@@ -18,6 +18,7 @@ import { LogoIcon } from "../../icons/logo-icon"
 import AddBlockIcon from "../../icons/add-block-icon"
 import ViewAnalytics from "./right-side-menu/components/view-analytics"
 import Help from "./right-side-menu/components/help"
+import Tutorial from "./right-side-menu/components/tutorial"
 
 export default function LeftSideMenu() {
     const navigate = useNavigate()
@@ -118,7 +119,7 @@ export default function LeftSideMenu() {
                     {localization.options}
                 </div>
 
-                <div className="flex flex-col pl-4 hover:cursor-pointer hover:bg-primary-light h-[30px] items-center" onClick={() => dispatch(sidebarExpanded({ expanded: true, component: null }))}>
+                <div className="flex flex-col pl-4 hover:cursor-pointer hover:bg-primary-light h-[30px] items-center" onClick={() => dispatch(sidebarExpanded({ expanded: true, component: Tutorial }))}>
 
                     <div className="flex flex-row w-[100%] h-[100%]">
                         <div className="pr-2 flex items-center"><LogoIcon /></div>

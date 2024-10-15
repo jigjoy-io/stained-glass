@@ -34,7 +34,7 @@ export default function Help() {
     return <div className="mt-20 flex flex-col justify-center items-center gap-6 px-20">
         <Heading position="center" text={localization.contactUs} />
         <Text position="center" text={localization.description} />
-        <div className="w-[500px]">
+        <div className="w-[500px] max-w-[100%]">
             <TextArea placeholder={localization.placeholder} onChange={handleChange}/>
         </div>
         <Button text={localization.cta} />

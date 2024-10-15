@@ -27,6 +27,7 @@ jobs:
           echo REACT_APP_API=${{secrets.REACT_APP_API}} >> .env
           echo REACT_APP_USER_POOL_ID=${{secrets.REACT_APP_USER_POOL_ID}} >> .env
           echo REACT_APP_USER_POOL_WEB_CLIENT_ID=${{secrets.REACT_APP_USER_POOL_WEB_CLIENT_ID}} >> .env
+          echo REACT_APP_JIGJOY_TUTORIAL=${{secrets.REACT_APP_JIGJOY_TUTORIAL}} >> .env
           cat .env
           
       - name: Dependency Installation
