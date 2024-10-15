@@ -109,7 +109,7 @@ export default function Authorization(props: any) {
 				</m.div>
 
 				<m.div variants={item} className="flex flex-col">
-					<Input action={handleEmailChange} key='email' type="email" placeholder={localization.emailPlaceholder} />
+					<Input onChange={handleEmailChange} key='email' type="email" placeholder={localization.emailPlaceholder} />
 				</m.div>
 				{message != '' &&
 					<m.div variants={item} className="flex flex-col text-[green]">
@@ -117,7 +117,7 @@ export default function Authorization(props: any) {
 					</m.div>
 				}
 				<m.div key='submit' variants={item}>
-					<Button text={localization.authButton} action={authorize} focus={true} />
+					<Button width="w-full" text={localization.authButton} action={authorize} focus={true} />
 				</m.div>
 			</m.div>
 		</LazyMotion>
