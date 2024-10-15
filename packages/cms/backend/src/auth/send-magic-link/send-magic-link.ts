@@ -30,6 +30,7 @@ export async function sendMagicLinkHandler({
 
         const user: SignInDto = JSON.parse(body)
         const email = user.email
+        const lang = user.lang
 
         schemaValidator(schema, user)
 
@@ -82,7 +83,7 @@ export async function sendMagicLinkHandler({
             statusCode: 202
         }
 
-        await sendEmail(email, magicLink)
+        await sendEmail(email, magicLink, lang)
         return Responses._202(response)
 
     } catch (error) {
@@ -90,25 +91,30 @@ export async function sendMagicLinkHandler({
     }
 }
 
-async function sendEmail(emailAddress: string, magicLink: string) {
+async function sendEmail(emailAddress: string, magicLink: string, lang: string) {
+
+    let subject = "JigJoy Login Link";
+    let body = `<html><body><p>This is your one-time sign in link (it will expire in ${TIMEOUT_MINS} mins):</p>
+                <a href="${magicLink}" target="_blank">link</a></body></html>`;
+
+    if (lang === "RS") {
+        subject = "JigJoy Link za Prijavu";
+        body = `<html><body><p>Ovo je vaš jednokratni link za prijavu (isteći će za ${TIMEOUT_MINS} minuta):</p>
+                <a href="${magicLink}" target="_blank">link</a></body></html>`;
+    }
 
     const command = new SendEmailCommand({
         Destination: {
             ToAddresses: [emailAddress],
         },
         Message: {
-            Subject: { Data: "JigJoy Login Link" },
-
+            Subject: { Data: subject },
             Body: {
-                Html: {Data: `<html><body><p>This is your one-time sign in link (it will expire in ${TIMEOUT_MINS} mins):</p>
-                <a href="${magicLink}" target="_blank">link</a></body></html>`},
-            }
+                Html: { Data: body },
+            },
         },
-
-       
-    
         Source: SES_FROM_ADDRESS,
-    })
+    });
 
 try {
     let response = await ses.send(command)
