@@ -7,6 +7,8 @@ import Responses from '@utils/api-responses'
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
 import { CognitoIdentityProviderClient, AdminGetUserCommand, AdminCreateUserCommand, AdminUpdateUserAttributesCommand } from "@aws-sdk/client-cognito-identity-provider"
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses"
+import { EmailFactory, IEmail } from "@utils/email-factory-pattern"
+
 const ses = new SESClient()
 
 const cognito = new CognitoIdentityProviderClient()
@@ -18,8 +20,6 @@ const TIMEOUT_MINS = 5
 import { encrypt } from "@utils/encription"
 import { escape } from "querystring"
 
-
-
 export async function sendMagicLinkHandler({
     body,
 }: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
@@ -30,6 +30,7 @@ export async function sendMagicLinkHandler({
 
         const user: SignInDto = JSON.parse(body)
         const email = user.email
+        const language = user.language
 
         schemaValidator(schema, user)
 
@@ -82,7 +83,7 @@ export async function sendMagicLinkHandler({
             statusCode: 202
         }
 
-        await sendEmail(email, magicLink)
+        await sendEmail(email, magicLink, language)
         return Responses._202(response)
 
     } catch (error) {
@@ -90,25 +91,22 @@ export async function sendMagicLinkHandler({
     }
 }
 
-async function sendEmail(emailAddress: string, magicLink: string) {
+async function sendEmail(emailAddress: string, magicLink: string, language: string) {
+
+    const email: IEmail = EmailFactory.getEmail(language);
 
     const command = new SendEmailCommand({
         Destination: {
             ToAddresses: [emailAddress],
         },
         Message: {
-            Subject: { Data: "JigJoy Login Link" },
-
+            Subject: { Data: email.getSubject() },
             Body: {
-                Html: {Data: `<html><body><p>This is your one-time sign in link (it will expire in ${TIMEOUT_MINS} mins):</p>
-                <a href="${magicLink}" target="_blank">link</a></body></html>`},
-            }
+                Html: { Data: email.getBody(magicLink, TIMEOUT_MINS) },
+            },
         },
-
-       
-    
         Source: SES_FROM_ADDRESS,
-    })
+    });
 
 try {
     let response = await ses.send(command)

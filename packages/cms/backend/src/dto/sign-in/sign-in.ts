@@ -1,3 +1,4 @@
 export type SignInDto = {
-    email: string
+    email: string,
+    language: string
 }
