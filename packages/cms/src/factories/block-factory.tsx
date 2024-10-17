@@ -15,12 +15,18 @@ const CarouselConfigurer = lazy(() => import('../components/carousel/carousel-co
 const PageTile = lazy(() => import('../components/page/page-tile'))
 const PageConfigurer = lazy(() => import('../components/page/page-configurer'))
 const BlockSelector = lazy(() => import('../components/toolbar/block-selector/block-selector'))
+const ImageConfigurer = lazy(() => import('../components/image/image-configurer'))
+const AudioConfigurer = lazy(() => import('../components/audio/audio-configurer'))
+const ReelConfigurer = lazy(() => import('../components/reel/reel-configurer'))
 
 export default class BlockFactory extends React.Component {
 
-    static buildingBlocks : any = {
+    static buildingBlocks: any = {
         "audio": {
             component: AudioButton
+        },
+        "audio-configurer": {
+            component: AudioConfigurer
         },
         "text": {
             component: Text
@@ -33,6 +39,9 @@ export default class BlockFactory extends React.Component {
         },
         "image": {
             component: Image
+        },
+        "image-configurer": {
+            component: ImageConfigurer
         },
         "button": {
             component: Button
@@ -48,6 +57,9 @@ export default class BlockFactory extends React.Component {
         },
         "reel": {
             component: Reel
+        },
+        "reel-configurer": {
+            component: ReelConfigurer
         },
         "profile": {
             component: Profile
@@ -65,9 +77,9 @@ export default class BlockFactory extends React.Component {
             component: BlockSelector
         }
     }
-    
-    static get(props: any ) {
-        let block : any = this.buildingBlocks[props.type]
-        return <Suspense><block.component {...props}/></Suspense>
+
+    static get(props: any) {
+        let block: any = this.buildingBlocks[props.type]
+        return <Suspense><block.component {...props} /></Suspense>
     }
 }
