@@ -85,6 +85,8 @@ export default function ImageConfigurer(props: any) {
             block[props.attribute] = uploadedFileUrl || value
             dispatch(updateBlock(block))
 
+            return uploadedFileUrl;
+
         } catch (error) {
             setFileAlert({ type: "danger", message: localization.uploadError })
         } finally {
@@ -115,7 +117,8 @@ export default function ImageConfigurer(props: any) {
         dispatch(blockingUpdated(true))
     }
 
-    const create = () => {
+    const create = async () => {
+        const fileUrl = await update()
         dispatch(blockingUpdated(false))
 
         let block = TemplateFactory.createImageBlock(fileUrl)
@@ -188,7 +191,6 @@ export default function ImageConfigurer(props: any) {
                                     <input className="p-1 rounded-lg border w-[100%] mb-3" value={value} onChange={(e: any) => setValue(e.target.value)} />
                                 </Tab>
                             </Tabs>
-                            <Button text={localization.update} action={update} />
                         </div>
                         <div className="mt-[1rem]">
                             <Button width="w-full" text={localization.create} action={create} />

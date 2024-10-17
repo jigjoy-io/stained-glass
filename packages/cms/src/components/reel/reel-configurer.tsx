@@ -14,6 +14,7 @@ import Alert from "../alert/alert";
 import Button from "../button/button";
 import VideoEditingIcon from "../../icons/video-editing-icon";
 import useFileChangeHandler from "../../util/handle-file-change";
+import { fileUpdate } from "../../util/file-update";
 
 let localization = new LocalizedStrings({
     US: {
@@ -47,157 +48,119 @@ let localization = new LocalizedStrings({
 })
 
 export default function ReelConfigurer(props: any) {
-    const [display, setDisplay] = useState(false)
-    const [value, setValue] = useState(props.value)
-    const fileInputRef = useRef<HTMLInputElement>(null)
-    const [loading, setLoading] = useState(false)
-    const [fileUrl, setFileUrl] = useState<string | null>(null)
+    const [display, setDisplay] = useState(false);
+    const [value, setValue] = useState(props.value);
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    const [top, setTop] = useState(window.innerHeight / 2);
+    const [y, setY] = useState(0);
+    const ref = useRef<HTMLDivElement>(null);
 
-    const dispatch = useDispatch()
-    const lang = useLanguage()
-    localization.setLanguage(lang)
+    const dispatch = useDispatch();
+    const lang = useLanguage();
+    localization.setLanguage(lang);
 
     const { file, fileAlert, handleFileChange, setFileAlert } = useFileChangeHandler(lang);
     const { handleFileUpload } = useFileUpload(setValue, "video");
 
+    const { update, loading } = fileUpdate(props.block, setFileAlert, localization);
+
     const triggerFileInput = () => {
-        fileInputRef.current?.click()
-    }
-
-    const [top, setTop] = useState(window.innerHeight / 2)
-    const [y, setY] = useState(0)
-
-    const ref = useRef<HTMLDivElement>(null)
-
-    const update = async () => {
-        setLoading(true)
-        try {
-            let uploadedFileUrl = fileUrl
-
-            if (file && !fileUrl) {
-                setFileAlert({ type: "info", message: localization.uploadInProgress })
-                uploadedFileUrl = await handleFileUpload(file)
-                setFileUrl(uploadedFileUrl)
-                setFileAlert({ type: "success", message: localization.fileUploadedSuccessfully })
-            }
-
-            const block = { ...props.block }
-            block[props.attribute] = uploadedFileUrl || value
-            dispatch(updateBlock(block))
-
-        } catch (error) {
-            setFileAlert({ type: "danger", message: localization.uploadError })
-        } finally {
-            setLoading(false)
-        }
-    }
+        fileInputRef.current?.click();
+    };
 
     useLayoutEffect(() => {
-
         if (ref.current) {
-            let contentRect = ref.current.getBoundingClientRect()
-
+            let contentRect = ref.current.getBoundingClientRect();
             if (contentRect.top + window.innerHeight / 2 > window.innerHeight) {
-                setY(-100)
-                setTop(contentRect.top)
-            }
-            else {
-                setY(0)
-                setTop(contentRect.top)
+                setY(-100);
+                setTop(contentRect.top);
+            } else {
+                setY(0);
+                setTop(contentRect.top);
             }
         }
-
-
-    }, [display])
+    }, [display]);
 
     const openConfigurer = () => {
-        setDisplay(true)
-        dispatch(blockingUpdated(true))
-    }
+        setDisplay(true);
+        dispatch(blockingUpdated(true));
+    };
 
-    const create = () => {
-        dispatch(blockingUpdated(false))
+    const create = async () => {
+        const uploadedFileUrl = await update(file, handleFileUpload, value);
+        dispatch(blockingUpdated(false));
 
-        let block = TemplateFactory.createReelBlock(fileUrl)
-
+        let block = TemplateFactory.createReelBlock(uploadedFileUrl);
         block.id = props.id;
-
-        dispatch(updateBlock(block))
-    }
+        dispatch(updateBlock(block));
+    };
 
     const turnOffPopup = () => {
-        let block = JSON.parse(JSON.stringify(props))
-        block.display = false
-        dispatch(updateBlock(block))
-    }
+        let block = JSON.parse(JSON.stringify(props));
+        block.display = false;
+        dispatch(updateBlock(block));
+    };
 
     const onClose = () => {
-
-        dispatch(blockingUpdated(false))
-        setDisplay(false)
-        turnOffPopup()
-    }
+        dispatch(blockingUpdated(false));
+        setDisplay(false);
+        turnOffPopup();
+    };
 
     useEffect(() => {
-
         window.onbeforeunload = function () {
-            turnOffPopup()
-            return true
-        }
+            turnOffPopup();
+            return true;
+        };
 
         return () => {
-            window.onbeforeunload = null
-        }
-
-    }, [])
+            window.onbeforeunload = null;
+        };
+    }, []);
 
     return (
         <div>
-
-            {display && createPortal(<ClickOutsideListener callback={onClose}>
-                <div
-                    style={{
-                        width: 460,
-                        pointerEvents: 'auto',
-                        top: top,
-                        transform: `translate(-25%, ${y}%)`
-                    }}
-
-                    className="fixed rounded-md bg-[white] rounded-lg rounded-[5px] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.7)] z-50 -translate-x-[25%] left-[50%]"
-
-                >
-                    <div className="p-[5%]">
-                        <div>
-                            <Tabs>
-                                <Tab key={localization.uploadImage}>
-                                    <div className="mb-2">
-                                        <Alert type={fileAlert.type} message={fileAlert.message} />
-                                    </div>
-                                    <input
-                                        type="file"
-                                        ref={fileInputRef}
-                                        onChange={handleFileChange}
-                                        accept="video/*"
-                                        style={{ display: 'none' }}
-                                    />
-                                    <Button width="w-full" text={localization.clickToUpload} color="default" action={triggerFileInput} />
-                                    {file && !loading && <p className="mt-2 text-sm text-ellipsis overflow-hidden">{file.name}</p>}
-                                </Tab>
-                                <Tab key={localization.embedLink}>
-                                    <input className="p-1 rounded-lg border w-[100%] mb-3" value={value} onChange={(e: any) => setValue(e.target.value)} />
-                                </Tab>
-                            </Tabs>
-                            <Button text={localization.update} action={update} />
-                        </div>
-                        <div className="mt-[1rem]">
-                            <Button width="w-full" text={localization.create} action={create} />
+            {display && createPortal(
+                <ClickOutsideListener callback={onClose}>
+                    <div
+                        style={{
+                            width: 460,
+                            pointerEvents: 'auto',
+                            top: top,
+                            transform: `translate(-25%, ${y}%)`
+                        }}
+                        className="fixed rounded-md bg-[white] rounded-lg rounded-[5px] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.7)] z-50 -translate-x-[25%] left-[50%]"
+                    >
+                        <div className="p-[5%]">
+                            <div>
+                                <Tabs>
+                                    <Tab key={localization.uploadImage}>
+                                        <div className="mb-2">
+                                            <Alert type={fileAlert.type} message={fileAlert.message} />
+                                        </div>
+                                        <input
+                                            type="file"
+                                            ref={fileInputRef}
+                                            onChange={handleFileChange}
+                                            accept="video/*"
+                                            style={{ display: 'none' }}
+                                        />
+                                        <Button width="w-full" text={localization.clickToUpload} color="default" action={triggerFileInput} />
+                                        {file && !loading && <p className="mt-2 text-sm text-ellipsis overflow-hidden">{file.name}</p>}
+                                    </Tab>
+                                    <Tab key={localization.embedLink}>
+                                        <input className="p-1 rounded-lg border w-[100%] mb-3" value={value} onChange={(e: any) => setValue(e.target.value)} />
+                                    </Tab>
+                                </Tabs>
+                            </div>
+                            <div className="mt-[1rem]">
+                                <Button width="w-full" text={localization.create} action={create} />
+                            </div>
                         </div>
                     </div>
-                </div>
-            </ClickOutsideListener>, document.body)
-
-
-            }
+                </ClickOutsideListener>,
+                document.body
+            )}
 
             <div
                 ref={ref}
@@ -208,6 +171,5 @@ export default function ReelConfigurer(props: any) {
                 <div className="pl-2">{localization.clickToAdd}</div>
             </div>
         </div>
-    )
-
+    );
 }

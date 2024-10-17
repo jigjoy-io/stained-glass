@@ -85,6 +85,8 @@ export default function AudioConfigurer(props: any) {
             block[props.attribute] = uploadedFileUrl || value
             dispatch(updateBlock(block))
 
+            return uploadedFileUrl;
+
         } catch (error) {
             setFileAlert({ type: "danger", message: localization.uploadError })
         } finally {
@@ -115,7 +117,8 @@ export default function AudioConfigurer(props: any) {
         dispatch(blockingUpdated(true))
     }
 
-    const create = () => {
+    const create = async () => {
+        const fileUrl = await update()
         dispatch(blockingUpdated(false))
 
         let block = TemplateFactory.createAudioBlock(fileUrl)
