@@ -7,6 +7,8 @@ import Tabs from "../../tabs/tabs"
 import LocalizedStrings from "react-localization"
 import useFileUpload from "../../../util/file-upload"
 import Alert from "../../alert/alert"
+import useFileChangeHandler from "../../../util/handle-file-change"
+import { useLanguage } from "../../../util/store"
 
 let localization = new LocalizedStrings({
     US: {
@@ -38,30 +40,18 @@ let localization = new LocalizedStrings({
 export default function VideoEditor(props: any) {
     const [value, setValue] = useState(props.value)
     const fileInputRef = useRef<HTMLInputElement>(null)
-    const [file, setFile] = useState<File | null>(null)
     const [loading, setLoading] = useState(false)
     const [fileUrl, setFileUrl] = useState<string | null>(null)
 
     const dispatch = useDispatch()
+    const lang = useLanguage()
     localization.setLanguage(props.lang)
-    const [fileAlert, setFileAlert] = useState({ type: "info", message: localization.maxFileUpload })
 
-    const { handleFileUpload } = useFileUpload(setValue, 'video')
+    const { file, fileAlert, handleFileChange, setFileAlert } = useFileChangeHandler(lang);
+    const { handleFileUpload } = useFileUpload(setValue, "video")
 
     const triggerFileInput = () => {
         fileInputRef.current?.click()
-    }
-
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const selectedFile = event.target.files?.[0]
-        if (selectedFile) {
-            if (selectedFile.size > 5 * 1024 * 1024) {
-                setFileAlert({ type: "danger", message: localization.fileTooLarge })
-            } else {
-                setFile(selectedFile)
-                setFileAlert({ type: "info", message: localization.fileLoadSuccess })
-            }
-        }
     }
 
     const update = async () => {

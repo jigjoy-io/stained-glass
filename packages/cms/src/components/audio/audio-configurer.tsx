@@ -13,6 +13,7 @@ import Tab from "../tabs/tab";
 import Alert from "../alert/alert";
 import Button from "../button/button";
 import AudioEditingIcon from "../../icons/audio-editing-icon";
+import useFileChangeHandler from "../../util/handle-file-change";
 
 let localization = new LocalizedStrings({
     US: {
@@ -46,20 +47,18 @@ let localization = new LocalizedStrings({
 })
 
 export default function AudioConfigurer(props: any) {
-    const dispatch = useDispatch()
     const [display, setDisplay] = useState(false)
     const [value, setValue] = useState(props.value)
     const fileInputRef = useRef<HTMLInputElement>(null)
-    const [file, setFile] = useState<File | null>(null)
     const [loading, setLoading] = useState(false)
     const [fileUrl, setFileUrl] = useState<string | null>(null)
 
+    const dispatch = useDispatch()
     const lang = useLanguage()
     localization.setLanguage(lang)
 
-    const [fileAlert, setFileAlert] = useState({ type: "info", message: localization.maxFileUpload })
-
-    const { handleFileUpload } = useFileUpload(setValue, 'audio')
+    const { file, fileAlert, handleFileChange, setFileAlert } = useFileChangeHandler(lang);
+    const { handleFileUpload } = useFileUpload(setValue, "audio");
 
     const triggerFileInput = () => {
         fileInputRef.current?.click()
@@ -69,18 +68,6 @@ export default function AudioConfigurer(props: any) {
     const [y, setY] = useState(0)
 
     const ref = useRef<HTMLDivElement>(null)
-
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const selectedFile = event.target.files?.[0]
-        if (selectedFile) {
-            if (selectedFile.size > 5 * 1024 * 1024) {
-                setFileAlert({ type: "danger", message: localization.fileTooLarge })
-            } else {
-                setFile(selectedFile)
-                setFileAlert({ type: "info", message: localization.fileLoadSuccess })
-            }
-        }
-    }
 
     const update = async () => {
         setLoading(true)
