@@ -26,6 +26,9 @@ export default class EditorFactory extends React.Component {
         "image": {
             builder: new EditableImage()
         },
+        "image-configurer": {
+            builder: new BasicEditableBlock()
+        },
         "button": {
             builder: new NoneEditableBlock()
         },
@@ -38,11 +41,17 @@ export default class EditorFactory extends React.Component {
         "reel": {
             builder: new EditableReel()
         },
+        "reel-configurer": {
+            builder: new BasicEditableBlock()
+        },
         "message": {
             builder: new EditableMessage()
         },
         "audio": {
             builder: new EditableAudio()
+        },
+        "audio-configurer": {
+            builder: new BasicEditableBlock()
         },
         "carousel-tile": {
             builder: new EditableCarouselTile()

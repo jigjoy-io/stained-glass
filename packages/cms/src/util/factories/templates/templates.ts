@@ -15,6 +15,11 @@ export class TemplatesStorage {
                 source: "https://www.w3schools.com/html/mov_bbb.mp4",
                 position: "left"
             },
+            "audio-configurer": {
+                type: "audio-configurer",
+                source: "https://www.w3schools.com/html/mov_bbb.mp4",
+                display: true
+            },
             "text": {
                 type: "text",
                 text: "",
@@ -35,6 +40,11 @@ export class TemplatesStorage {
                 source: "https://jigjoy.io/assets/placeholderimage.jpg",
                 position: "left",
                 size: 'large'
+            },
+            "image-configurer": {
+                type: "image-configurer",
+                source: "https://jigjoy.io/assets/placeholderimage.jpg",
+                display: true
             },
             "question": {
                 type: 'question',
@@ -86,6 +96,11 @@ export class TemplatesStorage {
                 type: "reel",
                 source: "https://www.w3schools.com/html/mov_bbb.mp4",
                 position: "left"
+            },
+            "reel-configurer": {
+                type: "reel-configurer",
+                source: "https://www.w3schools.com/html/mov_bbb.mp4",
+                display: true
             },
             "profile": {
                 type: "profile",

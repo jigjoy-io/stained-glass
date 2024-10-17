@@ -5,9 +5,9 @@ export default class TemplateFactory {
 
     static create(type: string) {
         let templates = TemplatesStorage.getTemplates()
-        
+
         let block: any = templates[type]
-        
+
         let template = JSON.parse(JSON.stringify(block))
         template.id = uuidv4()
         return template
@@ -30,6 +30,24 @@ export default class TemplateFactory {
         blankPage.origin = origin
         return blankPage
 
+    }
+
+    static createImageBlock(fileUrl) {
+        let imageBlock = this.create('image')
+        imageBlock.source = fileUrl;
+        return imageBlock;
+    }
+
+    static createAudioBlock(fileUrl) {
+        let audioBlock = this.create('audio')
+        audioBlock.source = fileUrl;
+        return audioBlock;
+    }
+
+    static createReelBlock(fileUrl) {
+        let reelBlock = this.create('reel')
+        reelBlock.source = fileUrl;
+        return reelBlock;
     }
 
     static createCarouselPage(origin, numberOfPages = 3) {

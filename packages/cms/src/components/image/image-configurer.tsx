@@ -1,10 +1,12 @@
-import React from "react"
-import LocalizedStrings from "react-localization"
-import { useLanguage } from "../../../../util/store"
-import FileEditor from "../../../../components/file-editor/file-editor"
+import React from "react";
+import { useLanguage } from "../../util/store";
+import LocalizedStrings from "react-localization";
+import ImageEditingIcon from "../../icons/image-editing-icon";
+import MediaConfigurer from "../media-configurer/media-configurer";
 
 let localization = new LocalizedStrings({
     US: {
+        create: "Create",
         update: "Update",
         embedLink: "Embed link",
         uploadFile: "Upload image",
@@ -14,9 +16,11 @@ let localization = new LocalizedStrings({
         fileLoadSuccess: "You can start uploading your image.",
         fileUploadedSuccessfully: "Your image upload has finished!",
         uploadInProgress: "Upload in progress...",
-        uploadError: "Error has occured during the upload!"
+        uploadError: "Error has occured during the upload!",
+        clickToAdd: "Click to create."
     },
     RS: {
+        create: "Kreiraj",
         update: "Promeni",
         embedLink: "Unesi link",
         uploadFile: "Promeni sliku",
@@ -27,20 +31,22 @@ let localization = new LocalizedStrings({
         fileUploadedSuccessfully: "Vaša slika je uspešno otpremljena!",
         uploadInProgress: "Otpremljivanje je u toku...",
         uploadError: "Greška prilikom otpremljivanja!",
+        clickToAdd: "Klikni da kreiraš."
     }
 })
 
-export default function ImageEditor(props: any) {
+export default function ImageConfigurer(props: any) {
+
     const lang = useLanguage()
-    localization.setLanguage(props.lang)
+    localization.setLanguage(lang)
 
     return (
-        <FileEditor
-            value={props.value}
-            block={props.block}
-            fileType="image"
+        <MediaConfigurer
+            mediaType="image"
+            icon={<ImageEditingIcon />}
             localization={localization}
+            props={props}
             lang={lang}
         />
-    )
+    );
 }

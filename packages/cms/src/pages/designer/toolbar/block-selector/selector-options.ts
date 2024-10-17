@@ -73,23 +73,20 @@ export class SelectorOptions {
                 key: "multimedia",
                 commands: [
                     {
-                        key: "image",
+                        key: "image-configurer",
                         label: localization.image,
-                        // description: "Upload an image or embed image link",
                         description: localization.imageDescription,
                         icon: ImageIcon
                     },
                     {
-                        key: "reel",
+                        key: "reel-configurer",
                         label: localization.video,
-                        // description: "Upload video file or embed video link",
                         description: localization.videoDescription,
                         icon: VideoIcon
                     },
                     {
-                        key: "audio",
+                        key: "audio-configurer",
                         label: localization.audio,
-                        // description: "Upload an audio file or embed audio link",
                         description: localization.audioDescription,
                         icon: AudioIcon
                     }
