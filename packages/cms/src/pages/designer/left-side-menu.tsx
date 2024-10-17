@@ -11,7 +11,6 @@ import { Link, useNavigate, useSearch } from '@tanstack/react-router'
 import AnalyticsIcon from "../../icons/analytics-icon"
 import { sidebarExpanded } from "../../reducers/sidebar-reducer"
 import Loader from "../../components/loader/loader"
-import UserMenu from "../../components/user-menu/user-menu"
 import localization from './left-side-menu.localization'
 import HelpIcon from "../../icons/help-icon"
 import LogoIcon from "../../icons/logo-icon"
@@ -19,6 +18,7 @@ import AddBlockIcon from "../../icons/add-block-icon"
 import ViewAnalytics from "./right-side-menu/components/view-analytics"
 import Help from "./right-side-menu/components/help"
 import Tutorial from "./right-side-menu/components/tutorial"
+import UserMenu from "../authorization/user-menu/user-menu"
 
 export default function LeftSideMenu() {
     const navigate = useNavigate()

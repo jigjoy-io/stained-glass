@@ -2,9 +2,9 @@ import React from 'react'
 import { signOut } from 'aws-amplify/auth'
 import { useNavigate } from '@tanstack/react-router'
 import { useDispatch } from 'react-redux'
-import { accountUpdated } from '../../../reducers/auth-reducer'
+import { accountUpdated } from '../../../../reducers/auth-reducer'
 import localization from './logout.localization'
-import { useLanguage } from '../../../util/store'
+import { useLanguage } from '../../../../util/store'
 
 export default function LogoutButton(){
 
