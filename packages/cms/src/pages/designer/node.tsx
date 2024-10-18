@@ -406,14 +406,12 @@ export function Node(props: any) {
         updatePage(newRoot)
 
 
-        if (newPage.id == activePage.id) {
-            dispatch(rootPageUpdated(newPage))
-            dispatch(pageUpdated(newPage))
-        }
+        dispatch(rootPageUpdated(newPage))
+        dispatch(pageUpdated(newPage))
+
 
         let index = allPages.findIndex((page) => page.id == newRoot.id)
         allPages.splice(index, 1, newRoot)
-
         dispatch(pagesUpdated(allPages))
 
     }
