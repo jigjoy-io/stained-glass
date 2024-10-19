@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react"
 import SpeakerOnIcon from "../../icons/speaker-on-icon"
-import SpeakerOffIcon from "../../icons/speaker-off-icon"
 import MediaLibrary from "../../util/media-library"
 import AudioPlayer from "./audio-player"
 import SpeakerOnIcon1 from "../../icons/speaker-on-1-icon"
@@ -54,12 +53,12 @@ function AudioButton({ id, position, source }: AudioButtonProps) {
         if (isPlaying) {
             setIsPlaying(false)
         }
-        console.log(isPlaying)
+
         mediaLibrary.play(audioPlayer)
     }
 
     const renderIcon = () => {
-        if (!isPlaying) return <SpeakerOffIcon />
+
         switch (animationState) {
             case 0:
                 return <SpeakerOnIcon1 />
