@@ -264,8 +264,11 @@ export function Node(props: any) {
 
     const selectActivePage = () => {
 
-        dispatch(pageExpanded(activePage.id))
+        if(!activePage)
+            return 
         
+        dispatch(pageExpanded(activePage.id))
+
         if (activePage.type == 'blank') {
             setSelected(activePage.id)
         }

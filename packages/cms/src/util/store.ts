@@ -22,7 +22,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
     key: 'root',
     storage: storage,
-    whitelist: ['localization', 'page'] // only localization will be persisted
+    whitelist: ['localization', 'page']
 }
 
 
