@@ -2,9 +2,9 @@ import { fetchUserAttributes, getCurrentUser } from '@aws-amplify/auth'
 import { useNavigate } from '@tanstack/react-router'
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { useLanguage, useMode } from '../../util/store'
+import { useLanguage, useMode, usePages } from '../../util/store'
 import localization from './onboarding.localization'
-import { modeUpdated } from '../../reducers/page-reducer'
+import { carouselPageSwitched, modeUpdated, pagesUpdated, pageUpdated, rootPageUpdated } from '../../reducers/page-reducer'
 import { createPage } from '../../api/page'
 import Loader from '../../components/loader/loader'
 import CloseIcon from '../../icons/close-icon'
@@ -18,6 +18,7 @@ export default function Onboarding() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const mode = useMode()
+    const pages = usePages()
 
     const lang = useLanguage()
     localization.setLanguage(lang)
@@ -53,12 +54,21 @@ export default function Onboarding() {
         let page = TemplateFactory.createPage(type, userAttributes.email)
 
         let createdPage = await createPage(page)
+        
+        dispatch(carouselPageSwitched(null))
+        let allPages = JSON.parse(JSON.stringify(pages))
+        allPages.push(createdPage)
+        dispatch(pagesUpdated(allPages))
+        
+        dispatch(rootPageUpdated(createdPage))
+        dispatch(pageUpdated(createdPage))
+
+
 
         dispatch(modeUpdated("editing"))
 
         navigate({
-            to: `/interactive-content-designer`,
-            search: { pageId: createdPage.id }
+            to: `/interactive-content-designer`
         })
     }
 

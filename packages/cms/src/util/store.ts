@@ -11,19 +11,18 @@ import storage from 'redux-persist/lib/storage'
 import { persistStore, persistReducer } from 'redux-persist'
 
 const rootReducer = combineReducers({
-        toolbar: toolbarReducer,
-        tree: treeReducer,
-        page: pageReducer,
-        auth: authReducer,
-        sidebar: sidebarReducer,
-        localization: localizationReducer
-    }
-)
+    toolbar: toolbarReducer,
+    tree: treeReducer,
+    page: pageReducer,
+    auth: authReducer,
+    sidebar: sidebarReducer,
+    localization: localizationReducer
+})
 
 const persistConfig = {
     key: 'root',
     storage: storage,
-    whitelist: ['localization'] // only localization will be persisted
+    whitelist: ['localization', 'page'] // only localization will be persisted
 }
 
 
