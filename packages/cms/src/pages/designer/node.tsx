@@ -97,11 +97,6 @@ export function Node(props: any) {
 
     const dispatch = useDispatch()
 
-    const pageId = useSearch({
-        from: '/interactive-content-designer',
-        select: (search: any) => search.pageId,
-    })
-
     const remove = async (event) => {
         closeDropdown()
         event.stopPropagation()
@@ -267,27 +262,31 @@ export function Node(props: any) {
         }
     }
 
-    useEffect(() => {
-        if (pageId == props.id) {
-            setSelected(pageId)
-            dispatch(rootPageUpdated(props.root))
-            dispatch(pageUpdated(props.root))
+    const selectActivePage = () => {
+
+        dispatch(pageExpanded(activePage.id))
+        
+        if (activePage.type == 'blank') {
+            setSelected(activePage.id)
         }
 
+
+        if (activePage.type == 'carousel' && activeCarousel == null) {
+            dispatch(carouselPageSwitched(activePage.config.pages[0].id))
+        }
+    }
+
+    useEffect(() => {
+        selectActivePage()
     }, [])
 
     useEffect(() => {
-        if (activePage.type=='blank')
-            setSelected(activePage.id)
-
-        if (activePage.type=='carousel' && activeCarousel==null){
-            dispatch(carouselPageSwitched(activePage.config.pages[0].id))
-
-        }
+        selectActivePage()
     }, [activePage])
 
     useEffect(() => {
-        setSelected(activeCarousel)
+        if (activeCarousel != null)
+            setSelected(activeCarousel)
     }, [activeCarousel])
 
 
@@ -300,9 +299,9 @@ export function Node(props: any) {
         e.stopPropagation()
 
         dispatch(pageExpanded(props.id))
+        dispatch(rootPageUpdated(props.root))
 
         if (props.root.id == selectedPage.id) {
-            dispatch(rootPageUpdated(props.root))
             dispatch(pageUpdated(props.root))
             if (selectedPage.type == 'carousel') {
                 dispatch(carouselPageSwitched(selectedPage.config.pages[0].id))
@@ -311,6 +310,8 @@ export function Node(props: any) {
         }
 
         let parent = findParent(props.root, selectedPage)
+
+
 
         if (parent.type == "blank") {
             dispatch(pageUpdated(selectedPage))

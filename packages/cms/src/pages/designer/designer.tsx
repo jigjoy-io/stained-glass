@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import Page from "../../components/page"
-import { modeUpdated, rootPageUpdated } from "../../reducers/page-reducer"
+import { carouselPageSwitched, modeUpdated, rootPageUpdated } from "../../reducers/page-reducer"
 import { AppDispatch, useBlocked, useLanguage, useModified, usePage, useRootPage, useSidebarVisible } from "../../util/store"
 import { updatePage } from "../../api/page"
 import { replaceBlock } from "../../util/traversals/replace-block"
@@ -12,6 +12,7 @@ import { blockingUpdated } from "../../reducers/toolbar-reducer"
 import { sidebarExpanded } from "../../reducers/sidebar-reducer"
 import Premium from "./right-side-menu/components/premium"
 import LocalizedStrings from "react-localization"
+import { pageExpanded } from "../../reducers/tree-reducer"
 
 let localization = new LocalizedStrings({
     US: {

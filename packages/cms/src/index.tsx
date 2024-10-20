@@ -33,7 +33,6 @@ const dashboardRoute = createRouteMask({
 	from: '/interactive-content-designer',
 	to: '/interactive-content-designer',
 	params: () => ({
-		pageId: undefined,
 		token: undefined,
 		email: undefined
 	}),

@@ -2,9 +2,8 @@ import { createFileRoute } from "@tanstack/react-router"
 import Designer from "../pages/designer/designer"
 
 type Route = {
-    email: string
-    token: string 
-    pageId?: string | null
+    email: string | undefined
+    token: string | undefined
 }
 
 export const Route = createFileRoute('/interactive-content-designer' as never)({
@@ -12,9 +11,8 @@ export const Route = createFileRoute('/interactive-content-designer' as never)({
     validateSearch: (search: Record<string, unknown>): Route => {
         // validate and parse the search params into a typed state
         return {
-            pageId: (search.pageId as string) || null,
-            email: (search.email as string),
-            token: (search.token as string) 
+            email: (search.email ? search.email as string : undefined) ,
+            token: (search.token ? search.token as string : undefined) 
         }
     }
 })

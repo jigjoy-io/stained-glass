@@ -21,6 +21,10 @@ export default function CarouselPage(props: any) {
 
     const backToHome = async () => {
         dispatch(pageUpdated(rootPage))
+
+        if(rootPage.type=='carousel'){
+            dispatch(carouselPageSwitched(rootPage.config.pages[0].id))
+        }
     }
 
     const calculatePercentage = (pageNumber: number) => {
