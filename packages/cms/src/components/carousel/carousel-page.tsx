@@ -19,9 +19,8 @@ export default function CarouselPage(props: any) {
     const dispatch = useDispatch()
     const { previous, next, home } = props.config.buttons
 
-    const backToHome = async (page: any) => {
+    const backToHome = async () => {
         dispatch(pageUpdated(rootPage))
-        dispatch(carouselPageSwitched(pages[0].id))
     }
 
     const calculatePercentage = (pageNumber: number) => {
@@ -67,7 +66,7 @@ export default function CarouselPage(props: any) {
 
                 <div className="flex flex-row p-3">
                     <Progress percentage={percentage} />
-                    <div className='w-max bg-primary-light border-2 border-primary p-1 rounded-md cursor-pointer' onClick={() => backToHome(origin)}>
+                    <div className='w-max bg-primary-light border-2 border-primary p-1 rounded-md cursor-pointer' onClick={backToHome}>
                         <CloseIcon />
                     </div>
                 </div>
@@ -86,7 +85,7 @@ export default function CarouselPage(props: any) {
                 {
                     (current == pages.length - 1) && <div className="flex flex-row fixed bottom-0 gap-3 p-3 mt-3 bg-white w-[100%] max-w-[400px]">
 
-                        <Button  width="w-full" text={home} action={() => backToHome(origin)} />
+                        <Button  width="w-full" text={home} action={backToHome} />
                     </div >
                 }
             </div>
