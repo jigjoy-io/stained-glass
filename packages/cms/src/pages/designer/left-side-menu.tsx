@@ -35,14 +35,8 @@ export default function LeftSideMenu() {
 
         let pages = await getPages(currentUser.signInDetails?.loginId as string)
         dispatch(pagesUpdated(pages))
-        selectFirstPage()
-    }
-
-    const selectFirstPage = () => {
-        if (pages.length > 0) {
-            dispatch(rootPageUpdated(pages[0]))
-            dispatch(pageUpdated(pages[0]))
-        }
+        dispatch(rootPageUpdated(pages[0]))
+        dispatch(pageUpdated(pages[0]))
     }
 
     useEffect(() => {
