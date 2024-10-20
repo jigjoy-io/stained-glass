@@ -12,7 +12,8 @@ interface PageState {
     mode: string,
     activeBlock: string | null,
     pages: any [],
-    currentCarouselPage: number | null
+    currentCarouselPage: number | null,
+    activePlayer: string | null
 }
 
 let initialState: PageState = {
@@ -22,7 +23,8 @@ let initialState: PageState = {
     mode: "visiting",
     activeBlock: null,
     pages: [],
-    currentCarouselPage: null
+    currentCarouselPage: null,
+    activePlayer: null
 }
 
 export const fetchPage = createAsyncThunk('loadPage', async (id: string) => {
@@ -44,10 +46,13 @@ export const pageSlice = createSlice({
                 state.pages.splice(index, 1, page)
             }
 
+            state.activePlayer = null
+
         },
 
         pageUpdated: (state, action: PayloadAction<any>) => {
             state.activePage = action.payload
+            state.activePlayer = null
         },
 
         insertBlock: (state, action: PayloadAction<any>) => {
@@ -89,6 +94,10 @@ export const pageSlice = createSlice({
         carouselPageSwitched: (state, action: PayloadAction<any>) => {
             state.currentCarouselPage = action.payload
         },
+
+        activePlayerUpdated: (state, action: PayloadAction<any>) => {
+            state.activePlayer = action.payload
+        }
     },
     extraReducers(builder) {
         builder
@@ -99,7 +108,7 @@ export const pageSlice = createSlice({
     }
 })
 
-export const { rootPageUpdated, pageUpdated, modeUpdated, insertBlock, removeBlock, updateBlock, appendBlock, focusBlock, pagesUpdated, carouselPageSwitched } = pageSlice.actions
+export const { rootPageUpdated, pageUpdated, modeUpdated, insertBlock, removeBlock, updateBlock, appendBlock, focusBlock, pagesUpdated, carouselPageSwitched, activePlayerUpdated } = pageSlice.actions
 
 
 export default pageSlice.reducer

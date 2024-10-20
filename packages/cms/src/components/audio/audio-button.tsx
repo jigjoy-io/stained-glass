@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react"
 import SpeakerOnIcon from "../../icons/speaker-on-icon"
-import MediaLibrary from "../../util/media-library"
-import AudioPlayer from "./audio-player"
 import SpeakerOnIcon1 from "../../icons/speaker-on-1-icon"
 import SpeakerOnIcon2 from "../../icons/speaker-on-2-icon"
+import { activePlayerUpdated } from "../../reducers/page-reducer"
+import { useDispatch } from "react-redux"
+import { useActivePlayer } from "../../util/store"
 
 interface AudioButtonProps {
     id: string,
@@ -14,24 +15,14 @@ interface AudioButtonProps {
 function AudioButton({ id, position, source }: AudioButtonProps) {
     const [isPlaying, setIsPlaying] = useState(false)
     const [animationState, setAnimationState] = useState(0)
+    const dispatch = useDispatch()
+    const activePlayer = useActivePlayer()
+    let intervalId: NodeJS.Timeout | null = null
 
-    let params = {
-        id: id,
-        source: source,
-        onStart: () => {
-            setIsPlaying(true)
-        },
-        onEnd: () => {
-            setIsPlaying(false)
-        }
-    }
+    const [audioPlayer, setAudioPlayer] = useState<any>()
 
-    const audioPlayer: AudioPlayer = new AudioPlayer(params)
-    const mediaLibrary = MediaLibrary.getInstance()
-    mediaLibrary.addPlayer(audioPlayer)
 
     useEffect(() => {
-        let intervalId: NodeJS.Timeout | null = null;
         if (isPlaying) {
             intervalId = setInterval(() => {
                 setAnimationState((prevState) => (prevState + 1) % 3)
@@ -41,20 +32,60 @@ function AudioButton({ id, position, source }: AudioButtonProps) {
         }
 
         return () => {
-            if (intervalId) clearInterval(intervalId)
+            if (intervalId) {
+                clearInterval(intervalId)
+            }
+
+            dispatch(activePlayerUpdated(null))
+
         }
     }, [isPlaying])
 
+
+    const stopPlaying = () => {
+        setIsPlaying(false)
+        audioPlayer.pause()
+    }
+
+    const startPlaying = () => {
+
+        setIsPlaying(true)
+        audioPlayer.play()
+
+    }
+
     useEffect(() => {
-        return () => mediaLibrary.removePlayer(audioPlayer)
+        setAudioPlayer(new Audio(source))
     }, [])
 
-    const togglePlay = () => {
-        if (isPlaying) {
-            setIsPlaying(false)
+
+    useEffect(() => {
+        if (audioPlayer)
+            audioPlayer.onended = () => stopPlaying()
+    }, [audioPlayer])
+
+
+    useEffect(() => {
+
+
+        if (activePlayer && activePlayer != id) {
+            stopPlaying()
         }
 
-        mediaLibrary.play(audioPlayer)
+
+    }, [activePlayer])
+
+    const togglePlay = () => {
+
+        if (!isPlaying) {
+            startPlaying()
+            dispatch(activePlayerUpdated(id))
+        } else {
+            stopPlaying()
+            dispatch(activePlayerUpdated(null))
+        }
+
+
     }
 
     const renderIcon = () => {
@@ -80,6 +111,7 @@ function AudioButton({ id, position, source }: AudioButtonProps) {
                 {renderIcon()}
             </div>
         </div>
+
     )
 }
 
