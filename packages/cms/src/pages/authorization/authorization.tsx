@@ -54,7 +54,9 @@ export default function Authorization(props: any) {
 		try {
 			const user = await getCurrentUser()
 			if (user) {
-				navigate({ to: '/interactive-content-designer' })
+				navigate({ 
+					to: '/interactive-content-designer'
+				})
 			}
 		} catch (error) {
 			console.error("Error checking user authentication:", error)

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { LazyMotion, m } from "framer-motion"
-import { useLanguage, useMode } from "../util/store"
+import { useMode } from "../util/store"
 import { appendBlock, focusBlock } from "../reducers/page-reducer"
 import { useDispatch } from "react-redux"
 import TemplateFactory from "../util/factories/templates/template-factory"
@@ -28,7 +28,6 @@ const loadFeatures = () => import("../util/animations").then(res => res.default)
 export default function PageContent(props: any) {
 
     const mode: any = useMode()
-    const lang: any = useLanguage()
     const id: any = props.id
     const dispatch = useDispatch()
 
