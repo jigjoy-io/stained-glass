@@ -36,7 +36,7 @@ let localization = new LocalizedStrings({
         leadMagnet: "Lead magnet",
         paid: "Plaćeno",
         carouselSettings: "Podešavanje karusela",
-        accessType: 'Podešavanje pristup'
+        accessType: 'Podešavanje pristupa'
     }
 })
 
