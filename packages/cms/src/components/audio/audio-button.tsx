@@ -13,12 +13,13 @@ interface AudioButtonProps {
 }
 
 function AudioButton({ id, position, source }: AudioButtonProps) {
-    const [isPlaying, setIsPlaying] = useState(false)
+
     const [animationState, setAnimationState] = useState(0)
     const dispatch = useDispatch()
-    const activePlayer = useActivePlayer()
     let intervalId: NodeJS.Timeout | null = null
 
+    const [isPlaying, setIsPlaying] = useState(false)
+    const activePlayer = useActivePlayer()
     const [audioPlayer, setAudioPlayer] = useState<any>()
 
 
@@ -35,27 +36,37 @@ function AudioButton({ id, position, source }: AudioButtonProps) {
             if (intervalId) {
                 clearInterval(intervalId)
             }
-
-            dispatch(activePlayerUpdated(null))
-
         }
     }, [isPlaying])
 
 
     const stopPlaying = () => {
-        setIsPlaying(false)
-        audioPlayer.pause()
+        if(audioPlayer){
+            setIsPlaying(false)
+            audioPlayer.pause()
+        }
+
     }
 
     const startPlaying = () => {
+        if(audioPlayer){
+            setIsPlaying(true)
+            audioPlayer.play()
+        }
 
-        setIsPlaying(true)
-        audioPlayer.play()
 
     }
 
     useEffect(() => {
+        
         setAudioPlayer(new Audio(source))
+
+        return () => {
+            if(audioPlayer){
+                setIsPlaying(false)
+                audioPlayer.pause()
+            }
+        }
     }, [])
 
 
@@ -67,8 +78,7 @@ function AudioButton({ id, position, source }: AudioButtonProps) {
 
     useEffect(() => {
 
-
-        if (activePlayer && activePlayer != id) {
+        if (activePlayer != id) {
             stopPlaying()
         }
 
@@ -81,7 +91,6 @@ function AudioButton({ id, position, source }: AudioButtonProps) {
             startPlaying()
             dispatch(activePlayerUpdated(id))
         } else {
-            stopPlaying()
             dispatch(activePlayerUpdated(null))
         }
 
