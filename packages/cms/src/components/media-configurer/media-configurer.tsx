@@ -150,7 +150,7 @@ export default function MediaConfigurer({ mediaType, icon, localization, props, 
 											accept={`${mediaType}/*`}
 											style={{ display: 'none' }}
 										/>
-										<Button width="w-full" text={localization.clickToUpload} action={triggerFileInput} disabled={fileAlert != null} />
+										<Button width="w-full" text={localization.clickToUpload} action={triggerFileInput} disabled={fileAlert != null && fileAlert.type != 'danger'} />
 									</Tab>
 									<Tab key={localization.embedLink}>
 										<Input value={value} onChange={setValue} placeholder={localization.embedLinkPlaceholder} />
