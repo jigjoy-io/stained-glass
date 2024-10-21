@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import SpeakerOnIcon from "../../icons/speaker-on-icon"
 import SpeakerOnIcon1 from "../../icons/speaker-on-1-icon"
 import SpeakerOnIcon2 from "../../icons/speaker-on-2-icon"
@@ -20,7 +20,7 @@ function AudioButton({ id, position, source }: AudioButtonProps) {
 
     const [isPlaying, setIsPlaying] = useState(false)
     const activePlayer = useActivePlayer()
-    const [audioPlayer, setAudioPlayer] = useState<any>()
+    const audioRef = useRef<HTMLAudioElement | null>(null)
 
 
     useEffect(() => {
@@ -41,39 +41,33 @@ function AudioButton({ id, position, source }: AudioButtonProps) {
 
 
     const stopPlaying = () => {
-        if(audioPlayer){
+        if (audioRef.current) {
             setIsPlaying(false)
-            audioPlayer.pause()
+            audioRef.current.pause()
         }
 
     }
 
     const startPlaying = () => {
-        if(audioPlayer){
-            setIsPlaying(true)
-            audioPlayer.play()
-        }
+        if (audioRef.current) {
+            audioRef.current.src = source
 
+            audioRef.current.onended = () => stopPlaying()
+            setIsPlaying(true)
+            audioRef.current.play()
+        }
 
     }
 
     useEffect(() => {
-        
-        setAudioPlayer(new Audio(source))
-
         return () => {
-            if(audioPlayer){
-                setIsPlaying(false)
-                audioPlayer.pause()
-            }
+
+            setIsPlaying(false)
+
+            if (audioRef.current)
+                audioRef.current.pause()
         }
     }, [])
-
-
-    useEffect(() => {
-        if (audioPlayer)
-            audioPlayer.onended = () => stopPlaying()
-    }, [audioPlayer])
 
 
     useEffect(() => {
@@ -111,7 +105,8 @@ function AudioButton({ id, position, source }: AudioButtonProps) {
         }
     }
 
-    return (
+    return (<>
+        <audio className="hidden" ref={audioRef} />
         <div className="flex w-full" style={{ justifyContent: position }}>
             <div
                 className='w-max hover:bg-primary-light border-2 border-[transparent] p-1 rounded-md cursor-pointer'
@@ -120,6 +115,8 @@ function AudioButton({ id, position, source }: AudioButtonProps) {
                 {renderIcon()}
             </div>
         </div>
+    </>
+
 
     )
 }
