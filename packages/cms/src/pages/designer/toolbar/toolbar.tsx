@@ -249,8 +249,8 @@ export default function Toolbar(props: any) {
                             block={props.block} 
                             attribute={editor.key} 
                             value={props.block[editor.key]} 
-                            extraProps={editor.extraProps} 
-                            repositionEditor={() => repositionEditor()}/>
+                            extraProps={editor.extraProps}
+                            />
                     </div>
                 </ClickOutsideListener>, document.body)
             }

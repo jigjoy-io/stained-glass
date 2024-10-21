@@ -7,6 +7,8 @@ let localization = new LocalizedStrings({
     US: {
         update: "Update",
         embedLink: "Embed link",
+        embedLinkPlaceholder: "Enter video url",
+        embedButton: "Embed",
         uploadFile: "Upload reel",
         clickToUpload: "Click to upload reel",
         maxFileUpload: "Maximum video file size is 5mb.",
@@ -19,6 +21,8 @@ let localization = new LocalizedStrings({
     RS: {
         update: "Promeni",
         embedLink: "Unesi link",
+        embedLinkPlaceholder: "Unesi link do videa",
+        embedButton: "Ubaci",
         uploadFile: "Promeni reel",
         clickToUpload: "Klikni da ubaciš reel",
         maxFileUpload: "Maksimalna veličina video fajla je 5mb.",

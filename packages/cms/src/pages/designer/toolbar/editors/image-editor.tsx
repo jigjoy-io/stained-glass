@@ -14,7 +14,9 @@ let localization = new LocalizedStrings({
         fileLoadSuccess: "You can start uploading your image.",
         fileUploadedSuccessfully: "Your image upload has finished!",
         uploadInProgress: "Upload in progress...",
-        uploadError: "Error has occured during the upload!"
+        uploadError: "Error has occured during the upload!",
+        embedLinkPlaceholder: "Enter image url",
+        embedButton: "Embed",
     },
     RS: {
         update: "Promeni",
@@ -27,6 +29,8 @@ let localization = new LocalizedStrings({
         fileUploadedSuccessfully: "Vaša slika je uspešno otpremljena!",
         uploadInProgress: "Otpremljivanje je u toku...",
         uploadError: "Greška prilikom otpremljivanja!",
+        embedLinkPlaceholder: "Unesi link slike",
+        embedButton: "Ubaci",
     }
 })
 

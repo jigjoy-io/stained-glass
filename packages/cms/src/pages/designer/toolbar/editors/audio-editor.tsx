@@ -7,6 +7,8 @@ let localization = new LocalizedStrings({
     US: {
         update: "Update",
         embedLink: "Embed link",
+        embedLinkPlaceholder: "Enter audio url",
+        embedButton: "Embed",
         uploadFile: "Upload audio",
         clickToUpload: "Click to upload audio",
         maxFileUpload: "Maximum audio file size is 5mb.",
@@ -15,10 +17,13 @@ let localization = new LocalizedStrings({
         uploadInProgress: "Upload in progress...",
         uploadError: "Error has occured during the upload!",
         fileUploadedSuccessfully: "Your audio upload has finished!",
+
     },
     RS: {
         update: "Promeni",
         embedLink: "Unesi link",
+        embedLinkPlaceholder: "Unesi link do audio fajla",
+        embedButton: "Ubaci",
         uploadFile: "Promeni zvuk",
         clickToUpload: "Klikni da ubaciš zvuk",
         maxFileUpload: "Maksimalna veličina audio fajla je 5mb.",

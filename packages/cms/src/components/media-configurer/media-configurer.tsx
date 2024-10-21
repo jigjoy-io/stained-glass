@@ -38,7 +38,7 @@ interface MediaConfigurerProps {
 	props: any
 }
 
-export default function MediaConfigurer({ mediaType, icon, localization, props, lang }: MediaConfigurerProps) {
+export default function MediaConfigurer({ mediaType, icon, localization, props }: MediaConfigurerProps) {
 
 	const [display, setDisplay] = useState(props.display)
 	const [value, setValue] = useState(props.value)
@@ -115,7 +115,7 @@ export default function MediaConfigurer({ mediaType, icon, localization, props, 
 				setFileAlert({ type: "danger", message: localization.fileTooLarge })
 			} else {
 				const uploadedFileUrl = await update(selectedFile, handleFileUpload, value)
-				console.log(uploadedFileUrl)
+
 				createBlock(uploadedFileUrl)
 			}
 		}
@@ -150,7 +150,7 @@ export default function MediaConfigurer({ mediaType, icon, localization, props, 
 											accept={`${mediaType}/*`}
 											style={{ display: 'none' }}
 										/>
-										<Button width="w-full" text={localization.clickToUpload} action={triggerFileInput} disabled={fileAlert != null && fileAlert.type != 'danger'} />
+										<Button width="w-full" text={localization.clickToUpload} action={triggerFileInput} disabled={loading} />
 									</Tab>
 									<Tab key={localization.embedLink}>
 										<Input value={value} onChange={setValue} placeholder={localization.embedLinkPlaceholder} />
