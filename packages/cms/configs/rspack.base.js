@@ -1,8 +1,6 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyPlugin = require("copy-webpack-plugin");
+const rspack = require("@rspack/core")
 const Dotenv = require('dotenv-webpack');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   entry: {
@@ -39,7 +37,7 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          MiniCssExtractPlugin.loader,
+          rspack.CssExtractRspackPlugin.loader,
           'css-loader',
           'postcss-loader'
         ]
@@ -47,10 +45,10 @@ module.exports = {
     ],
   },
   plugins: [
-    new MiniCssExtractPlugin({
+    new rspack.CssExtractRspackPlugin({
       filename: '[name].[contenthash].css',
     }),
-    new CopyPlugin({
+    new rspack.CopyRspackPlugin({
       patterns: [
         { from: "manifest.json" },
         { from: "./public/favicon.ico" }
@@ -60,7 +58,7 @@ module.exports = {
       path: './.env',
       safe: true,
     }),
-    new HtmlWebpackPlugin({
+    new rspack.HtmlRspackPlugin({
       template: 'public/index.html',
       title: 'JigJoy - Playground for Your Followers',
       filename: 'index.html',

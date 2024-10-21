@@ -1,6 +1,6 @@
 const path = require('path');
 const { merge } = require('webpack-merge');
-const webpackBaseConfig = require('./rspack.base');
+const rspackBaseConfig = require('./rspack.base');
 
 const devConfig = {
   mode: "development",
@@ -17,10 +17,10 @@ const devConfig = {
     hot: true,
     compress: false,
     historyApiFallback: true,
+    open: true
   },
 };
 
-const mergedConfig = merge(webpackBaseConfig, devConfig);
+const mergedConfig = merge(rspackBaseConfig, devConfig);
 
-console.log('Exporting merged config');
 module.exports = mergedConfig;

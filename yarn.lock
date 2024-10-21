@@ -2462,6 +2462,21 @@
     webpack-dev-server "5.0.4"
     ws "^8.16.0"
 
+"@rspack/dev-server@^1.0.9":
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/@rspack/dev-server/-/dev-server-1.0.9.tgz#3061d3bb643ab0c9765fdb5554b31112be7eba96"
+  integrity sha512-VF+apLFfl5LWIhVbfkJ5ccU0Atl5mi+sGTkx+XtE1tbUmMJkde0nm/4+eaQCud7oGl+ZCzt4kW14uuzLSiEGDw==
+  dependencies:
+    chokidar "^3.6.0"
+    connect-history-api-fallback "^2.0.0"
+    express "^4.19.2"
+    http-proxy-middleware "^2.0.6"
+    mime-types "^2.1.35"
+    p-retry "4.6.2"
+    webpack-dev-middleware "^7.4.2"
+    webpack-dev-server "5.0.4"
+    ws "^8.16.0"
+
 "@rspack/lite-tapable@1.0.1":
   version "1.0.1"
   resolved "https://registry.npmjs.org/@rspack/lite-tapable/-/lite-tapable-1.0.1.tgz"
