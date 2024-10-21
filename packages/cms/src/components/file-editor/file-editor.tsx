@@ -43,7 +43,7 @@ export default function FileEditor({ value, block, fileType, localization, lang 
 
     const handleUpdate = () => {
         update(file, handleFileUpload, localValue);
-    };
+    }
 
     return (
         <div className="flex flex-col p-2 w-[300px] mt-4">

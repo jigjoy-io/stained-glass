@@ -31,16 +31,15 @@ let localization = new LocalizedStrings({
 })
 
 export default function ImageEditor(props: any) {
+
     const lang = useLanguage()
     localization.setLanguage(props.lang)
 
-    return (
-        <FileEditor
-            value={props.value}
-            block={props.block}
-            fileType="image"
-            localization={localization}
-            lang={lang}
-        />
-    )
+    return <FileEditor
+        value={props.value}
+        block={props.block}
+        fileType="image"
+        localization={localization}
+        lang={lang}
+    />
 }

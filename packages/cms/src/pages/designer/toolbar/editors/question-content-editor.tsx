@@ -43,7 +43,6 @@ let localization = new LocalizedStrings({
 export default function QuestionContentEditor(props: any) {
 
     const [value, setValue] = useState(props.value)
-    const [displayUrlInput, setDisplayUrlInput] = useState(false)
     const fileInputRef = useRef<HTMLInputElement>(null)
     const [file, setFile] = useState<File | null>(null)
     const [loading, setLoading] = useState(false)
