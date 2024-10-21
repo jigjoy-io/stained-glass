@@ -1,6 +1,7 @@
 const path = require('path');
 const rspack = require("@rspack/core")
 const Dotenv = require('dotenv-webpack');
+const { RsdoctorRspackPlugin } = require('@rsdoctor/rspack-plugin');
 
 module.exports = {
   entry: {
@@ -45,6 +46,9 @@ module.exports = {
     ],
   },
   plugins: [
+    new RsdoctorRspackPlugin({
+        disableClientServer: false,
+      }),
     new rspack.CssExtractRspackPlugin({
       filename: '[name].[contenthash].css',
     }),

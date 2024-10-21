@@ -264,9 +264,9 @@ export function Node(props: any) {
 
     const selectActivePage = () => {
 
-        if(!activePage)
-            return 
-        
+        if (!activePage)
+            return
+
         dispatch(pageExpanded(activePage.id))
 
         if (activePage.type == 'blank') {
