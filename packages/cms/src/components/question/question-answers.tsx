@@ -10,8 +10,7 @@ function QuestionAnswers(props: any) {
     const [alert, setAlert] = useState({})
     const [answered, setAnswered] = useState(false)
 
-    const selectAnswer = (event, outcome: any) => {
-        event.stopPropagation()
+    const selectAnswer = (outcome: any) => {
         setAnswered(false)
         setSelected(outcome)
     }
