@@ -86,6 +86,8 @@ export default function MediaConfigurer({ mediaType, icon, localization, props }
 	}, [])
 
 	const createBlock = (fileUrl) => {
+		dispatch(blockingUpdated(false))
+		
 		let block = TemplateFactory.createMediaBlock(fileUrl, mediaType)
 
 		block.id = props.id
@@ -109,14 +111,10 @@ export default function MediaConfigurer({ mediaType, icon, localization, props }
 							<div>
 								<Tabs>
 									<Tab key={localization.uploadFile}>
-										<FileUploader mediaType={mediaType} localization={localization} callback={createBlock}/>
+										<FileUploader mediaType={mediaType} localization={localization} callback={createBlock} />
 									</Tab>
 									<Tab key={localization.embedLink}>
-										{/* <Input value={value} onChange={setValue} placeholder={localization.embedLinkPlaceholder} />
-										<div className="mt-3">
-											<Button width="w-full" text={localization.embedButton} action={() => createBlock(value)} />
-										</div> */}
-										<FileUrlEditor />
+										<FileUrlEditor filePath={value} fileType={mediaType} localization={localization} callback={createBlock} />
 									</Tab>
 								</Tabs>
 							</div>
