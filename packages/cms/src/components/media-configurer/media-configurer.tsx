@@ -40,7 +40,9 @@ export default function MediaConfigurer({ mediaType, icon, localization, props }
 
 	const dispatch = useDispatch()
 
-	const [top, setTop] = useState(window.innerHeight / 2)
+	const [top, setTop] = useState<number>()
+	const [left, setLeft] = useState<number>()
+
 	const [y, setY] = useState(0)
 	const ref = useRef<HTMLDivElement>(null)
 
@@ -49,11 +51,12 @@ export default function MediaConfigurer({ mediaType, icon, localization, props }
 			let contentRect = ref.current.getBoundingClientRect()
 			if (contentRect.top + window.innerHeight / 2 > window.innerHeight) {
 				setY(-100)
-				setTop(contentRect.top)
 			} else {
 				setY(0)
-				setTop(contentRect.top)
+
 			}
+			setTop(contentRect.top)
+			setLeft(contentRect.left + contentRect.width/2)
 		}
 	}, [display])
 
@@ -85,6 +88,7 @@ export default function MediaConfigurer({ mediaType, icon, localization, props }
 		}
 	}, [])
 
+
 	const createBlock = (fileUrl) => {
 		dispatch(blockingUpdated(false))
 		
@@ -92,6 +96,7 @@ export default function MediaConfigurer({ mediaType, icon, localization, props }
 
 		block.id = props.id
 		dispatch(updateBlock(block))
+
 	}
 
 	return (
@@ -103,9 +108,10 @@ export default function MediaConfigurer({ mediaType, icon, localization, props }
 							width: 460,
 							pointerEvents: 'auto',
 							top: top,
-							transform: `translate(-25%, ${y}%)`
+							left: left,
+							transform: `translate(-50%, ${y}%)`
 						}}
-						className="fixed rounded-md bg-[white] rounded-lg rounded-[5px] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.7)] z-50 -translate-x-[25%] left-[50%]"
+						className="fixed rounded-md bg-[white] rounded-lg rounded-[5px] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.7)] z-50"
 					>
 						<div className="p-[5%]">
 							<div>
