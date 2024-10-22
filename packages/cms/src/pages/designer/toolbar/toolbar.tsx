@@ -48,7 +48,7 @@ let localization = new LocalizedStrings({
     }
 })
 
-const loadFeatures = () => import("../../../util/animations").then(res => res.default)
+const loadFeatures = () => import("../../../util/style-helper/animations").then(res => res.default)
 
 export default function Toolbar(props: any) {
 

@@ -9,9 +9,9 @@ import Tabs from "../tabs/tabs"
 import Tab from "../tabs/tab"
 import Input from "../input/input"
 import Button from "../button/button"
-import useFileUpload from "../../util/file-upload"
-import { fileUpdate } from "../../util/file-update"
 import Alert from "../alert/alert"
+import FileUploadHelper from "../../util/file-upload/file-upload"
+import { useRootPage } from "../../util/store"
 
 interface LocalizationStrings {
 	create: string
@@ -46,10 +46,11 @@ export default function MediaConfigurer({ mediaType, icon, localization, props }
 
     const [fileAlert, setFileAlert] = useState<any>(null)
 
-	const dispatch = useDispatch()
+	const [uploading, setUploadingStatus] = useState(false)
 
-	const { handleFileUpload } = useFileUpload(setValue, mediaType)
-	const { update, loading } = fileUpdate(props.block, setFileAlert, localization)
+	const rootPage = useRootPage()
+
+	const dispatch = useDispatch()
 
 	const triggerFileInput = () => {
 		fileInputRef.current?.click()
@@ -110,15 +111,16 @@ export default function MediaConfigurer({ mediaType, icon, localization, props }
 
 	const handleFileChange = async (event) => {
 		const selectedFile = event.target.files?.[0]
-		if (selectedFile) {
-			if (selectedFile.size > 5 * 1024 * 1024) {
-				setFileAlert({ type: "danger", message: localization.fileTooLarge })
-			} else {
-				const uploadedFileUrl = await update(selectedFile, handleFileUpload, value)
+		setUploadingStatus(true)
 
-				createBlock(uploadedFileUrl)
-			}
+		try {
+			let filePath = await FileUploadHelper.upload(selectedFile, rootPage.id)
+			setValue(filePath)
+		} catch (error) {
+			setUploadingStatus(false)
 		}
+
+		
 	}
 
 	return (
@@ -150,7 +152,7 @@ export default function MediaConfigurer({ mediaType, icon, localization, props }
 											accept={`${mediaType}/*`}
 											style={{ display: 'none' }}
 										/>
-										<Button width="w-full" text={localization.clickToUpload} action={triggerFileInput} disabled={loading} />
+										<Button width="w-full" text={localization.clickToUpload} action={triggerFileInput} disabled={uploading} />
 									</Tab>
 									<Tab key={localization.embedLink}>
 										<Input value={value} onChange={setValue} placeholder={localization.embedLinkPlaceholder} />

@@ -1,7 +1,6 @@
 import React, { useRef, useState } from "react"
 import LocalizedStrings from "react-localization"
 import { useDispatch } from "react-redux"
-import useFileUpload from "../../../../util/file-upload"
 import { updateBlock } from "../../../../reducers/page-reducer"
 import Checkbox from "../../../../components/checkbox/checkbox"
 import Tabs from "../../../../components/tabs/tabs"
@@ -52,7 +51,7 @@ export default function QuestionContentEditor(props: any) {
     localization.setLanguage(props.lang)
     const [fileAlert, setFileAlert] = useState({ type: "info", message: localization.maxFileUpload })
 
-    const { handleFileUpload } = useFileUpload(setValue, 'image')
+    //onst { handleFileUpload } = useFileUpload(setValue, 'image')
 
     const triggerFileInput = () => {
         fileInputRef.current?.click()

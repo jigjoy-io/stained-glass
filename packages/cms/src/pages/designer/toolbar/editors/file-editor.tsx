@@ -1,13 +1,12 @@
 import React, { useRef, useState } from "react"
-import useFileChangeHandler from "../../util/handle-file-change";
-import useFileUpload from "../../util/file-upload";
-import Tabs from "../tabs/tabs";
-import Tab from "../tabs/tab";
-import Alert from "../alert/alert";
-import Button from "../button/button";
-import { fileUpdate } from "../../util/file-update";
-import Input from "../input/input";
-import UrlValidator from "../../util/url-validator";
+import Tabs from "../../../../components/tabs/tabs"
+import Tab from "../../../../components/tabs/tab"
+import Alert from "../../../../components/alert/alert"
+import Button from "../../../../components/button/button"
+import Input from "../../../../components/input/input"
+import UrlValidator from "../../../../util/file-upload/url-validator"
+import { useRootPage } from "../../../../util/store"
+import FileUploadHelper from "../../../../util/file-upload/file-upload"
 
 interface LocalizationStrings {
     update: string
@@ -33,36 +32,35 @@ interface FileEditorProps {
 }
 
 export default function FileEditor({ value, block, fileType, localization }: FileEditorProps) {
-    const [localValue, setLocalValue] = useState<any>(value)
+    const [filePath, setFilePath] = useState<any>(value)
     const fileInputRef = useRef<HTMLInputElement>(null)
 
     const [fileAlert, setFileAlert] = useState<{ type: string, message: string } | null>(null)
     const [urlAlert, setUrlAlert] = useState<{ type: string, message: string } | null>(null)
 
+    const [uploading, setUploadingStatus] = useState(false)
+	const rootPage = useRootPage()
+
     const handleFileChange = async (event) => {
 
 
         const selectedFile = event.target.files?.[0]
-        if (selectedFile) {
-            if (selectedFile.size > 5 * 1024 * 1024) {
-                setFileAlert({ type: "danger", message: localization.fileTooLarge })
-            } else {
 
-                const uploadedFileUrl = await update(selectedFile, handleFileUpload, localValue)
-                setLocalValue(uploadedFileUrl)
-            }
-        }
+        setUploadingStatus(true)
+
+		try {
+			let filePath = await FileUploadHelper.upload(selectedFile, rootPage.id)
+			setFilePath(filePath)
+		} catch (error) {
+			setUploadingStatus(false)
+		}
     }
-
-    const { handleFileUpload } = useFileUpload(setLocalValue, fileType)
 
 
 
     const triggerFileInput = () => {
         fileInputRef.current?.click()
     }
-
-    const { update, loading } = fileUpdate(block, setFileAlert, localization)
 
     const handleUrlUpdate = (url) => {
         if(UrlValidator.validate(fileType, url)){
@@ -74,7 +72,7 @@ export default function FileEditor({ value, block, fileType, localization }: Fil
 
     return (
         <div className="flex flex-col p-2 w-[300px] mt-4">
-            {fileType === "image" && localValue && <img src={localValue} className="w-[100px] my-2 rounded-lg" alt="Uploaded" />}
+            {fileType === "image" && filePath && <img src={filePath} className="w-[100px] my-2 rounded-lg" alt="Uploaded" />}
             <Tabs>
                 <Tab key={localization.uploadFile}>
                     {
@@ -90,7 +88,7 @@ export default function FileEditor({ value, block, fileType, localization }: Fil
                         accept={`${fileType}/*`}
                         style={{ display: 'none' }}
                     />
-                    <Button width="w-full" text={localization.clickToUpload} action={triggerFileInput} disabled={loading} />
+                    <Button width="w-full" text={localization.clickToUpload} action={triggerFileInput} disabled={uploading} />
                 </Tab>
                 <Tab key={localization.embedLink}>
 
@@ -100,10 +98,10 @@ export default function FileEditor({ value, block, fileType, localization }: Fil
                         </div>
                     }
 
-                    <Input value={localValue} onChange={setLocalValue} placeholder={localization.embedLinkPlaceholder} />
+                    <Input value={filePath} onChange={setFilePath} placeholder={localization.embedLinkPlaceholder} />
 
                     <div className="mt-3">
-                        <Button width="w-full" text={localization.embedButton} action={() => handleUrlUpdate(localValue)} />
+                        <Button width="w-full" text={localization.embedButton} action={() => handleUrlUpdate(filePath)} />
                     </div>
                 </Tab>
             </Tabs>

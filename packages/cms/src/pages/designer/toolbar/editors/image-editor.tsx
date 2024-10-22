@@ -1,7 +1,7 @@
 import React from "react"
 import LocalizedStrings from "react-localization"
 import { useLanguage } from "../../../../util/store"
-import FileEditor from "../../../../components/file-editor/file-editor"
+import FileEditor from "../../../designer/toolbar/editors/file-editor"
 
 let localization = new LocalizedStrings({
     US: {
