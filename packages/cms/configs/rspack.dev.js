@@ -4,7 +4,7 @@ const rspackBaseConfig = require('./rspack.base');
 
 const devConfig = {
   mode: "development",
-  devtool: "eval-source-map",
+  devtool: "eval",
   cache: false,
   optimization: {
     minimize: false,
