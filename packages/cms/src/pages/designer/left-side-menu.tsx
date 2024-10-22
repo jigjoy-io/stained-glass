@@ -6,7 +6,7 @@ import Alert from "../../components/alert/alert"
 import Button from "../../components/button/button"
 import { pagesUpdated, pageUpdated, rootPageUpdated } from "../../reducers/page-reducer"
 import { useLanguage, usePages, useRootPage } from "../../util/store"
-import { Node } from './node'
+import Node from './node'
 import { Link, useNavigate } from '@tanstack/react-router'
 import AnalyticsIcon from "../../icons/analytics-icon"
 import { sidebarExpanded } from "../../reducers/sidebar-reducer"
@@ -30,23 +30,24 @@ export default function LeftSideMenu() {
     const lang = useLanguage()
     localization.setLanguage(lang)
 
-    async function fetchData(reload: boolean) {
+    async function fetchData() {
         const currentUser = await getCurrentUser()
 
         let pages = await getPages(currentUser.signInDetails?.loginId as string)
-        dispatch(pagesUpdated(pages))
-        if (reload) {
+        
+
+        if(!page){
             dispatch(rootPageUpdated(pages[0]))
             dispatch(pageUpdated(pages[0]))
         }
 
+
+        dispatch(pagesUpdated(pages))
+
     }
 
     useEffect(() => {
-
-        let reload = pages.length == 0
-        fetchData(reload)
-
+        fetchData()
     }, [])
 
     useEffect(() => {

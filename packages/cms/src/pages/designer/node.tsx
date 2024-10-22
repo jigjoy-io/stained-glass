@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { memo, useEffect, useRef, useState } from "react"
 import { useDispatch } from "react-redux"
 import { createPage, removePage, updatePage } from "../../api/page"
 import Grid from "../../components/grid/grid"
@@ -68,7 +68,7 @@ let localization = new LocalizedStrings({
     }
 })
 
-export function Node(props: any) {
+const Node = memo(function Node(props: any) {
 
     const activePage = usePage()
     const activeCarousel = useCurrentCarouselPage()
@@ -548,4 +548,6 @@ export function Node(props: any) {
 
     </div>
 
-}
+}) 
+
+export default Node
