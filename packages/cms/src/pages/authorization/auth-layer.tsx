@@ -25,7 +25,9 @@ export default function AuthLayer(props: any) {
 
     useEffect(() => {
         authorize(email, token)
-        dispatch(languageUpdated(lang))
+        if (lang) {
+            dispatch(languageUpdated(lang))
+        }
     }, [])
 
     async function authorize(email, token) {
