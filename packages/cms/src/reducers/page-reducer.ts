@@ -58,7 +58,7 @@ export const pageSlice = createSlice({
             state.activePage = action.payload
 
             // highlight and expand node in the tree
-            if(state.activePage){
+            if(state.activePage && state.mode=='editing'){
 
                 state.expandedPages.push(action.payload)
     
