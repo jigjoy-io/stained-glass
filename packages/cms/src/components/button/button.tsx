@@ -40,7 +40,7 @@ export default function Button(props: any) {
 				  touchTimeout = setTimeout(() => {
 					touchTimeout = null
 					props.action()
-				  }, 300) // Add a delay of 300ms to debounce the click event (TODO: Refactor ios hack for JIG-383)
+				  }, 1300) // Add a delay of 300ms to debounce the click event (TODO: Refactor ios hack for JIG-383)
 				}
 			  }}
 
