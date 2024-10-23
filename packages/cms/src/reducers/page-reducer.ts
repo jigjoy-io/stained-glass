@@ -45,6 +45,7 @@ export const pageSlice = createSlice({
 
             state.rootPage = action.payload
 
+            // refresh rootPage inside pages
             if(state.rootPage) {
                 let index = state.pages.findIndex((p: any) => p.id == action.payload.id)
                 state.pages.splice(index, 1, action.payload)
@@ -56,6 +57,7 @@ export const pageSlice = createSlice({
         pageUpdated: (state, action: PayloadAction<any>) => {
             state.activePage = action.payload
 
+            // highlight and expand node in the tree
             if(state.activePage){
 
                 state.expandedPages.push(action.payload)

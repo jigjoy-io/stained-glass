@@ -37,13 +37,10 @@ export default function LeftSideMenu() {
 
 
         if (!page) {
-            console.log('not exist persisted page')
             dispatch(rootPageUpdated(fetchedPages[0]))
             dispatch(pageUpdated(fetchedPages[0]))
             dispatch(pagesUpdated(fetchedPages))
         } else {
-
-            console.log('exist persisted page')
             const fetchedPage = fetchedPages.find(fp => fp.id == page.id)
             dispatch(rootPageUpdated(fetchedPage))
             dispatch(pageUpdated(fetchedPage))
