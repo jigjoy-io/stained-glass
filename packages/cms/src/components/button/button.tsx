@@ -6,6 +6,7 @@ export default function Button(props: any) {
 	const [color, setColor] = useState("bg-default text-[white]")
 	const [width, setWidth] = useState(props.width)
 	const [size, setSize] = useState("lg")
+	let touchTimeout: NodeJS.Timeout | null = null
 
 	const setTheme = () => {
 		if (props.color == "primary") {
@@ -34,9 +35,14 @@ export default function Button(props: any) {
 			className={`${color} ${width} ${props.size == 'sm' ? 'p-1 px-3 rounded-md font-bold' : 'p-3 font-bold rounded-lg text-ellipsis text-nowrap overflow-hidden'} ${!props.disabled && "cursor-pointer"} active:opacity-80 md:hover:opacity-80`}
 
 			onClick={(e) => {
-				e.preventDefault()
-				props.action()
-			}}
+				if (!touchTimeout) {
+				  props.action()
+				  touchTimeout = setTimeout(() => {
+					touchTimeout = null
+				  }, 300) // Add a delay of 300ms to debounce the click event
+				}
+			  }}
+
 			disabled={props.disabled}
 			autoFocus={props.focus}>
 			{props.text}
