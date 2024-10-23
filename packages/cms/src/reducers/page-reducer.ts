@@ -43,12 +43,11 @@ export const pageSlice = createSlice({
 
         rootPageUpdated: (state, action: PayloadAction<any>) =>{
 
-            let page: any = action.payload
-            state.rootPage = page
+            state.rootPage = action.payload
 
             if(state.rootPage) {
-                let index = state.pages.findIndex((p: any) => p.id == page.id)
-                state.pages.splice(index, 1, page)
+                let index = state.pages.findIndex((p: any) => p.id == action.payload.id)
+                state.pages.splice(index, 1, action.payload)
             }
 
 

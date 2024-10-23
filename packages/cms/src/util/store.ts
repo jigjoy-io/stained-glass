@@ -17,6 +17,7 @@ const rootReducer = combineReducers({
     localization: localizationReducer
 })
 
+
 const persistConfig = {
     key: 'root',
     storage: storage,
@@ -24,7 +25,7 @@ const persistConfig = {
 }
 
 
-const persistedReducer = persistReducer(persistConfig, rootReducer)
+const persistedReducer = persistReducer<ReturnType<typeof rootReducer>>(persistConfig, rootReducer)
 
 export const store = configureStore({
     reducer: persistedReducer,

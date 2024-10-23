@@ -34,19 +34,25 @@ export default function LeftSideMenu() {
         const currentUser = await getCurrentUser()
 
         let fetchedPages = await getPages(currentUser.signInDetails?.loginId as string)
-        
 
-        if(!page){
+
+        if (!page) {
+            console.log('not exist persisted page')
             dispatch(rootPageUpdated(fetchedPages[0]))
             dispatch(pageUpdated(fetchedPages[0]))
-        }else{
+            dispatch(pagesUpdated(fetchedPages))
+        } else {
+
+            console.log('exist persisted page')
             const fetchedPage = fetchedPages.find(fp => fp.id == page.id)
             dispatch(rootPageUpdated(fetchedPage))
             dispatch(pageUpdated(fetchedPage))
+            dispatch(pagesUpdated(fetchedPages))
         }
 
 
-        dispatch(pagesUpdated(fetchedPages))
+
+
 
     }
 
