@@ -5,14 +5,12 @@ import { useDispatch, useSelector } from "react-redux"
 import toolbarReducer from '../reducers/toolbar-reducer'
 import authReducer from '../reducers/auth-reducer'
 import localizationReducer from '../reducers/localization-reducer'
-import treeReducer from '../reducers/tree-reducer'
 import sidebarReducer from '../reducers/sidebar-reducer'
 import storage from 'redux-persist/lib/storage'
 import { persistStore, persistReducer } from 'redux-persist'
 
 const rootReducer = combineReducers({
     toolbar: toolbarReducer,
-    tree: treeReducer,
     page: pageReducer,
     auth: authReducer,
     sidebar: sidebarReducer,
@@ -22,7 +20,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
     key: 'root',
     storage: storage,
-    whitelist: ['localization']
+    whitelist: ['localization', 'page']
 }
 
 
@@ -48,7 +46,6 @@ export const useBlocked = () => useAppSelector((state: any) => state.toolbar.blo
 
 export const useSidebarVisible = () => useAppSelector((state: any) => state.sidebar.expanded)
 export const useSidebarComponent = () => useAppSelector((state: any) => state.sidebar.component)
-export const useExpandedPages = () => useAppSelector((state: any) => state.tree.expandedPages)
 
 export const useAuthorized = () => useAppSelector((state: any) => state.auth.authorized)
 
@@ -59,5 +56,8 @@ export const useModified = () => useAppSelector((state: any) => state.page.modif
 export const usePages = () => useAppSelector((state: any) => state.page.pages)
 export const useRootPage = () => useAppSelector((state: any) => state.page.rootPage)
 export const useMode = () => useAppSelector((state: any) => state.page.mode)
+export const useSelected = () => useAppSelector((state: any) => state.page.selected)
+export const useExpandedPages = () => useAppSelector((state: any) => state.page.expandedPages)
+
 export const useActiveBlock = () => useAppSelector((state: any) => state.page.activeBlock)
 export const useLanguage = () => useAppSelector((state: any) => state.localization.language)

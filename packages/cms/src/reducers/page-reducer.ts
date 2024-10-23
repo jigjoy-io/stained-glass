@@ -13,7 +13,9 @@ interface PageState {
     activeBlock: string | null,
     pages: any [],
     currentCarouselPage: number | null,
-    activePlayer: string | null
+    activePlayer: string | null,
+    selected: string | null,
+    expandedPages: string []
 }
 
 let initialState: PageState = {
@@ -24,7 +26,9 @@ let initialState: PageState = {
     activeBlock: null,
     pages: [],
     currentCarouselPage: null,
-    activePlayer: null
+    activePlayer: null,
+    selected: null,
+    expandedPages: []
 }
 
 export const fetchPage = createAsyncThunk('loadPage', async (id: string) => {
@@ -52,6 +56,31 @@ export const pageSlice = createSlice({
 
         pageUpdated: (state, action: PayloadAction<any>) => {
             state.activePage = action.payload
+
+            if(state.activePage){
+
+                //state.expandedPages.push(action.payload)
+    
+                if (state.activePage.type == 'blank') {
+                    state.selected = state.activePage.id
+                }
+        
+        
+                if (state.activePage.type == 'carousel' && state.currentCarouselPage == null) {
+                    state.selected = state.activePage.config.pages[0].id
+                }
+
+            }
+            
+
+        },
+
+        pageCollapsed: (state, action: PayloadAction<any>) => {
+            state.expandedPages = state.expandedPages.filter((node: any) => node !== action.payload)
+        },
+
+        pageExpanded: (state, action: PayloadAction<any>) => {
+            state.expandedPages.push(action.payload)
         },
 
         insertBlock: (state, action: PayloadAction<any>) => {
@@ -92,6 +121,7 @@ export const pageSlice = createSlice({
 
         carouselPageSwitched: (state, action: PayloadAction<any>) => {
             state.currentCarouselPage = action.payload
+            state.selected = action.payload
         },
 
         activePlayerUpdated: (state, action: PayloadAction<any>) => {
@@ -107,7 +137,7 @@ export const pageSlice = createSlice({
     }
 })
 
-export const { rootPageUpdated, pageUpdated, modeUpdated, insertBlock, removeBlock, updateBlock, appendBlock, focusBlock, pagesUpdated, carouselPageSwitched, activePlayerUpdated } = pageSlice.actions
+export const { pageCollapsed, pageExpanded, rootPageUpdated, pageUpdated, modeUpdated, insertBlock, removeBlock, updateBlock, appendBlock, focusBlock, pagesUpdated, carouselPageSwitched, activePlayerUpdated } = pageSlice.actions
 
 
 export default pageSlice.reducer

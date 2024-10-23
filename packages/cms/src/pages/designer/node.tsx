@@ -7,10 +7,9 @@ import DeleteBlockIcon from "../../icons/delete-block-icon"
 import DuplicateIcon from "../../icons/duplicate-icon"
 import ExpandPage from "../../icons/expand-page"
 import MoreIcon from "../../icons/more-icon"
-import { carouselPageSwitched, pagesUpdated, pageUpdated, rootPageUpdated } from "../../reducers/page-reducer"
+import { carouselPageSwitched, pageCollapsed, pageExpanded, pagesUpdated, pageUpdated, rootPageUpdated } from "../../reducers/page-reducer"
 import { blockingUpdated } from "../../reducers/toolbar-reducer"
-import { pageCollapsed, pageExpanded } from "../../reducers/tree-reducer"
-import { useCurrentCarouselPage, useExpandedPages, useLanguage, usePage, usePages } from "../../util/store"
+import { useExpandedPages, useLanguage, usePage, usePages, useSelected } from "../../util/store"
 import { deletePage } from "../../util/traversals/delete-page"
 import { duplicateBlock } from "../../util/traversals/duplcate-block"
 import { findParent } from "../../util/traversals/find-parent"
@@ -18,7 +17,6 @@ import { replaceBlock } from "../../util/traversals/replace-block"
 import { createPortal } from "react-dom"
 import ClickOutsideListener from "../../util/click-outside-listener"
 import Button from "../../components/button/button"
-import { useSearch } from '@tanstack/react-router'
 import { pushBlock } from "../../util/traversals/push-block"
 import LocalizedStrings from "react-localization"
 import AddBlockIcon from "../../icons/add-block-icon"
@@ -71,7 +69,7 @@ let localization = new LocalizedStrings({
 const Node = memo(function Node(props: any) {
 
     const activePage = usePage()
-    const activeCarousel = useCurrentCarouselPage()
+    const selected = useSelected()
     const [hover, setHover] = useState(null)
 
     const [renameActive, setRenameActive] = useState(false)
@@ -80,8 +78,6 @@ const Node = memo(function Node(props: any) {
     const [addingActive, setAddingActive] = useState(false)
 
     const [ident, setIdent] = useState(props.ident + 12)
-
-    const [selected, setSelected] = useState<string | null>()
 
     const [renameValue, setRenameValue] = useState('')
     const [tileToAdd, setTileToAdd] = useState('page-tile')
@@ -261,37 +257,6 @@ const Node = memo(function Node(props: any) {
             dispatch(pageExpanded(props.id))
         }
     }
-
-    const selectActivePage = () => {
-
-        if(!activePage)
-            return 
-        
-        dispatch(pageExpanded(activePage.id))
-
-        if (activePage.type == 'blank') {
-            setSelected(activePage.id)
-        }
-
-
-        if (activePage.type == 'carousel' && activeCarousel == null) {
-            dispatch(carouselPageSwitched(activePage.config.pages[0].id))
-        }
-    }
-
-    useEffect(() => {
-        selectActivePage()
-    }, [])
-
-    useEffect(() => {
-        selectActivePage()
-    }, [activePage])
-
-    useEffect(() => {
-        if (activeCarousel != null)
-            setSelected(activeCarousel)
-    }, [activeCarousel])
-
 
     useEffect(() => {
         localization.setLanguage(lang)
