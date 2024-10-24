@@ -221,33 +221,15 @@ export default function BlockSelector(props: any) {
         dispatch(focusBlock(null));
         let block = TemplateFactory.create(type);
 
-        if (type !== 'block-selector') {
-            block.id = props.id;
-            dispatch(updateBlock(block));
+        dispatch(insertBlock({
+            referenceBlock: props.id,
+            block: block,
+            position: 'above'
+        }))
 
-            const buildingBlocks = page.config.buildingBlocks;
-            const currentIndex = buildingBlocks.findIndex((b: any) => b.id === props.id);
+        dispatch(focusBlock(block.id))
 
-            const isLastBlock = currentIndex === buildingBlocks.length - 1;
-
-            if (isLastBlock) {
-                const newBlockSelector = TemplateFactory.create('block-selector');
-                dispatch(appendBlock({
-                    referenceBlock: props.id,
-                    block: newBlockSelector,
-                }));
-            }
-
-            setTimeout(() => {
-                dispatch(focusBlock(block.id));
-            }, 10);
-        } else {
-            block.id = props.id;
-            dispatch(updateBlock(block));
-            dispatch(focusBlock(block.id));
-
-        }
-
+        setOption("")
         closeMenu();
     };
 
