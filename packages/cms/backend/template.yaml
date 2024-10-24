@@ -302,7 +302,7 @@ Resources:
   migrationOldFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/adapters/primary/migration/migration-support-changing-carousel-buttons.migrateNavigationButtonsHandler
+      Handler: src/adapters/primary/migration/migration-profilev2.migrateProfileV2Handler
       Runtime: nodejs20.x
       Architectures:
         - x86_64
@@ -328,7 +328,7 @@ Resources:
         Target: "es2020"
         Sourcemap: true
         EntryPoints:
-          - src/adapters/primary/migration/migration-support-changing-carousel-buttons.ts
+          - src/adapters/primary/migration/migration-profilev2.ts
 
   retrievePageFunction:
     Type: AWS::Serverless::Function

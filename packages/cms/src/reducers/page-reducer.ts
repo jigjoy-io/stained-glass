@@ -14,6 +14,8 @@ interface PageState {
   pages: any[];
   currentCarouselPage: number | null;
   activePlayer: string | null;
+  selected: string | null;
+  expandedPages: string[];
 }
 
 let initialState: PageState = {
@@ -25,6 +27,8 @@ let initialState: PageState = {
   pages: [],
   currentCarouselPage: null,
   activePlayer: null,
+  selected: null,
+  expandedPages: [],
 };
 
 export const fetchPage = createAsyncThunk("loadPage", async (id: string) => {
@@ -37,16 +41,45 @@ export const pageSlice = createSlice({
 
   reducers: {
     rootPageUpdated: (state, action: PayloadAction<any>) => {
-      let page: any = action.payload;
-      state.rootPage = page;
+      state.rootPage = action.payload;
+
+      // refresh rootPage inside pages
       if (state.rootPage) {
-        let index = state.pages.findIndex((p: any) => p.id == page.id);
-        state.pages.splice(index, 1, page);
+        let index = state.pages.findIndex(
+          (p: any) => p.id == action.payload.id
+        );
+        state.pages.splice(index, 1, action.payload);
       }
     },
 
     pageUpdated: (state, action: PayloadAction<any>) => {
       state.activePage = action.payload;
+
+      // highlight and expand node in the tree
+      if (state.activePage && state.mode == "editing") {
+        state.expandedPages.push(action.payload);
+
+        if (state.activePage.type == "blank") {
+          state.selected = state.activePage.id;
+        }
+
+        if (
+          state.activePage.type == "carousel" &&
+          state.currentCarouselPage == null
+        ) {
+          state.selected = state.activePage.config.pages[0].id;
+        }
+      }
+    },
+
+    pageCollapsed: (state, action: PayloadAction<any>) => {
+      state.expandedPages = state.expandedPages.filter(
+        (node: any) => node !== action.payload
+      );
+    },
+
+    pageExpanded: (state, action: PayloadAction<any>) => {
+      state.expandedPages.push(action.payload);
     },
 
     insertBlock: (state, action: PayloadAction<any>) => {
@@ -87,6 +120,7 @@ export const pageSlice = createSlice({
 
     carouselPageSwitched: (state, action: PayloadAction<any>) => {
       state.currentCarouselPage = action.payload;
+      state.selected = action.payload;
     },
 
     activePlayerUpdated: (state, action: PayloadAction<any>) => {
@@ -102,6 +136,8 @@ export const pageSlice = createSlice({
 });
 
 export const {
+  pageCollapsed,
+  pageExpanded,
   rootPageUpdated,
   pageUpdated,
   modeUpdated,

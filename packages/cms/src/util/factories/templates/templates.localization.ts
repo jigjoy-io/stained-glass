@@ -14,7 +14,7 @@ let localization = new LocalizedStrings({
         messageText: "Message text goes here...",
         firstName: "First Name",
         lastName: "Last Name",
-        description: 'Decription...',
+        description: 'Description...',
         username: '@username',
         cta: 'Start',
         title: 'Title',
