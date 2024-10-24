@@ -401,7 +401,6 @@ const Node = memo(function Node(props: any) {
         setTileToAdd(e.target.value)
     }
 
-
     return <div>
         <div key={props.id}
             onClick={(e: React.MouseEvent) => loadPage(e, props)}
@@ -409,7 +408,7 @@ const Node = memo(function Node(props: any) {
             ${(selected == props.id) ? ' bg-primary-light ' : ''}
             hover:bg-primary-light hover:bg-opacity-60 rounded-sm flex flex-row items-center`}
             onMouseEnter={() => setHover(props.id)}
-            onMouseLeave={() => setHover(null)}
+            onMouseOut={() => setHover(null)}
             style={{ paddingLeft: `${ident}px` }}
         >
 
@@ -512,6 +511,6 @@ const Node = memo(function Node(props: any) {
 
     </div>
 
-}) 
+})
 
 export default Node
