@@ -30,7 +30,7 @@ let localization = new LocalizedStrings({
 	},
 })
 
-function usePageLanguage() {
+function getPageLanguage() {
 	const { langParam } = useSearch({
 		from: '/$pageId',
 		select: (search: any) => ({
@@ -48,7 +48,7 @@ function usePageLanguage() {
 }
 
 function ErrorBoundary() {
-	const lang = usePageLanguage()
+	const lang = getPageLanguage()
 	return lang && <PageNotFound message={localization.pageNotFoundMessage} />
 }
 
@@ -70,7 +70,7 @@ export const Route = createFileRoute('/$pageId' as never)({
 })
 
 function PendingComponent() {
-	const lang = usePageLanguage()
+	const lang = getPageLanguage()
 	const dispatch = useDispatch()
 
 	useEffect(() => {
