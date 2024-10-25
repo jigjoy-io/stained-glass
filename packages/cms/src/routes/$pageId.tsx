@@ -1,6 +1,7 @@
 import {
 	createFileRoute,
 	useSearch,
+	useNavigate,
 } from '@tanstack/react-router'
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
@@ -12,7 +13,7 @@ import {
 	rootPageUpdated,
 } from '../reducers/page-reducer'
 import Loader from '../components/loader/loader'
-import { PostError } from '../util/errors/post-error'
+import { PageNotFound } from '../util/errors/page-not-found'
 import LocalizedStrings from 'react-localization'
 import { languageUpdated } from '../reducers/localization-reducer'
 import { useLanguage } from '../util/store'
@@ -29,38 +30,51 @@ let localization = new LocalizedStrings({
 	},
 })
 
+function ErrorBoundary() {
+	const { langParam } = useSearch({
+		from: '/$pageId',
+		select: (search: any) => ({
+			langParam: search.lang ? search.lang.toUpperCase() : null,
+		}),
+	})
+	const lang = langParam || useLanguage()
+	localization.setLanguage(lang)
+
+	return <PageNotFound message={localization.pageNotFoundMessage} />
+}
+
 export const Route = createFileRoute('/$pageId' as never)({
 	loader: async ({ params: { pageId } }) => {
 		try {
-			return await accessPage(pageId, localization.pageNotFoundMessage)
+			const response = await accessPage(pageId, localization.pageNotFoundMessage)
+			if (response?.errorMessage) {
+				throw new Error(response.errorMessage)
+			}
+			return response
 		} catch (error) {
 			throw error
 		}
 	},
-	errorComponent: PostError,
+	errorComponent: ErrorBoundary,
 	pendingComponent: PendingComponent,
 	component: PageDisplay,
 })
 
 function PendingComponent() {
 	const { langParam } = useSearch({
-		from: `/$pageId`,
-		select: (search: any) => {
-			return {
-				langParam: search.lang ? search.lang.toUpperCase() : null,
-			}
-		},
+		from: '/$pageId',
+		select: (search: any) => ({
+			langParam: search.lang ? search.lang.toUpperCase() : null,
+		}),
 	})
-
 	const lang = langParam || useLanguage()
 	localization.setLanguage(lang)
-
 	const dispatch = useDispatch()
 
 	useEffect(() => {
 		localization.setLanguage(lang)
 		dispatch(languageUpdated(lang))
-	}, [lang])
+	}, [lang, dispatch])
 
 	return lang && <Loader message={localization.loadingMessage} />
 }
@@ -68,12 +82,18 @@ function PendingComponent() {
 function PageDisplay() {
 	const page = Route.useLoaderData()
 	const dispatch = useDispatch()
+	const navigate = useNavigate()
 
 	useEffect(() => {
+		if (page?.errorMessage === 'Something went wrong') {
+			navigate({ to: '/$pageId', params: { pageId: 'not-found' } })
+			return
+		}
+
 		dispatch(rootPageUpdated(page))
 		dispatch(pageUpdated(page))
 		dispatch(modeUpdated('visiting'))
-	}, [page, dispatch])
+	}, [page, dispatch, navigate])
 
 	return <Page />
 }
