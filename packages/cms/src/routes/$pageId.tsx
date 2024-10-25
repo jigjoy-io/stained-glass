@@ -30,17 +30,26 @@ let localization = new LocalizedStrings({
 	},
 })
 
-function ErrorBoundary() {
+function usePageLanguage() {
 	const { langParam } = useSearch({
 		from: '/$pageId',
 		select: (search: any) => ({
 			langParam: search.lang ? search.lang.toUpperCase() : null,
 		}),
 	})
-	const lang = langParam || useLanguage()
-	localization.setLanguage(lang)
+	const defaultLang = useLanguage()
+	const lang = langParam || defaultLang
 
-	return <PageNotFound message={localization.pageNotFoundMessage} />
+	useEffect(() => {
+		localization.setLanguage(lang)
+	}, [lang])
+
+	return lang
+}
+
+function ErrorBoundary() {
+	const lang = usePageLanguage()
+	return lang && <PageNotFound message={localization.pageNotFoundMessage} />
 }
 
 export const Route = createFileRoute('/$pageId' as never)({
@@ -61,18 +70,10 @@ export const Route = createFileRoute('/$pageId' as never)({
 })
 
 function PendingComponent() {
-	const { langParam } = useSearch({
-		from: '/$pageId',
-		select: (search: any) => ({
-			langParam: search.lang ? search.lang.toUpperCase() : null,
-		}),
-	})
-	const lang = langParam || useLanguage()
-	localization.setLanguage(lang)
+	const lang = usePageLanguage()
 	const dispatch = useDispatch()
 
 	useEffect(() => {
-		localization.setLanguage(lang)
 		dispatch(languageUpdated(lang))
 	}, [lang, dispatch])
 
@@ -93,7 +94,7 @@ function PageDisplay() {
 		dispatch(rootPageUpdated(page))
 		dispatch(pageUpdated(page))
 		dispatch(modeUpdated('visiting'))
-	}, [page, dispatch, navigate])
+	}, [page, dispatch])
 
 	return <Page />
 }
