@@ -10,7 +10,7 @@ export async function migrateProfileV2Handler({
 }: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
 
     try {
-        let pages = ["98150a85-0c67-403b-adc3-ab891cbf4b45", "8ae504a7-51a1-4572-902d-09a503c167fb", "7d0986e9-8cb0-4191-aa60-b12519a32e2a"]
+        let pages = ["92bf03be-00cb-4a1d-a0da-13ef9de2ae8d"]
 
         const createNewBlock = (block: any) => {
             let b = JSON.parse(JSON.stringify(block))

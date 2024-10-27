@@ -20,7 +20,7 @@ export async function migrateOldPagesHandler({
 }: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
 
     try {
-        let pages = ["01858c7d-17dc-4c64-93e2-f2df71f365zz", "48d7d761-f58e-4425-ac77-26a20e7813a6", "e5edf9f1-fdd6-4c84-b219-aab74abdml00", "hemijabm-83c9-45e4-bc78-eb9e6102home", "modernnomad-eb39-4850-a797-1f28b15fhome", "e5edf9f1-fdd6-4c84-b219-aab74abdjd00", "01858c7d-17dc-4c64-93e2-f2df71f3zzfp", "lazanja-9876-42bf-8aaf-60e3936fdecc"]
+        let pages = ["zmthequeen-17dc-4c64-93e2-f2dfhomehome"]
 
         const createNewBlock = async (block: any) => {
             let b = JSON.parse(JSON.stringify(block))
@@ -86,13 +86,13 @@ export async function migrateOldPagesHandler({
             if (p.type == "blank") {
                 p.name = 'Blank Page'
                 p.config = {
-                    buildingBlocks: await Promise.all(page.buildingBlocks.map(createNewBlock))
+                    buildingBlocks: await Promise.all(page.config ? page.config.buildingBlocks.map(createNewBlock): page.buildingBlocks.map(createNewBlock))
                 }
             } else if (p.type == "chapter") {
                 p.type = 'carousel'
                 p.name = 'Carousel'
                 p.config = {
-                    pages: await Promise.all(page.pages.map(refinePage))
+                    pages: await Promise.all(page.config ? page.config.pages.map(refinePage) : page.pages.map(refinePage))
                 }
             }
 

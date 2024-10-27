@@ -10,8 +10,7 @@ export async function migrateNavigationButtonsHandler({
 }: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
 
     try {
-        let pages: any [] = await retrievePagesUseCase('miodrag.todorovic@jigjoy.io')
-        pages = pages.map(x => x.id)
+        let pages: any [] = ["92bf03be-00cb-4a1d-a0da-13ef9de2ae8d"]
         
 
         const createNewBlock = (block: any) => {

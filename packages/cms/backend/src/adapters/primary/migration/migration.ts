@@ -9,18 +9,19 @@ const tableName = process.env.PAGE_TABLE
 import { v4 as uuid } from 'uuid'
 import { createPageUseCase } from '@use-cases/create-page'
 import { EnvironmentType } from '@models/types'
+import { retrievePageUseCase } from '@use-cases/retrieve-page'
 
 export async function migrateNewPagesHandler({
     body,
 }: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
 
     try {
-        let pages = ["srpskinaklik-17dc-4c64-93e2-f2dfhomehome"]
+        let pages = ["505a4c45-7e95-49fa-aabc-7dfaada8bf76"]
 
         const createNewBlock = (block: any) => {
             let b = JSON.parse(JSON.stringify(block))
             if (b.type == "carousel-tile" || b.type == "page-tile") {
-                b.page = createNewPage(b.page)               
+                b.page = createNewPage(b.page)
             }
 
             return b
@@ -35,14 +36,32 @@ export async function migrateNewPagesHandler({
             p.linkedPageId = null
 
             if (p.type == "blank") {
+
+                let blocks = []
+                if ("config" in page){
+                    blocks = page.config.buildingBlocks.map(createNewBlock) 
+                }else{
+                    blocks = page.buildingBlocks.map(createNewBlock)
+                }
+
                 p.name = 'Blank Page'
                 p.config = {
-                    buildingBlocks: page.buildingBlocks.map(createNewBlock)
+                    buildingBlocks: blocks
                 }
-            }else if (p.type =="carousel"){
+            } else if (p.type == "carousel") {
                 p.name = 'Carousel'
+
+
+                let pages = []
+
+                if ("config" in page){
+                    pages = page.config.pages.map(createNewPage)
+                }else{
+                    pages = page.pages.map(createNewPage)
+                }
+
                 p.config = {
-                    pages: page.pages.map(createNewPage)
+                    pages: pages
                 }
             }
 
@@ -53,14 +72,9 @@ export async function migrateNewPagesHandler({
 
         for (let i = 0; i < pages.length; i++) {
             let pageId = pages[i]
-            var params = {
-                TableName: tableName,
-                Key: { id: pageId },
-            }
 
-            let item: any = await ddbDocClient.send(new GetCommand(params))
 
-            let page = item.Item
+            let page: any = await retrievePageUseCase(pageId)
 
             page = createNewPage(page)
 
