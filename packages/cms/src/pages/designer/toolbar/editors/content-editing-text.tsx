@@ -6,6 +6,7 @@ import textEditingVariants from '../../../../util/style-helper/text-editing-vari
 import alignmentVariations from '../../../../util/style-helper/alignment-variations'
 import TemplateFactory from '../../../../util/factories/templates/template-factory'
 import { splitTextAtCursor } from '../../../../util/cursor-helper/split-text-at-cursor'
+import { moveCursorToEnd } from '../../../../util/cursor-helper/move-cursor-to-end'
 
 export default function ContentEditingText(props: any) {
 	const [position, setPosition] = useState(props.position)
@@ -87,19 +88,17 @@ export default function ContentEditingText(props: any) {
 		const prevText = prevBlockElement.innerText
 		const mergedText = prevText + currentText
 
-		// Update previous block with merged text
+		console.log("DUZINA", currentText.length)
+
 		dispatch(updateBlock({
 			...previousBlock,
 			text: mergedText
 		}))
 
-		// Remove current block
 		dispatch(removeBlock(props.id))
 
-		// Focus previous block and set cursor at merge point
 		dispatch(focusBlock(previousBlock.id))
 
-		// Use setTimeout to ensure DOM is updated before setting cursor
 		setTimeout(() => {
 			const updatedPrevBlock = document.querySelector(`[data-block-id="${previousBlock.id}"]`) as HTMLElement
 			if (updatedPrevBlock) {
@@ -107,14 +106,15 @@ export default function ContentEditingText(props: any) {
 				const sel = window.getSelection()
 				const textNode = updatedPrevBlock.firstChild || updatedPrevBlock
 
-				// Set cursor position to where the texts were merged
 				range.setStart(textNode, prevText.length)
 				range.collapse(true)
 				sel?.removeAllRanges()
 				sel?.addRange(range)
 				updatedPrevBlock.focus()
+
+				moveCursorToEnd(prevBlockElement)
 			}
-		}, 0)
+		}, 50)
 
 		return true
 	}
