@@ -213,7 +213,7 @@ export default function Toolbar(props: any) {
 									<Item text={localization.duplicate} tabFocus={false} icon={DuplicateIcon} action={duplicate} />
 									<Item text={localization.delete} tabFocus={false} textColor="red" icon={DeleteBlockIcon} action={deleteBlock} />
 									{props.editingOptions.map((option: any, index) => (
-										<div
+										<div key={index}
 											ref={(el: HTMLDivElement) => {
 												editorRefs.current[index] = el
 											}}
