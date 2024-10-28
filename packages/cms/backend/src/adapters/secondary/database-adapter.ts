@@ -1,11 +1,11 @@
-import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
-import { DynamoDBDocumentClient, GetCommand, PutCommand, DeleteCommand, QueryCommand, BatchWriteCommand, DeleteCommandInput } from '@aws-sdk/lib-dynamodb'
+import { DynamoDBClient } from "@aws-sdk/client-dynamodb"
+import { DynamoDBDocumentClient, GetCommand, PutCommand, DeleteCommand, QueryCommand, BatchWriteCommand, DeleteCommandInput } from "@aws-sdk/lib-dynamodb"
 import { PageDto } from "@dto/page/page"
-import { EnvironmentType } from '@models/types'
+import { EnvironmentType } from "@models/types"
 const client = new DynamoDBClient({})
 const ddbDocClient = DynamoDBDocumentClient.from(client)
 const tableName = process.env.PAGE_TABLE
-import { compress, decompress } from 'compress-json'
+import { compress, decompress } from "compress-json"
 
 const compressPage = (page: PageDto) => {
 	let p = JSON.parse(JSON.stringify(page))
@@ -14,7 +14,6 @@ const compressPage = (page: PageDto) => {
 }
 
 const decompressPage = (item: any): PageDto => {
-
 	let p = JSON.parse(JSON.stringify(item))
 	p.config = decompress(p.config)
 	const page: PageDto = {
@@ -25,12 +24,10 @@ const decompressPage = (item: any): PageDto => {
 }
 
 export async function putPage(page: PageDto): Promise<PageDto> {
-
-
 	let item = compressPage(page)
 	const params = {
 		TableName: tableName,
-		Item: item
+		Item: item,
 	}
 
 	await ddbDocClient.send(new PutCommand(params))
@@ -39,7 +36,6 @@ export async function putPage(page: PageDto): Promise<PageDto> {
 }
 
 export async function getPage(pageId: string): Promise<PageDto> {
-
 	var params = {
 		TableName: tableName,
 		Key: { id: pageId },
@@ -47,21 +43,18 @@ export async function getPage(pageId: string): Promise<PageDto> {
 
 	const { Item: item } = await ddbDocClient.send(new GetCommand(params))
 
-	let page : PageDto = decompressPage(item)
+	let page: PageDto = decompressPage(item)
 
 	return page
 }
 
 export async function putPages(pages: PageDto[]): Promise<PageDto[]> {
-
-	
-
 	const createPutRequest = (page: PageDto) => {
 		let item = compressPage(page)
 		return {
 			PutRequest: {
-				Item: item
-			}
+				Item: item,
+			},
 		}
 	}
 
@@ -84,44 +77,41 @@ export async function putPages(pages: PageDto[]): Promise<PageDto[]> {
 }
 
 export async function deletePage(pageId: any): Promise<void> {
-  const params: DeleteCommandInput = {
-    TableName: tableName,
-    Key: { id: pageId },
-    ReturnValues: "ALL_OLD",
-  }
+	const params: DeleteCommandInput = {
+		TableName: tableName,
+		Key: { id: pageId },
+		ReturnValues: "ALL_OLD",
+	}
 
-  const result = await ddbDocClient.send(new DeleteCommand(params))
+	const result = await ddbDocClient.send(new DeleteCommand(params))
 
-  if (result.Attributes && result.Attributes.linkedPageId) {
-    const linkedPageId = result.Attributes.linkedPageId
+	if (result.Attributes && result.Attributes.linkedPageId) {
+		const linkedPageId = result.Attributes.linkedPageId
 
-    const prodParams: DeleteCommandInput = {
-      TableName: tableName,
-      Key: { id: linkedPageId },
-    }
+		const prodParams: DeleteCommandInput = {
+			TableName: tableName,
+			Key: { id: linkedPageId },
+		}
 
-    await ddbDocClient.send(new DeleteCommand(prodParams))
-  }
-
+		await ddbDocClient.send(new DeleteCommand(prodParams))
+	}
 }
 
 export async function getPages(origin: string): Promise<PageDto[]> {
-
 	const params = {
-		KeyConditionExpression: 'origin = :origin',
-		IndexName: 'pageGSI',
+		KeyConditionExpression: "origin = :origin",
+		IndexName: "pageGSI",
 		ExpressionAttributeValues: {
-			':origin': origin
+			":origin": origin,
 		},
-		TableName: tableName
+		TableName: tableName,
 	}
 
 	const data = await ddbDocClient.send(new QueryCommand(params))
 	let items: any = data.Items as []
-	items = items.filter((item: any) => item.environment===EnvironmentType.Development) 
+	items = items.filter((item: any) => item.environment === EnvironmentType.Development)
 	items.sort((a: any, b: any) => new Date(a.created).getTime() - new Date(b.created).getTime())
 	let pages: PageDto[] = items.map(decompressPage)
-
 
 	return pages
 }
