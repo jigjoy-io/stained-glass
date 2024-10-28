@@ -1,5 +1,4 @@
 import Responses from "@utils/api-responses"
-import { APIGatewayProxyResult } from "aws-lambda"
 
 // we would typically use middy - but to keep this simple to read
 // without mutliple additional packages lets build outselves

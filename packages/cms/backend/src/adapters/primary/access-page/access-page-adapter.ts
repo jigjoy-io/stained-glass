@@ -4,6 +4,7 @@ import { errorHandler } from "@packages/apigw-error-handler"
 import { ReturnPageDto } from "@dto/page/page"
 import Responses from "@utils/api-responses"
 import { accessPageUseCase } from "@use-cases/access-page"
+import { isValidUUID } from "@utils/is-valid-uuid"
 
 /**
  * Access to production page
@@ -15,6 +16,10 @@ export async function accessPageHandler({ pathParameters }: APIGatewayProxyEvent
 		if (!pathParameters || !pathParameters?.id) throw new ValidationError("no id in the path parameters of the event")
 
 		const { id } = pathParameters
+
+		if (!isValidUUID(id)) {
+			return Responses._404({ message: `Invalid UUID: ${id}` })
+		}
 
 		console.log(`requested page: ${id}`)
 

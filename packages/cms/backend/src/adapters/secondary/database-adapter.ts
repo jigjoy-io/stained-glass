@@ -1,6 +1,7 @@
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb"
 import { DynamoDBDocumentClient, GetCommand, PutCommand, DeleteCommand, QueryCommand, BatchWriteCommand, DeleteCommandInput } from "@aws-sdk/lib-dynamodb"
 import { PageDto } from "@dto/page/page"
+import { PageNotFoundError } from "@errors/page-not-found-error"
 import { EnvironmentType } from "@models/types"
 const client = new DynamoDBClient({})
 const ddbDocClient = DynamoDBDocumentClient.from(client)
@@ -42,6 +43,10 @@ export async function getPage(pageId: string): Promise<PageDto> {
 	}
 
 	const { Item: item } = await ddbDocClient.send(new GetCommand(params))
+
+	if (!item) {
+		throw new PageNotFoundError(`Page with id: ${pageId} not found`)
+	}
 
 	let page: PageDto = decompressPage(item)
 
