@@ -43,8 +43,7 @@ export default function ContentEditingText(props: any) {
 	const activeBlock = useActiveBlock()
 
 	useEffect(() => {
-		if (activeBlock === props.id)
-			ref.current?.focus()
+		if (activeBlock === props.id) ref.current?.focus()
 	}, [activeBlock])
 
 	const updateText = (event: any) => {
@@ -53,7 +52,7 @@ export default function ContentEditingText(props: any) {
 			id: props.id,
 			position: props.position,
 			type: props.type,
-			text: newValue
+			text: newValue,
 		}
 		dispatch(updateBlock(block))
 	}
@@ -74,7 +73,7 @@ export default function ContentEditingText(props: any) {
 					break
 				} else if (node.nodeType === Node.TEXT_NODE) {
 					position += node.textContent?.length || 0
-				} else if (node.nodeName === 'BR') {
+				} else if (node.nodeName === "BR") {
 					position += 1
 				}
 			}
@@ -123,9 +122,9 @@ export default function ContentEditingText(props: any) {
 	}
 
 	const handleKeyDown = (event: any) => {
-		if (event.key === 'Enter' && event.shiftKey) {
+		if (event.key === "Enter" && event.shiftKey) {
 			return
-		} else if (event.key === 'Enter') {
+		} else if (event.key === "Enter") {
 			event.preventDefault()
 			if (!ref.current) return
 			const caretPosition = getCaretPosition(ref.current)
@@ -140,7 +139,7 @@ export default function ContentEditingText(props: any) {
 					id: props.id,
 					position: props.position,
 					type: props.type,
-					text: beforeCursor
+					text: beforeCursor,
 				}
 				dispatch(updateBlock(updatedBlock))
 				newBlock.text = afterCursor
@@ -153,11 +152,13 @@ export default function ContentEditingText(props: any) {
 				ref.current?.blur()
 			} else if (isCaretAtEnd && !event.shiftKey) {
 				let selector = TemplateFactory.createBlockSelector()
-				dispatch(insertBlock({
-					referenceBlock: props.id,
-					block: selector,
-					position: 'below'
-				}))
+				dispatch(
+					insertBlock({
+						referenceBlock: props.id,
+						block: selector,
+						position: "below",
+					}),
+				)
 				dispatch(focusBlock(selector.id))
 			}
 		} else if (event.key === 'Backspace') {
@@ -171,14 +172,7 @@ export default function ContentEditingText(props: any) {
 
 	return (
 		<div className={`inline-block w-[100%] ${style.lineHeight} ${alignmentVariations[position]}`}>
-			<div
-				contentEditable="plaintext-only"
-				spellCheck="false"
-				onKeyDown={handleKeyDown}
-				onBlur={(e) => updateText(e)}
-				data-block-id={props.id}
-				className={`${style.class} w-[100%] [&[contenteditable]]:focus:border-none [&[contenteditable]]:focus:outline-none`}
-				ref={ref}>
+			<div contentEditable="plaintext-only" spellCheck="false" onKeyDown={handleKeyDown} onBlur={(e) => updateText(e)} data-block-id={props.id} className={`${style.class} w-[100%] [&[contenteditable]]:focus:border-none [&[contenteditable]]:focus:outline-none`} ref={ref}>
 				{props.text}
 			</div>
 		</div>
