@@ -225,7 +225,7 @@ export default function BlockSelector(props: any) {
 			{showMenu &&
 				createPortal(
 					<ClickOutsideListener callback={closeMenu}>
-						<div style={{ top: top, left: left, transform: `translate(-100%, -${calculateY()}%)` }} className={`fixed flex flex-col w-[400px] min-w-[400px] h-auto max-h-[500px] overflow-y-auto bg-white shadow rounded-[5px] p-1 -translate-x-[100%]`}>
+						<div style={{ top: top, left: left, transform: `translate(-100%, -${calculateY()}%)` }} className={`fixed flex flex-col w-[100%] md:max-w-[340px] h-auto max-h-[400px] overflow-y-auto bg-white shadow rounded-[5px] p-1 -translate-x-[100%]`}>
 							{options.map((option: any, index) => (
 								<div key={option.key}>
 									{option.commands.map((command: any) => (

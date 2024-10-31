@@ -102,7 +102,7 @@ export default function MediaConfigurer({ mediaType, icon, localization, props }
 					<ClickOutsideListener callback={onClose}>
 						<div
 							style={{
-								width: 460,
+								width: 400,
 								pointerEvents: "auto",
 								top: top,
 								left: left,

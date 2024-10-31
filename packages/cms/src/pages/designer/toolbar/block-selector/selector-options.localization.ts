@@ -7,7 +7,7 @@ const localization = new LocalizedStrings({
 		blankPage: "Blank Page",
 		blankPageDescription: "Create a sub-page inside this page",
 		carousel: "Carousel",
-		carouselDescription: "Separate content into multiple connected pages.",
+		carouselDescription: "Split content into multiple connected pages.",
 		text: "Text",
 		textDescription: "Begin writing with plain text",
 		heading: "Heading",

@@ -127,7 +127,7 @@ export default function CarouselConfigurer(props: any) {
 						<div
 							className="fixed bg-[white] rounded-[5px] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.7)] z-50"
 							style={{
-								width: 460,
+								width: 400,
 								pointerEvents: "auto",
 								top: top,
 								left: left,

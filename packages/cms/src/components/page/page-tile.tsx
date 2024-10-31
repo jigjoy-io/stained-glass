@@ -30,9 +30,9 @@ export default function PageTile(props: any) {
 				</div>
 			)}
 
-			<div className="font-bold text-xl">{props.title}</div>
+			<div className="text-heading">{props.title}</div>
 
-			{props.description && <div className="pt-4 text-xl">{props.description}</div>}
+			{props.description && <div className="pt-4">{props.description}</div>}
 			<div className="pt-4">
 				<Grid numberOfCols={1}>
 					<Button text={cta} color="primary" action={load} />
