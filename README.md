@@ -4,7 +4,7 @@ Welcome to the Interactive Content Designer repository! This project enables ind
 
 ## Overview
 
-The Interactive Content Designer is designed to empower users to create engaging and interactive experiences easily. With a modular approach, users can mix and match different components to build unique applications tailored to their needs.
+With a modular approach, users can mix and match different components to build unique applications tailored to their needs.
 
 ## Running the Project Locally
 
