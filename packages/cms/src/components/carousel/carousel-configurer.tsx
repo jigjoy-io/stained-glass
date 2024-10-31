@@ -128,7 +128,7 @@ export default function CarouselConfigurer(props: any) {
 					<ClickOutsideListener callback={onClose}>
 						<div
 							style={{
-								width: 460,
+								width: 400,
 								pointerEvents: "auto",
 								top: top,
 								left: left,

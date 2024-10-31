@@ -31,6 +31,7 @@
 		"build": "sam build --profile Development",
 		"deploy": "sam deploy --profile Development",
 		"serve": "sam local start-api --profile Development --port 8000 --region eu-west-1 --env-vars env.json",
+		"start": "sam local start-api --profile Development --port 8000 --region eu-west-1 --env-vars env.json",
 		"test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js"
 	},
 	"jest": {
