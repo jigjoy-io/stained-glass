@@ -11,7 +11,7 @@ export const moveCursorToEndOff = (element: HTMLElement, offset: number = 0) => 
 	selection?.removeAllRanges()
 	selection?.addRange(range)
 }
-// =======
+
 export const moveCursorToEnd = (element: HTMLElement) => {
 	const range = document.createRange()
 	const selection = window.getSelection()
@@ -22,4 +22,3 @@ export const moveCursorToEnd = (element: HTMLElement) => {
 	selection?.removeAllRanges()
 	selection?.addRange(range)
 }
-// >>>>>>> development

@@ -1,12 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { focusBlock, insertBlock, updateBlock, removeBlock } from '../../../../reducers/page-reducer'
-import { useActiveBlock, usePage } from '../../../../util/store'
-import textEditingVariants from '../../../../util/style-helper/text-editing-variations'
-import alignmentVariations from '../../../../util/style-helper/alignment-variations'
-import TemplateFactory from '../../../../util/factories/templates/template-factory'
-import { splitTextAtCursor } from '../../../../util/cursor-helper/split-text-at-cursor'
-import { moveCursorToEndOff } from '../../../../util/cursor-helper/move-cursor-to-end'
+import React, { useEffect, useRef, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { focusBlock, insertBlock, updateBlock, removeBlock } from "../../../../reducers/page-reducer"
+import { useActiveBlock, usePage } from "../../../../util/store"
+import textEditingVariants from "../../../../util/style-helper/text-editing-variations"
+import alignmentVariations from "../../../../util/style-helper/alignment-variations"
+import TemplateFactory from "../../../../util/factories/templates/template-factory"
+import { splitTextAtCursor } from "../../../../util/cursor-helper/split-text-at-cursor"
+import { moveCursorToEndOff } from "../../../../util/cursor-helper/move-cursor-to-end"
 
 export default function ContentEditingText(props: any) {
 	const [position, setPosition] = useState(props.position)
@@ -15,19 +15,19 @@ export default function ContentEditingText(props: any) {
 	const page = usePage()
 
 	const previousTextBlock = useSelector(() => {
-		const blocks = page.config.buildingBlocks;
-		const currentIndex = blocks.findIndex((block: any) => block.id === props.id);
+		const blocks = page.config.buildingBlocks
+		const currentIndex = blocks.findIndex((block: any) => block.id === props.id)
 
-		if (currentIndex <= 0) return null;
+		if (currentIndex <= 0) return null
 
 		for (let i = currentIndex - 1; i >= 0; i--) {
 			if (blocks[i].type === "text" || blocks[i].type === "title" || blocks[i].type === "heading") {
-				return blocks[i];
+				return blocks[i]
 			}
 		}
 
-		return null;
-	});
+		return null
+	})
 
 	useEffect(() => {
 		setPosition(props.position)
@@ -95,31 +95,30 @@ export default function ContentEditingText(props: any) {
 		const prevText = prevBlockElement.innerText
 		const mergedText = prevText + currentText
 
-		dispatch(updateBlock({
-			...previousTextBlock,
-			text: mergedText
-		}))
+		dispatch(
+			updateBlock({
+				...previousTextBlock,
+				text: mergedText,
+			}),
+		)
 
 		dispatch(removeBlock(props.id))
-
 		dispatch(focusBlock(previousTextBlock.id))
 
-		setTimeout(() => {
-			const updatedPrevBlock = document.querySelector(`[data-block-id="${previousTextBlock.id}"]`) as HTMLElement
-			if (updatedPrevBlock) {
-				const range = document.createRange()
-				const sel = window.getSelection()
-				const textNode = updatedPrevBlock.firstChild || updatedPrevBlock
+		const updatedPrevBlock = document.querySelector(`[data-block-id="${previousTextBlock.id}"]`) as HTMLElement
+		if (updatedPrevBlock) {
+			const range = document.createRange()
+			const sel = window.getSelection()
+			const textNode = updatedPrevBlock.firstChild || updatedPrevBlock
 
-				range.setStart(textNode, prevText.length)
-				range.collapse(true)
-				sel?.removeAllRanges()
-				sel?.addRange(range)
-				updatedPrevBlock.focus()
+			range.setStart(textNode, prevText.length)
+			range.collapse(true)
+			sel?.removeAllRanges()
+			sel?.addRange(range)
+			updatedPrevBlock.focus()
 
-				moveCursorToEndOff(prevBlockElement, currentText.length)
-			}
-		}, 50)
+			moveCursorToEndOff(prevBlockElement, currentText.length)
+		}
 
 		return true
 	}
@@ -146,11 +145,13 @@ export default function ContentEditingText(props: any) {
 				}
 				dispatch(updateBlock(updatedBlock))
 				newBlock.text = afterCursor
-				dispatch(insertBlock({
-					referenceBlock: props.id,
-					block: newBlock,
-					position: 'below'
-				}))
+				dispatch(
+					insertBlock({
+						referenceBlock: props.id,
+						block: newBlock,
+						position: "below",
+					}),
+				)
 				dispatch(focusBlock(newBlock.id))
 				ref.current?.blur()
 			} else if (isCaretAtEnd && !event.shiftKey) {
@@ -164,7 +165,7 @@ export default function ContentEditingText(props: any) {
 				)
 				dispatch(focusBlock(selector.id))
 			}
-		} else if (event.key === 'Backspace') {
+		} else if (event.key === "Backspace") {
 			const caretPosition = getCaretPosition(ref.current!)
 			if (caretPosition === 0) {
 				event.preventDefault()
