@@ -31,6 +31,8 @@ interface SelectionRange {
 	end: number
 }
 
+// ... previous imports and animations remain the same ...
+
 const DraggableBlock = React.memo(
 	({
 		block,
@@ -59,6 +61,7 @@ const DraggableBlock = React.memo(
 		const ref = useRef<HTMLDivElement>(null)
 		const [isHovered, setIsHovered] = useState(false)
 		const dragStartPosRef = useRef<{ x: number; y: number } | null>(null)
+		const dragHandleRef = useRef<HTMLDivElement | null>(null)
 
 		const [{ handlerId, isOver }, drop] = useDrop<
 			{ indices: number[]; type: string },
@@ -118,13 +121,17 @@ const DraggableBlock = React.memo(
 				// Store initial click position
 				dragStartPosRef.current = { x: e.clientX, y: e.clientY }
 
-				if (e.shiftKey) {
-					onSelectionStart(index)
-				} else if (e.ctrlKey || e.metaKey) {
-					// Do nothing here, we'll handle Ctrl/Cmd click on mouseUp
-				} else if (!isSelected) {
-					// Only clear selection if clicking on an unselected block
-					onSelect(index, false)
+				// Only handle drag if clicking the drag handle
+				const isDragHandle = dragHandleRef.current?.contains(e.target as Node)
+				if (!isDragHandle) {
+					if (e.shiftKey) {
+						onSelectionStart(index)
+					} else if (e.ctrlKey || e.metaKey) {
+						// Do nothing here, we'll handle Ctrl/Cmd click on mouseUp
+					} else if (!isSelected) {
+						// Only clear selection if clicking on an unselected block
+						onSelect(index, false)
+					}
 				}
 			}
 		}
@@ -137,13 +144,17 @@ const DraggableBlock = React.memo(
 					Math.abs(e.clientX - dragStartPosRef.current.x) < 5 &&
 					Math.abs(e.clientY - dragStartPosRef.current.y) < 5
 
-				if (e.shiftKey) {
-					onSelectionEnd(index)
-				} else if (e.ctrlKey || e.metaKey) {
-					onSelect(index, true)
-				} else if (isClick && !isDragging) {
-					// Only handle single selection on click, not during drag
-					onSelect(index, false)
+				// Don't handle selection if clicking drag handle
+				const isDragHandle = dragHandleRef.current?.contains(e.target as Node)
+				if (!isDragHandle) {
+					if (e.shiftKey) {
+						onSelectionEnd(index)
+					} else if (e.ctrlKey || e.metaKey) {
+						onSelect(index, true)
+					} else if (isClick && !isDragging) {
+						// Only handle single selection on click, not during drag
+						onSelect(index, false)
+					}
 				}
 			}
 			dragStartPosRef.current = null
@@ -152,7 +163,8 @@ const DraggableBlock = React.memo(
 		const handleMouseEnter = () => setIsHovered(true)
 		const handleMouseLeave = () => setIsHovered(false)
 
-		drag(drop(ref))
+		// Only apply drag ref to the handle
+		drop(ref)
 
 		const blockClasses = [
 			"relative",
@@ -165,6 +177,11 @@ const DraggableBlock = React.memo(
 		]
 			.filter(Boolean)
 			.join(" ")
+
+		// Show drag handle only for the first selected block
+		const showDragHandle =
+			mode === "editing" &&
+			((selectedBlocks.length > 0 && selectedBlocks[0] === index) || (selectedBlocks.length === 0 && isHovered))
 
 		return (
 			<div className="relative group">
@@ -189,11 +206,17 @@ const DraggableBlock = React.memo(
 					onMouseLeave={handleMouseLeave}
 				>
 					<div className={blockClasses}>
-						{mode === "editing" && (
+						{showDragHandle && (
 							<div
+								ref={(node) => {
+									dragHandleRef.current = node
+									drag(node)
+								}}
 								className={`
-                absolute left-2 cursor-grab active:cursor-grabbing p-1 
-                rounded transition-opacity duration-150
+                absolute ${selectedBlocks.length > 1 ? "-left-5 top-3" : "left-2"} 
+                cursor-grab active:cursor-grabbing p-1 z-50
+                rounded transition-opacity duration-150 bg-white shadow-sm
+                hover:bg-gray-100
                 ${isSelected || isHovered ? "opacity-100" : "opacity-0"}
               `}
 							>
@@ -202,8 +225,7 @@ const DraggableBlock = React.memo(
 						)}
 						<div
 							className={`
-            ${mode === "editing" ? "pl-8" : ""} 
-            ${isSelected ? "ring-2 ring-blue-400" : ""}
+            ${isSelected ? "bg-light" : ""}
             ${isDraggingAny ? "pointer-events-none" : ""}
           `}
 						>
@@ -224,6 +246,8 @@ const DraggableBlock = React.memo(
 		)
 	},
 )
+
+// ... rest of the PageContent component remains the same ...
 
 const loadFeatures = () => import("../util/style-helper/animations").then((res) => res.default)
 
