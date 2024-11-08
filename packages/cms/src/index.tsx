@@ -9,6 +9,8 @@ import { persistor, store } from "./util/store"
 
 import { PostHogProvider } from "posthog-js/react"
 import { PersistGate } from "redux-persist/integration/react"
+import { DndProvider } from "react-dnd"
+import { HTML5Backend } from "react-dnd-html5-backend"
 
 const options = {
 	api_host: process.env.REACT_APP_PUBLIC_POSTHOG_HOST,
@@ -54,11 +56,13 @@ declare module "@tanstack/react-router" {
 rootDiv.render(
 	<React.StrictMode>
 		<PostHogProvider apiKey={process.env.REACT_APP_PUBLIC_POSTHOG_KEY} options={options}>
-			<Provider store={store}>
-				<PersistGate loading={null} persistor={persistor}>
-					<RouterProvider router={router} />
-				</PersistGate>
-			</Provider>
+			<DndProvider backend={HTML5Backend}>
+				<Provider store={store}>
+					<PersistGate loading={null} persistor={persistor}>
+						<RouterProvider router={router} />
+					</PersistGate>
+				</Provider>
+			</DndProvider>
 		</PostHogProvider>
 	</React.StrictMode>,
 )
