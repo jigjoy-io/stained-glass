@@ -43,12 +43,6 @@ let localization = new LocalizedStrings({
 	},
 })
 
-interface DragItem {
-	type: string
-	index: number
-	block: any
-}
-
 const loadFeatures = () => import("../../../util/style-helper/animations").then((res) => res.default)
 
 export default function Toolbar(props: any) {
@@ -76,7 +70,7 @@ export default function Toolbar(props: any) {
 		localization.setLanguage(lang)
 	}, [lang])
 
-	const [{ isDragging }, drag, dragPreview] = useDrag<DragItem, void, { isDragging: boolean }>(
+	const [{ isDragging }, drag, dragPreview] = useDrag<any, void, { isDragging: boolean }>(
 		() => ({
 			type: "BLOCK",
 			item: {

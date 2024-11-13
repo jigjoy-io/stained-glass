@@ -18,12 +18,6 @@ const animation = {
 	},
 }
 
-interface DragItem {
-	type: string
-	index: number
-	block: any
-}
-
 const loadFeatures = () => import("../util/style-helper/animations").then((res) => res.default)
 
 export default function PageContent(props: any) {
@@ -33,7 +27,7 @@ export default function PageContent(props: any) {
 	const page = usePage()
 	const [dropTarget, setDropTarget] = useState<{ index: number; position: "top" | "bottom" } | null>(null)
 
-	const [{ isOver, canDrop }, drop] = useDrop<DragItem, void, { isOver: boolean; canDrop: boolean }>(
+	const [{ isOver, canDrop }, drop] = useDrop<any, void, { isOver: boolean; canDrop: boolean }>(
 		() => ({
 			accept: "BLOCK",
 			collect: (monitor) => ({
