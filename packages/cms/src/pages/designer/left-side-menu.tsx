@@ -93,10 +93,6 @@ export default function LeftSideMenu() {
 		navigate({ to: "/onboarding" })
 	}
 
-	useEffect(() => {
-		console.log("###########", pages)
-	}, [])
-
 	return (
 		lang && (
 			<div className="h-[100dvh] max-h-[100dvh] bg-[#F2EEF0] bg-opacity-30 border-r border-light shadow-lg flex flex-col flex-none">

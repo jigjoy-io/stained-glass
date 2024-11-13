@@ -1,17 +1,9 @@
 import React from "react"
 import CarouselPage from "../../components/carousel/carousel-page"
 import BlankPage from "../../components/page/blank-page"
-import PageContent from "../../components/page-content"
-
-interface PageProps {
-	type: string
-	id: string
-	config?: any
-	[key: string]: any
-}
 
 export class PageFactory extends React.Component {
-	static layouts: { [key: string]: { component: React.ComponentType<any> } } = {
+	static layouts: any = {
 		carousel: {
 			component: CarouselPage,
 		},
@@ -20,19 +12,8 @@ export class PageFactory extends React.Component {
 		},
 	}
 
-	static get(props: PageProps) {
-		if (!props || !props.type) {
-			console.warn("Invalid props passed to PageFactory.get:", props)
-			return null
-		}
-
-		const layout = this.layouts[props.type]
-		if (!layout || !layout.component) {
-			console.warn(`No component found for type: ${props.type}`)
-			return <PageContent {...props} />
-		}
-
-		const Component = layout.component
-		return <Component {...props} />
+	static get(props: any) {
+		let layout: any = this.layouts[props.type]
+		return <layout.component {...props} key={props.id} />
 	}
 }

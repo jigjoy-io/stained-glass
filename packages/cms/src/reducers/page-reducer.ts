@@ -119,26 +119,6 @@ export const pageSlice = createSlice({
 		activePlayerUpdated: (state, action: PayloadAction<any>) => {
 			state.activePlayer = action.payload
 		},
-		moveBlock: (state, action: PayloadAction<{ sourceIndex: number; targetIndex: number }>) => {
-			if (!state.activePage?.config?.buildingBlocks) return
-
-			const { sourceIndex, targetIndex } = action.payload
-			const blocks = [...state.activePage.config.buildingBlocks]
-
-			const [movedBlock] = blocks.splice(sourceIndex, 1)
-
-			blocks.splice(targetIndex, 0, movedBlock)
-
-			state.activePage = {
-				...state.activePage,
-				config: {
-					...state.activePage.config,
-					buildingBlocks: blocks,
-				},
-			}
-
-			state.modified = Date.now()
-		},
 	},
 	extraReducers(builder) {
 		builder.addCase(fetchPage.fulfilled, (state, action) => {
@@ -148,6 +128,6 @@ export const pageSlice = createSlice({
 	},
 })
 
-export const { pageCollapsed, pageExpanded, rootPageUpdated, pageUpdated, modeUpdated, insertBlock, removeBlock, updateBlock, appendBlock, focusBlock, pagesUpdated, carouselPageSwitched, activePlayerUpdated, moveBlock } = pageSlice.actions
+export const { pageCollapsed, pageExpanded, rootPageUpdated, pageUpdated, modeUpdated, insertBlock, removeBlock, updateBlock, appendBlock, focusBlock, pagesUpdated, carouselPageSwitched, activePlayerUpdated } = pageSlice.actions
 
 export default pageSlice.reducer
