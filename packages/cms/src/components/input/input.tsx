@@ -18,7 +18,7 @@ export default function Input(props: any) {
 
 	const handleKeyDown = (event: any) => {
 		if (props.inputType === "number") {
-			if ([8, 9, 46, 37, 38, 39, 40].includes(event.keyCode)) {
+			if ([8, 9, 46, 37, 38, 39, 40, 190, 189].includes(event.keyCode)) {
 				return
 			}
 
