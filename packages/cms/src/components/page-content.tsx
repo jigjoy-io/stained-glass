@@ -1,12 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react"
 import { LazyMotion, m } from "framer-motion"
 import { useMode, usePage } from "../util/store"
-import { appendBlock, focusBlock, pageUpdated } from "../reducers/page-reducer"
+import { appendBlock, focusBlock, updateBlock } from "../reducers/page-reducer"
 import { useDispatch } from "react-redux"
 import { useDrop } from "react-dnd"
 import EditorFactory from "../util/factories/editor-factory"
 import TemplateFactory from "../util/factories/templates/template-factory"
-import update from "immutability-helper"
 
 const animation = {
 	hidden: { opacity: 0 },
@@ -81,7 +80,7 @@ export default function PageContent(props: any) {
 				filteredBlocks.splice(targetIndex, 0, movedBlock)
 
 				dispatch(
-					pageUpdated({
+					updateBlock({
 						...page,
 						config: {
 							...page.config,
@@ -94,32 +93,6 @@ export default function PageContent(props: any) {
 			},
 		}),
 		[blocks, page, dropTarget],
-	)
-
-	const moveBlock = useCallback(
-		(dragIndex: number, hoverIndex: number) => {
-			setBlocks((prevBlocks: any[]) => {
-				const newBlocks = update(prevBlocks, {
-					$splice: [
-						[dragIndex, 1],
-						[hoverIndex, 0, prevBlocks[dragIndex]],
-					],
-				})
-
-				dispatch(
-					pageUpdated({
-						...page,
-						config: {
-							...page.config,
-							buildingBlocks: newBlocks,
-						},
-					}),
-				)
-
-				return newBlocks
-			})
-		},
-		[dispatch, props],
 	)
 
 	useEffect(() => {
