@@ -7,7 +7,6 @@ import Button from "../button/button"
 import Progress from "../progress/progress"
 import Content from "../page-content"
 import { useCurrentCarouselPage, usePage, useRootPage } from "../../util/store"
-import CarouselButton from "../button/carousel-button"
 
 export default function CarouselPage(props) {
 	const [current, setCurrent] = useState(0)
@@ -68,33 +67,32 @@ export default function CarouselPage(props) {
 		type: "spring",
 		stiffness: 200,
 		damping: 25,
-		mass: 0.5,
+		mass: 1.5,
 	}
 
 	const variants = {
 		enter: (direction) => ({
-			x: direction > 0 ? 100 : -100,
+			x: direction > 0 ? 20 : -20,
 			opacity: 0,
-			scale: 0.95,
+			transition: {
+				x: springConfig,
+				opacity: { duration: 0.2 },
+			},
 		}),
 		center: {
 			x: 0,
 			opacity: 1,
-			scale: 1,
 			transition: {
 				x: springConfig,
 				opacity: { duration: 0.3 },
-				scale: { type: "spring", stiffness: 250, damping: 20, mass: 1 },
 			},
 		},
 		exit: (direction) => ({
-			x: direction > 0 ? -100 : 100,
+			x: direction > 0 ? -20 : 20,
 			opacity: 0,
-			scale: 0.95,
 			transition: {
 				x: springConfig,
-				opacity: { duration: 0.3 },
-				scale: { duration: 0.2 },
+				opacity: { duration: 0.2 },
 			},
 		}),
 	}
@@ -111,7 +109,7 @@ export default function CarouselPage(props) {
 							</div>
 						</div>
 
-						<div className="relative h-full">
+						<div className="relative h-full overflow-hidden">
 							<AnimatePresence initial={false} custom={direction} mode="wait">
 								<motion.div
 									key={pages[current].id}
@@ -129,18 +127,18 @@ export default function CarouselPage(props) {
 
 						{current === 0 && (
 							<div className="flex flex-row fixed bottom-0 gap-3 p-3 mt-3  w-full md:max-w-[360px]">
-								<CarouselButton width="w-full" text={next} action={nextPage} />
+								<Button width="w-full" text={next} action={nextPage} rounded />
 							</div>
 						)}
 						{current !== pages.length - 1 && current !== 0 && (
 							<div className="flex flex-row fixed bottom-0 gap-3 p-3 mt-3  w-full md:max-w-[360px]">
-								<CarouselButton width="w-full" text={previous} action={previousPage} />
-								<CarouselButton width="w-full" text={next} action={nextPage} />
+								<Button width="w-full" text={previous} action={previousPage} rounded />
+								<Button width="w-full" text={next} action={nextPage} rounded />
 							</div>
 						)}
 						{current === pages.length - 1 && (
 							<div className="flex flex-row fixed bottom-0 gap-3 p-3 mt-3  w-full md:max-w-[360px]">
-								<CarouselButton width="w-full" text={home} action={backToHome} />
+								<Button width="w-full" text={home} action={backToHome} rounded />
 							</div>
 						)}
 					</div>

@@ -5,10 +5,7 @@ function Progress({ percentage = 0 }) {
 	return (
 		<motion.div className="w-full bg-shallow-gray shadow-inner rounded-full h-5 mb-3 mr-3 translate-y-[50%]">
 			<motion.div
-				className="h-full relative rounded-full overflow-hidden"
-				style={{
-					background: "linear-gradient(90deg, #d4e546 0%, #95ed3a 50%, #48ec92 100%)",
-				}}
+				className="h-full relative rounded-full overflow-hidden bg-gradient-custom"
 				initial={{ width: 0 }}
 				animate={{ width: `${percentage}%` }}
 				transition={{

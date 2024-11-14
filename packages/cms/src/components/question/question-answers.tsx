@@ -26,7 +26,7 @@ function QuestionAnswers(props: any) {
 	}
 
 	return (
-		<div className="flex flex-col gap-3 mt-3" key={props.id}>
+		<div className="flex flex-col gap-2 mt-3" key={props.id}>
 			{props.answers.map((answer: any) => (
 				<Item
 					tabFocus={false}
@@ -37,7 +37,7 @@ function QuestionAnswers(props: any) {
 					action={selectAnswer}
 				/>
 			))}
-			<motion.div className="relative" layout>
+			<motion.div className="relative mt-2" layout>
 				<AnimatePresence mode="popLayout">
 					{answered ? (
 						<motion.div
@@ -74,6 +74,7 @@ function QuestionAnswers(props: any) {
 								color={selected != null ? "secondary" : "default"}
 								action={checkAnswer}
 								disabled={selected.id == null}
+								rounded
 							/>
 						</motion.div>
 					)}
