@@ -1,11 +1,12 @@
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { LazyMotion, m } from "framer-motion"
-import { useMode, usePage } from "../util/store"
+import { useCurrentCarouselPage, useMode, usePage } from "../util/store"
 import { appendBlock, focusBlock, updateBlock } from "../reducers/page-reducer"
 import { useDispatch } from "react-redux"
 import { useDrop } from "react-dnd"
 import EditorFactory from "../util/factories/editor-factory"
 import TemplateFactory from "../util/factories/templates/template-factory"
+import BuildingBlock from "../util/factories/building-block"
 
 const animation = {
 	hidden: { opacity: 0 },
@@ -25,7 +26,25 @@ export default function PageContent(props: any) {
 	const dispatch = useDispatch()
 	const [blocks, setBlocks] = useState<any[]>([])
 	const page = usePage()
+	const activeCarousel = useCurrentCarouselPage()
 	const [dropTarget, setDropTarget] = useState<{ index: number; position: "top" | "bottom" } | null>(null)
+
+	function findPageById(page, targetId) {
+		if (page.id === targetId) {
+			return page
+		}
+
+		if (page.config && page.config.pages && Array.isArray(page.config.pages)) {
+			for (const nestedPage of page.config.pages) {
+				const result = findPageById(nestedPage, targetId)
+				if (result) {
+					return result
+				}
+			}
+		}
+
+		return null
+	}
 
 	const [{ isOver, canDrop }, drop] = useDrop<any, void, { isOver: boolean; canDrop: boolean }>(
 		() => ({
@@ -73,15 +92,29 @@ export default function PageContent(props: any) {
 				const [movedBlock] = filteredBlocks.splice(dragIndex, 1)
 				filteredBlocks.splice(targetIndex, 0, movedBlock)
 
-				dispatch(
-					updateBlock({
-						...page,
-						config: {
-							...page.config,
-							buildingBlocks: filteredBlocks,
-						},
-					}),
-				)
+				const carouselPage = findPageById(page, activeCarousel)
+
+				if (carouselPage) {
+					dispatch(
+						updateBlock({
+							...carouselPage,
+							config: {
+								...carouselPage.config,
+								buildingBlocks: filteredBlocks,
+							},
+						}),
+					)
+				} else {
+					dispatch(
+						updateBlock({
+							...page,
+							config: {
+								...page.config,
+								buildingBlocks: filteredBlocks,
+							},
+						}),
+					)
+				}
 
 				setDropTarget(null)
 			},
@@ -125,36 +158,40 @@ export default function PageContent(props: any) {
 	return (
 		<div className="bg-white h-full flex flex-col break-words">
 			<div className={`relative ${isOver && canDrop ? "bg-gray-50" : ""}`} ref={drop}>
-				{/* <LazyMotion features={loadFeatures}> */}
-				{/* <m.div variants={animation} initial="hidden" animate="show"> */}
-				{blocks.map((block, index) => (
-					<div key={block.id} data-block-index={index} className="relative">
-						{dropTarget?.index === index && dropTarget.position === "top" && (
-							<div className="pointer-events-none" style={getDropIndicatorStyle("top")} />
-						)}
+				<LazyMotion features={loadFeatures}>
+					<m.div variants={animation} initial="hidden" animate="show">
+						{blocks.map((block, index) => (
+							<div key={block.id} data-block-index={index} className="relative">
+								{dropTarget?.index === index && dropTarget.position === "top" && (
+									<div className="pointer-events-none" style={getDropIndicatorStyle("top")} />
+								)}
 
-						<div
-							className={`
+								<div
+									className={`
                                     relative 
                                     ${dropTarget?.index === index ? "z-10" : ""}
                                 `}
-						>
-							{React.cloneElement(
-								EditorFactory.getEditableBlock({
-									...block,
-									index,
-									mode,
-								}),
-							)}
-						</div>
+								>
+									{mode === "editing" ? (
+										React.cloneElement(
+											EditorFactory.getEditableBlock({
+												...block,
+												index,
+												mode,
+											}),
+										)
+									) : (
+										<BuildingBlock {...block} mode={mode} />
+									)}
+								</div>
 
-						{dropTarget?.index === index && dropTarget.position === "bottom" && (
-							<div className="pointer-events-none" style={getDropIndicatorStyle("bottom")} />
-						)}
-					</div>
-				))}
-				{/* </m.div> */}
-				{/* </LazyMotion> */}
+								{dropTarget?.index === index && dropTarget.position === "bottom" && (
+									<div className="pointer-events-none" style={getDropIndicatorStyle("bottom")} />
+								)}
+							</div>
+						))}
+					</m.div>
+				</LazyMotion>
 			</div>
 			<div className="grow min-h-[150px]" onClick={ativateSelector}></div>
 		</div>
