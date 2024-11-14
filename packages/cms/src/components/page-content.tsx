@@ -155,10 +155,6 @@ export default function PageContent(props: any) {
 		}
 	}
 
-	useEffect(() => {
-		console.log("MODE", mode)
-	}, [])
-
 	return (
 		<div className="bg-white h-full flex flex-col break-words">
 			<div className={`relative ${isOver && canDrop ? "bg-gray-50" : ""}`} ref={drop}>
