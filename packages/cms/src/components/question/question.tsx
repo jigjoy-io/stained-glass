@@ -5,7 +5,7 @@ import QuestionContent from "./question-content"
 export default function Question(props: any) {
 	return (
 		<>
-			<QuestionContent content={props.content} />
+			{/* <QuestionContent content={props.content} /> */}
 			<QuestionAnswers {...props} />
 		</>
 	)

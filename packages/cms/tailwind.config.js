@@ -18,6 +18,7 @@ module.exports = {
 			yellow: "#FEF7EA",
 			blue: "#E5EFFA",
 			red: "#fdd0df",
+			"shallow-gray": "#E5E7EB",
 			"text-danger": "#ed5249",
 		},
 

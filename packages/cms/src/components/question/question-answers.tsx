@@ -3,6 +3,7 @@ import { useState } from "react"
 import Alert from "../alert/alert"
 import Button from "../button/button"
 import Item from "../item/item"
+import { motion, AnimatePresence } from "framer-motion"
 
 function QuestionAnswers(props: any) {
 	const [selected, setSelected] = useState({} as any)
@@ -27,12 +28,57 @@ function QuestionAnswers(props: any) {
 	return (
 		<div className="flex flex-col gap-3 mt-3" key={props.id}>
 			{props.answers.map((answer: any) => (
-				<Item tabFocus={false} borderOn={true} {...answer} answered={answered} selected={selected.id} action={selectAnswer} />
+				<Item
+					tabFocus={false}
+					borderOn={true}
+					{...answer}
+					answered={answered}
+					selected={selected.id}
+					action={selectAnswer}
+				/>
 			))}
-
-			{answered && <Alert {...alert} />}
-
-			{!answered && <Button text={props.outcomes.confirmationButtonText} key={selected.id} width="w-full" color={selected != null ? "secondary" : "default"} action={checkAnswer} disabled={selected.id == null} />}
+			<motion.div className="relative" layout>
+				<AnimatePresence mode="popLayout">
+					{answered ? (
+						<motion.div
+							key="alert"
+							initial={{ y: 100, opacity: 0 }}
+							animate={{ y: 0, opacity: 1 }}
+							exit={{ y: 100, opacity: 0 }}
+							transition={{
+								type: "spring",
+								damping: 20,
+								stiffness: 300,
+								duration: 0.4,
+							}}
+						>
+							<Alert {...alert} />
+						</motion.div>
+					) : (
+						<motion.div
+							key="button"
+							initial={{ y: 20, opacity: 0 }}
+							animate={{ y: 0, opacity: 1 }}
+							exit={{ y: 20, opacity: 0 }}
+							transition={{
+								type: "spring",
+								damping: 25,
+								stiffness: 400,
+								duration: 0.3,
+							}}
+						>
+							<Button
+								text={props.outcomes.confirmationButtonText}
+								key={selected.id}
+								width="w-full"
+								color={selected != null ? "secondary" : "default"}
+								action={checkAnswer}
+								disabled={selected.id == null}
+							/>
+						</motion.div>
+					)}
+				</AnimatePresence>
+			</motion.div>
 		</div>
 	)
 }

@@ -125,32 +125,36 @@ export default function PageContent(props: any) {
 	return (
 		<div className="bg-white h-full flex flex-col break-words">
 			<div className={`relative ${isOver && canDrop ? "bg-gray-50" : ""}`} ref={drop}>
-				<LazyMotion features={loadFeatures}>
-					<m.div variants={animation} initial="hidden" animate="show">
-						{blocks.map((block, index) => (
-							<div key={block.id} data-block-index={index} className="relative">
-								{dropTarget?.index === index && dropTarget.position === "top" && <div className="pointer-events-none" style={getDropIndicatorStyle("top")} />}
+				{/* <LazyMotion features={loadFeatures}> */}
+				{/* <m.div variants={animation} initial="hidden" animate="show"> */}
+				{blocks.map((block, index) => (
+					<div key={block.id} data-block-index={index} className="relative">
+						{dropTarget?.index === index && dropTarget.position === "top" && (
+							<div className="pointer-events-none" style={getDropIndicatorStyle("top")} />
+						)}
 
-								<div
-									className={`
+						<div
+							className={`
                                     relative 
                                     ${dropTarget?.index === index ? "z-10" : ""}
                                 `}
-								>
-									{React.cloneElement(
-										EditorFactory.getEditableBlock({
-											...block,
-											index,
-											mode,
-										}),
-									)}
-								</div>
+						>
+							{React.cloneElement(
+								EditorFactory.getEditableBlock({
+									...block,
+									index,
+									mode,
+								}),
+							)}
+						</div>
 
-								{dropTarget?.index === index && dropTarget.position === "bottom" && <div className="pointer-events-none" style={getDropIndicatorStyle("bottom")} />}
-							</div>
-						))}
-					</m.div>
-				</LazyMotion>
+						{dropTarget?.index === index && dropTarget.position === "bottom" && (
+							<div className="pointer-events-none" style={getDropIndicatorStyle("bottom")} />
+						)}
+					</div>
+				))}
+				{/* </m.div> */}
+				{/* </LazyMotion> */}
 			</div>
 			<div className="grow min-h-[150px]" onClick={ativateSelector}></div>
 		</div>

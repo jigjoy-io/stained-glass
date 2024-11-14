@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
+import { motion, AnimatePresence } from "framer-motion"
 import { carouselPageSwitched, pageUpdated } from "../../reducers/page-reducer"
 import CloseIcon from "../../icons/close-icon"
 import Button from "../button/button"
 import Progress from "../progress/progress"
 import Content from "../page-content"
 import { useCurrentCarouselPage, usePage, useRootPage } from "../../util/store"
+import CarouselButton from "../button/carousel-button"
 
-export default function CarouselPage(props: any) {
+export default function CarouselPage(props) {
 	const [current, setCurrent] = useState(0)
+	const [direction, setDirection] = useState(0)
 	const activeCarousel = useCurrentCarouselPage()
 	const [percentage, setPercentage] = useState(0)
 	const [pages, setPages] = useState(props.config.pages)
-	// const [origin, setOrigin] = useState(props.origin)
 	const page = usePage()
 	const rootPage = useRootPage()
 	const dispatch = useDispatch()
@@ -20,22 +22,21 @@ export default function CarouselPage(props: any) {
 
 	const backToHome = async () => {
 		dispatch(pageUpdated(rootPage))
-
-		if (rootPage.type == "carousel") {
+		if (rootPage.type === "carousel") {
 			dispatch(carouselPageSwitched(rootPage.config.pages[0].id))
 		}
 	}
 
-	const calculatePercentage = (pageNumber: number) => {
+	const calculatePercentage = (pageNumber) => {
 		let percentage = (pageNumber / (pages.length - 1)) * 100
 		setPercentage(percentage)
 	}
 
 	const refreshCarousel = () => {
-		let current = pages.findIndex((p: any) => p.id == activeCarousel)
-		if (current != -1) {
-			setCurrent(current)
-			calculatePercentage(current)
+		let currentIndex = pages.findIndex((p) => p.id === activeCarousel)
+		if (currentIndex !== -1) {
+			setCurrent(currentIndex)
+			calculatePercentage(currentIndex)
 		}
 	}
 
@@ -52,44 +53,94 @@ export default function CarouselPage(props: any) {
 	}, [pages])
 
 	const nextPage = () => {
+		setDirection(1)
 		let nextPage = pages[current + 1]
 		dispatch(carouselPageSwitched(nextPage.id))
 	}
 
 	const previousPage = () => {
-		let nextPage = pages[current - 1]
-		dispatch(carouselPageSwitched(nextPage.id))
+		setDirection(-1)
+		let previousPage = pages[current - 1]
+		dispatch(carouselPageSwitched(previousPage.id))
+	}
+
+	const springConfig = {
+		type: "spring",
+		stiffness: 200,
+		damping: 25,
+		mass: 0.5,
+	}
+
+	const variants = {
+		enter: (direction) => ({
+			x: direction > 0 ? 100 : -100,
+			opacity: 0,
+			scale: 0.95,
+		}),
+		center: {
+			x: 0,
+			opacity: 1,
+			scale: 1,
+			transition: {
+				x: springConfig,
+				opacity: { duration: 0.3 },
+				scale: { type: "spring", stiffness: 250, damping: 20, mass: 1 },
+			},
+		},
+		exit: (direction) => ({
+			x: direction > 0 ? -100 : 100,
+			opacity: 0,
+			scale: 0.95,
+			transition: {
+				x: springConfig,
+				opacity: { duration: 0.3 },
+				scale: { duration: 0.2 },
+			},
+		}),
 	}
 
 	return (
 		<>
 			{page && (
-				<div className="flex max-h-[100dvh] h-[100dvh] w-[100%] justify-center overflow-y-auto">
-					<div className="flex flex-col w-[100%] md:max-w-[360px]">
+				<div className="flex max-h-[100dvh] h-[100dvh] w-full justify-center overflow-hidden">
+					<div className="flex flex-col w-full md:max-w-[360px]">
 						<div className="flex flex-row p-3">
 							<Progress percentage={percentage} />
-							<div className="w-max bg-primary-light border-2 border-primary p-1 rounded-[5px] cursor-pointer" onClick={backToHome}>
+							<div className="w-max p-1 rounded-[5px] cursor-pointer" onClick={backToHome}>
 								<CloseIcon />
 							</div>
 						</div>
 
-						<div className="h-[100%] p-3">
-							<Content config={pages[current].config} key={pages[current].id} id={pages[current].id} />
+						<div className="relative h-full">
+							<AnimatePresence initial={false} custom={direction} mode="wait">
+								<motion.div
+									key={pages[current].id}
+									custom={direction}
+									variants={variants}
+									initial="enter"
+									animate="center"
+									exit="exit"
+									className="absolute w-full h-full p-3"
+								>
+									<Content config={pages[current].config} key={pages[current].id} id={pages[current].id} />
+								</motion.div>
+							</AnimatePresence>
 						</div>
 
-						{current == 0 && (
-							<div className="flex flex-row fixed bottom-0 gap-3 p-3 mt-3 bg-white w-[100%] md:max-w-[360px]">
-								<Button width="w-full" text={next} action={nextPage} />
+						{current === 0 && (
+							<div className="flex flex-row fixed bottom-0 gap-3 p-3 mt-3  w-full md:max-w-[360px]">
+								<CarouselButton width="w-full" text={next} action={nextPage} />
 							</div>
 						)}
-						{current != pages.length - 1 && current != 0 && (
-							<div className="flex flex-row fixed bottom-0 gap-3 p-3 mt-3 bg-white w-[100%] md:max-w-[360px]">
-								<Button width="w-full" text={previous} action={previousPage} /> <Button width="w-full" text={next} action={nextPage} />
+						{current !== pages.length - 1 && current !== 0 && (
+							<div className="flex flex-row fixed bottom-0 gap-3 p-3 mt-3  w-full md:max-w-[360px]">
+								<CarouselButton width="w-full" text={previous} action={previousPage} />
+								<CarouselButton width="w-full" text={next} action={nextPage} />
 							</div>
 						)}
-						{current == pages.length - 1 && (
-							<div className="flex flex-row fixed bottom-0 gap-3 p-3 mt-3 bg-white w-[100%] md:max-w-[360px]">
-								<Button width="w-full" text={home} action={backToHome} />
+						{current === pages.length - 1 && (
+							<div className="flex flex-row fixed bottom-0 gap-3 p-3 mt-3  w-full md:max-w-[360px]">
+								<CarouselButton width="w-full" text={home} action={backToHome} />
 							</div>
 						)}
 					</div>
