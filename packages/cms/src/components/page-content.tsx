@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux"
 import { useDrop } from "react-dnd"
 import EditorFactory from "../util/factories/editor-factory"
 import TemplateFactory from "../util/factories/templates/template-factory"
+import BuildingBlock from "../util/factories/building-block"
 
 const animation = {
 	hidden: { opacity: 0 },
@@ -169,12 +170,16 @@ export default function PageContent(props: any) {
                                     ${dropTarget?.index === index ? "z-10" : ""}
                                 `}
 								>
-									{React.cloneElement(
-										EditorFactory.getEditableBlock({
-											...block,
-											index,
-											mode,
-										}),
+									{mode === "editing" ? (
+										React.cloneElement(
+											EditorFactory.getEditableBlock({
+												...block,
+												index,
+												mode,
+											}),
+										)
+									) : (
+										<BuildingBlock {...block} mode={mode} />
 									)}
 								</div>
 
