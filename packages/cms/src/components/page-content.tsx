@@ -162,7 +162,9 @@ export default function PageContent(props: any) {
 					<m.div variants={animation} initial="hidden" animate="show">
 						{blocks.map((block, index) => (
 							<div key={block.id} data-block-index={index} className="relative">
-								{dropTarget?.index === index && dropTarget.position === "top" && <div className="pointer-events-none" style={getDropIndicatorStyle("top")} />}
+								{dropTarget?.index === index && dropTarget.position === "top" && (
+									<div className="pointer-events-none" style={getDropIndicatorStyle("top")} />
+								)}
 
 								<div
 									className={`
@@ -183,7 +185,9 @@ export default function PageContent(props: any) {
 									)}
 								</div>
 
-								{dropTarget?.index === index && dropTarget.position === "bottom" && <div className="pointer-events-none" style={getDropIndicatorStyle("bottom")} />}
+								{dropTarget?.index === index && dropTarget.position === "bottom" && (
+									<div className="pointer-events-none" style={getDropIndicatorStyle("bottom")} />
+								)}
 							</div>
 						))}
 					</m.div>

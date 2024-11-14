@@ -23,12 +23,12 @@ export default function Item(props: any) {
 			onKeyDown={handleKeyDown}
 			tabIndex={props.tabFocus ? 0 : -1}
 			className={`min-w-[225px] 
-			${selected != null && selected === props.id ? "bg-primary-light" : "bg-[white]"} 
+			${selected != null && selected === props.id ? "bg-gradient-custom-opacity" : "bg-[white]"} 
 			border-2 border-[white] md:hover:bg-primary-light  
 			${props.borderOn && "border border-light shadow-md"} 
 			p-[3px] rounded-[5px] cursor-pointer flex flex-col`}
 		>
-			<div className="flex flex-row">
+			<div className="flex flex-row p-1">
 				{props.icon && (
 					<div className="pl-1 pr-2 flex items-center">
 						<props.icon />
