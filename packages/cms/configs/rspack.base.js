@@ -48,6 +48,7 @@ module.exports = {
 				{ from: "manifest.json" },
 				{ from: "./public/favicon.ico" },
 				{ from: "./public/audio", to: "public/audio" },
+				{ from: "./public/images", to: "public/images" },
 			],
 		}),
 		new Dotenv({
