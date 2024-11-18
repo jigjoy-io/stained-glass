@@ -44,7 +44,14 @@ export default function InputTypeEditor(props: any) {
 		<div className="flex flex-col p-2">
 			<div className="pb-3">
 				{localization.positions.map((position: any) => (
-					<Item tabFocus={false} text={position.text} icon={position.icon} id={position.key} selected={value} action={select} />
+					<Item
+						tabFocus={false}
+						text={position.text}
+						icon={position.icon}
+						id={position.key}
+						selected={value}
+						action={select}
+					/>
 				))}
 			</div>
 			<Button text={localization.update} action={update} />
