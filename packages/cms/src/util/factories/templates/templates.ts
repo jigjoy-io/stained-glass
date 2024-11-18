@@ -35,7 +35,7 @@ export class TemplatesStorage {
 			},
 			image: {
 				type: "image",
-				source: "https://jigjoy.io/assets/placeholderimage.jpg",
+				source: "/public/images/placeholderimage/jpg",
 				position: "left",
 				size: "large",
 			},
@@ -54,7 +54,7 @@ export class TemplatesStorage {
 			},
 			"image-configurer": {
 				type: "image-configurer",
-				source: "https://jigjoy.io/assets/placeholderimage.jpg",
+				source: "/public/images/placeholderimage.jpg",
 				display: true,
 			},
 			question: {
@@ -63,7 +63,7 @@ export class TemplatesStorage {
 					displayQuestion: true,
 					text: localization.questionText,
 					displayImage: true,
-					image: "https://jigjoy.io/assets/placeholderimage.jpg",
+					image: "/public/images/placeholderimage.jpg",
 				},
 				answers: [
 					{
@@ -118,7 +118,7 @@ export class TemplatesStorage {
 				firstName: localization.firstName,
 				lastName: localization.lastName,
 				description: localization.description,
-				image: "https://jigjoy.io/assets/profiletileplaceholderimage.jpg",
+				image: "/public/images/profiletileplaceholderimage.jpg",
 				username: localization.username,
 			},
 			"carousel-tile": {
