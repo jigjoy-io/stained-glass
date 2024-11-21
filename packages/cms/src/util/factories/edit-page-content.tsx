@@ -28,6 +28,7 @@ export default function EditPageContent(props: any) {
 	const page = usePage()
 	const activeCarousel = useCurrentCarouselPage()
 	const [selectedBlocks, setSelectedBlocks] = useState<any[]>([])
+	const [isDragging, setIsDragging] = useState(false)
 
 	const onSelectionChange = useCallback(
 		(selectionBox) => {
@@ -45,11 +46,18 @@ export default function EditPageContent(props: any) {
 
 				return boxesIntersect(selectionBox, blockBox)
 			})
+			if (isDragging) return
 
 			setSelectedBlocks(selectedBlocks)
 		},
 		[blocks],
 	)
+
+	const handleClick = (e: React.MouseEvent) => {
+		if (!isDragging) {
+			setSelectedBlocks([])
+		}
+	}
 
 	const { DragSelection } = useSelectionContainer({
 		onSelectionChange,
@@ -83,6 +91,7 @@ export default function EditPageContent(props: any) {
 				canDrop: monitor.canDrop(),
 			}),
 			hover(item, monitor) {
+				setIsDragging(true)
 				const dragRect = monitor.getSourceClientOffset()
 				if (!dragRect) return
 
@@ -108,6 +117,7 @@ export default function EditPageContent(props: any) {
 				}
 			},
 			drop(item, monitor) {
+				setIsDragging(false)
 				if (!dropTarget) return
 
 				const dragIndex = item.block.index
@@ -185,7 +195,7 @@ export default function EditPageContent(props: any) {
 	}
 
 	return (
-		<div className="bg-white h-full flex flex-col break-words">
+		<div className="bg-white h-full flex flex-col break-words" onClick={handleClick}>
 			<div className={`relative ${isOver && canDrop ? "bg-gray-50" : ""}`} ref={drop}>
 				<LazyMotion features={loadFeatures}>
 					<m.div variants={animation} initial="hidden" animate="show">
