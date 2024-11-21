@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import { LazyMotion, m } from "framer-motion"
 import { useDrop } from "react-dnd"
 import { useDispatch } from "react-redux"
@@ -6,6 +6,7 @@ import { appendBlock, focusBlock, updateBlock } from "../../reducers/page-reduce
 import EditorFactory from "./editor-factory"
 import { useCurrentCarouselPage, usePage } from "../store"
 import TemplateFactory from "./templates/template-factory"
+import { boxesIntersect, useSelectionContainer } from "@air/react-drag-to-select"
 
 const animation = {
 	hidden: { opacity: 0 },
@@ -26,6 +27,36 @@ export default function EditPageContent(props: any) {
 	const dispatch = useDispatch()
 	const page = usePage()
 	const activeCarousel = useCurrentCarouselPage()
+	const [selectedBlocks, setSelectedBlocks] = useState<any[]>([])
+
+	const onSelectionChange = useCallback(
+		(selectionBox) => {
+			const selectedBlocks = blocks.filter((block) => {
+				const blockElement = document.querySelector(`[id="${block.id}"]`)
+				if (!blockElement) return false
+
+				const rect = blockElement.getBoundingClientRect()
+				const blockBox = {
+					top: rect.top,
+					left: rect.left,
+					width: rect.width,
+					height: rect.height,
+				}
+
+				return boxesIntersect(selectionBox, blockBox)
+			})
+
+			setSelectedBlocks(selectedBlocks)
+		},
+		[blocks],
+	)
+
+	const { DragSelection } = useSelectionContainer({
+		onSelectionChange,
+		selectionProps: {
+			className: "bg-blue-100",
+		},
+	})
 
 	function findPageById(page, targetId) {
 		if (page.id === targetId) {
@@ -158,8 +189,16 @@ export default function EditPageContent(props: any) {
 			<div className={`relative ${isOver && canDrop ? "bg-gray-50" : ""}`} ref={drop}>
 				<LazyMotion features={loadFeatures}>
 					<m.div variants={animation} initial="hidden" animate="show">
+						<DragSelection />
 						{blocks.map((block, index) => (
-							<div key={block.id} data-block-index={index} className="relative">
+							<div
+								key={block.id}
+								id={block.id}
+								data-block-index={index}
+								className={`relative ${
+									selectedBlocks.some((selectedBlock) => selectedBlock.id === block.id) ? "bg-highlight" : ""
+								}`}
+							>
 								{dropTarget?.index === index && dropTarget.position === "top" && (
 									<div className="pointer-events-none" style={getDropIndicatorStyle("top")} />
 								)}

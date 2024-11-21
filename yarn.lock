@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@air/react-drag-to-select@^5.0.10":
+  version "5.0.10"
+  resolved "https://registry.yarnpkg.com/@air/react-drag-to-select/-/react-drag-to-select-5.0.10.tgz#c80c748bc06e6abac00f4a352c6917f80405140d"
+  integrity sha512-KP0HaYoGvVinDwl0K4hv54CAyvbmN/7Z9ZRhOwZvJsgBjfAwWEHYIoJ5k3VLk3D4dp6XIU1FXnBbKO/IoF4S7g==
+  dependencies:
+    react-style-object-to-css "^1.1.2"
+
 "@alloc/quick-lru@^5.2.0":
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/@alloc/quick-lru/-/quick-lru-5.2.0.tgz#7bf68b20c0a350f936915fcae06f58e32007ce30"
@@ -4058,6 +4065,11 @@ locate-path@^3.0.0:
     p-locate "^3.0.0"
     path-exists "^3.0.0"
 
+lodash.throttle@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
+  integrity sha512-wIkUCfVKpVsWo3JSZlc+8MB5it+2AN5W8J7YVMST30UrvcQNZ1Okbj+rbVniijTWE6FGYy4XJq/rHkas8qJMLQ==
+
 lodash@^4.17.15, lodash@^4.17.20, lodash@^4.17.21, lodash@^4.17.4:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
@@ -4982,6 +4994,11 @@ react-side-effect@^2.1.0:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/react-side-effect/-/react-side-effect-2.1.2.tgz#dc6345b9e8f9906dc2eeb68700b615e0b4fe752a"
   integrity sha512-PVjOcvVOyIILrYoyGEpDN3vmYNLdy1CajSFNt4TDsVQC5KpTijDvWVoR+/7Rz2xT978D8/ZtFceXxzsPwZEDvw==
+
+react-style-object-to-css@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/react-style-object-to-css/-/react-style-object-to-css-1.1.2.tgz#3e97da92c9edf8190e30f4b27026e74285940498"
+  integrity sha512-+5MFULqCCj7wwJJ/ISKFP91ZlHVF1Rv8o0neiTKvt21XDTU5e34tc8hy+XPLeYWYOupdHt25HxxwocvYm3HM6A==
 
 react@^18.3.1:
   version "18.3.1"

@@ -20,6 +20,7 @@ module.exports = {
 			red: "#fdd0df",
 			"shallow-gray": "#E5E7EB",
 			"text-danger": "#ed5249",
+			highlight: "#DBEAFE",
 		},
 
 		extend: {
