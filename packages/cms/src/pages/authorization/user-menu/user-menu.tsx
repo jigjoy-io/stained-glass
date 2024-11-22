@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react"
 import { getCurrentUser } from "aws-amplify/auth"
 import ExpandDownIcon from "../../../icons/expand-down-icon"
 import { createPortal } from "react-dom"
-import { blockingUpdated } from "../../../reducers/toolbar-reducer"
+import { blockingUpdated } from "../../../reducers/editor-reducer"
 import { useDispatch } from "react-redux"
 import InitialIcon from "../../../icons/initial-icon"
 import LogoutButton from "./logout/logout"
@@ -80,9 +80,15 @@ export default function UserMenu() {
 	return (
 		<div>
 			<div>
-				<button onClick={handleOpen} className="p-2 flex items-center justify-between text-gray-800 hover:bg-black-50 transition-colors duration-200">
+				<button
+					onClick={handleOpen}
+					className="p-2 flex items-center justify-between text-gray-800 hover:bg-black-50 transition-colors duration-200"
+				>
 					{userEmail && (
-						<div className="flex flex-row items-center space-x-2 hover:bg-primary-light hover:bg-opacity-60 p-1 rounded-[5px]" ref={ref}>
+						<div
+							className="flex flex-row items-center space-x-2 hover:bg-primary-light hover:bg-opacity-60 p-1 rounded-[5px]"
+							ref={ref}
+						>
 							<InitialIcon initials={userEmail[0].toUpperCase()} />
 							<ExpandDownIcon />
 						</div>
@@ -92,11 +98,18 @@ export default function UserMenu() {
 				{isOpen &&
 					createPortal(
 						<ClickOutsideListener callback={handleClose}>
-							<div className={`fixed flex rounded-[5px] p-1 shadow bg-[white] w-[250px]`} style={{ top: rect.top + rect.height, left: rect.x }}>
+							<div
+								className={`fixed flex rounded-[5px] p-1 shadow bg-[white] w-[250px]`}
+								style={{ top: rect.top + rect.height, left: rect.x }}
+							>
 								<div className="flex flex-col gap-1 w-full">
 									<span className="p-1 px-2 font-medium truncate">{userEmail}</span>
 									<div className="border-b border-primary" />
-									<button ref={refLanguageSettings} className="p-1 px-2 text-left text-gray-700 transition-colors duration-200 hover:bg-primary-light rounded-[5px]" onClick={openLanguageSettings}>
+									<button
+										ref={refLanguageSettings}
+										className="p-1 px-2 text-left text-gray-700 transition-colors duration-200 hover:bg-primary-light rounded-[5px]"
+										onClick={openLanguageSettings}
+									>
 										{localization.languageSettings}
 									</button>
 									<LogoutButton />
@@ -109,7 +122,10 @@ export default function UserMenu() {
 				{isOpenSettings &&
 					createPortal(
 						<ClickOutsideListener callback={handleSettingsClose}>
-							<div className={`fixed flex flex-col rounded-[5px] p-3 gap-2 shadow bg-white w-[250px]`} style={{ top: rect.top, left: rect.x + rect.width }}>
+							<div
+								className={`fixed flex flex-col rounded-[5px] p-3 gap-2 shadow bg-white w-[250px]`}
+								style={{ top: rect.top, left: rect.x + rect.width }}
+							>
 								<p className="font-bold">{localization.chooseLanguage}</p>
 								<LanguageSwitcher initial={lang} />
 							</div>

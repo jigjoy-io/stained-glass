@@ -1,11 +1,12 @@
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { LazyMotion, m } from "framer-motion"
 import { useDrop } from "react-dnd"
 import { useDispatch } from "react-redux"
 import { appendBlock, focusBlock, updateBlock } from "../../reducers/page-reducer"
 import EditorFactory from "./editor-factory"
-import { useCurrentCarouselPage, usePage } from "../store"
+import { useCurrentCarouselPage, usePage, useSelectedBlocks } from "../store"
 import TemplateFactory from "./templates/template-factory"
+import { selectBlocks } from "../../reducers/editor-reducer"
 import { boxesIntersect, useSelectionContainer } from "@air/react-drag-to-select"
 
 const animation = {
@@ -26,13 +27,21 @@ export default function EditPageContent(props: any) {
 	const [dropTarget, setDropTarget] = useState<{ index: number; position: "top" | "bottom" } | null>(null)
 	const dispatch = useDispatch()
 	const page = usePage()
+	const selectedBlocks = useSelectedBlocks()
 	const activeCarousel = useCurrentCarouselPage()
-	const [selectedBlocks, setSelectedBlocks] = useState<any[]>([])
+	// const [selectedBlocks, setSelectedBlocks] = useState<any[]>([])
 	const [isDragging, setIsDragging] = useState(false)
+	const [boxSelection, setBoxSelection] = useState<any>()
 
-	const onSelectionChange = useCallback(
-		(selectionBox) => {
-			const selectedBlocks = blocks.filter((block) => {
+	const { DragSelection } = useSelectionContainer({
+		onSelectionStart: () => {
+			dispatch(selectBlocks([]))
+		},
+		onSelectionChange: (selectionBox) => {
+			setBoxSelection(selectionBox)
+		},
+		onSelectionEnd: () => {
+			const finalizedSelection = blocks.filter((block) => {
 				const blockElement = document.querySelector(`[id="${block.id}"]`)
 				if (!blockElement) return false
 
@@ -44,27 +53,21 @@ export default function EditPageContent(props: any) {
 					height: rect.height,
 				}
 
-				return boxesIntersect(selectionBox, blockBox)
+				return boxesIntersect(boxSelection, blockBox)
 			})
-			if (isDragging) return
 
-			setSelectedBlocks(selectedBlocks)
+			dispatch(selectBlocks(finalizedSelection))
 		},
-		[blocks],
-	)
-
-	const handleClick = (e: React.MouseEvent) => {
-		if (!isDragging) {
-			setSelectedBlocks([])
-		}
-	}
-
-	const { DragSelection } = useSelectionContainer({
-		onSelectionChange,
 		selectionProps: {
 			className: "bg-blue-100",
 		},
 	})
+
+	const handleClick = (e: React.MouseEvent) => {
+		if (!isDragging) {
+			dispatch(selectBlocks([]))
+		}
+	}
 
 	function findPageById(page, targetId) {
 		if (page.id === targetId) {

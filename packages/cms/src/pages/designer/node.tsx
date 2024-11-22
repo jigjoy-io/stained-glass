@@ -15,7 +15,7 @@ import {
 	pageUpdated,
 	rootPageUpdated,
 } from "../../reducers/page-reducer"
-import { blockingUpdated } from "../../reducers/toolbar-reducer"
+import { blockingUpdated } from "../../reducers/editor-reducer"
 import { useExpandedPages, useHovered, useLanguage, usePage, usePages, useSelected } from "../../util/store"
 import { deletePage } from "../../util/traversals/delete-page"
 import { duplicateBlock } from "../../util/traversals/duplcate-block"

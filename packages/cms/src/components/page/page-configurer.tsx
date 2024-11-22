@@ -8,7 +8,7 @@ import Tab from "../tabs/tab"
 import { updateBlock } from "../../reducers/page-reducer"
 import { useDispatch } from "react-redux"
 import { useLanguage, usePage } from "../../util/store"
-import { blockingUpdated } from "../../reducers/toolbar-reducer"
+import { blockingUpdated } from "../../reducers/editor-reducer"
 import { createPortal } from "react-dom"
 import LocalizedStrings from "react-localization"
 import TemplateFactory from "../../util/factories/templates/template-factory"
@@ -143,7 +143,11 @@ export default function PageConfigurer(props: any) {
 													<label className="flex-none flex items-center w-[33%]" htmlFor="headline">
 														{localization.title}
 													</label>
-													<input className="ml-4 p-1 rounded-[5px] border w-[100%]" value={title} onChange={(e: any) => setHeadline(e.target.value)} />
+													<input
+														className="ml-4 p-1 rounded-[5px] border w-[100%]"
+														value={title}
+														onChange={(e: any) => setHeadline(e.target.value)}
+													/>
 												</div>
 											</div>
 
@@ -152,7 +156,11 @@ export default function PageConfigurer(props: any) {
 													<label className="flex-none flex items-center w-[33%]" htmlFor="headline">
 														{localization.description}
 													</label>
-													<input className="ml-4 p-1 rounded-[5px] border w-[100%]" value={description} onChange={(e: any) => setDescription(e.target.value)} />
+													<input
+														className="ml-4 p-1 rounded-[5px] border w-[100%]"
+														value={description}
+														onChange={(e: any) => setDescription(e.target.value)}
+													/>
 												</div>
 											</div>
 										</Tab>
@@ -161,13 +169,25 @@ export default function PageConfigurer(props: any) {
 											<div className="w-[100%]">
 												<div className="opacity-30">{localization.comingSoon}</div>
 												<div className="flex flex-row w-full mt-3 gap-3">
-													<Checkbox disabled={true} selected={accessType == "freebie"} onChange={() => setAccessType("freebie")}>
+													<Checkbox
+														disabled={true}
+														selected={accessType == "freebie"}
+														onChange={() => setAccessType("freebie")}
+													>
 														{localization.freebie}
 													</Checkbox>
-													<Checkbox disabled={true} selected={accessType == "lead magnet"} onChange={() => setAccessType("lead magnet")}>
+													<Checkbox
+														disabled={true}
+														selected={accessType == "lead magnet"}
+														onChange={() => setAccessType("lead magnet")}
+													>
 														{localization.leadMagnet}
 													</Checkbox>
-													<Checkbox disabled={true} selected={accessType == "paid"} onChange={() => setAccessType("paid")}>
+													<Checkbox
+														disabled={true}
+														selected={accessType == "paid"}
+														onChange={() => setAccessType("paid")}
+													>
 														{localization.paid}
 													</Checkbox>
 												</div>
@@ -184,7 +204,11 @@ export default function PageConfigurer(props: any) {
 					</ClickOutsideListener>,
 					document.body,
 				)}
-			<div ref={ref} onClick={openConfigurer} className="w-[100%] py-[8px] bg-default-light hover:bg-gray-300 cursor-pointer rounded-[5px] flex items-center pl-5 hover:opacity-60">
+			<div
+				ref={ref}
+				onClick={openConfigurer}
+				className="w-[100%] py-[8px] bg-default-light hover:bg-gray-300 cursor-pointer rounded-[5px] flex items-center pl-5 hover:opacity-60"
+			>
 				<CarouselIcon />
 				<div className="pl-2">{localization.clickToAdd}</div>
 			</div>

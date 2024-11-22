@@ -1,6 +1,6 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react"
 import { useDispatch } from "react-redux"
-import { blockingUpdated } from "../../reducers/toolbar-reducer"
+import { blockingUpdated } from "../../reducers/editor-reducer"
 import { updateBlock } from "../../reducers/page-reducer"
 import { createPortal } from "react-dom"
 import ClickOutsideListener from "../../util/click-outside-listener"
@@ -117,7 +117,12 @@ export default function MediaSettings({ mediaType, icon, localization, props }: 
 											<FileUploader mediaType={mediaType} localization={localization} callback={createBlock} />
 										</Tab>
 										<Tab key={localization.embedLink}>
-											<FileUrlEditor filePath={value} fileType={mediaType} localization={localization} callback={createBlock} />
+											<FileUrlEditor
+												filePath={value}
+												fileType={mediaType}
+												localization={localization}
+												callback={createBlock}
+											/>
 										</Tab>
 									</Tabs>
 								</div>
@@ -127,7 +132,11 @@ export default function MediaSettings({ mediaType, icon, localization, props }: 
 					document.body,
 				)}
 
-			<div ref={ref} onClick={openConfigurer} className="w-[100%] py-[8px] bg-default-light hover:bg-gray-300 cursor-pointer rounded-[5px] flex items-center pl-5 hover:opacity-60">
+			<div
+				ref={ref}
+				onClick={openConfigurer}
+				className="w-[100%] py-[8px] bg-default-light hover:bg-gray-300 cursor-pointer rounded-[5px] flex items-center pl-5 hover:opacity-60"
+			>
 				{icon}
 				<div className="pl-2">{localization.clickToAdd}</div>
 			</div>

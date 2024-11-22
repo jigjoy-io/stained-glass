@@ -5,9 +5,9 @@ import { AddNewBlock } from "./builder/add-new-block"
 import { createPortal } from "react-dom"
 import { AnimatePresence, LazyMotion, m } from "framer-motion"
 import LocalizedStrings from "react-localization"
-import { useLanguage, usePage } from "../../../util/store"
-import { blockingUpdated } from "../../../reducers/toolbar-reducer"
-import { insertBlock, removeBlock, pageUpdated } from "../../../reducers/page-reducer"
+import { useLanguage, useSelectedBlocks } from "../../../util/store"
+import { blockingUpdated } from "../../../reducers/editor-reducer"
+import { insertBlock, removeBlock } from "../../../reducers/page-reducer"
 import { duplicateBlock } from "../../../util/traversals/duplcate-block"
 import ClickOutsideListener from "../../../util/click-outside-listener"
 import DuplicateIcon from "../../../icons/duplicate-icon"
@@ -67,8 +67,8 @@ export default function Toolbar(props: any) {
 	const [editorLeft, setEditorLeft] = useState<number>()
 
 	const dispatch = useDispatch()
+	const selectedBlocks = useSelectedBlocks()
 	const lang = useLanguage()
-	const page = usePage()
 
 	useEffect(() => {
 		localization.setLanguage(lang)
@@ -85,14 +85,35 @@ export default function Toolbar(props: any) {
 			collect: (monitor) => ({
 				isDragging: monitor.isDragging(),
 			}),
+			preview: {
+				captureDraggingState: true,
+			},
 		}),
 		[props.index, props.block],
 	)
 
+	useEffect(() => {
+		const previewContainer = document.createElement("div")
+
+		selectedBlocks.forEach((block) => {
+			const element = document.getElementById(block.id)
+			if (element) {
+				const clone = element.cloneNode(true) as HTMLElement
+				previewContainer.appendChild(clone)
+			}
+		})
+
+		if (containerRef.current) {
+			console.log("PREV CONT", previewContainer)
+			dragPreview(previewContainer)
+		}
+	}, [selectedBlocks])
+
 	const handleMouseMove = (e: MouseEvent) => {
 		if (containerRef.current) {
 			const rect = containerRef.current.getBoundingClientRect()
-			const isWithinRange = e.clientX >= rect.left - 200 && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom
+			const isWithinRange =
+				e.clientX >= rect.left - 200 && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom
 			setOn(isWithinRange)
 		}
 	}
@@ -175,12 +196,6 @@ export default function Toolbar(props: any) {
 		}, 5)
 	})
 
-	useEffect(() => {
-		if (containerRef.current) {
-			dragPreview(containerRef.current)
-		}
-	}, [dragPreview])
-
 	return (
 		<div
 			ref={containerRef}
@@ -209,7 +224,11 @@ export default function Toolbar(props: any) {
 												</div>
 											}
 										>
-											<div ref={drag} className="cursor-grab active:cursor-grabbing" style={{ opacity: isDragging ? 0.4 : 1 }}>
+											<div
+												ref={drag}
+												className="cursor-grab active:cursor-grabbing"
+												style={{ opacity: isDragging ? 0.4 : 1 }}
+											>
 												<OpenMenuIcon />
 											</div>
 										</ToolbarButtonWrapper>
@@ -226,16 +245,28 @@ export default function Toolbar(props: any) {
 					className={`opacity-50 bg-default-light h-[100%] w-[100%] 
                     ${editor != null || toolbarVisible ? "absolute" : "hidden"} ${blockRadius}`}
 				/>
-				<div className={`${on && !toolbarVisible && editor == null && "opacity-80"} ${blockRadius}`}>{props.children}</div>
+				<div className={`${on && !toolbarVisible && editor == null && "opacity-80"} ${blockRadius}`}>
+					{props.children}
+				</div>
 			</div>
 
 			{toolbarVisible &&
 				createPortal(
 					<ClickOutsideListener callback={handleToolbarClose}>
-						<div className="fixed flex rounded-[5px] p-1 shadow bg-[white] z-50 -translate-x-[100%]" style={{ top: toolbarTop, left: toolbarLeft }} ref={toolbarRef}>
+						<div
+							className="fixed flex rounded-[5px] p-1 shadow bg-[white] z-50 -translate-x-[100%]"
+							style={{ top: toolbarTop, left: toolbarLeft }}
+							ref={toolbarRef}
+						>
 							<Grid numberOfCols={1}>
 								<Item text={localization.duplicate} tabFocus={false} icon={DuplicateIcon} action={duplicate} />
-								<Item text={localization.delete} tabFocus={false} textColor="red" icon={DeleteBlockIcon} action={deleteBlock} />
+								<Item
+									text={localization.delete}
+									tabFocus={false}
+									textColor="red"
+									icon={DeleteBlockIcon}
+									action={deleteBlock}
+								/>
 								{props.editingOptions.map((option: any, index: number) => (
 									<div
 										key={index}
@@ -244,7 +275,12 @@ export default function Toolbar(props: any) {
 										}}
 									>
 										{index === 0 && <div className="border-b border-default-light" />}
-										<Item text={option.name} tabFocus={false} icon={option.icon} action={() => handleOpenEditor(option, index)} />
+										<Item
+											text={option.name}
+											tabFocus={false}
+											icon={option.icon}
+											action={() => handleOpenEditor(option, index)}
+										/>
 									</div>
 								))}
 							</Grid>
@@ -257,8 +293,20 @@ export default function Toolbar(props: any) {
 				editor &&
 				createPortal(
 					<ClickOutsideListener callback={handleEditorClose}>
-						<div className="fixed flex rounded-[5px] p-1 shadow bg-[white] z-50" style={{ top: editorTop, left: editorLeft }} ref={editorRef}>
-							<editor.editor id={props.id} lang={lang} tabFocus={false} block={props.block} attribute={editor.key} value={props.block[editor.key]} extraProps={editor.extraProps} />
+						<div
+							className="fixed flex rounded-[5px] p-1 shadow bg-[white] z-50"
+							style={{ top: editorTop, left: editorLeft }}
+							ref={editorRef}
+						>
+							<editor.editor
+								id={props.id}
+								lang={lang}
+								tabFocus={false}
+								block={props.block}
+								attribute={editor.key}
+								value={props.block[editor.key]}
+								extraProps={editor.extraProps}
+							/>
 						</div>
 					</ClickOutsideListener>,
 					document.body,
