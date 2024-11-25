@@ -63,17 +63,17 @@ export class SelectorOptions {
 					},
 				],
 			},
-			{
-				key: "inputs",
-				commands: [
-					{
-						key: "form-configurer",
-						label: "Form",
-						description: "Collect user informations.",
-						icon: InputIcon,
-					},
-				],
-			},
+			// {
+			// 	key: "inputs",
+			// 	commands: [
+			// 		{
+			// 			key: "form-configurer",
+			// 			label: "Form",
+			// 			description: "Collect user informations.",
+			// 			icon: InputIcon,
+			// 		},
+			// 	],
+			// },
 			{
 				title: "Multimedia",
 				key: "multimedia",
