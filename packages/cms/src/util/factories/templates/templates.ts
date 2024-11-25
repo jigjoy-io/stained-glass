@@ -34,23 +34,23 @@ export class TemplatesStorage {
 				position: "left",
 				size: "large",
 			},
-			form: {
-				type: "form",
-				inputs: [
-					{
-						label: "Label",
-						inputType: "text",
-						placeholder: "Placeholder text",
-					},
-				],
-			},
-			"form-configurer": {
-				placeholder: "Placeholder text",
-				label: "Label",
-				type: "form-configurer",
-				inputType: "text",
-				display: true,
-			},
+			// form: {
+			// 	type: "form",
+			// 	inputs: [
+			// 		{
+			// 			label: "Label",
+			// 			inputType: "text",
+			// 			placeholder: "Placeholder text",
+			// 		},
+			// 	],
+			// },
+			// "form-configurer": {
+			// 	placeholder: "Placeholder text",
+			// 	label: "Label",
+			// 	type: "form-configurer",
+			// 	inputType: "text",
+			// 	display: true,
+			// },
 			"image-configurer": {
 				type: "image-configurer",
 				source: "/public/images/placeholderimage.jpg",
