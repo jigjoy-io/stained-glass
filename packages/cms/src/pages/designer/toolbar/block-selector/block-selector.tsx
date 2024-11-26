@@ -179,7 +179,7 @@ export default function BlockSelector(props: any) {
 				type="text"
 				value={option}
 				onFocus={() => setPlaceholder(placeholder)}
-				className="w-full h-10 px-3 py-2 bg-white rounded-md border border-gray-200 shadow-sm transition-all duration-300 ease-outplaceholder:text-gray-400hover:border-gray-300focus:outline-none focus:border-pink-300 focus:bg-pink-50/30focus:-translate-y-[1px]focus:placeholder:text-pink-300"
+				className="w-full h-10 px-3 py-2 bg-white rounded-md shadow-[0px_0px_20px_5px_rgba(66,_220,_219,_0.5)] border border-light outline-none"
 				placeholder={placeholder}
 				onChange={handleChange}
 				onKeyDown={handleKeyDown}
