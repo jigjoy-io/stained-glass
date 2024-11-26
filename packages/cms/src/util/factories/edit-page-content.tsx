@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react"
 import { LazyMotion, m } from "framer-motion"
-import { useDrop } from "react-dnd"
 import { useDispatch } from "react-redux"
-import { appendBlock, focusBlock, updateBlock } from "../../reducers/page-reducer"
-import EditorFactory from "./editor-factory"
+import { appendBlock, focusBlock } from "../../reducers/page-reducer"
 import { useCurrentCarouselPage, usePage, useSelectedBlocks } from "../store"
-import TemplateFactory from "./templates/template-factory"
 import { selectBlocks } from "../../reducers/editor-reducer"
 import { boxesIntersect, useSelectionContainer } from "@air/react-drag-to-select"
+import { useBlockDropHandler } from "../drag-and-drop/block-drop-handler"
+import TemplateFactory from "./templates/template-factory"
+import EditorFactory from "./editor-factory"
 
 const animation = {
 	hidden: { opacity: 0 },
@@ -24,145 +24,41 @@ const loadFeatures = () => import("../style-helper/animations").then((res) => re
 
 export default function EditPageContent(props: any) {
 	const [blocks, setBlocks] = useState<any[]>([])
-	const [dropTarget, setDropTarget] = useState<{ index: number; position: "top" | "bottom" } | null>(null)
 	const dispatch = useDispatch()
 	const page = usePage()
 	const selectedBlocks = useSelectedBlocks()
 	const activeCarousel = useCurrentCarouselPage()
-	// const [selectedBlocks, setSelectedBlocks] = useState<any[]>([])
-	const [isDragging, setIsDragging] = useState(false)
 	const [boxSelection, setBoxSelection] = useState<any>()
 
 	const { DragSelection } = useSelectionContainer({
-		onSelectionStart: () => {
-			dispatch(selectBlocks([]))
-		},
-		onSelectionChange: (selectionBox) => {
-			setBoxSelection(selectionBox)
-		},
+		onSelectionStart: () => dispatch(selectBlocks([])),
+		onSelectionChange: (selectionBox) => setBoxSelection(selectionBox),
 		onSelectionEnd: () => {
 			const finalizedSelection = blocks.filter((block) => {
 				const blockElement = document.querySelector(`[id="${block.id}"]`)
 				if (!blockElement) return false
 
 				const rect = blockElement.getBoundingClientRect()
-				const blockBox = {
-					top: rect.top,
-					left: rect.left,
-					width: rect.width,
-					height: rect.height,
-				}
-
+				const blockBox = { top: rect.top, left: rect.left, width: rect.width, height: rect.height }
 				return boxesIntersect(boxSelection, blockBox)
 			})
 
 			dispatch(selectBlocks(finalizedSelection))
 		},
-		selectionProps: {
-			className: "bg-blue-100",
-		},
+		selectionProps: { className: "bg-blue-100" },
 	})
 
-	const handleClick = (e: React.MouseEvent) => {
-		if (!isDragging) {
-			dispatch(selectBlocks([]))
-		}
+	const handleClick = () => {
+		dispatch(selectBlocks([]))
 	}
 
-	function findPageById(page, targetId) {
-		if (page.id === targetId) {
-			return page
-		}
-
-		if (page.config && page.config.pages && Array.isArray(page.config.pages)) {
-			for (const nestedPage of page.config.pages) {
-				const result = findPageById(nestedPage, targetId)
-				if (result) {
-					return result
-				}
-			}
-		}
-
-		return null
-	}
-
-	const [{ isOver, canDrop }, drop] = useDrop<any, void, { isOver: boolean; canDrop: boolean }>(
-		() => ({
-			accept: "BLOCK",
-			collect: (monitor) => ({
-				isOver: monitor.isOver(),
-				canDrop: monitor.canDrop(),
-			}),
-			hover(item, monitor) {
-				setIsDragging(true)
-				const dragRect = monitor.getSourceClientOffset()
-				if (!dragRect) return
-
-				const hoverElements = document.elementsFromPoint(dragRect.x, dragRect.y)
-				const blockElement = hoverElements.find((el) => el.getAttribute("data-block-index"))
-
-				if (blockElement) {
-					const hoverIndex = parseInt(blockElement.getAttribute("data-block-index") || "0")
-					const hoverRect = blockElement.getBoundingClientRect()
-					const hoverMiddleY = (hoverRect.bottom - hoverRect.top) / 2
-					const clientOffset = monitor.getClientOffset()
-
-					if (!clientOffset) return
-
-					const hoverClientY = clientOffset.y - hoverRect.top
-					const position = hoverClientY < hoverMiddleY ? "top" : "bottom"
-
-					if (!dropTarget || dropTarget.index !== hoverIndex || dropTarget.position !== position) {
-						setDropTarget({ index: hoverIndex, position })
-					}
-				} else {
-					setDropTarget(null)
-				}
-			},
-			drop(item, monitor) {
-				setIsDragging(false)
-				if (!dropTarget) return
-
-				const dragIndex = item.block.index
-				const hoverIndex = dropTarget.index
-
-				if (dragIndex === hoverIndex) return
-
-				const targetIndex = dropTarget.position === "top" ? hoverIndex : hoverIndex + 1
-
-				const filteredBlocks = blocks.filter((block) => block !== null)
-				const [movedBlock] = filteredBlocks.splice(dragIndex, 1)
-				filteredBlocks.splice(targetIndex, 0, movedBlock)
-
-				const carouselPage = findPageById(page, activeCarousel)
-
-				if (carouselPage) {
-					dispatch(
-						updateBlock({
-							...carouselPage,
-							config: {
-								...carouselPage.config,
-								buildingBlocks: filteredBlocks,
-							},
-						}),
-					)
-				} else {
-					dispatch(
-						updateBlock({
-							...page,
-							config: {
-								...page.config,
-								buildingBlocks: filteredBlocks,
-							},
-						}),
-					)
-				}
-
-				setDropTarget(null)
-			},
-		}),
-		[blocks, page, dropTarget],
-	)
+	const { isOver, canDrop, drop, dropTarget } = useBlockDropHandler({
+		blocks,
+		selectedBlocks,
+		page,
+		activeCarousel,
+		dispatch,
+	})
 
 	useEffect(() => {
 		if (props.config?.buildingBlocks) {
@@ -182,18 +78,12 @@ export default function EditPageContent(props: any) {
 		...(position === "top" ? { top: "-2px" } : { bottom: "-2px" }),
 	})
 
-	const ativateSelector = () => {
-		if (blocks.length != 0 && blocks[blocks.length - 1].type == "block-selector") {
+	const activateSelector = () => {
+		if (blocks.length !== 0 && blocks[blocks.length - 1].type === "block-selector") {
 			dispatch(focusBlock(blocks[blocks.length - 1].id))
 		} else {
-			let selector = TemplateFactory.createBlockSelector()
-
-			dispatch(
-				appendBlock({
-					pageId: props.id,
-					block: selector,
-				}),
-			)
+			const selector = TemplateFactory.createBlockSelector()
+			dispatch(appendBlock({ pageId: props.id, block: selector }))
 		}
 	}
 
@@ -224,7 +114,7 @@ export default function EditPageContent(props: any) {
 					</m.div>
 				</LazyMotion>
 			</div>
-			<div className="grow min-h-[150px]" onClick={ativateSelector}></div>
+			<div className="grow min-h-[150px]" onClick={activateSelector}></div>
 		</div>
 	)
 }
