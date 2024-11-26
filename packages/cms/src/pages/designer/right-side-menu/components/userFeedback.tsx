@@ -15,7 +15,7 @@ interface UserFeedbackProps {
 export default function UserFeedback({ heading, description, requestType }: UserFeedbackProps) {
 	const [feedbackMessage, setFeedbackMessage] = useState("")
 	const [error, setError] = useState(false)
-	const [success, setSuccess] = useState(true)
+	const [success, setSuccess] = useState(false)
 
 	const handleChange = (value) => {
 		setFeedbackMessage(value)
@@ -43,7 +43,7 @@ export default function UserFeedback({ heading, description, requestType }: User
 	}
 
 	return (
-		<div className="mt-20 flex flex-col justify-center items-center gap-4 px-10">
+		<div className="flex flex-col justify-center items-center gap-4 px-10">
 			<Heading position="center" text={heading} />
 			<Text position="center" text={description} />
 			{success ? (
@@ -52,7 +52,7 @@ export default function UserFeedback({ heading, description, requestType }: User
 				</div>
 			) : (
 				<>
-					<div className="w-full">
+					<div className="max-w-[500px] w-[100%]">
 						<TextArea placeholder="Leave a message, and we’ll contact you soon." onChange={handleChange} />
 					</div>
 					{error && <div className="text-[red]">The message field is required. Please enter your message.</div>}
