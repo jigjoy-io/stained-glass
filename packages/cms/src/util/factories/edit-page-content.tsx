@@ -102,13 +102,10 @@ export default function EditPageContent(props: any) {
 									selectedBlocks.some((selectedBlock) => selectedBlock.id === block.id) ? "bg-highlight" : ""
 								}`}
 							>
-								{/* Drop indicator for "top" */}
 								{dropTarget?.block?.id === block.id && dropTarget?.position === "top" && (
 									<div className="pointer-events-none" style={getDropIndicatorStyle("top")} />
 								)}
-								{/* Render the editable block */}
 								{EditorFactory.getEditableBlock(block)}
-								{/* Drop indicator for "bottom" */}
 								{dropTarget?.block?.id === block.id && dropTarget?.position === "bottom" && (
 									<div className="pointer-events-none" style={getDropIndicatorStyle("bottom")} />
 								)}
