@@ -57,7 +57,7 @@ module.exports = {
 		}),
 		new rspack.HtmlRspackPlugin({
 			template: "public/index.html",
-			title: "JigJoy - Playground for Your Followers",
+			title: "JigJoy - The no-code platform for gamified content creation.",
 			filename: "index.html",
 			chunks: ["main"],
 		}),

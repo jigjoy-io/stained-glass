@@ -16,10 +16,15 @@ export default function Input(props: any) {
 
 	const handleKeyDown = (event: any) => {
 		if (props.inputType === "number") {
-			if (/[0-9.+-]/.test(event.key)) {
+			if (
+				/[0-9.+-]/.test(event.key) ||
+				event.key === "Backspace" ||
+				event.key === "Delete" ||
+				event.inputType === "deleteContentBackward" ||
+				event.inputType === "deleteContentForward"
+			) {
 				return
 			}
-
 			event.preventDefault()
 		}
 	}
@@ -42,7 +47,17 @@ export default function Input(props: any) {
 					<label>{props.label}</label>
 				</div>
 			)}
-			<input onChange={handleChange} onKeyDown={handleKeyDown} className="w-[100%] min-h-[40px] h-[40px] p-2 bg-[white] border border-light shadow-lg px-[8px] rounded-[5px] outline-none" value={props.inputType === "date" ? formatDate(value) : value} name={props.key} placeholder={props.placeholder} type={props.inputType} pattern={props.inputType === "number" ? "[0-9]*" : undefined} inputMode={props.inputType === "number" ? "numeric" : undefined} />
+			<input
+				onChange={handleChange}
+				onKeyDown={handleKeyDown}
+				className="w-[100%] min-h-[40px] h-[40px] p-2 bg-[white] border border-light shadow-lg px-[8px] rounded-[5px] outline-none text-[16px]"
+				value={props.inputType === "date" ? formatDate(value) : value}
+				name={props.key}
+				placeholder={props.placeholder}
+				type={props.inputType}
+				pattern={props.inputType === "number" ? "[0-9]*" : undefined}
+				inputMode={props.inputType === "number" ? "numeric" : undefined}
+			/>
 		</>
 	)
 }

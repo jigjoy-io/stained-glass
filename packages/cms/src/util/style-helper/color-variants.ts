@@ -1,11 +1,11 @@
 const colorVariants = {
-	blue: "bg-blue",
-	red: "bg-red",
-	green: "bg-green",
-	brown: "bg-brown",
-	rose: "bg-rose",
-	white: "bg-white",
-	yellow: "bg-yellow",
+	blue: "bg-jig-blue",
+	red: "bg-jig-red",
+	green: "bg-jig-green",
+	brown: "bg-jig-brown",
+	rose: "bg-jig-rose",
+	white: "bg-jig-white",
+	yellow: "bg-jig-yellow",
 }
 
 export default colorVariants

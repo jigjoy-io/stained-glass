@@ -28,25 +28,6 @@ const transition = {
 	duration: 0.25,
 }
 
-let localization = new LocalizedStrings({
-	US: {
-		open: "Open",
-		menu: " menu",
-		duplicate: "Duplicate block",
-		delete: "Delete block",
-		drag: "Drag",
-		toMove: " to move",
-	},
-	RS: {
-		open: "Otvori meni",
-		menu: " meni",
-		duplicate: "Kloniraj blok",
-		delete: "Obriši blok",
-		drag: "Prevuci",
-		toMove: " da pomeriš blok",
-	},
-})
-
 const loadFeatures = () => import("../../../util/style-helper/animations").then((res) => res.default)
 
 export default function Toolbar(props: any) {
@@ -68,11 +49,6 @@ export default function Toolbar(props: any) {
 
 	const dispatch = useDispatch()
 	const selectedBlocks = useSelectedBlocks()
-	const lang = useLanguage()
-
-	useEffect(() => {
-		localization.setLanguage(lang)
-	}, [lang])
 
 	const [{ isDragging }, drag, dragPreview] = useDrag<any, void, { isDragging: boolean }>(
 		() => ({
@@ -230,9 +206,9 @@ export default function Toolbar(props: any) {
 											tooltip={
 												<div className="text-center text-[14px]">
 													<div>
-														<span className="font-extrabold">{localization.open}</span> {localization.menu}
+														<span className="font-extrabold">Open</span> menu
 													</div>
-													<span className="font-extrabold">{localization.drag}</span> {localization.toMove}
+													<span className="font-extrabold">Drag</span> to move
 												</div>
 											}
 										>
@@ -271,9 +247,9 @@ export default function Toolbar(props: any) {
 							ref={toolbarRef}
 						>
 							<Grid numberOfCols={1}>
-								<Item text={localization.duplicate} tabFocus={false} icon={DuplicateIcon} action={duplicate} />
+								<Item text="Duplicate block" tabFocus={false} icon={DuplicateIcon} action={duplicate} />
 								<Item
-									text={localization.delete}
+									text="Delete block"
 									tabFocus={false}
 									textColor="red"
 									icon={DeleteBlockIcon}
@@ -312,7 +288,6 @@ export default function Toolbar(props: any) {
 						>
 							<editor.editor
 								id={props.id}
-								lang={lang}
 								tabFocus={false}
 								block={props.block}
 								attribute={editor.key}
