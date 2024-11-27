@@ -33,13 +33,11 @@ export default function EditPageContent(props: any) {
 
 	const { DragSelection } = useSelectionContainer({
 		onSelectionStart: () => {
-			console.log("TRALALA")
 			if (isDragging) return
 			dispatch(selectBlocks([]))
 			setBoxSelection(null)
 		},
 		onSelectionChange: (selectionBox) => {
-			console.log("blalal")
 			if (isDragging) return
 			setBoxSelection(selectionBox)
 		},

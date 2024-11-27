@@ -4,8 +4,7 @@ import { useDispatch } from "react-redux"
 import { AddNewBlock } from "./builder/add-new-block"
 import { createPortal } from "react-dom"
 import { AnimatePresence, LazyMotion, m } from "framer-motion"
-import LocalizedStrings from "react-localization"
-import { useLanguage, useSelectedBlocks } from "../../../util/store"
+import { useSelectedBlocks } from "../../../util/store"
 import { blockingUpdated } from "../../../reducers/editor-reducer"
 import { insertBlock, removeBlock } from "../../../reducers/page-reducer"
 import { duplicateBlock } from "../../../util/traversals/duplcate-block"
@@ -69,27 +68,27 @@ export default function Toolbar(props: any) {
 		[props.index, props.block],
 	)
 
-	useEffect(() => {
-		if (selectedBlocks && selectedBlocks.length > 0) {
-			const previewContainer = document.createElement("div")
-			previewContainer.style.backgroundColor = "red"
-			previewContainer.style.opacity = "0.5"
-			previewContainer.style.position = "relative"
-			previewContainer.style.zIndex = "9999"
+	// useEffect(() => {
+	// 	if (selectedBlocks && selectedBlocks.length > 0) {
+	// 		const previewContainer = document.createElement("div")
+	// 		previewContainer.style.backgroundColor = "red"
+	// 		previewContainer.style.opacity = "0.5"
+	// 		previewContainer.style.position = "relative"
+	// 		previewContainer.style.zIndex = "9999"
 
-			selectedBlocks.forEach((block) => {
-				const element = document.getElementById(block.id)
-				if (element) {
-					const clone = element.cloneNode(true) as HTMLElement
-					previewContainer.appendChild(clone)
-				}
-			})
+	// 		selectedBlocks.forEach((block) => {
+	// 			const element = document.getElementById(block.id)
+	// 			if (element) {
+	// 				const clone = element.cloneNode(true) as HTMLElement
+	// 				previewContainer.appendChild(clone)
+	// 			}
+	// 		})
 
-			setTimeout(() => {
-				dragPreview(previewContainer)
-			}, 1000)
-		}
-	}, [selectedBlocks, dragPreview])
+	// 		setTimeout(() => {
+	// 			dragPreview(previewContainer)
+	// 		}, 1000)
+	// 	}
+	// }, [selectedBlocks, dragPreview])
 
 	useEffect(() => {
 		if (containerRef.current) {
