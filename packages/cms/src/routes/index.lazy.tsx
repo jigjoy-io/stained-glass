@@ -1,6 +1,6 @@
 import { createLazyFileRoute } from "@tanstack/react-router"
-import Authorization from "../pages/authorization/authorization"
+import LandingPage from "../pages/landing-page/landing-page"
 
 export const Route: any = createLazyFileRoute("/" as never)({
-	component: Authorization,
+	component: LandingPage,
 })

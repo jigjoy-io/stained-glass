@@ -4,7 +4,11 @@ import { updateBlock } from "../../../../reducers/page-reducer"
 import Item from "../../../../components/item/item"
 import Button from "../../../../components/button/button"
 
-let positions: [{ text: "Text"; key: "text" }, { text: "Date"; key: "date" }, { text: "Number"; key: "number" }]
+const positions = [
+	{ text: "Text", key: "text" },
+	{ text: "Date", key: "date" },
+	{ text: "Number", key: "number" },
+]
 
 export default function InputTypeEditor(props: any) {
 	const [value, setValue] = useState(props.value)

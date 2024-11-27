@@ -5,14 +5,14 @@ import Button from "../../../../components/button/button"
 import colorVariants from "../../../../util/style-helper/color-variants"
 import Item from "../../../../components/item/item"
 
-let colors: [
-	{ text: "Blue"; key: "blue" },
-	{ text: "Green"; key: "green" },
-	{ text: "Yellow"; key: "yellow" },
-	{ text: "Rose"; key: "rose" },
-	{ text: "Red"; key: "red" },
-	{ text: "Brown"; key: "brown" },
-	{ text: "White"; key: "white" },
+const colors = [
+	{ text: "Blue", key: "blue" },
+	{ text: "Green", key: "green" },
+	{ text: "Yellow", key: "yellow" },
+	{ text: "Rose", key: "rose" },
+	{ text: "Red", key: "red" },
+	{ text: "Brown", key: "brown" },
+	{ text: "White", key: "white" },
 ]
 
 export default function ColorEditor(props: any) {

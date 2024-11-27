@@ -4,7 +4,11 @@ import { updateBlock } from "../../../../reducers/page-reducer"
 import Checkbox from "../../../../components/checkbox/checkbox"
 import Button from "../../../../components/button/button"
 
-let sizes: [{ text: "Small"; key: "small" }, { text: "Medium"; key: "medium" }, { text: "Large"; key: "large" }]
+const sizes = [
+	{ text: "Small", key: "small" },
+	{ text: "Medium", key: "medium" },
+	{ text: "Large", key: "large" },
+]
 
 export default function SizeEditor(props: any) {
 	const [value, setValue] = useState(props.value)
