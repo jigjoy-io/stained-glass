@@ -103,30 +103,35 @@ export default function EditPageContent(props: any) {
 
 	return (
 		<div className="bg-white h-full flex flex-col break-words" onClick={handleClick}>
-			<div className={`relative ${isOver && canDrop ? "bg-gray-50" : ""}`} ref={drop}>
-				<LazyMotion features={loadFeatures}>
-					<m.div variants={animation} initial="hidden" animate="show">
-						<DragSelection />
-						{blocks.map((block) => (
-							<div
-								key={block.id}
-								id={block.id}
-								data-block-id={block.id}
-								className={`relative ${
-									selectedBlocks.some((selectedBlock) => selectedBlock.id === block.id) ? "bg-highlight" : ""
-								}`}
-							>
-								{dropTarget?.block?.id === block.id && dropTarget?.position === "top" && (
-									<div className="pointer-events-none" style={getDropIndicatorStyle("top")} />
-								)}
-								{EditorFactory.getEditableBlock(block)}
-								{dropTarget?.block?.id === block.id && dropTarget?.position === "bottom" && (
-									<div className="pointer-events-none" style={getDropIndicatorStyle("bottom")} />
-								)}
-							</div>
-						))}
-					</m.div>
-				</LazyMotion>
+			<div
+				className={`relative ${isOver && canDrop ? "bg-gray-50" : ""}w-[500px] flex items-center justify-center`}
+				ref={drop}
+			>
+				<div className="flex flex-col w-full md:max-w-[360px] p-3">
+					<LazyMotion features={loadFeatures}>
+						<m.div variants={animation} initial="hidden" animate="show">
+							<DragSelection />
+							{blocks.map((block) => (
+								<div
+									key={block.id}
+									id={block.id}
+									data-block-id={block.id}
+									className={`relative ${
+										selectedBlocks.some((selectedBlock) => selectedBlock.id === block.id) ? "bg-highlight" : ""
+									}`}
+								>
+									{dropTarget?.block?.id === block.id && dropTarget?.position === "top" && (
+										<div className="pointer-events-none" style={getDropIndicatorStyle("top")} />
+									)}
+									{EditorFactory.getEditableBlock(block)}
+									{dropTarget?.block?.id === block.id && dropTarget?.position === "bottom" && (
+										<div className="pointer-events-none" style={getDropIndicatorStyle("bottom")} />
+									)}
+								</div>
+							))}
+						</m.div>
+					</LazyMotion>
+				</div>
 			</div>
 			<div className="grow min-h-[150px]" onClick={activateSelector}></div>
 		</div>

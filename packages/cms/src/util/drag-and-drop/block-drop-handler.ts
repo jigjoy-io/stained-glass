@@ -36,24 +36,44 @@ export function useBlockDropHandler({
 		() => ({
 			accept: "BLOCK",
 			hover(item, monitor) {
-				const dragRect = monitor.getSourceClientOffset()
-				if (!dragRect) return
+				const clientOffset = monitor.getClientOffset()
+				if (!clientOffset) return
 
-				const hoverElements = document.elementsFromPoint(dragRect.x, dragRect.y)
+				const hoverElements = document.elementsFromPoint(clientOffset.x, clientOffset.y)
 				const blockElement = hoverElements.find((el) => el.getAttribute("data-block-id"))
+
+				let hoverBlock = blockElement
 
 				if (blockElement) {
 					const hoverBlockId = blockElement.getAttribute("data-block-id")
-					const hoverBlock = blocks.find((block) => block.id === hoverBlockId)
+					hoverBlock = blocks.find((block) => block.id === hoverBlockId)
+				} else {
+					const blocksRects = blocks.map((block) => {
+						const element = document.querySelector(`[data-block-id="${block.id}"]`)
+						return {
+							block,
+							rect: element?.getBoundingClientRect(),
+						}
+					})
 
-					if (!hoverBlock) return
+					const nearestBlock = blocksRects.find(
+						({ rect }) =>
+							rect &&
+							clientOffset.x >= rect.left - 200 &&
+							clientOffset.x <= rect.right + 200 &&
+							clientOffset.y >= rect.top &&
+							clientOffset.y <= rect.bottom,
+					)
+
+					hoverBlock = nearestBlock?.block || null
+				}
+
+				if (hoverBlock) {
+					const blockElement = document.querySelector(`[data-block-id="${hoverBlock.id}"]`)
+					if (!blockElement) return
 
 					const hoverRect = blockElement.getBoundingClientRect()
 					const hoverMiddleY = (hoverRect.bottom - hoverRect.top) / 2
-					const clientOffset = monitor.getClientOffset()
-
-					if (!clientOffset) return
-
 					const hoverClientY = clientOffset.y - hoverRect.top
 					const position = hoverClientY < hoverMiddleY ? "top" : "bottom"
 
@@ -73,7 +93,7 @@ export function useBlockDropHandler({
 				setIsDragging(true)
 			},
 		}),
-		[blocks, page, dropTarget],
+		[blocks, page, dropTarget, selectedBlocks, activeCarousel, dispatch],
 	)
 
 	return { isOver, canDrop, drop, dropTarget, setDropTarget }
