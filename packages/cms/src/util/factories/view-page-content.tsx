@@ -42,6 +42,7 @@ export default function ViewPageContent(props: any) {
 					))}
 				</m.div>
 			</LazyMotion>
+			<div className="grow min-h-[150px]" />
 		</div>
 	)
 }
