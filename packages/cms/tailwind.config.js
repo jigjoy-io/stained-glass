@@ -20,6 +20,7 @@ module.exports = {
 				"jig-red": "#fdd0df",
 				"shallow-gray": "#E5E7EB",
 				"text-danger": "#ed5249",
+				highlight: "#DBEAFE",
 				"text-default": "#E2E2E2",
 				"dot-color": "#4b5563",
 			},

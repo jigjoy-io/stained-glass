@@ -9,7 +9,7 @@ import { updateBlock } from "../../reducers/page-reducer"
 import { useDispatch } from "react-redux"
 import { usePage } from "../../util/store"
 import { createPortal } from "react-dom"
-import { blockingUpdated } from "../../reducers/toolbar-reducer"
+import { blockingUpdated } from "../../reducers/editor-reducer"
 import TemplateFactory from "../../util/factories/templates/template-factory"
 
 export default function CarouselConfigurer(props: any) {

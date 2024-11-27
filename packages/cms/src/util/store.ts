@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit"
 import pageReducer from "../reducers/page-reducer"
 import { useDispatch, useSelector } from "react-redux"
-import toolbarReducer from "../reducers/toolbar-reducer"
+import toolbarReducer from "../reducers/editor-reducer"
 import authReducer from "../reducers/auth-reducer"
 import sidebarReducer from "../reducers/sidebar-reducer"
 import storage from "redux-persist/lib/storage"
@@ -55,5 +55,6 @@ export const useRootPage = () => useAppSelector((state: any) => state.page.rootP
 export const useMode = () => useAppSelector((state: any) => state.page.mode)
 export const useSelected = () => useAppSelector((state: any) => state.page.selected)
 export const useExpandedPages = () => useAppSelector((state: any) => state.page.expandedPages)
+export const useSelectedBlocks = () => useAppSelector((state: any) => state.toolbar.selectedBlocks)
 
 export const useActiveBlock = () => useAppSelector((state: any) => state.page.activeBlock)

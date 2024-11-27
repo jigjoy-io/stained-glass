@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@air/react-drag-to-select@^5.0.10":
+  version "5.0.10"
+  resolved "https://registry.yarnpkg.com/@air/react-drag-to-select/-/react-drag-to-select-5.0.10.tgz#c80c748bc06e6abac00f4a352c6917f80405140d"
+  integrity sha512-KP0HaYoGvVinDwl0K4hv54CAyvbmN/7Z9ZRhOwZvJsgBjfAwWEHYIoJ5k3VLk3D4dp6XIU1FXnBbKO/IoF4S7g==
+  dependencies:
+    react-style-object-to-css "^1.1.2"
+
 "@alloc/quick-lru@^5.2.0":
   version "5.2.0"
   resolved "https://registry.npmjs.org/@alloc/quick-lru/-/quick-lru-5.2.0.tgz"
@@ -4825,7 +4832,16 @@ react-side-effect@^2.1.0:
   resolved "https://registry.npmjs.org/react-side-effect/-/react-side-effect-2.1.2.tgz"
   integrity sha512-PVjOcvVOyIILrYoyGEpDN3vmYNLdy1CajSFNt4TDsVQC5KpTijDvWVoR+/7Rz2xT978D8/ZtFceXxzsPwZEDvw==
 
+<<<<<<< HEAD
+react-style-object-to-css@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/react-style-object-to-css/-/react-style-object-to-css-1.1.2.tgz#3e97da92c9edf8190e30f4b27026e74285940498"
+  integrity sha512-+5MFULqCCj7wwJJ/ISKFP91ZlHVF1Rv8o0neiTKvt21XDTU5e34tc8hy+XPLeYWYOupdHt25HxxwocvYm3HM6A==
+
+react@^18.3.1:
+=======
 "react@^16.3.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.9.0 || ^17.0.0 || ^18", "react@^17.0.0 || ^18.0.0", react@^18.0, react@^18.0.0, react@^18.3.1, "react@>= 16.14", react@>=16.3.0, react@>=16.8.0, react@>=18:
+>>>>>>> development
   version "18.3.1"
   resolved "https://registry.npmjs.org/react/-/react-18.3.1.tgz"
   integrity sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==

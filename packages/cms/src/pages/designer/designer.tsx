@@ -8,7 +8,7 @@ import { replaceBlock } from "../../util/traversals/replace-block"
 import LeftSideMenu from "./left-side-menu"
 import { RightSideMenu } from "./right-side-menu/right-side-menu"
 import AuthLayer from "../authorization/auth-layer"
-import { blockingUpdated } from "../../reducers/toolbar-reducer"
+import { blockingUpdated } from "../../reducers/editor-reducer"
 import { sidebarExpanded } from "../../reducers/sidebar-reducer"
 import Premium from "./right-side-menu/components/premium"
 

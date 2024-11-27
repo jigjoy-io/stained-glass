@@ -1,6 +1,6 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react"
 import { useDispatch } from "react-redux"
-import { blockingUpdated } from "../../reducers/toolbar-reducer"
+import { blockingUpdated } from "../../reducers/editor-reducer"
 import { updateBlock } from "../../reducers/page-reducer"
 import { createPortal } from "react-dom"
 import ClickOutsideListener from "../../util/click-outside-listener"

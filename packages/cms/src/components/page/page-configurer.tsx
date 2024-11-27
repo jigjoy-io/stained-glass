@@ -8,7 +8,7 @@ import Tab from "../tabs/tab"
 import { updateBlock } from "../../reducers/page-reducer"
 import { useDispatch } from "react-redux"
 import { usePage } from "../../util/store"
-import { blockingUpdated } from "../../reducers/toolbar-reducer"
+import { blockingUpdated } from "../../reducers/editor-reducer"
 import { createPortal } from "react-dom"
 import TemplateFactory from "../../util/factories/templates/template-factory"
 

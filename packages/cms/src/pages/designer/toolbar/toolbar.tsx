@@ -4,7 +4,8 @@ import { useDispatch } from "react-redux"
 import { AddNewBlock } from "./builder/add-new-block"
 import { createPortal } from "react-dom"
 import { AnimatePresence, LazyMotion, m } from "framer-motion"
-import { blockingUpdated } from "../../../reducers/toolbar-reducer"
+import { useSelectedBlocks } from "../../../util/store"
+import { blockingUpdated } from "../../../reducers/editor-reducer"
 import { insertBlock, removeBlock } from "../../../reducers/page-reducer"
 import { duplicateBlock } from "../../../util/traversals/duplcate-block"
 import ClickOutsideListener from "../../../util/click-outside-listener"
@@ -46,6 +47,7 @@ export default function Toolbar(props: any) {
 	const [editorLeft, setEditorLeft] = useState<number>()
 
 	const dispatch = useDispatch()
+	const selectedBlocks = useSelectedBlocks()
 
 	const [{ isDragging }, drag, dragPreview] = useDrag<any, void, { isDragging: boolean }>(
 		() => ({
@@ -58,9 +60,41 @@ export default function Toolbar(props: any) {
 			collect: (monitor) => ({
 				isDragging: monitor.isDragging(),
 			}),
+			preview: {
+				captureDraggingState: true,
+			},
 		}),
+
 		[props.index, props.block],
 	)
+
+	// useEffect(() => {
+	// 	if (selectedBlocks && selectedBlocks.length > 0) {
+	// 		const previewContainer = document.createElement("div")
+	// 		previewContainer.style.backgroundColor = "red"
+	// 		previewContainer.style.opacity = "0.5"
+	// 		previewContainer.style.position = "relative"
+	// 		previewContainer.style.zIndex = "9999"
+
+	// 		selectedBlocks.forEach((block) => {
+	// 			const element = document.getElementById(block.id)
+	// 			if (element) {
+	// 				const clone = element.cloneNode(true) as HTMLElement
+	// 				previewContainer.appendChild(clone)
+	// 			}
+	// 		})
+
+	// 		setTimeout(() => {
+	// 			dragPreview(previewContainer)
+	// 		}, 1000)
+	// 	}
+	// }, [selectedBlocks, dragPreview])
+
+	useEffect(() => {
+		if (containerRef.current) {
+			dragPreview(containerRef.current)
+		}
+	}, [dragPreview])
 
 	const handleMouseMove = (e: MouseEvent) => {
 		if (containerRef.current) {
@@ -148,12 +182,6 @@ export default function Toolbar(props: any) {
 			repositionEditor()
 		}, 5)
 	})
-
-	useEffect(() => {
-		if (containerRef.current) {
-			dragPreview(containerRef.current)
-		}
-	}, [dragPreview])
 
 	return (
 		<div
