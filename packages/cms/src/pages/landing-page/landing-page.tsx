@@ -70,13 +70,11 @@ function LandingPage() {
 						<LazyMotion features={loadFeatures}>
 							<m.div variants={container} initial="hidden" animate="show">
 								<m.div className="py-4 lg:py-8 xl:py-3" variants={item}>
-									<h1 className="text-4xl lg:text-4xl 2xl:text-6xl text-center font-bold">
-										Transform ideas into interactive fun
-									</h1>
+									<h1 className="text-4xl lg:text-4xl 2xl:text-5xl text-center font-bold">Personalized AI Companion</h1>
 								</m.div>
 								<m.div variants={item}>
-									<p className="text-xl xl:text-2xl 2xl:text-3xl my-4 text-center text-[#454545]">
-										Type a prompt, and JigJoy AI creates an interactive app.
+									<p className="text-xl xl:text-2xl my-4 text-center text-[#454545]">
+										sends you jokes, news, interactive lessons, fitness routines—whatever matches your preferences
 									</p>
 								</m.div>
 								<m.div className="max-w-fit mx-auto py-4 xl:py-3 lg:py-8" variants={item}>
@@ -92,7 +90,7 @@ function LandingPage() {
 										></m.div>
 										<div className="mt-4 relative px-10 py-5 bg-white ring-1 ring-gray-900/5 rounded-full leading-none flex items-top justify-start space-x-6">
 											<div className="space-y-2 font-bold">
-												<p className="text-xl">Try for free</p>
+												<p className="text-xl">Try JigJoy for free</p>
 											</div>
 										</div>
 									</div>
