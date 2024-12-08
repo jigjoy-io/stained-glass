@@ -28,6 +28,20 @@ export async function createPage(page: any) {
 	}
 
 	const res: any = await fetch(`${API_HOST}/`, options)
+
+	return await res.json()
+}
+
+export async function generatePage(request: any) {
+	const options = {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(request),
+	}
+
+	const res: any = await fetch(`${API_HOST}/generate`, options)
 	return await res.json()
 }
 

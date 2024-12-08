@@ -7,7 +7,7 @@ interface SidebarState {
 }
 
 let initialState: SidebarState = {
-	expanded: false,
+	expanded: true,
 	hovered: null,
 	component: null,
 }

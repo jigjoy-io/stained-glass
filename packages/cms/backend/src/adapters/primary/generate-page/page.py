@@ -56,6 +56,31 @@ class QuestionAnswer(BaseModel):
     correct: bool = Field(default=True, description="Flag that tells rendering engine is this answer correct")
     text: Optional[str] = Field(default=None, description="Answer text")
 
+class PositiveAnswer(BaseModel):
+    """Information about question's message for positive answer."""
+
+    type: str = "success"
+    title: str = Field(default="Great!", description="Positive message title")
+    message: str = Field(default="The answer is correct.", description="Positive message")
+
+class NegativeAnswer(BaseModel):
+    """Information about question's message for negative answer."""
+
+
+    type: str = "danger"
+    title: str = Field(default="Better luck next time", description="Negative message title")
+    message: str = Field(default="The answer is not correct.", description="Negative message")
+
+class QuestionOutcomes(BaseModel):
+    """Information about question's outome messages."""
+
+    confirmationButtonText: str = Field(default="Check the answer", description="The button text for checking answer")
+    correct: PositiveAnswer = Field(
+        default_factory=PositiveAnswer, description="The message that will be shown when the user answer positevly"
+    )
+    incorrect: NegativeAnswer = Field(
+        default_factory=NegativeAnswer, description="The message that will be shown when the user answer negatively"
+    )
 
 class Question(BaseBuildingBlock):
     """Information about multi-choice Question building block."""
@@ -66,6 +91,10 @@ class Question(BaseBuildingBlock):
     )
     answers: List[QuestionAnswer] = Field(
         default_factory=list, description="Answer options for the question"
+    )
+
+    outcomes: QuestionOutcomes = Field(
+        default_factory=NegativeAnswer, description="Messages that will be shown after user check the answer"
     )
 
     def get_block(self):
@@ -122,7 +151,7 @@ class QuestionPage(BaseBuildingBlock):
     """Information about a question page."""
     id: str = Field(default=str(uuid.uuid4()), description="Unique identificator of building block")
     type: str = Field(default='page', description="Question page is page building block.")
-    name: str = Field(default='Page', description="The page name - This field is metadata and it's value describe what the page is about.")
+    name: str = Field(description="The shortest possible description of the question")
     config: SingleQuestion = Field(
         default_factory=SingleQuestion, description="The building blocks that will be rendered on the page."
     )
@@ -169,7 +198,7 @@ class TopicIntorductionPage(BaseBuildingBlock):
     
     id: str = Field(default=str(uuid.uuid4()), description="Unique identificator of building block")
     type: str = Field(default='page', description="TopicIntroductionPage is a page.")
-    name: str = Field(default='Page', description="The page name - This field is metadata and it's value describe what the page is about.")
+    name: str = Field(description="The shortest possible description of the topic")
     config: BuildingBlocks = Field(
         default_factory=BuildingBlocks, description="TopicIntroductionPage usually has a few blocks: heading (topic heading) and text block (topic explanation)."
     )
@@ -189,6 +218,7 @@ class Carousel(BaseBuildingBlock):
     """Information about a Carousel building block."""    
     id: str = Field(default=str(uuid.uuid4()), description="Unique identificator of building block")
     type: str = "carousel"
+    name: str = Field(description="The shortest possible description of the section/carousel")
     title: Optional[str] = Field(default=None, description="Title of the section/carousel")
     description: Optional[str] = Field(default=None, description="Single sentence description about the section/carousel")
     buttons: Buttons = Field(default_factory=Buttons, description="Navigation buttons.")
@@ -201,7 +231,7 @@ class Carousel(BaseBuildingBlock):
 
 class Lessons(BaseModel):
     """Container for a carousels."""
-    pages:  List[Union['Carousel']]  = Field(default_factory=list, description="Lessons are consists from multiple carousels")
+    buildingBlocks:  List[Union['Carousel']]  = Field(default_factory=list, description="Lessons are consists from multiple carousels")
 
     @classmethod
     def parse_raw_blocks(cls, raw_blocks):
@@ -222,6 +252,7 @@ class LessonTemplate(BaseBuildingBlock):
     """Information about a Lesson Template."""
     
     id: str = str(uuid.uuid4())
+    name: str = Field(description="The shortest possible description of the lesson")
     type: str = "page"
     config: Lessons = Field(description="The building blocks that will be rendered on the page.")
 

@@ -301,7 +301,7 @@ Resources:
       CodeUri: src/adapters/primary/generate-page/
       Handler: generate-page-adapter.generatePageHandler
       Runtime: python3.12
-      MemorySize: 128 # Optional: Increase memory size to improve performance
+      MemorySize: 1024 # Optional: Increase memory size to improve performance
       Timeout: 100 # Set the timeout (in seconds)
       Architectures:
         - x86_64

@@ -18,6 +18,8 @@ import Help from "./right-side-menu/components/help"
 import UserMenu from "../authorization/user-menu/user-menu"
 import Tutorial from "./right-side-menu/components/tutorial"
 import BookIcon from "../../icons/book-icon."
+import AI from "./right-side-menu/components/ai"
+import MagicIcon from "../../icons/magic-icon"
 
 export default function LeftSideMenu() {
 	const navigate = useNavigate()
@@ -56,6 +58,7 @@ export default function LeftSideMenu() {
 	}
 
 	useEffect(() => {
+		dispatch(sidebarExpanded({ expanded: true, component: AI }))
 		if (action != "page-creation") fetchData()
 	}, [])
 
@@ -116,6 +119,18 @@ export default function LeftSideMenu() {
 
 			<div className="w-full">
 				<div className="px-3 py-2 font-bold">Options</div>
+
+				<div
+					className="flex flex-col pl-4 hover:cursor-pointer hover:bg-primary-light h-[30px] items-center"
+					onClick={() => dispatch(sidebarExpanded({ expanded: true, component: AI }))}
+				>
+					<div className="flex flex-row w-[100%] h-[100%]">
+						<div className="pr-2 flex items-center">
+							<MagicIcon />
+						</div>
+						<div className="flex items-center">JigJoy AI</div>
+					</div>
+				</div>
 
 				<div
 					className="flex flex-col pl-4 hover:cursor-pointer hover:bg-primary-light h-[30px] items-center"

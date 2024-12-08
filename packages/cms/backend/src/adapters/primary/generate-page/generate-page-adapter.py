@@ -26,9 +26,6 @@ def generatePageHandler(message, context):
 
     try:
 
-
-
-
         body = json.loads(message['body'])
         text = body['statement']
 
@@ -41,7 +38,7 @@ def generatePageHandler(message, context):
         openai_api_key = secret_dict.get('OpenaiApiKey')
         os.environ["OPENAI_API_KEY"] = openai_api_key
 
-        llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+        llm = ChatOpenAI(model="gpt-4o", temperature=0)
 
         lesson_creator = ChatPromptTemplate.from_messages(
             [
@@ -72,9 +69,10 @@ def generatePageHandler(message, context):
             "headers": {
                 "Content-Type": "application/json",
                 "Access-Control-Allow-Methods": "POST, PUT, GET, DELETE, OPTIONS",
-                "Access-Control-Allow-Origin": "*"
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "Content-Type"
             },
-            "body": json.dumps(blank_page)
+            "body": blank_page
         }
     except Exception as e:
         return {
