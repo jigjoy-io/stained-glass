@@ -246,7 +246,8 @@ Resources:
               Action: kms:Encrypt
               Resource: !GetAtt EncryptionKey.Arn
             - Effect: Allow
-              Action: ["cognito-idp:AdminUpdateUserAttributes", "cognito-idp:AdminGetUser", "cognito-idp:AdminCreateUser"]
+              Action:
+                ["cognito-idp:AdminUpdateUserAttributes", "cognito-idp:AdminGetUser", "cognito-idp:AdminCreateUser"]
               Resource: !GetAtt JigJoyUserPool.Arn
       Events:
         Api:
@@ -293,6 +294,23 @@ Resources:
         Sourcemap: true
         EntryPoints:
           - src/adapters/primary/create-page/create-page-adapter.ts
+
+  GeneratePageFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: src/adapters/primary/generate-page/
+      Handler: generate-page-adapter.generatePageHandler
+      Runtime: python3.12
+      MemorySize: 128 # Optional: Increase memory size to improve performance
+      Timeout: 100 # Set the timeout (in seconds)
+      Architectures:
+        - x86_64
+      Events:
+        GeneratePage:
+          Type: Api
+          Properties:
+            Path: /generate
+            Method: POST
 
   retrievePageFunction:
     Type: AWS::Serverless::Function
