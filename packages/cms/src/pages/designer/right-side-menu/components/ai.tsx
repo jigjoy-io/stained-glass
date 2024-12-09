@@ -37,18 +37,19 @@ export default function AI() {
 			statement: chatMessage,
 		}
 
-		let generatedPage = await generatePage(params)
+		let newPage = await generatePage(params)
 
-		generatedPage = refinePage(generatedPage)
-		generatedPage.origin = email
-		console.log(generatedPage)
+		newPage = refinePage(newPage)
+		newPage.origin = email
+		newPage.environment = "development"
+		newPage.linkedPageId = null
 
 		let allPages = JSON.parse(JSON.stringify(pages))
-		allPages.push(generatedPage)
+		allPages.push(newPage)
 		dispatch(pagesUpdated(allPages))
 
 		setLoading(false)
-		//createPage(generatePage)
+		createPage(newPage)
 	}
 
 	return (

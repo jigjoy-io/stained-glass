@@ -21,9 +21,6 @@ export default function Designer() {
 	const sidebarVisible = useSidebarVisible()
 
 	const update = (rootPage, page) => {
-		console.log("update")
-		console.log(rootPage)
-		console.log(page)
 		if (rootPage === null || page === null || rootPage === undefined || page === undefined) return
 
 		let root = JSON.parse(JSON.stringify(rootPage))
