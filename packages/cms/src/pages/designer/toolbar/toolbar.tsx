@@ -173,7 +173,7 @@ export default function Toolbar(props: any) {
 			onMouseLeave={() => setOn(false)}
 			className={`
             sticky flex flex-col
-            ${isDragging ? "opacity-50 bg-gray-100 rounded-md" : ""}
+            ${isDragging ? "opacity-50 bg-gray-100 rounded-lg" : ""}
         `}
 		>
 			<LazyMotion features={loadFeatures}>
@@ -212,7 +212,7 @@ export default function Toolbar(props: any) {
 
 			<div>
 				<div
-					className={`opacity-50 bg-default-light h-[100%] w-[100%] 
+					className={`opacity-50 bg-highlight h-[100%] w-[100%] 
                     ${editor != null || toolbarVisible ? "absolute" : "hidden"} ${blockRadius}`}
 				/>
 				<div className={`${on && !toolbarVisible && editor == null && "opacity-80"} ${blockRadius}`}>

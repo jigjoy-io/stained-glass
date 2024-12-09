@@ -45,13 +45,11 @@ export default function EditPageContent(props: any) {
 		onSelectionEnd: () => {
 			const finalizedSelection = blocks.filter((block) => {
 				const blockElement = document.querySelector(`[id="${block.id}"]`)
-				if (!blockElement) return false
+				if (!blockElement || !boxSelection) return false
 
 				const rect = blockElement.getBoundingClientRect()
-				if (boxSelection) {
-					const blockBox = { top: rect.top, left: rect.left, width: rect.width, height: rect.height }
-					return boxesIntersect(boxSelection, blockBox)
-				}
+				const blockBox = { top: rect.top, left: rect.left, width: rect.width, height: rect.height }
+				return boxesIntersect(boxSelection, blockBox)
 			})
 
 			dispatch(selectBlocks(finalizedSelection))
@@ -106,7 +104,7 @@ export default function EditPageContent(props: any) {
 	return (
 		<div className="bg-white h-full flex flex-col break-words" onClick={handleClick}>
 			<div
-				className={`relative ${isOver && canDrop ? "bg-gray-50" : ""}w-[500px] flex items-center justify-center`}
+				className={`relative ${isOver && canDrop ? "bg-gray-50" : ""} w-[500px] flex items-center justify-center`}
 				ref={drop}
 			>
 				<div className="flex flex-col w-full md:max-w-[360px] p-3">
@@ -119,7 +117,9 @@ export default function EditPageContent(props: any) {
 									id={block.id}
 									data-block-id={block.id}
 									className={`relative ${
-										selectedBlocks.some((selectedBlock) => selectedBlock.id === block.id) ? "bg-highlight" : ""
+										selectedBlocks.some((selectedBlock) => selectedBlock.id === block.id)
+											? "bg-highlight rounded-lg"
+											: ""
 									}`}
 								>
 									{dropTarget?.block?.id === block.id && dropTarget?.position === "top" && (
