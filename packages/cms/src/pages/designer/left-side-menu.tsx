@@ -143,7 +143,7 @@ export default function LeftSideMenu() {
 					</div>
 				</div>
 
-				<div
+				{/* <div
 					className="flex flex-col pl-4 hover:cursor-pointer hover:bg-primary-light h-[30px] items-center"
 					onClick={() => dispatch(sidebarExpanded({ expanded: true, component: ViewAnalytics }))}
 				>
@@ -153,7 +153,7 @@ export default function LeftSideMenu() {
 						</div>
 						<div className="flex items-center">View Analytics</div>
 					</div>
-				</div>
+				</div> */}
 
 				<div
 					className="flex flex-col pl-4 hover:cursor-pointer hover:bg-primary-light h-[30px] items-center"
