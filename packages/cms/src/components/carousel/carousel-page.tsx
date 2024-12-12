@@ -99,7 +99,7 @@ export default function CarouselPage(props) {
 
 	return (
 		<>
-			{page && (
+			{page && pages[current] && (
 				<div className="flex max-h-[100dvh] h-[100dvh] w-full justify-center">
 					<div className="flex flex-col w-full md:max-w-[360px]">
 						<div className="flex flex-row p-3 w-full min-w-[360px]">
