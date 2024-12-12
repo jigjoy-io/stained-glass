@@ -188,7 +188,7 @@ class EnterCommand extends KeyCommand {
 		} else {
 			const newBlock = TemplateFactory.createBlockSelector()
 
-			if (nextBlock.type == "block-selector") {
+			if (nextBlock && nextBlock.type == "block-selector") {
 				dispatch(focusBlock(nextBlock.id))
 			} else {
 				dispatch(

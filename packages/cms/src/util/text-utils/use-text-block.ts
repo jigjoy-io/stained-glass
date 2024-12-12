@@ -22,14 +22,6 @@ export const findPreviousTextBlock = (
 	return null
 }
 
-export const findPreviousBlock = (blocks: Block[], currentBlockId: string): Block | null => {
-	const currentIndex = blocks?.findIndex((block) => block.id === currentBlockId)
-
-	const previousBlock = currentIndex - 1
-	if (!blocks || previousBlock < 0) return null
-	return blocks[previousBlock]
-}
-
 export const findNextBlock = (blocks: Block[], currentBlockId: string): Block | null => {
 	const currentIndex = blocks?.findIndex((block) => block.id === currentBlockId)
 

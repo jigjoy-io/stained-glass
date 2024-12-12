@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { updateBlock } from "../../../../reducers/page-reducer"
-import { useActiveBlock, usePage } from "../../../../util/store"
+import { useActiveBlock, useCurrentCarouselPage, usePage } from "../../../../util/store"
 import textEditingVariants from "../../../../util/style-helper/text-editing-variations"
 import alignmentVariations from "../../../../util/style-helper/alignment-variations"
 import { findNextBlock, findPreviousTextBlock } from "../../../../util/text-utils/use-text-block"
@@ -12,14 +12,27 @@ export default function ContentEditingText(props: any) {
 	const [type, setType] = useState(props.type)
 	const [style, setStyle] = useState({} as any)
 	const page = usePage()
+	const currentCarouselPage = useCurrentCarouselPage()
 
 	const previousTextBlock = useSelector(() => {
-		const blocks = page.config.buildingBlocks
+		let blocks = page.config.buildingBlocks
+		if (page.type == "carousel") {
+			let activePage = page.config.pages.find((p) => p.id == currentCarouselPage)
+			blocks = activePage.config.buildingBlocks
+		} else {
+			blocks = page.config.buildingBlocks
+		}
 		return findPreviousTextBlock(blocks, props.id, ["text", "title", "heading"])
 	})
 
 	const nextBlock = useSelector(() => {
-		const blocks = page.config.buildingBlocks
+		let blocks = []
+		if (page.type == "carousel") {
+			let activePage = page.config.pages.find((p) => p.id == currentCarouselPage)
+			blocks = activePage.config.buildingBlocks
+		} else {
+			blocks = page.config.buildingBlocks
+		}
 		return findNextBlock(blocks, props.id)
 	})
 
