@@ -1,4 +1,4 @@
-import { fetchUserAttributes, getCurrentUser } from "@aws-amplify/auth"
+import { getCurrentUser } from "@aws-amplify/auth"
 import { useNavigate } from "@tanstack/react-router"
 import React, { useEffect } from "react"
 import { useDispatch } from "react-redux"

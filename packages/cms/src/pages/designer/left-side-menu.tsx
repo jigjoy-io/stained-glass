@@ -8,12 +8,10 @@ import { pagesUpdated, pageUpdated, rootPageUpdated } from "../../reducers/page-
 import { usePages, useRootPage } from "../../util/store"
 import Node from "./node"
 import { Link, useNavigate, useSearch } from "@tanstack/react-router"
-import AnalyticsIcon from "../../icons/analytics-icon"
 import { sidebarExpanded } from "../../reducers/sidebar-reducer"
 import Loader from "../../components/loader/loader"
 import HelpIcon from "../../icons/help-icon"
 import AddBlockIcon from "../../icons/add-block-icon"
-import ViewAnalytics from "./right-side-menu/components/view-analytics"
 import Help from "./right-side-menu/components/help"
 import UserMenu from "../authorization/user-menu/user-menu"
 import Tutorial from "./right-side-menu/components/tutorial"
@@ -142,18 +140,6 @@ export default function LeftSideMenu() {
 						<div className="flex items-center">Tutorial</div>
 					</div>
 				</div>
-
-				{/* <div
-					className="flex flex-col pl-4 hover:cursor-pointer hover:bg-primary-light h-[30px] items-center"
-					onClick={() => dispatch(sidebarExpanded({ expanded: true, component: ViewAnalytics }))}
-				>
-					<div className="flex flex-row w-[100%] h-[100%]">
-						<div className="pr-2 flex items-center">
-							<AnalyticsIcon />
-						</div>
-						<div className="flex items-center">View Analytics</div>
-					</div>
-				</div> */}
 
 				<div
 					className="flex flex-col pl-4 hover:cursor-pointer hover:bg-primary-light h-[30px] items-center"

@@ -6,7 +6,6 @@ const Heading = lazy(() => import("../../components/heading/heading"))
 const Title = lazy(() => import("../../components/title/title"))
 const Image = lazy(() => import("../../components/image/image"))
 const Button = lazy(() => import("../../components/button/button"))
-const Form = lazy(() => import("../../components/form/form"))
 const Question = lazy(() => import("../../components/question/question"))
 const CarouselTile = lazy(() => import("../../components/carousel/carousel-tile"))
 const Message = lazy(() => import("../../components/message/message"))
@@ -19,7 +18,6 @@ const BlockSelector = lazy(() => import("../../pages/designer/toolbar/block-sele
 const ImageConfigurer = lazy(() => import("../../components/image/image-configurer"))
 const AudioConfigurer = lazy(() => import("../../components/audio/audio-configurer"))
 const ReelConfigurer = lazy(() => import("../../components/reel/reel-configurer"))
-const FormConfigurer = lazy(() => import("../../components/form/form-configurer"))
 
 export default class BlockFactory extends React.Component {
 	static buildingBlocks: any = {
@@ -46,12 +44,6 @@ export default class BlockFactory extends React.Component {
 		},
 		button: {
 			component: Button,
-		},
-		form: {
-			component: Form,
-		},
-		"form-configurer": {
-			component: FormConfigurer,
 		},
 		question: {
 			component: Question,

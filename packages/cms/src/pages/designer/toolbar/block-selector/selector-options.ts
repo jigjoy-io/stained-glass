@@ -7,7 +7,6 @@ import VideoIcon from "../../../../icons/video-icon"
 import AudioIcon from "../../../../icons/audio-icon"
 import QuestionIcon from "../../../../icons/question-icon"
 import MessageIcon from "../../../../icons/message-icon"
-import InputIcon from "../../../../icons/input-icon"
 
 export class SelectorOptions {
 	static getOptions() {
@@ -63,17 +62,6 @@ export class SelectorOptions {
 					},
 				],
 			},
-			// {
-			// 	key: "inputs",
-			// 	commands: [
-			// 		{
-			// 			key: "form-configurer",
-			// 			label: "Form",
-			// 			description: "Collect user informations.",
-			// 			icon: InputIcon,
-			// 		},
-			// 	],
-			// },
 			{
 				title: "Multimedia",
 				key: "multimedia",

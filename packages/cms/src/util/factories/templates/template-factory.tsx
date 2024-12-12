@@ -48,10 +48,6 @@ export default class TemplateFactory {
 		return reelBlock
 	}
 
-	static createFormBlock() {
-		return this.create("form")
-	}
-
 	static createCarouselPage(origin, numberOfPages = 3) {
 		let page = this.create("carousel")
 		page.origin = origin

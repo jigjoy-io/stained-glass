@@ -15,7 +15,6 @@ export default class PlainBlockFactory extends React.Component {
 		"reel",
 		"message",
 		"audio",
-		"form",
 	]
 
 	static getBlock(props: any) {
