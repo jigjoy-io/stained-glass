@@ -21,7 +21,6 @@
 		"react-dnd": "^16.0.1",
 		"react-dnd-html5-backend": "^16.0.1",
 		"react-dom": "^18.3.1",
-		"react-flags-select": "^2.2.3",
 		"react-helmet": "^6.1.0",
 		"react-redux": "^9.1.2",
 		"redux-persist": "^6.0.0",

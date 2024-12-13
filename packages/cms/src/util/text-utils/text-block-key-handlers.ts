@@ -4,6 +4,7 @@ import TemplateFactory from "../factories/templates/template-factory"
 import { focusBlock, insertBlock, updateBlock } from "../../reducers/page-reducer"
 import { getCursorPosition } from "../cursor-helper/get-cursor-position"
 import { mergeWithPreviousBlock } from "./merge-blocks"
+import { findNextBlock } from "./use-text-block"
 
 interface KeyHandlerContext {
 	event: React.KeyboardEvent
@@ -18,7 +19,6 @@ interface KeyHandlerContext {
 		setOption?: (value: string) => void
 	}
 	previousBlock?: any
-	nextBlock: any
 }
 
 interface CaretContext {
@@ -172,7 +172,7 @@ class EnterCommand extends KeyCommand {
 	}
 
 	private handleEndOfBlock(): void {
-		const { dispatch, blockId, blockType, event, nextBlock } = this.context
+		const { dispatch, blockId, blockType, event } = this.context
 
 		if (blockType === "block-selector") {
 			const value = (event.target as HTMLInputElement).value || ""
@@ -186,11 +186,12 @@ class EnterCommand extends KeyCommand {
 				}),
 			)
 		} else {
-			const newBlock = TemplateFactory.createBlockSelector()
+			let nextBlock: any = findNextBlock(blockId)
 
 			if (nextBlock && nextBlock.type == "block-selector") {
 				dispatch(focusBlock(nextBlock.id))
 			} else {
+				const newBlock = TemplateFactory.createBlockSelector()
 				dispatch(
 					insertBlock({
 						referenceBlock: blockId,

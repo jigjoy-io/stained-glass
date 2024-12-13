@@ -1,3 +1,4 @@
+import { store } from "../store"
 interface Block {
 	id: string
 	type: string
@@ -22,10 +23,24 @@ export const findPreviousTextBlock = (
 	return null
 }
 
-export const findNextBlock = (blocks: Block[], currentBlockId: string): Block | null => {
-	const currentIndex = blocks?.findIndex((block) => block.id === currentBlockId)
+export const findNextBlock = (currentBlockId: string): Block | null => {
+	const state: any = store.getState().page
 
-	const nextBlock = currentIndex + 1
-	if (!blocks || nextBlock >= blocks.length) return null
-	return blocks[nextBlock]
+	let nextBlockIndex = -1
+	let blocks = []
+	if (state.activePage.type == "carousel") {
+		const currentCarousel = state.currentCarouselPage
+			? state.activePage.config.pages.findIndex((page) => page.id == state.currentCarouselPage)
+			: 0
+
+		blocks = state.activePage.config.pages[currentCarousel].config.buildingBlocks
+	} else {
+		blocks = state.activePage.config.buildingBlocks
+	}
+
+	let currentBlockIndex = blocks.findIndex((block: any) => block.id === currentBlockId)
+	nextBlockIndex = currentBlockIndex + 1
+
+	if (!blocks || nextBlockIndex < 1 || nextBlockIndex >= blocks.length) return null
+	return blocks[nextBlockIndex]
 }
