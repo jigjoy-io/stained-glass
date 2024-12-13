@@ -31,11 +31,6 @@ export default function BlockSelector(props: any) {
 		return findPreviousTextBlock(blocks, props.id, ["text", "title", "heading", "block-selector"])
 	})
 
-	const nextBlock = useSelector(() => {
-		const blocks = page.config.buildingBlocks
-		return findNextBlock(blocks, props.id)
-	})
-
 	useEffect(() => {
 		const selectorOptions = SelectorOptions.getOptions()
 
@@ -117,7 +112,6 @@ export default function BlockSelector(props: any) {
 				setOption: setOption,
 			},
 			previousBlock: previousTextBlock,
-			nextBlock: nextBlock,
 		})
 	}
 
