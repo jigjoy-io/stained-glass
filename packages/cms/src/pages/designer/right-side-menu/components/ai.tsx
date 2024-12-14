@@ -80,7 +80,7 @@ export default function AI() {
 			{loading && (
 				<div className="px-3">
 					<div className="w-full h-fit">
-						<Loader message="App generating in progress" />
+						<Loader message="App generation in progress" />
 					</div>
 				</div>
 			)}
