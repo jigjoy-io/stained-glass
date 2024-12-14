@@ -5,11 +5,25 @@ interface Block {
 	[key: string]: any
 }
 
-export const findPreviousTextBlock = (
-	blocks: Block[],
-	currentBlockId: string,
-	validTypes: string[] = ["text", "title", "heading", "block-selector"],
-): Block | null => {
+const getBlocks = () => {
+	const state: any = store.getState().page
+
+	let blocks = []
+	if (state.activePage.type == "carousel") {
+		const currentCarousel = state.currentCarouselPage
+			? state.activePage.config.pages.findIndex((page) => page.id == state.currentCarouselPage)
+			: 0
+
+		blocks = state.activePage.config.pages[currentCarousel].config.buildingBlocks
+	} else {
+		blocks = state.activePage.config.buildingBlocks
+	}
+	return blocks
+}
+export const findPreviousTextBlock = (currentBlockId: string): Block | null => {
+	const blocks: Block[] = getBlocks()
+	const validTypes: string[] = ["text", "title", "heading", "block-selector"]
+
 	const currentIndex = blocks?.findIndex((block) => block.id === currentBlockId)
 
 	if (currentIndex <= 0) return null
@@ -24,20 +38,8 @@ export const findPreviousTextBlock = (
 }
 
 export const findNextBlock = (currentBlockId: string): Block | null => {
-	const state: any = store.getState().page
-
+	const blocks: Block[] = getBlocks()
 	let nextBlockIndex = -1
-	let blocks = []
-	if (state.activePage.type == "carousel") {
-		const currentCarousel = state.currentCarouselPage
-			? state.activePage.config.pages.findIndex((page) => page.id == state.currentCarouselPage)
-			: 0
-
-		blocks = state.activePage.config.pages[currentCarousel].config.buildingBlocks
-	} else {
-		blocks = state.activePage.config.buildingBlocks
-	}
-
 	let currentBlockIndex = blocks.findIndex((block: any) => block.id === currentBlockId)
 	nextBlockIndex = currentBlockIndex + 1
 

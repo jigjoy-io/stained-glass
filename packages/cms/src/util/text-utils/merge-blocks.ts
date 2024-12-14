@@ -1,5 +1,5 @@
 import { focusBlock, removeBlock, updateBlock } from "../../reducers/page-reducer"
-import { moveCursorToEnd, moveCursorToEndOff } from "../cursor-helper/move-cursor-to-end"
+import { findPreviousTextBlock } from "./use-text-block"
 
 interface TextBlock {
 	id: string
@@ -7,7 +7,38 @@ interface TextBlock {
 	[key: string]: any
 }
 
-export const mergeWithPreviousBlock = (currentBlock: TextBlock, previousBlock: TextBlock | null, currentText: string, dispatch: any): boolean => {
+function setCaretPosition(el, pos) {
+	// Loop through all child nodes
+
+	for (var node of el.childNodes) {
+		console.log(node.nodeType)
+		if (node.nodeType == 3) {
+			// we have a text node
+			if (node.length >= pos) {
+				const range = document.createRange()
+				const selection = window.getSelection()
+
+				//el = document.querySelector(`[data-block-id="${el.id}"]`) as HTMLElement
+				console.log(`position: ${pos}`)
+				range.setStart(node, pos)
+				range.collapse(true)
+
+				selection?.removeAllRanges()
+				selection?.addRange(range)
+				return -1 // we are done
+			}
+		} else {
+			pos = setCaretPosition(node, pos)
+			if (pos == -1) {
+				return -1 // no need to finish the for loop
+			}
+		}
+	}
+	return pos // needed because of recursion stuff
+}
+
+export const mergeWithPreviousBlock = (currentBlock: TextBlock, currentText: string, dispatch: any): boolean => {
+	const previousBlock = findPreviousTextBlock(currentBlock.id)
 	if (!previousBlock) {
 		if (!currentText) {
 			dispatch(removeBlock(currentBlock.id))
@@ -15,31 +46,35 @@ export const mergeWithPreviousBlock = (currentBlock: TextBlock, previousBlock: T
 		return true
 	}
 
-	const prevBlockElement = document.querySelector(`[data-block-id="${previousBlock.id}"]`) as HTMLElement
+	let prevBlockElement = document.querySelector(`[data-block-id="${previousBlock.id}"]`) as HTMLElement
 
 	const prevText = prevBlockElement.innerText
 	const mergedText = prevText + currentText
 
-	dispatch(
-		updateBlock({
-			...previousBlock,
-			text: mergedText,
-		}),
-	)
-
 	dispatch(removeBlock(currentBlock.id))
-	dispatch(focusBlock(previousBlock.id))
 
-	const updatedPrevBlock = document.querySelector(`[data-block-id="${previousBlock.id}"]`) as HTMLElement
+	if (mergedText == "" || previousBlock.type == "block-selector") {
+		dispatch(
+			updateBlock({
+				...previousBlock,
+				option: mergedText,
+			}),
+		)
 
-	if (updatedPrevBlock) {
-		if (currentText.length) {
-			setTimeout(() => {
-				moveCursorToEndOff(prevBlockElement, currentText.length)
-			}, 50)
-		} else {
-			moveCursorToEnd(prevBlockElement)
-		}
+		setTimeout(() => {
+			dispatch(focusBlock(previousBlock.id))
+		}, 25)
+	} else {
+		dispatch(
+			updateBlock({
+				...previousBlock,
+				text: mergedText,
+			}),
+		)
+
+		setTimeout(() => {
+			setCaretPosition(prevBlockElement, prevText.length)
+		}, 50)
 	}
 
 	return true
