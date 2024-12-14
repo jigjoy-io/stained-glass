@@ -1,22 +1,15 @@
 import React, { useEffect, useRef, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { updateBlock } from "../../../../reducers/page-reducer"
-import { useActiveBlock, usePage } from "../../../../util/store"
+import { useActiveBlock } from "../../../../util/store"
 import textEditingVariants from "../../../../util/style-helper/text-editing-variations"
 import alignmentVariations from "../../../../util/style-helper/alignment-variations"
-import { findPreviousTextBlock } from "../../../../util/text-utils/use-text-block"
 import { handleTextBlockKeyDown } from "../../../../util/text-utils/text-block-key-handlers"
 
 export default function ContentEditingText(props: any) {
 	const [position, setPosition] = useState(props.position)
 	const [type, setType] = useState(props.type)
 	const [style, setStyle] = useState({} as any)
-	const page = usePage()
-
-	const previousTextBlock = useSelector(() => {
-		const blocks = page.config.buildingBlocks
-		return findPreviousTextBlock(blocks, props.id, ["text", "title", "heading"])
-	})
 
 	useEffect(() => {
 		setPosition(props.position)
@@ -53,7 +46,6 @@ export default function ContentEditingText(props: any) {
 			blockId: props.id,
 			blockType: props.type,
 			ref,
-			previousBlock: previousTextBlock,
 		})
 	}
 

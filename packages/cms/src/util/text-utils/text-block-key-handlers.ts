@@ -18,7 +18,6 @@ interface KeyHandlerContext {
 		onClose?: () => void
 		setOption?: (value: string) => void
 	}
-	previousBlock?: any
 }
 
 interface CaretContext {
@@ -234,7 +233,7 @@ class EnterCommand extends KeyCommand {
 
 class BackspaceCommand extends KeyCommand {
 	execute(): void {
-		const { event, ref, previousBlock, blockId, dispatch } = this.context
+		const { event, ref, blockId, dispatch } = this.context
 
 		if (!ref?.current) return
 
@@ -244,7 +243,7 @@ class BackspaceCommand extends KeyCommand {
 		if ((!isInput && !ref.current.innerText.trim()) || caretPosition === 0) {
 			event.preventDefault()
 			const currentText = isInput ? ref.current.value : ref.current.innerText || ""
-			mergeWithPreviousBlock({ id: blockId }, previousBlock, currentText, dispatch)
+			mergeWithPreviousBlock({ id: blockId }, currentText, dispatch)
 		}
 	}
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { createPortal } from "react-dom"
 import { SelectorOptions } from "./selector-options"
 import { useActiveBlock, usePage } from "../../../../util/store"
@@ -8,13 +8,12 @@ import TemplateFactory from "../../../../util/factories/templates/template-facto
 import { focusBlock, insertBlock } from "../../../../reducers/page-reducer"
 import ClickOutsideListener from "../../../../util/click-outside-listener"
 import Item from "../../../../components/item/item"
-import { findNextBlock, findPreviousTextBlock } from "../../../../util/text-utils/use-text-block"
 import { handleTextBlockKeyDown } from "../../../../util/text-utils/text-block-key-handlers"
 
 export default function BlockSelector(props: any) {
 	const page = usePage()
 
-	const [option, setOption] = useState("")
+	const [option, setOption] = useState(props.option || "")
 	const [options, setOptions] = useState([] as any)
 	const [allOptions, setAllOptions] = useState([] as any)
 	const [showMenu, setShowMenu] = useState(false)
@@ -25,11 +24,6 @@ export default function BlockSelector(props: any) {
 	const [left, setLeft] = useState()
 
 	const dispatch = useDispatch()
-
-	const previousTextBlock = useSelector(() => {
-		const blocks = page.config.buildingBlocks
-		return findPreviousTextBlock(blocks, props.id, ["text", "title", "heading", "block-selector"])
-	})
 
 	useEffect(() => {
 		const selectorOptions = SelectorOptions.getOptions()
@@ -66,6 +60,10 @@ export default function BlockSelector(props: any) {
 			}
 		}
 	}
+
+	useEffect(() => {
+		setOption(props.option)
+	}, [props.option])
 
 	useEffect(() => {
 		setMenuPosition()
@@ -111,7 +109,6 @@ export default function BlockSelector(props: any) {
 				onClose: closeMenu,
 				setOption: setOption,
 			},
-			previousBlock: previousTextBlock,
 		})
 	}
 
