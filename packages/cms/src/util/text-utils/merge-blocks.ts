@@ -37,9 +37,7 @@ function setCaretPosition(el, pos) {
 export const mergeWithPreviousBlock = (currentBlock: TextBlock, currentText: string, dispatch: any): boolean => {
 	const previousBlock = findPreviousTextBlock(currentBlock.id)
 	if (!previousBlock) {
-		if (!currentText) {
-			dispatch(removeBlock(currentBlock.id))
-		}
+		dispatch(removeBlock(currentBlock.id))
 		return true
 	}
 
