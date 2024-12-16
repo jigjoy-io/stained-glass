@@ -8,7 +8,7 @@ import TemplateFactory from "../../../../util/factories/templates/template-facto
 import { focusBlock, insertBlock } from "../../../../reducers/page-reducer"
 import ClickOutsideListener from "../../../../util/click-outside-listener"
 import Item from "../../../../components/item/item"
-import { handleTextBlockKeyDown } from "../../../../util/text-utils/text-block-key-handlers"
+import { handleTextBlockKeyDown } from "../../../../util/factories/key-command-factory"
 
 export default function BlockSelector(props: any) {
 	const page = usePage()
