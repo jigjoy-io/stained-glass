@@ -1,8 +1,8 @@
 {
-  "name": "interactive-content-designer",
+  "name": "jigjoy-engine",
   "version": "1.0.0",
-  "repository": "https://github.com/jigjoy-io/interactive-content-designer.git",
-  "author": "Mijura <miodragvilotijevic@gmail.com>",
+  "repository": "https://github.com/jigjoy-io/jigjoy-engine.git",
+  "author": "Mijura <miodragvilotijevic@jigjoy.io>",
   "private": true,
   "scripts": {
     "build": "yarn workspaces run build",

@@ -57,7 +57,7 @@ module.exports = {
 		}),
 		new rspack.HtmlRspackPlugin({
 			template: "public/index.html",
-			title: "JigJoy - The no-code platform for gamified content creation.",
+			title: "A text-to-play engine that transforms imagination into playful apps.",
 			filename: "index.html",
 			chunks: ["main"],
 		}),
