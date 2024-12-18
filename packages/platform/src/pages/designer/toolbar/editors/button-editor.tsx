@@ -1,8 +1,7 @@
-import React, { useState } from "react"
+import React, { lazy, Suspense, useState } from "react"
 import { useDispatch } from "react-redux"
 import { updateBlock } from "../../../../reducers/page-reducer"
-import Button from "../../../../components/button/button"
-
+const Button = lazy(() => import("renderer/Button"))
 interface ButtonTexts {
 	previous: string
 	next: string
@@ -44,7 +43,9 @@ export default function ButtonEditor({ block, attribute }: MenuEditorProps) {
 					/>
 				</div>
 			))}
-			<Button text="Update" action={update} />
+			<Suspense>
+				<Button text="Update" action={update} />
+			</Suspense>
 		</div>
 	)
 }

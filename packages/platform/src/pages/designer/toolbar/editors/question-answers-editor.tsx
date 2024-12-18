@@ -1,8 +1,9 @@
-import React, { useState } from "react"
+import React, { lazy, Suspense, useState } from "react"
 import { useDispatch } from "react-redux"
 import { v4 as uuid } from "uuid"
 import { updateBlock } from "../../../../reducers/page-reducer"
-import Button from "../../../../components/button/button"
+
+const Button = lazy(() => import("renderer/Button"))
 import Checkbox from "../../../../components/checkbox/checkbox"
 import CloseIcon from "../../../../icons/close-icon"
 
@@ -68,9 +69,13 @@ export default function QuestionAnswersEditor(props: any) {
 			))}
 
 			<div className="my-1">
-				<Button width="w-full" text="Add answer" color="default" action={addAnswer} />
+				<Suspense>
+					<Button width="w-full" text="Add answer" color="default" action={addAnswer} />
+				</Suspense>
 			</div>
-			<Button text="Update" action={update} />
+			<Suspense>
+				<Button text="Update" action={update} />
+			</Suspense>
 		</div>
 	)
 }

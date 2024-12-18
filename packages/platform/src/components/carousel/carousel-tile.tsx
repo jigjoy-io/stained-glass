@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react"
-import Button from "../button/button"
+import React, { lazy, Suspense, useEffect, useState } from "react"
 import Grid from "../grid/grid"
 import { useDispatch } from "react-redux"
 import Tile from "../tile/tile"
+const Button = lazy(() => import("renderer/Button"))
 import { carouselPageSwitched, pageExpanded, pageUpdated } from "../../reducers/page-reducer"
 
 export default function CarouselTile(props: any) {
@@ -26,22 +26,24 @@ export default function CarouselTile(props: any) {
 	}
 
 	return (
-		<Tile color={color}>
-			{props.image && (
-				<div className={`${props.title || props.description ? "mb-10" : "mb-20"} px-1 block`}>
-					<img className="float-right rounded-[5px]" height={128} width={128} src={props.image} />
+		<Suspense>
+			<Tile color={color}>
+				{props.image && (
+					<div className={`${props.title || props.description ? "mb-10" : "mb-20"} px-1 block`}>
+						<img className="float-right rounded-[5px]" height={128} width={128} src={props.image} />
+					</div>
+				)}
+
+				<div className="text-heading">{props.title}</div>
+
+				{props.description && <div className="pt-4">{props.description}</div>}
+
+				<div className="pt-4">
+					<Grid numberOfCols={1}>
+						<Button rounded text={cta} color="gradient" action={load} />
+					</Grid>
 				</div>
-			)}
-
-			<div className="text-heading">{props.title}</div>
-
-			{props.description && <div className="pt-4">{props.description}</div>}
-
-			<div className="pt-4">
-				<Grid numberOfCols={1}>
-					<Button rounded text={cta} color="gradient" action={load} />
-				</Grid>
-			</div>
-		</Tile>
+			</Tile>
+		</Suspense>
 	)
 }

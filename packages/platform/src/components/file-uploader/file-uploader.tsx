@@ -1,10 +1,10 @@
-import React, { useRef, useState } from "react"
+import React, { lazy, Suspense, useRef, useState } from "react"
 import Alert from "../alert/alert"
 import { useRootPage } from "../../util/store"
 import AlertProps, { AlertType } from "../alert/alert-props"
 import { FileTooLargeError } from "../../util/errors/file-too-large-error"
 import FileHelper from "../../util/file-upload/file-upload"
-import Button from "../button/button"
+const Button = lazy(() => import("renderer/Button"))
 
 export default function FileUploader({ mediaType, callback }) {
 	const [uploading, setUploadingStatus] = useState(false)
@@ -53,7 +53,9 @@ export default function FileUploader({ mediaType, callback }) {
 				accept={`${mediaType}/*`}
 				style={{ display: "none" }}
 			/>
-			<Button width="w-full" text="Upload" action={triggerFileInput} disabled={uploading} />
+			<Suspense>
+				<Button width="w-full" text="Upload" action={triggerFileInput} disabled={uploading} />
+			</Suspense>
 		</>
 	)
 }

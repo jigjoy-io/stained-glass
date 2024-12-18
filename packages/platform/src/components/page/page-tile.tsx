@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react"
-import Button from "../button/button"
+import React, { lazy, Suspense, useEffect, useState } from "react"
+
+const Button = lazy(() => import("renderer/Button"))
 import Grid from "../grid/grid"
 import { useDispatch } from "react-redux"
 import Tile from "../tile/tile"
@@ -36,7 +37,9 @@ export default function PageTile(props: any) {
 			{props.description && <div className="pt-4">{props.description}</div>}
 			<div className="pt-4">
 				<Grid numberOfCols={1}>
-					<Button text={cta} color="gradient" rounded action={load} />
+					<Suspense>
+						<Button text={cta} color="gradient" rounded action={load} />
+					</Suspense>
 				</Grid>
 			</div>
 		</Tile>

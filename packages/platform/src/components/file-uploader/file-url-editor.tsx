@@ -1,8 +1,8 @@
-import React, { useState } from "react"
+import React, { lazy, Suspense, useState } from "react"
 import UrlValidator from "../../util/file-upload/url-validator"
 import Alert from "../alert/alert"
 import Input from "../input/input"
-import Button from "../button/button"
+const Button = lazy(() => import("renderer/Button"))
 import AlertProps, { AlertType } from "../alert/alert-props"
 
 export default function FileUrlEditor({ filePath, fileType, callback }) {
@@ -28,7 +28,9 @@ export default function FileUrlEditor({ filePath, fileType, callback }) {
 			<Input value={fileUrl} onChange={setFileUrl} placeholder={`Enter ${fileType} url`} />
 
 			<div className="mt-3">
-				<Button width="w-full" text="Embed" action={() => handleUrlUpdate(fileUrl)} />
+				<Suspense>
+					<Button width="w-full" text="Embed" action={() => handleUrlUpdate(fileUrl)} />
+				</Suspense>
 			</div>
 		</>
 	)

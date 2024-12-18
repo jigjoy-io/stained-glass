@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react"
+import { lazy, Suspense, useEffect, useState } from "react"
 import React from "react"
 import Input from "../../components/input/input"
-import Button from "../../components/button/button"
-import Title from "../../components/title/title"
+const Button = lazy(() => import("renderer/Button"))
 import { LazyMotion, m } from "framer-motion"
 import { createSingInChallenge } from "../../api/authorize"
 import { useNavigate } from "@tanstack/react-router"
@@ -87,7 +86,7 @@ export default function Authorization(props: any) {
 					</m.div>
 					<m.div key="title" variants={item}>
 						<div className="my-5">
-							<Title text="Welcome to JigJoy 👏" />
+							<div className="text-title">Welcome to JigJoy 👏</div>
 						</div>
 					</m.div>
 
@@ -100,7 +99,9 @@ export default function Authorization(props: any) {
 						</m.div>
 					)}
 					<m.div key="submit" variants={item}>
-						<Button width="w-full" text="Log in or Sign up" action={authorize} focus={true} />
+						<Suspense>
+							<Button width="w-full" text="Log in or Sign up" action={authorize} focus={true} />
+						</Suspense>
 					</m.div>
 				</m.div>
 			</LazyMotion>

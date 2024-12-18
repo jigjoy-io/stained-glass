@@ -1,7 +1,7 @@
-import React from "react"
+import React, { lazy, Suspense } from "react"
 import { useState } from "react"
 import Alert from "../alert/alert"
-import Button from "../button/button"
+const Button = lazy(() => import("renderer/Button"))
 import Item from "../item/item"
 import { motion, AnimatePresence } from "framer-motion"
 
@@ -72,15 +72,17 @@ function QuestionAnswers(props: any) {
 								duration: 0.3,
 							}}
 						>
-							<Button
-								text={props.outcomes.confirmationButtonText}
-								key={selected.id}
-								width="w-full"
-								color={selected != null ? "secondary" : "default"}
-								action={checkAnswer}
-								disabled={selected.id == null}
-								rounded
-							/>
+							<Suspense>
+								<Button
+									text={props.outcomes.confirmationButtonText}
+									key={selected.id}
+									width="w-full"
+									color={selected != null ? "secondary" : "default"}
+									action={checkAnswer}
+									disabled={selected.id == null}
+									rounded
+								/>
+							</Suspense>
 						</motion.div>
 					)}
 				</AnimatePresence>

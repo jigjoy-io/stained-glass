@@ -65,6 +65,9 @@ module.exports = {
 			remotes: {},
 			exposes: {
 				"./Text": "./src/components/text/text",
+				"./Heading": "./src/components/heading/heading",
+				"./Title": "./src/components/title/title",
+				"./Button": "./src/components/button/button",
 			},
 			shared: {
 				react: {

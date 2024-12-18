@@ -1,8 +1,8 @@
-import React, { useState } from "react"
+import React, { lazy, Suspense, useState } from "react"
 import { useDispatch } from "react-redux"
 import { updateBlock } from "../../../../reducers/page-reducer"
 import Checkbox from "../../../../components/checkbox/checkbox"
-import Button from "../../../../components/button/button"
+const Button = lazy(() => import("renderer/Button"))
 
 const sizes = [
 	{ text: "Small", key: "small" },
@@ -31,7 +31,9 @@ export default function SizeEditor(props: any) {
 					</div>
 				))}
 			</div>
-			<Button text="Update" action={update} />
+			<Suspense>
+				<Button text="Update" action={update} />
+			</Suspense>
 		</div>
 	)
 }

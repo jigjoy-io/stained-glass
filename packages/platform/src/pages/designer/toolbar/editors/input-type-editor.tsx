@@ -1,8 +1,8 @@
-import React, { useState } from "react"
+import React, { lazy, Suspense, useState } from "react"
 import { useDispatch } from "react-redux"
 import { updateBlock } from "../../../../reducers/page-reducer"
 import Item from "../../../../components/item/item"
-import Button from "../../../../components/button/button"
+const Button = lazy(() => import("renderer/Button"))
 
 const positions = [
 	{ text: "Text", key: "text" },
@@ -38,7 +38,9 @@ export default function InputTypeEditor(props: any) {
 					/>
 				))}
 			</div>
-			<Button text="Update" action={update} />
+			<Suspense>
+				<Button text="Update" action={update} />
+			</Suspense>
 		</div>
 	)
 }

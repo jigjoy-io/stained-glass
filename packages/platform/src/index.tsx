@@ -12,6 +12,7 @@ import { PersistGate } from "redux-persist/integration/react"
 import { DndProvider } from "react-dnd"
 import { HTML5Backend } from "react-dnd-html5-backend"
 import { Helmet } from "react-helmet"
+import "./types/index.d.ts"
 
 const options = {
 	api_host: process.env.REACT_APP_PUBLIC_POSTHOG_HOST,

@@ -1,1 +1,5 @@
 declare module "*.module.css"
+declare module "renderer/Text"
+declare module "renderer/Heading"
+declare module "renderer/Title"
+declare module "renderer/Button"

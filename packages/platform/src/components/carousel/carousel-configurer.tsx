@@ -1,6 +1,7 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react"
+import React, { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from "react"
 import CarouselIcon from "../../icons/carousel-icon"
-import Button from "../button/button"
+
+const Button = lazy(() => import("renderer/Button"))
 import Checkbox from "../checkbox/checkbox"
 import Tabs from "../tabs/tabs"
 import ClickOutsideListener from "../../util/click-outside-listener"
@@ -180,7 +181,9 @@ export default function CarouselConfigurer(props: any) {
 									</Tabs>
 
 									<div className="mt-[1rem]">
-										<Button width="w-full" text="Create" action={create} />
+										<Suspense>
+											<Button width="w-full" text="Create" action={create} />
+										</Suspense>
 									</div>
 								</div>
 							</div>

@@ -1,9 +1,10 @@
 import { getCurrentUser } from "aws-amplify/auth"
-import React, { useEffect, useState } from "react"
+import React, { lazy, Suspense, useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { getPages, publishPage, updatePage } from "../../api/page"
 import Alert from "../../components/alert/alert"
-import Button from "../../components/button/button"
+
+const Button = lazy(() => import("renderer/Button"))
 import { pagesUpdated, pageUpdated, rootPageUpdated } from "../../reducers/page-reducer"
 import { usePages, useRootPage } from "../../util/store"
 import Node from "./node"
@@ -194,7 +195,9 @@ export default function LeftSideMenu() {
 						)}
 						<div className="w-[100%] px-3 py-1 flex gap-x-2">
 							<div className="w-[50%]">
-								<Button text="Preview" color="default" width="w-full" action={enterPreview} />
+								<Suspense>
+									<Button text="Preview" color="default" width="w-full" action={enterPreview} />
+								</Suspense>
 							</div>
 							<Link
 								to={`/${page.id}`}
@@ -205,7 +208,9 @@ export default function LeftSideMenu() {
 							</Link>
 						</div>
 						<div className="w-[100%] px-3 py-1">
-							<Button width="w-full" text="Publish" action={publish} />
+							<Suspense>
+								<Button width="w-full" text="Publish" action={publish} />
+							</Suspense>
 						</div>
 					</div>
 				)}

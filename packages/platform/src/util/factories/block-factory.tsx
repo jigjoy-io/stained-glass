@@ -2,10 +2,10 @@ import React, { lazy, Suspense } from "react"
 
 const AudioButton = lazy(() => import("../../components/audio/audio-button"))
 const Text = lazy(() => import("renderer/Text"))
-const Heading = lazy(() => import("../../components/heading/heading"))
-const Title = lazy(() => import("../../components/title/title"))
+const Heading = lazy(() => import("renderer/Heading"))
+const Title = lazy(() => import("renderer/Title"))
 const Image = lazy(() => import("../../components/image/image"))
-const Button = lazy(() => import("../../components/button/button"))
+const Button = lazy(() => import("renderer/Button"))
 const Question = lazy(() => import("../../components/question/question"))
 const CarouselTile = lazy(() => import("../../components/carousel/carousel-tile"))
 const Message = lazy(() => import("../../components/message/message"))

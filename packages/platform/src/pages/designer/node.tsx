@@ -1,4 +1,4 @@
-import React, { memo, useRef, useState } from "react"
+import React, { lazy, memo, Suspense, useRef, useState } from "react"
 import { useDispatch } from "react-redux"
 import { createPage, removePage, updatePage } from "../../api/page"
 import Grid from "../../components/grid/grid"
@@ -23,7 +23,7 @@ import { findParent } from "../../util/traversals/find-parent"
 import { replaceBlock } from "../../util/traversals/replace-block"
 import { createPortal } from "react-dom"
 import ClickOutsideListener from "../../util/click-outside-listener"
-import Button from "../../components/button/button"
+const Button = lazy(() => import("renderer/Button"))
 import { pushBlock } from "../../util/traversals/push-block"
 import AddBlockIcon from "../../icons/add-block-icon"
 import RenameIcon from "../../icons/rename-icon"
@@ -414,8 +414,10 @@ const Node = memo(function Node(props: any) {
 								<p className="font-bold">Delete Page Permanently?</p>
 								<div>Are you sure? This will permanently erase all content.</div>
 								<div className="flex gap-2 mt-3 justify-end">
-									<Button size="sm" color="white" text="Yes" action={remove} />
-									<Button size="sm" color="default" text="No" action={closeDelete} />
+									<Suspense>
+										<Button size="sm" color="white" text="Yes" action={remove} />
+										<Button size="sm" color="default" text="No" action={closeDelete} />
+									</Suspense>
 								</div>
 							</div>
 						</div>
@@ -443,7 +445,9 @@ const Node = memo(function Node(props: any) {
 									<option value="carousel-tile">Carousel</option>
 								</select>
 								<div className="flex mt-3">
-									<Button size="sm" color="white" text="Create" action={createNewPage} />
+									<Suspense>
+										<Button size="sm" color="white" text="Create" action={createNewPage} />
+									</Suspense>
 								</div>
 							</div>
 						</div>
@@ -465,7 +469,9 @@ const Node = memo(function Node(props: any) {
 									onChange={(event) => setRenameValue(event.target.value)}
 									autoFocus
 								/>
-								<Button text="Rename" size="sm" action={renamePage} />
+								<Suspense>
+									<Button text="Rename" size="sm" action={renamePage} />
+								</Suspense>
 							</div>
 						</div>
 					</ClickOutsideListener>,

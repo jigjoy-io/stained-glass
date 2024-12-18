@@ -1,11 +1,11 @@
-import React, { useState } from "react"
+import React, { lazy, Suspense, useState } from "react"
 import { useDispatch } from "react-redux"
 import { updateBlock } from "../../../../reducers/page-reducer"
 import LeftAlignmentIcon from "../../../../icons/alignment-left-icon"
 import RightAlignmentIcon from "../../../../icons/alignment-right-icon"
 import CenterAlignmentIcon from "../../../../icons/alignment-center-icon"
 import Item from "../../../../components/item/item"
-import Button from "../../../../components/button/button"
+const Button = lazy(() => import("renderer/Button"))
 
 export default function PositionEditor(props: any) {
 	const [value, setValue] = useState(props.value)
@@ -41,7 +41,9 @@ export default function PositionEditor(props: any) {
 					/>
 				))}
 			</div>
-			<Button text="Update" action={update} />
+			<Suspense>
+				<Button text="Update" action={update} />
+			</Suspense>
 		</div>
 	)
 }

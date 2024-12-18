@@ -1,6 +1,6 @@
-import React, { useState } from "react"
-import Heading from "../../../../components/heading/heading"
-import Button from "../../../../components/button/button"
+import React, { lazy, Suspense, useState } from "react"
+
+const Button = lazy(() => import("renderer/Button"))
 import TextArea from "../../../../components/textarea/textarea"
 import { getCurrentUser } from "aws-amplify/auth"
 import { RequestType, saveUserFeedback } from "../../../../api/feedback"
@@ -43,7 +43,7 @@ export default function UserFeedback({ heading, description, requestType }: User
 
 	return (
 		<div className="flex flex-col justify-center items-center gap-4 px-10">
-			<Heading position="center" text={heading} />
+			<div className="text-heading text-center">{heading}</div>
 			<div className="text-center">
 				<p>{description}</p>
 			</div>
@@ -57,7 +57,9 @@ export default function UserFeedback({ heading, description, requestType }: User
 						<TextArea placeholder="Leave a message, and we’ll contact you soon." onChange={handleChange} />
 					</div>
 					{error && <div className="text-[red]">The message field is required. Please enter your message.</div>}
-					<Button text="Submit" action={submitRequest} />
+					<Suspense>
+						<Button text="Submit" action={submitRequest} />
+					</Suspense>
 				</>
 			)}
 		</div>

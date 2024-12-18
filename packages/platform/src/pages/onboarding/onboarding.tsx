@@ -13,9 +13,7 @@ import {
 import { createPage } from "../../api/page"
 import Loader from "../../components/loader/loader"
 import CloseIcon from "../../icons/close-icon"
-import Title from "../../components/title/title"
 import Tile from "../../components/tile/tile"
-import Heading from "../../components/heading/heading"
 import TemplateFactory from "../../util/factories/templates/template-factory"
 
 export default function Onboarding() {
@@ -83,7 +81,9 @@ export default function Onboarding() {
 						<CloseIcon />
 					</div>
 					<div className="flex flex-col mt-20 items-center justify-center">
-						<Title position="center" text="Choose project to start."></Title>
+						<div className="text-center">
+							<p className="text-title">Choose project to start.</p>
+						</div>
 
 						<div className="flex flex-row gap-8">
 							<div
@@ -91,7 +91,7 @@ export default function Onboarding() {
 								onClick={() => create("blank")}
 							>
 								<Tile>
-									<Heading text="Blank Page" />
+									<p className="text-heading">Blank Page</p>
 									<p className="mt-4">Create an app from scratch.</p>
 								</Tile>
 							</div>
@@ -100,7 +100,7 @@ export default function Onboarding() {
 								onClick={() => create("carousel")}
 							>
 								<Tile>
-									<Heading text="Carousel" />
+									<p className="text-heading">Carousel</p>
 									<p className="mt-4">Create a quiz or micro-lesson.</p>
 								</Tile>
 							</div>

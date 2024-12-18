@@ -1,6 +1,5 @@
-import React, { useState } from "react"
-import Heading from "../../../../components/heading/heading"
-import Button from "../../../../components/button/button"
+import React, { lazy, Suspense, useState } from "react"
+const Button = lazy(() => import("renderer/Button"))
 import { getCurrentUser } from "aws-amplify/auth"
 import { createPage, generatePage } from "../../../../api/page"
 import { refinePage } from "../../../../util/traversals/refine-page"
@@ -53,7 +52,7 @@ export default function AI() {
 
 	return (
 		<div className="flex flex-col justify-center items-center gap-4 px-10">
-			<Heading position="center" text="JigJoy AI" />
+			<div className="text-heading text-center">JigJoy AI</div>
 			<div className="text-center">
 				<p>Just type a prompt and JigJoy AI will create an engaging, bite-sized lesson.</p>
 			</div>
@@ -70,7 +69,9 @@ export default function AI() {
 							/>
 						</div>
 						<div className="w-fit">
-							<Button text="Generate App" action={submitRequest} />
+							<Suspense>
+								<Button text="Generate App" action={submitRequest} />
+							</Suspense>
 						</div>
 					</div>
 					{error && (

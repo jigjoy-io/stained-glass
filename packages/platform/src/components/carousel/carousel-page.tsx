@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react"
+import React, { lazy, Suspense, useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { motion, AnimatePresence } from "framer-motion"
 import { carouselPageSwitched, pageUpdated } from "../../reducers/page-reducer"
 import CloseIcon from "../../icons/close-icon"
-import Button from "../button/button"
+const Button = lazy(() => import("renderer/Button"))
 import Progress from "../progress/progress"
 import PageContent from "../page-content"
 import { useCurrentCarouselPage, useRootPage } from "../../util/store"
@@ -97,52 +97,54 @@ export default function CarouselPage(props) {
 	}
 
 	return (
-		<>
-			{pages[current] && (
-				<div className="flex max-h-[100dvh] h-[100dvh] w-full justify-center">
-					<div className="flex flex-col w-full md:max-w-[360px]">
-						<div className="flex flex-row p-3 w-full min-w-[360px]">
-							<Progress percentage={percentage} />
-							<div className="w-max p-1 rounded-[5px] cursor-pointer" onClick={backToHome}>
-								<CloseIcon />
+		<Suspense>
+			<>
+				{pages[current] && (
+					<div className="flex max-h-[100dvh] h-[100dvh] w-full justify-center">
+						<div className="flex flex-col w-full md:max-w-[360px]">
+							<div className="flex flex-row p-3 w-full min-w-[360px]">
+								<Progress percentage={percentage} />
+								<div className="w-max p-1 rounded-[5px] cursor-pointer" onClick={backToHome}>
+									<CloseIcon />
+								</div>
 							</div>
-						</div>
 
-						<div className="relative h-full">
-							<AnimatePresence initial={true} custom={direction} mode="wait">
-								<motion.div
-									key={pages[current].id}
-									custom={direction}
-									variants={variants}
-									initial="enter"
-									animate="center"
-									exit="exit"
-									className="w-full h-full p-3"
-								>
-									<PageContent config={pages[current].config} key={pages[current].id} id={pages[current].id} />
-								</motion.div>
-							</AnimatePresence>
-						</div>
+							<div className="relative h-full">
+								<AnimatePresence initial={true} custom={direction} mode="wait">
+									<motion.div
+										key={pages[current].id}
+										custom={direction}
+										variants={variants}
+										initial="enter"
+										animate="center"
+										exit="exit"
+										className="w-full h-full p-3"
+									>
+										<PageContent config={pages[current].config} key={pages[current].id} id={pages[current].id} />
+									</motion.div>
+								</AnimatePresence>
+							</div>
 
-						{current === 0 && (
-							<div className="flex flex-row fixed bottom-0 gap-3 p-3 mt-3  w-full md:max-w-[360px]">
-								<Button width="w-full" text={next} action={nextPage} rounded />
-							</div>
-						)}
-						{current !== pages.length - 1 && current !== 0 && (
-							<div className="flex flex-row fixed bottom-0 gap-3 p-3 mt-3  w-full md:max-w-[360px]">
-								<Button width="w-full" text={previous} action={previousPage} rounded />
-								<Button width="w-full" text={next} action={nextPage} rounded />
-							</div>
-						)}
-						{current === pages.length - 1 && (
-							<div className="flex flex-row fixed bottom-0 gap-3 p-3 mt-3  w-full md:max-w-[360px]">
-								<Button width="w-full" text={home} action={backToHome} rounded />
-							</div>
-						)}
+							{current === 0 && (
+								<div className="flex flex-row fixed bottom-0 gap-3 p-3 mt-3  w-full md:max-w-[360px]">
+									<Button width="w-full" text={next} action={nextPage} rounded />
+								</div>
+							)}
+							{current !== pages.length - 1 && current !== 0 && (
+								<div className="flex flex-row fixed bottom-0 gap-3 p-3 mt-3  w-full md:max-w-[360px]">
+									<Button width="w-full" text={previous} action={previousPage} rounded />
+									<Button width="w-full" text={next} action={nextPage} rounded />
+								</div>
+							)}
+							{current === pages.length - 1 && (
+								<div className="flex flex-row fixed bottom-0 gap-3 p-3 mt-3  w-full md:max-w-[360px]">
+									<Button width="w-full" text={home} action={backToHome} rounded />
+								</div>
+							)}
+						</div>
 					</div>
-				</div>
-			)}
-		</>
+				)}
+			</>
+		</Suspense>
 	)
 }

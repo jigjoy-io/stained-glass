@@ -1,6 +1,6 @@
-import React, { useState } from "react"
+import React, { lazy, Suspense, useState } from "react"
 import { useDispatch } from "react-redux"
-import Button from "../../../../components/button/button"
+const Button = lazy(() => import("renderer/Button"))
 import { updateBlock } from "../../../../reducers/page-reducer"
 
 export default function LimitedTextEditor(props: any) {
@@ -28,7 +28,9 @@ export default function LimitedTextEditor(props: any) {
 					{value.length} / {limit}
 				</span>
 			</div>
-			<Button text="Update" action={update} />
+			<Suspense>
+				<Button text="Update" action={update} />
+			</Suspense>
 		</div>
 	)
 }
