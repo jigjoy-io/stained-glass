@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import Heading from "../../../../components/heading/heading"
-import Text from "../../../../components/text/text"
 import Button from "../../../../components/button/button"
 import { getCurrentUser } from "aws-amplify/auth"
 import { createPage, generatePage } from "../../../../api/page"
@@ -55,7 +54,9 @@ export default function AI() {
 	return (
 		<div className="flex flex-col justify-center items-center gap-4 px-10">
 			<Heading position="center" text="JigJoy AI" />
-			<Text position="center" text="Just type a prompt and JigJoy AI will create an engaging, bite-sized lesson. " />
+			<div className="text-center">
+				<p>Just type a prompt and JigJoy AI will create an engaging, bite-sized lesson.</p>
+			</div>
 			<div>
 				<div className="flex flex-col max-w-[500px] w-[500px] gap-3 mt-20">
 					<div className="flex flex-row gap-3">

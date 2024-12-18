@@ -2,12 +2,13 @@ const path = require("path")
 const rspack = require("@rspack/core")
 const Dotenv = require("dotenv-webpack")
 
+const deps = require("../package.json").dependencies
 module.exports = {
 	entry: {
 		main: path.join(__dirname, "../src/index.tsx"),
 	},
 	output: {
-		publicPath: "auto",
+		publicPath: "http://localhost:3000/",
 	},
 	target: "web",
 	module: {
@@ -60,6 +61,26 @@ module.exports = {
 			title: "Text-to-play engine that transforms imagination into playful apps.",
 			filename: "index.html",
 			chunks: ["main"],
+		}),
+		new rspack.container.ModuleFederationPlugin({
+			name: "platform",
+			filename: "remoteEntry.js",
+			remotes: {
+				renderer: "renderer@http://localhost:3001/remoteEntry.js",
+			},
+			exposes: {},
+			shared: {
+				react: {
+					singleton: true,
+					requiredVersion: deps.react,
+					eager: true,
+				},
+				"react-dom": {
+					singleton: true,
+					requiredVersion: deps["react-dom"],
+					eager: true,
+				},
+			},
 		}),
 	],
 	resolve: {

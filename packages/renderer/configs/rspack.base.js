@@ -8,7 +8,7 @@ module.exports = {
 		main: path.join(__dirname, "../src/index.tsx"),
 	},
 	output: {
-		publicPath: "auto",
+		publicPath: "http://localhost:3001/",
 	},
 	mode: "development",
 	target: "web",
@@ -59,12 +59,14 @@ module.exports = {
 			chunks: ["main"],
 		}),
 		new rspack.container.ModuleFederationPlugin({
-			name: "micro-frontend",
+			name: "renderer",
+			library: { type: "assign", name: "renderer" },
 			filename: "remoteEntry.js",
 			remotes: {},
-			exposes: {},
+			exposes: {
+				"./Text": "./src/components/text/text",
+			},
 			shared: {
-				...deps,
 				react: {
 					singleton: true,
 					requiredVersion: deps.react,

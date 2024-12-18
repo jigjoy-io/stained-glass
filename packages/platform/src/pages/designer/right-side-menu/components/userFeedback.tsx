@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import Heading from "../../../../components/heading/heading"
-import Text from "../../../../components/text/text"
 import Button from "../../../../components/button/button"
 import TextArea from "../../../../components/textarea/textarea"
 import { getCurrentUser } from "aws-amplify/auth"
@@ -45,7 +44,9 @@ export default function UserFeedback({ heading, description, requestType }: User
 	return (
 		<div className="flex flex-col justify-center items-center gap-4 px-10">
 			<Heading position="center" text={heading} />
-			<Text position="center" text={description} />
+			<div className="text-center">
+				<p>{description}</p>
+			</div>
 			{success ? (
 				<div className="text-[green] text-center">
 					Your message has been successfully saved. Our team will contact you shortly.

@@ -1,6 +1,5 @@
 import React from "react"
 import Tile from "../tile/tile"
-import Text from "../text/text"
 
 export default function Profile(props: any) {
 	return (
@@ -15,7 +14,7 @@ export default function Profile(props: any) {
 				</div>
 			</div>
 			<div className="pt-4 w-max[100%] break-words">
-				<Text text={props.description}></Text>
+				<p>{props.description}</p>
 			</div>
 		</Tile>
 	)

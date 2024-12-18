@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from "react"
 
 const AudioButton = lazy(() => import("../../components/audio/audio-button"))
-const Text = lazy(() => import("../../components/text/text"))
+const Text = lazy(() => import("renderer/Text"))
 const Heading = lazy(() => import("../../components/heading/heading"))
 const Title = lazy(() => import("../../components/title/title"))
 const Image = lazy(() => import("../../components/image/image"))
@@ -80,7 +80,7 @@ export default class BlockFactory extends React.Component {
 	static get(props: any) {
 		let block: any = this.buildingBlocks[props.type]
 		return (
-			<Suspense>
+			<Suspense fallback={<div />}>
 				<block.component {...props} />
 			</Suspense>
 		)
