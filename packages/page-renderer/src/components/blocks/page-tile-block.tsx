@@ -1,11 +1,13 @@
-import React, { lazy } from "react"
+import React, { lazy, Suspense } from "react"
 
 const PageTile = lazy(() => import("ui-library/PageTile"))
 
 export default function PageTileBlock(props) {
 	return (
 		<div className="py-3">
-			<PageTile {...props} />
+			<Suspense>
+				<PageTile {...props} />
+			</Suspense>
 		</div>
 	)
 }

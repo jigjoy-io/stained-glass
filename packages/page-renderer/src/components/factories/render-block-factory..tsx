@@ -1,4 +1,4 @@
-import React, { lazy, ReactElement } from "react"
+import React, { lazy, ReactElement, Suspense } from "react"
 
 const TitleBlock = lazy(() => import("../blocks/title-block"))
 const HeadingBlock = lazy(() => import("../blocks/heading-block"))
@@ -16,47 +16,91 @@ import AbstractBlockFactory from "./abstract-block-factory"
 
 class RenderBlockFactory extends AbstractBlockFactory {
 	createTitleBlock(props: any): ReactElement {
-		return <TitleBlock {...props} />
+		return (
+			<Suspense>
+				<TitleBlock {...props} />
+			</Suspense>
+		)
 	}
 
 	createHeadingBlock(props: any): ReactElement {
-		return <HeadingBlock {...props} />
+		return (
+			<Suspense>
+				<HeadingBlock {...props} />
+			</Suspense>
+		)
 	}
 
 	createTextBlock(props: any): ReactElement {
-		return <TextBlock {...props} />
+		return (
+			<Suspense>
+				<TextBlock {...props} />
+			</Suspense>
+		)
 	}
 
 	createImageBlock(props: any): ReactElement {
-		return <ImageBlock {...props} />
+		return (
+			<Suspense>
+				<ImageBlock {...props} />
+			</Suspense>
+		)
 	}
 
 	createAudioBlock(props: any): ReactElement {
-		return <AudioBlock {...props} />
+		return (
+			<Suspense>
+				<AudioBlock {...props} />
+			</Suspense>
+		)
 	}
 
 	createVideoBlock(props: any): ReactElement {
-		return <VideoBlock {...props} />
+		return (
+			<Suspense>
+				<VideoBlock {...props} />
+			</Suspense>
+		)
 	}
 
 	createProfileBlock(props: any): ReactElement {
-		return <ProfileBlock {...props} />
+		return (
+			<Suspense>
+				<ProfileBlock {...props} />
+			</Suspense>
+		)
 	}
 
 	createCarouselTileBlock(props: any): ReactElement {
-		return <CarouselTileBlock {...props} />
+		return (
+			<Suspense>
+				<CarouselTileBlock {...props} />
+			</Suspense>
+		)
 	}
 
 	createPageTileBlock(props: any): ReactElement {
-		return <PageTileBlock {...props} />
+		return (
+			<Suspense>
+				<PageTileBlock {...props} />
+			</Suspense>
+		)
 	}
 
 	createQuestionBlock(props: any): ReactElement {
-		return <QuestionBlock {...props} />
+		return (
+			<Suspense>
+				<QuestionBlock {...props} />
+			</Suspense>
+		)
 	}
 
 	createMessageBlock(props: any): ReactElement {
-		return <MessageBlock {...props} />
+		return (
+			<Suspense>
+				<MessageBlock {...props} />
+			</Suspense>
+		)
 	}
 }
 

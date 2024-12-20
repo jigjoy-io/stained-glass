@@ -1,11 +1,13 @@
-import React, { lazy } from "react"
+import React, { lazy, Suspense } from "react"
 
 const Profile = lazy(() => import("ui-library/Profile"))
 
 export default function ProfileBlock(props) {
 	return (
 		<div className="py-3">
-			<Profile {...props} />
+			<Suspense>
+				<Profile {...props} />
+			</Suspense>
 		</div>
 	)
 }

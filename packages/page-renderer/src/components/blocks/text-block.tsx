@@ -1,11 +1,13 @@
-import React, { lazy } from "react"
+import React, { lazy, Suspense } from "react"
 
 const Text = lazy(() => import("ui-library/Text"))
 
 export default function TextBlock(props) {
 	return (
 		<div className="py-1">
-			<Text {...props} />
+			<Suspense>
+				<Text {...props} />
+			</Suspense>
 		</div>
 	)
 }
