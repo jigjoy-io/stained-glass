@@ -59,11 +59,13 @@ module.exports = {
 			chunks: ["main"],
 		}),
 		new rspack.container.ModuleFederationPlugin({
-			name: "page-renderer",
-			library: { type: "assign", name: "page-renderer" },
+			name: "renderer",
+			library: { type: "assign", name: "renderer" },
 			filename: "remoteEntry.js",
 			remotes: {},
-			exposes: {},
+			exposes: {
+				"./Page": "./src/page-renderer",
+			},
 			shared: {
 				react: {
 					singleton: true,

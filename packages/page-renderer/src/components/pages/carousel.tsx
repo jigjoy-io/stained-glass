@@ -43,7 +43,7 @@ const variants = {
 	}),
 }
 
-export default function CarouselPage(props) {
+export default function Carousel(props) {
 	const [current, setCurrent] = useState(0)
 	const [direction, setDirection] = useState(0)
 	const activeCarousel = useCurrentCarouselPage()

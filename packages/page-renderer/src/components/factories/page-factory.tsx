@@ -1,19 +1,16 @@
-import React from "react"
-import CarouselPage from "../pages/carousel"
-import BlankPage from "../pages/page"
+import React, { ReactElement } from "react"
+import Carousel from "../pages/carousel"
+import Page from "../pages/page"
 
 export class PageFactory extends React.Component {
-	static layouts: any = {
-		carousel: {
-			component: CarouselPage,
-		},
-		blank: {
-			component: BlankPage,
-		},
-	}
-
-	static get(props: any) {
-		let layout: any = this.layouts[props.type]
-		return <layout.component {...props} key={props.id} />
+	static createPage(pageConfig: any): ReactElement {
+		switch (pageConfig.type) {
+			case "blank":
+				return <Page {...pageConfig} key={pageConfig.id} />
+			case "carousel":
+				return <Carousel {...pageConfig} key={pageConfig.id} />
+			default:
+				return <></>
+		}
 	}
 }
