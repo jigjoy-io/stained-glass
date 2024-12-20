@@ -1,8 +1,5 @@
 const gaps = {
 	audio: "py-3",
-	text: "py-1",
-	heading: "py-2",
-	title: "py-3",
 	image: "py-3",
 	question: "py-3",
 	message: "py-3",

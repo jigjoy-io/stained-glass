@@ -1,6 +1,6 @@
 import React, { lazy, Suspense } from "react"
 
-const AudioButton = lazy(() => import("../../components/audio/audio-button"))
+const AudioButton = lazy(() => import("../../../../renderer/src/components/building-blocks/audio-button"))
 const Text = lazy(() => import("renderer/Text"))
 const Heading = lazy(() => import("renderer/Heading"))
 const Title = lazy(() => import("renderer/Title"))
@@ -13,8 +13,8 @@ const Reel = lazy(() => import("../../components/reel/reel"))
 const Profile = lazy(() => import("../../components/profile/profile"))
 const CarouselConfigurer = lazy(() => import("../../components/carousel/carousel-configurer"))
 const PageTile = lazy(() => import("../../components/page/page-tile"))
-const PageConfigurer = lazy(() => import("../../components/page/page-configurer"))
-const BlockSelector = lazy(() => import("../../pages/designer/toolbar/block-selector/block-selector"))
+const PageConfigurer = lazy(() => import("../../components/settings/page-settings"))
+const BlockSelector = lazy(() => import("../../components/building-blocks/block-selector"))
 const ImageConfigurer = lazy(() => import("../../components/image/image-configurer"))
 const AudioConfigurer = lazy(() => import("../../components/audio/audio-configurer"))
 const ReelConfigurer = lazy(() => import("../../components/reel/reel-configurer"))
@@ -80,7 +80,7 @@ export default class BlockFactory extends React.Component {
 	static get(props: any) {
 		let block: any = this.buildingBlocks[props.type]
 		return (
-			<Suspense fallback={<div />}>
+			<Suspense>
 				<block.component {...props} />
 			</Suspense>
 		)

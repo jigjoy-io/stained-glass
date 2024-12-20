@@ -4,7 +4,7 @@ import { v4 as uuid } from "uuid"
 import { updateBlock } from "../../../../reducers/page-reducer"
 
 const Button = lazy(() => import("renderer/Button"))
-import Checkbox from "../../../../components/checkbox/checkbox"
+import Checkbox from "../../../../components/shared/checkbox"
 import CloseIcon from "../../../../icons/close-icon"
 
 export default function QuestionAnswersEditor(props: any) {

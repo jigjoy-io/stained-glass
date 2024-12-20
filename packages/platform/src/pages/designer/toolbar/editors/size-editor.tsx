@@ -1,7 +1,7 @@
 import React, { lazy, Suspense, useState } from "react"
 import { useDispatch } from "react-redux"
 import { updateBlock } from "../../../../reducers/page-reducer"
-import Checkbox from "../../../../components/checkbox/checkbox"
+import Checkbox from "../../../../components/shared/checkbox"
 const Button = lazy(() => import("renderer/Button"))
 
 const sizes = [
