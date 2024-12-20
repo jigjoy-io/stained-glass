@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react"
-import alignmentVariations from "../../../renderer/src/util/style-helper/alignment-variations"
 
 export default function Title(props: any) {
 	const [position, setPosition] = useState(props.position)
@@ -14,7 +13,7 @@ export default function Title(props: any) {
 	}, [props.text])
 
 	return (
-		<div className={`inline-block w-[100%] h-min-[2.5rem] h-max ${alignmentVariations[position]}`}>
+		<div className={`inline-block w-[100%] h-min-[2.5rem] h-max ${position}`}>
 			<div className="text-title">{text}</div>
 		</div>
 	)

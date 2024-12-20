@@ -1,6 +1,6 @@
 import React from "react"
-import CarouselPage from "../../components/carousel/carousel-page"
-import BlankPage from "../../components/page/blank-page"
+import CarouselPage from "../pages/carousel"
+import BlankPage from "../page"
 
 export class PageFactory extends React.Component {
 	static layouts: any = {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { LazyMotion, m } from "framer-motion"
-import PlainBlockFactory from "../../factories/block-factory"
+import BlockFactory from "../factories/block-factory"
 
 const animation = {
 	hidden: { opacity: 0 },
@@ -13,7 +13,7 @@ const animation = {
 	},
 }
 
-const loadFeatures = () => import("../../../../../platform/src/util/style-helper/animations").then((res) => res.default)
+const loadFeatures = () => import("../../util/style-helper/animations").then((res) => res.default)
 
 export default function PageContent(props: any) {
 	const [blocks, setBlocks] = useState<any[]>([])
@@ -31,7 +31,7 @@ export default function PageContent(props: any) {
 				<m.div variants={animation} initial="hidden" animate="show">
 					{blocks.map((block) => (
 						<div key={block.id} className="relative">
-							{PlainBlockFactory.getBlock({ ...block })}
+							{BlockFactory.getBlock({ ...block })}
 						</div>
 					))}
 				</m.div>

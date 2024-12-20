@@ -1,5 +1,5 @@
 import React from "react"
-import PageContent from "./page-content"
+import PageContent from "../../page-content"
 
 export default function Page(props) {
 	return (

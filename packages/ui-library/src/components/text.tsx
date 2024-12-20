@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react"
-import alignmentVariations from "../../../renderer/src/util/style-helper/alignment-variations"
 
 export default function Text(props: any) {
 	const [position, setPosition] = useState(props.position)
@@ -9,7 +8,7 @@ export default function Text(props: any) {
 	}, [props.position])
 
 	return (
-		<div className={`inline-block h-min-[1.7rem] h-max w-[100%] ${alignmentVariations[position]}`}>
+		<div className={`inline-block h-min-[1.7rem] h-max w-[100%] ${position}`}>
 			<div className="text-paragraph whitespace-pre-line">{props.text}</div>
 		</div>
 	)

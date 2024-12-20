@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react"
-import colorVariants from "../../../renderer/src/util/style-helper/color-variants"
 import AudioButton from "./audio-button"
 
 export default function Message(props: any) {
@@ -26,7 +25,7 @@ export default function Message(props: any) {
 
 	return (
 		<div className={`flex h-max w-full`} style={{ justifyContent: position }}>
-			<div className={`block w-[75%] p-4 rounded-[5px] ${position == "left" ? "rounded-bl-none" : "rounded-br-none"} ${colorVariants[color]}`} style={{ justifyContent: position }}>
+			<div className={`block w-[75%] p-4 rounded-[5px] ${position == "left" ? "rounded-bl-none" : "rounded-br-none"} ${color}`} style={{ justifyContent: position }}>
 				<div>{message}</div>
 				<div className={`mt-3 flex ${position}`} style={{ justifyContent: position }}>
 					<AudioButton id={props.id} source={audio} />

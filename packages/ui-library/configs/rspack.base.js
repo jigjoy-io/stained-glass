@@ -63,7 +63,12 @@ module.exports = {
 			filename: "remoteEntry.js",
 			library: { type: "assign", name: "ui-library" },
 			remotes: {},
-			exposes: {},
+			exposes: {
+				"./Text": "./src/components/text",
+				"./Heading": "./src/components/heading",
+				"./Title": "./src/components/title",
+				"./Button": "./src/components/button",
+			},
 			shared: {
 				react: {
 					singleton: true,

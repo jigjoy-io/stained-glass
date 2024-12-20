@@ -1,9 +1,9 @@
-import React, { lazy, Suspense } from "react"
+import React from "react"
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import Item from "../../../../../ui-library/src/components/item"
-import Alert from "../../alert/alert"
-const Button = lazy(() => import("renderer/Button"))
+import Item from "../item"
+import Button from "../button"
+import Alert from "../alert/alert"
 
 function QuestionAnswers(props: any) {
 	const [selected, setSelected] = useState({} as any)
@@ -65,9 +65,7 @@ function QuestionAnswers(props: any) {
 								duration: 0.3,
 							}}
 						>
-							<Suspense>
-								<Button text={props.outcomes.confirmationButtonText} key={selected.id} width="w-full" color={selected != null ? "secondary" : "default"} action={checkAnswer} disabled={selected.id == null} rounded />
-							</Suspense>
+							<Button text={props.outcomes.confirmationButtonText} key={selected.id} width="w-full" color={selected != null ? "secondary" : "default"} action={checkAnswer} disabled={selected.id == null} rounded />
 						</motion.div>
 					)}
 				</AnimatePresence>

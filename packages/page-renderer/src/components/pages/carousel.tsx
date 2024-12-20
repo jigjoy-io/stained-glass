@@ -1,12 +1,11 @@
 import React, { lazy, Suspense, useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { motion, AnimatePresence } from "framer-motion"
-import { carouselPageSwitched, pageUpdated } from "../../../../../platform/src/reducers/page-reducer"
-import CloseIcon from "../../../../../platform/src/icons/close-icon"
-const Button = lazy(() => import("renderer/Button"))
-import Progress from "./progress"
-import PageContent from "../../../../../platform/src/components/page-content"
-import { useCurrentCarouselPage, useRootPage } from "../../../../../platform/src/util/store"
+import { carouselPageSwitched, pageUpdated } from "../../../../platform/src/reducers/page-reducer"
+import CloseIcon from "../../../../platform/src/icons/close-icon"
+import Progress from "../../../../ui-library/src/components/progress"
+import PageContent from "./page-content"
+import { useCurrentCarouselPage, useRootPage } from "../../../../platform/src/util/store"
 
 const springConfig = {
 	type: "spring",

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react"
-import alignmentVariations from "../../../renderer/src/util/style-helper/alignment-variations"
 
 export default function Heading(props: any) {
 	const [position, setPosition] = useState(props.position)
@@ -9,7 +8,7 @@ export default function Heading(props: any) {
 	}, [props.position])
 
 	return (
-		<div className={`inline-block w-[100%] h-min-[2rem] h-max ${alignmentVariations[position]}`}>
+		<div className={`inline-block w-[100%] h-min-[2rem] h-max ${position}`}>
 			<div className="text-heading">{props.text}</div>
 		</div>
 	)
