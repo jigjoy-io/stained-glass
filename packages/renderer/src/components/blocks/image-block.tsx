@@ -1,5 +1,5 @@
 import React from "react"
-import Image from "../building-blocks/image"
+import Image from "../../../../ui-library/src/components/image"
 
 export default function ImageBlock(props) {
 	return (

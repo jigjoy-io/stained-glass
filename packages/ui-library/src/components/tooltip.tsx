@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import "./../../index.css"
+import "../../../platform/src/index.css"
 import { createPortal } from "react-dom"
 
 export default function Tooltip(props: any) {

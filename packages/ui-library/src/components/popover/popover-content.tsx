@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
 import { createPortal } from "react-dom"
-import ClickOutsideListener from "../../../util/click-outside-listener"
 
 export default function PopoverContent(props: any) {
 	const [isOpen, setIsOpen] = useState(null)
@@ -25,8 +24,7 @@ export default function PopoverContent(props: any) {
 		// If the popover content exceeds the viewport, position it higher to ensure full visibility.
 		if (ref.current) {
 			let contentRect = ref.current.getBoundingClientRect()
-			if (contentRect.top + contentRect.height > window.innerHeight)
-				setTop(window.innerHeight - contentRect.height - 16)
+			if (contentRect.top + contentRect.height > window.innerHeight) setTop(window.innerHeight - contentRect.height - 16)
 		}
 	}, [props.rect])
 

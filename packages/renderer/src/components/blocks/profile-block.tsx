@@ -1,5 +1,5 @@
 import React from "react"
-import Profile from "../building-blocks/profile"
+import Profile from "../../../../ui-library/src/components/profile"
 
 export default function ProfileBlock(props) {
 	return (

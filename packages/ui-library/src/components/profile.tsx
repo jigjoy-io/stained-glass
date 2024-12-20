@@ -1,5 +1,5 @@
 import React from "react"
-import Tile from "../shared/tile"
+import Tile from "./tile"
 
 export default function Profile(props: any) {
 	return (

@@ -1,12 +1,8 @@
 import React, { useEffect, useRef, useState } from "react"
-import { useActivePlayer } from "../../util/store"
-import { activePlayerUpdated } from "../../reducers/page-reducer"
-import { useDispatch } from "react-redux"
 
 export default function Video(props: any) {
 	const [source, setSource] = useState(props.source)
 	const videoRef = useRef<HTMLVideoElement | null>(null)
-	const activePlayer = useActivePlayer()
 
 	useEffect(() => {
 		setSource(props.source)
@@ -18,17 +14,9 @@ export default function Video(props: any) {
 		}
 	}, [props.source])
 
-	useEffect(() => {
-		if (activePlayer && activePlayer != props.id) {
-			videoRef.current?.pause()
-		}
-	}, [activePlayer])
-
 	const handlePlay = () => {
 		if (videoRef.current?.paused) {
-			dispatch(activePlayerUpdated(props.id))
-		} else {
-			dispatch(activePlayerUpdated(null))
+			props.onPlay(props.id)
 		}
 	}
 

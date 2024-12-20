@@ -1,5 +1,5 @@
 import React from "react"
-import Heading from "../building-blocks/heading"
+import Heading from "../../../../ui-library/src/components/heading"
 
 export default function HeadingBlock(props) {
 	return (

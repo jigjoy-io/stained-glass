@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import alignmentVariations from "../../util/style-helper/alignment-variations"
+import alignmentVariations from "../../../renderer/src/util/style-helper/alignment-variations"
 
 export default function Heading(props: any) {
 	const [position, setPosition] = useState(props.position)

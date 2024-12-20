@@ -1,5 +1,5 @@
 import React from "react"
-import CarouselTile from "../building-blocks/carousel-tile"
+import CarouselTile from "../../../../ui-library/src/components/carousel-tile"
 
 export default function CarouselTileBlock(props) {
 	return (

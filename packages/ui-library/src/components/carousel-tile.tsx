@@ -1,8 +1,8 @@
 import React, { lazy, Suspense, useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
-import Tile from "../shared/tile"
+import Tile from "./tile"
 const Button = lazy(() => import("renderer/Button"))
-import { carouselPageSwitched, pageExpanded, pageUpdated } from "../../../../platform/src/reducers/page-reducer"
+import { carouselPageSwitched, pageExpanded, pageUpdated } from "../../../platform/src/reducers/page-reducer"
 
 export default function CarouselTile(props: any) {
 	const [color, setColor] = useState("")

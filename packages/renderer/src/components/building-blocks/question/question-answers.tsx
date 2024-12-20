@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from "react"
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import Item from "../../item/item"
+import Item from "../../../../../ui-library/src/components/item"
 import Alert from "../../alert/alert"
 const Button = lazy(() => import("renderer/Button"))
 

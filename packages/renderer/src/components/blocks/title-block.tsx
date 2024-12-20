@@ -1,5 +1,5 @@
 import React from "react"
-import Title from "../building-blocks/title"
+import Title from "../../../../ui-library/src/components/title"
 
 export default function TitleBlock(props) {
 	return (

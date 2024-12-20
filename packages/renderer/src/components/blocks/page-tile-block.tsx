@@ -1,5 +1,5 @@
 import React from "react"
-import PageTile from "../building-blocks/page-tile"
+import PageTile from "../../../../ui-library/src/components/page-tile"
 
 export default function PageTileBlock(props) {
 	return (

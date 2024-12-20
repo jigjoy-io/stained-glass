@@ -1,5 +1,5 @@
 import React from "react"
-import Message from "../building-blocks/message"
+import Message from "../../../../ui-library/src/components/message"
 
 export default function MessageBlock(props) {
 	return (

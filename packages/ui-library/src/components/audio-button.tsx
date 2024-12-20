@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react"
-import SpeakerOnIcon from "../../../../platform/src/icons/speaker-on-icon"
-import SpeakerOnIcon1 from "../../../../platform/src/icons/speaker-on-1-icon"
-import SpeakerOnIcon2 from "../../../../platform/src/icons/speaker-on-2-icon"
-import { activePlayerUpdated } from "../../../../platform/src/reducers/page-reducer"
+import SpeakerOnIcon from "../../../platform/src/icons/speaker-on-icon"
+import SpeakerOnIcon1 from "../../../platform/src/icons/speaker-on-1-icon"
+import SpeakerOnIcon2 from "../../../platform/src/icons/speaker-on-2-icon"
+import { activePlayerUpdated } from "../../../platform/src/reducers/page-reducer"
 import { useDispatch } from "react-redux"
-import { useActivePlayer } from "../../../../platform/src/util/store"
+import { useActivePlayer } from "../../../platform/src/util/store"
 
 interface AudioButtonProps {
 	id: string

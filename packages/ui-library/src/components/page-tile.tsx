@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react"
 
-import Tile from "../shared/tile"
-import Button from "../shared/button"
+import Tile from "./tile"
+import Button from "./button"
 
 import { useDispatch } from "react-redux"
-import { pageExpanded, pageUpdated } from "../../../../platform/src/reducers/page-reducer"
+import { pageExpanded, pageUpdated } from "../../../platform/src/reducers/page-reducer"
 
 export default function PageTile(props: any) {
 	const [color, setColor] = useState("")

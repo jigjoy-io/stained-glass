@@ -1,5 +1,5 @@
 import React from "react"
-import Audio from "../building-blocks/audio-button"
+import Audio from "../../../../ui-library/src/components/audio-button"
 
 export default function AudioBlock(props) {
 	return (
