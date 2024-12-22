@@ -94,7 +94,7 @@ export default function Carousel(props) {
 							<div className="relative h-full">
 								<AnimatePresence initial={true} custom={direction} mode="wait">
 									<motion.div key={pages[current].id} custom={direction} variants={variants} initial="enter" animate="center" exit="exit" className="w-full h-full p-3">
-										<PageContent config={pages[current].config} key={pages[current].id} id={pages[current].id} />
+										<PageContent config={pages[current].config} key={pages[current].id} id={pages[current].id} switchPage={props.switchPage} />
 									</motion.div>
 								</AnimatePresence>
 							</div>

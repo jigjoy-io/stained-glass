@@ -3,13 +3,9 @@ import React, { useEffect, useState } from "react"
 import Tile from "./tile"
 import Button from "./button"
 
-import { useDispatch } from "react-redux"
-import { pageExpanded, pageUpdated } from "../../../platform/src/reducers/page-reducer"
-
 export default function PageTile(props: any) {
 	const [color, setColor] = useState("")
 	const [cta, setCta] = useState(props.cta)
-	const dispatch = useDispatch()
 
 	useEffect(() => {
 		setColor(props.color)
@@ -18,11 +14,6 @@ export default function PageTile(props: any) {
 	useEffect(() => {
 		setCta(props.cta)
 	}, [props.cta])
-
-	const load = () => {
-		dispatch(pageUpdated(props.page))
-		dispatch(pageExpanded(props.page.id))
-	}
 
 	return (
 		<Tile color={color}>
@@ -36,7 +27,7 @@ export default function PageTile(props: any) {
 
 			{props.description && <div className="pt-4">{props.description}</div>}
 			<div className="pt-4">
-				<Button text={cta} color="gradient" rounded action={load} />
+				<Button text={cta} color="gradient" rounded action={() => props.switchPage(props.page)} />
 			</div>
 		</Tile>
 	)

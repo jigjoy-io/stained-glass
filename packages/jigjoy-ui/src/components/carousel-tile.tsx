@@ -14,13 +14,6 @@ export default function CarouselTile(props: any) {
 		setCta(props.cta)
 	}, [props.cta])
 
-	const load = () => {
-		// console.log(props.page.config.pages[0].id)
-		// dispatch(carouselPageSwitched(props.page.config.pages[0].id))
-		// dispatch(pageUpdated(props.page))
-		// dispatch(pageExpanded(props.page.id))
-	}
-
 	return (
 		<Tile color={color}>
 			{props.image && (
@@ -34,7 +27,7 @@ export default function CarouselTile(props: any) {
 			{props.description && <div className="pt-4">{props.description}</div>}
 
 			<div className="pt-4">
-				<Button rounded text={cta} color="gradient" action={load} />
+				<Button rounded text={cta} color="gradient" action={() => props.switchPage(props.page)} />
 			</div>
 		</Tile>
 	)
