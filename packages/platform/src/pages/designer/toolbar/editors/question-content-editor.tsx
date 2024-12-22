@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { updateBlock } from "../../../../reducers/page-reducer"
-import Checkbox from "../../../../../../jigjoyui/src/components/checkbox"
-import Tabs from "../../../../components/tabs/tabs"
-import Tab from "../../../../components/tabs/tab"
-import FileUploader from "../../../../components/file-uploader/file-uploader"
-import FileUrlEditor from "../../../../components/file-uploader/file-url-editor"
 
 export default function QuestionContentEditor(props: any) {
 	const [value, setValue] = useState(props.value)

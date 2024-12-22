@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
 import Tile from "./tile"
-import { carouselPageSwitched, pageExpanded, pageUpdated } from "../../../platform/src/reducers/page-reducer"
 import Button from "./button"
 
 export default function CarouselTile(props: any) {
 	const [color, setColor] = useState("")
 	const [cta, setCta] = useState(props.cta)
-	const dispatch = useDispatch()
 
 	useEffect(() => {
 		setColor(props.color)
@@ -18,10 +15,10 @@ export default function CarouselTile(props: any) {
 	}, [props.cta])
 
 	const load = () => {
-		console.log(props.page.config.pages[0].id)
-		dispatch(carouselPageSwitched(props.page.config.pages[0].id))
-		dispatch(pageUpdated(props.page))
-		dispatch(pageExpanded(props.page.id))
+		// console.log(props.page.config.pages[0].id)
+		// dispatch(carouselPageSwitched(props.page.config.pages[0].id))
+		// dispatch(pageUpdated(props.page))
+		// dispatch(pageExpanded(props.page.id))
 	}
 
 	return (

@@ -24,7 +24,7 @@ export default class BlockFactory {
 			case "carousel-tile":
 				return this.factory.createCarouselTileBlock(blockConfig)
 			case "page-tile":
-				return this.factory.createPageTileBlock(blockConfig)
+				return <></>
 			case "question":
 				return this.factory.createQuestionBlock(blockConfig)
 			case "message":

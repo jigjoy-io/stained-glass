@@ -14,8 +14,7 @@ export default function Button(props: any) {
 		} else if (props.color == "gradient") {
 			setColor("bg-gradient-custom")
 		} else {
-			console.log(props.color)
-			setColor("bg-[black] text-white")
+			setColor("bg-[black] text-[white]")
 		}
 	}
 
