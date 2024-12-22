@@ -50,7 +50,9 @@ export default function Carousel(props) {
 
 	const { previous, next, home } = props.config.buttons
 
-	const backToHome = async () => {}
+	const backToHome = async () => {
+		props.switchPage(props.parentPage)
+	}
 
 	const calculatePercentage = (pageNumber) => {
 		let percentage = (pageNumber / (pages.length - 1)) * 100

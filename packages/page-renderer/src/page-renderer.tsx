@@ -12,7 +12,7 @@ function PageRenderer(props) {
 		setPageModel(model)
 	}
 
-	return <>{pageModel && PageFactory.createPage(pageModel)}</>
+	return <>{pageModel && PageFactory.createPage(pageModel, props)}</>
 }
 
 export default PageRenderer

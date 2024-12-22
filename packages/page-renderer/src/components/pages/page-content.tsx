@@ -28,7 +28,7 @@ export default function PageContent(props: any) {
 				<m.div variants={animation} initial="hidden" animate="show">
 					{blocks.map((block) => (
 						<div key={block.id} className="relative">
-							{BlockFactory.createBlock({ ...block, switchPage: props.switchPage })}
+							{BlockFactory.createBlock({ ...block, switchPage: props.switchPage, parentPage: props.parentPage })}
 						</div>
 					))}
 				</m.div>
