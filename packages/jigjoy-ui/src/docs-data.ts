@@ -1,3 +1,4 @@
+import AudioButtonDocumentation from "./documentations/audion-button-documentation"
 import ButtonDocumentation from "./documentations/button-documentation"
 import HeadingDocumentation from "./documentations/heading-documentation"
 import TitleDocumentation from "./documentations/title-documentation"
@@ -27,6 +28,11 @@ const docs: Documentation[] = [
 		id: "button",
 		name: "Button",
 		component: ButtonDocumentation,
+	},
+	{
+		id: "audio",
+		name: "Audio Button",
+		component: AudioButtonDocumentation,
 	},
 ]
 

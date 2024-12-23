@@ -2,9 +2,6 @@ import React, { useEffect, useRef, useState } from "react"
 import SpeakerOnIcon from "../icons/speaker-on-icon"
 import SpeakerOnIcon1 from "../icons/speaker-on-1-icon"
 import SpeakerOnIcon2 from "../icons/speaker-on-2-icon"
-import { activePlayerUpdated } from "../../../platform/src/reducers/page-reducer"
-import { useDispatch } from "react-redux"
-import { useActivePlayer } from "../../../platform/src/util/store"
 
 interface AudioButtonProps {
 	id: string
@@ -14,11 +11,11 @@ interface AudioButtonProps {
 
 function AudioButton({ id, position, source }: AudioButtonProps) {
 	const [animationState, setAnimationState] = useState(0)
-	const dispatch = useDispatch()
+
 	let intervalId: NodeJS.Timeout | null = null
 
 	const [isPlaying, setIsPlaying] = useState(false)
-	const activePlayer = useActivePlayer()
+
 	const audioRef = useRef<HTMLAudioElement | null>(null)
 
 	useEffect(() => {
@@ -62,18 +59,9 @@ function AudioButton({ id, position, source }: AudioButtonProps) {
 		}
 	}, [])
 
-	useEffect(() => {
-		if (activePlayer != id) {
-			stopPlaying()
-		}
-	}, [activePlayer])
-
 	const togglePlay = () => {
 		if (!isPlaying) {
 			startPlaying()
-			dispatch(activePlayerUpdated(id))
-		} else {
-			dispatch(activePlayerUpdated(null))
 		}
 	}
 
