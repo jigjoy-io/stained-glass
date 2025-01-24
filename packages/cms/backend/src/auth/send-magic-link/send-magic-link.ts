@@ -17,7 +17,7 @@ const ses = new SESClient()
 
 const cognito = new CognitoIdentityProviderClient()
 
-const { SES_FROM_ADDRESS, USER_POOL_ID, BASE_URL } = process.env
+const { SES_FROM_ADDRESS, USER_POOL_ID, CLIENT_URL } = process.env
 const ONE_MIN = 60 * 1000
 const TIMEOUT_MINS = 5
 
@@ -64,7 +64,7 @@ export async function sendMagicLinkHandler({ body }: APIGatewayProxyEvent): Prom
 		const tokenRaw = await encrypt(JSON.stringify(payload))
 		const tokenB64 = Buffer.from(tokenRaw).toString("base64")
 		const token = escape(tokenB64)
-		const magicLink = `${BASE_URL}/interactive-content-designer?email=${email}&token=${token}`
+		const magicLink = `${CLIENT_URL}/interactive-content-designer?email=${email}&token=${token}`
 
 		const updateAttributesCommand = new AdminUpdateUserAttributesCommand({
 			UserPoolId: USER_POOL_ID as string,

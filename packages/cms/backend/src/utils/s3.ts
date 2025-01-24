@@ -1,5 +1,5 @@
 import { S3, ListObjectsV2Command, DeleteObjectsCommand } from "@aws-sdk/client-s3"
-const assetsBucket = process.env.ASSETS_BUCKET
+const assetsBucket = process.env.ASSETS_FOLDER
 
 const s3 = new S3()
 

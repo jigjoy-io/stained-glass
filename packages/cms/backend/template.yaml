@@ -43,7 +43,7 @@ Resources:
     Type: AWS::Cognito::UserPoolDomain
     Properties:
       UserPoolId: !Ref JigJoyUserPool
-      Domain: "{{resolve:secretsmanager:vars:SecretString:UserPoolDomain}}"
+      Domain: "{{resolve:secretsmanager:legacy:SecretString:UserPoolDomain}}"
 
   # Web Client
   WebClient:
@@ -235,7 +235,7 @@ Resources:
           KMS_KEY_ID: !Ref EncryptionKey
           USER_POOL_ID: !Ref JigJoyUserPool
           SES_FROM_ADDRESS: team@jigjoy.io
-          BASE_URL: "{{resolve:secretsmanager:vars:SecretString:FrontendUrl}}"
+          CLIENT_URL: "{{resolve:secretsmanager:legacy:SecretString:ClientUrl}}"
       Policies:
         - Version: "2012-10-17"
           Statement:
@@ -319,7 +319,7 @@ Resources:
               Action:
                 - secretsmanager:GetSecretValue
               Resource:
-                - !Sub arn:aws:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:vars*
+                - !Sub arn:aws:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:legacy*
 
   migrateAssetsFunction:
     Type: AWS::Serverless::Function
@@ -337,7 +337,7 @@ Resources:
       Environment:
         Variables:
           PAGE_TABLE: !Ref PageTable
-          ASSETS_BUCKET: "{{resolve:secretsmanager:vars:SecretString:AssetsBucket}}"
+          ASSETS_FOLDER: "{{resolve:secretsmanager:legacy:SecretString:AssetsBucket}}"
       Events:
         Api:
           Type: Api
@@ -427,7 +427,7 @@ Resources:
       Description: Upload user document to S3
       Environment:
         Variables:
-          ASSETS_BUCKET: "{{resolve:secretsmanager:vars:SecretString:AssetsBucket}}"
+          ASSETS_FOLDER: "{{resolve:secretsmanager:legacy:SecretString:AssetsBucket}}"
       Events:
         Api:
           Type: Api
@@ -521,7 +521,7 @@ Resources:
       Environment:
         Variables:
           PAGE_TABLE: !Ref PageTable
-          ASSETS_BUCKET: "{{resolve:secretsmanager:vars:SecretString:AssetsBucket}}"
+          ASSETS_FOLDER: "{{resolve:secretsmanager:legacy:SecretString:AssetsBucket}}"
       Events:
         Api:
           Type: Api

@@ -33,7 +33,7 @@ Create an environment variables file (env.json) and fill in the required values:
 	"sendMagicLinkFunction": {
 		"KMS_KEY_ID": "_",
 		"USER_POOL_ID": "_",
-		"BASE_URL": "_"
+		"CLIENT_URL": "_"
 	},
 	"createPageFunction": {
 		"PAGE_TABLE": "_"
@@ -45,7 +45,7 @@ Create an environment variables file (env.json) and fill in the required values:
 		"PAGE_TABLE": "_"
 	},
 	"uploadDocumentFunction": {
-		"ASSETS_BUCKET": "_"
+		"ASSETS_FOLDER": "_"
 	},
 	"retrievePagesFunction": {
 		"PAGE_TABLE": "_"
@@ -55,7 +55,7 @@ Create an environment variables file (env.json) and fill in the required values:
 	},
 	"removePageFunction": {
 		"PAGE_TABLE": "_",
-		"ASSETS_BUCKET": "_"
+		"ASSETS_FOLDER": "_"
 	},
 	"publishPageFunction": {
 		"PAGE_TABLE": "_"

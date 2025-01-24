@@ -1,7 +1,7 @@
 import { S3, PutObjectCommand } from "@aws-sdk/client-s3"
 
 const s3 = new S3()
-const assetsBucket = process.env.ASSETS_BUCKET
+const assetsBucket = process.env.ASSETS_FOLDER
 
 /**
  * Uploads a file to S3 and returns the file URL.
@@ -12,7 +12,12 @@ const assetsBucket = process.env.ASSETS_BUCKET
  * @param {string} file.rootPageId - The root page id.
  * @returns {Promise<string>} The URL of the uploaded file.
  */
-export async function uploadDocument(file: { filename: string; content: Buffer; mimetype: string; rootPageId: string }): Promise<string> {
+export async function uploadDocument(file: {
+	filename: string
+	content: Buffer
+	mimetype: string
+	rootPageId: string
+}): Promise<string> {
 	const folderPath = `assets/${file.rootPageId}/`
 
 	const params = {
