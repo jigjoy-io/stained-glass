@@ -13,7 +13,7 @@ const animation = {
 	},
 }
 
-const loadFeatures = () => import("../../util/style-helper/animations").then((res) => res.default)
+const loadFeatures = () => import("../style-helper/animations").then((res) => res.default)
 
 export default function ViewPageContent(props: any) {
 	const [blocks, setBlocks] = useState<any[]>([])

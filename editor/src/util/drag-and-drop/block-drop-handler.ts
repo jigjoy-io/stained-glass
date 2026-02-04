@@ -1,8 +1,8 @@
 import { useDrop } from "react-dnd"
 import { useState, Dispatch } from "react"
-import { RubberBandDropStrategy } from "../drag-and-drop/rubber-band-drop-strategy"
-import { ToolbarDropStrategy } from "../drag-and-drop/toolbar-drop-strategy"
-import { DropHandler } from "../drag-and-drop/drop-handler"
+import { RubberBandDropStrategy } from "./rubber-band-drop-strategy"
+import { ToolbarDropStrategy } from "./toolbar-drop-strategy"
+import { DropHandler } from "./drop-handler"
 
 interface UseBlockDropHandlerParams {
 	blocks: any[]
