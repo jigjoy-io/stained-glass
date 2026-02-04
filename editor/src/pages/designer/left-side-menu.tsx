@@ -59,20 +59,8 @@ export default function LeftSideMenu() {
 		}
 	}
 
-	const createNewPage = async () => {
-		navigate({ to: "/onboarding" })
-	}
-
 	return (
 		<div className="h-[100dvh] max-h-[100dvh] bg-[#F2EEF0] bg-opacity-30 border-r border-light shadow-lg flex flex-col flex-none">
-			<div
-				className="mx-2 mt-5 px-3 py-2 flex flex-row items-center hover:bg-primary-light hover:bg-opacity-60 rounded-[5px] cursor-pointer border"
-				onClick={createNewPage}
-			>
-				<AddBlockIcon />
-				<div className="font-bold">Start New Project</div>
-			</div>
-
 			<div className="grow overflow-y-auto mt-4">
 				{pages.length > 0 && (
 					<div className="flex flex-col">
