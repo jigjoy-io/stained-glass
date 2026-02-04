@@ -1,3 +1,0 @@
-langchain-core
-langchain-openai
-boto3
