@@ -27,10 +27,6 @@ function refine(block: any) {
 		block = refineBuildingBlocks(block)
 	} else if (block.type == "page-tile") {
 		block.page = refine(block.page)
-	} else if (block.type == "question") {
-		for (let i = 0; i < block.answers.length; i++) {
-			block.answers[i].id = uuid()
-		}
 	}
 	return block
 }

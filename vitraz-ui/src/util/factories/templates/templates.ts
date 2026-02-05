@@ -39,45 +39,6 @@ export class TemplatesStorage {
 				source: "/public/images/placeholderimage.jpg",
 				display: true,
 			},
-			question: {
-				type: "question",
-				content: {
-					displayQuestion: true,
-					text: "Question text...",
-					displayImage: true,
-					image: "/public/images/placeholderimage.jpg",
-				},
-				answers: [
-					{
-						id: uuid(),
-						correct: false,
-						text: "Answer 1 text",
-					},
-					{
-						id: uuid(),
-						correct: true,
-						text: "Answer 2 text",
-					},
-					{
-						id: uuid(),
-						correct: false,
-						text: "Answer 3 text",
-					},
-				],
-				outcomes: {
-					confirmationButtonText: "Check the answer",
-					correct: {
-						message: "The answer is correct.",
-						title: "Great!",
-						type: "success",
-					},
-					incorrect: {
-						message: "The answer is not correct.",
-						title: "Better luck next time",
-						type: "danger",
-					},
-				},
-			},
 			"block-selector": {
 				type: "block-selector",
 			},

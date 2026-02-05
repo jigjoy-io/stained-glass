@@ -50,20 +50,6 @@ function seedMockPages(origin: string): any[] {
 			buildingBlocks: [
 				createMockBlock("block-selector"),
 				createMockBlock("title", { text: "Learn something" }),
-				createMockBlock("question", {
-					content: { displayQuestion: true, text: "What is 2 + 2?", displayImage: false, image: "" },
-					answers: [
-						{ id: uuidv4(), correct: false, text: "3" },
-						{ id: uuidv4(), correct: true, text: "4" },
-						{ id: uuidv4(), correct: false, text: "5" },
-					],
-					outcomes: {
-						confirmationButtonText: "Check the answer",
-						correct: { message: "Correct.", title: "Great!", type: "success" },
-						incorrect: { message: "Try again.", title: "Oops", type: "danger" },
-					},
-				}),
-				createMockBlock("message", { message: "Feedback message.", audio: "", position: "left", color: "rose" }),
 			],
 		},
 	}

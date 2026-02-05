@@ -2,7 +2,6 @@ import PageIcon from "../../../../icons/page-icon"
 import RenameIcon from "../../../../icons/rename-icon"
 import ImageIcon from "../../../../icons/image-icon"
 import AudioIcon from "../../../../icons/audio-icon"
-import QuestionIcon from "../../../../icons/question-icon"
 
 export class SelectorOptions {
 	static getOptions() {
@@ -52,17 +51,7 @@ export class SelectorOptions {
 						icon: AudioIcon,
 					},
 				],
-			},
-			{
-				key: "advanced",
-				commands: [
-					{
-						key: "question",
-						label: "Question",
-						icon: QuestionIcon,
-					},
-				],
-			},
+			}
 		]
 
 		return options
