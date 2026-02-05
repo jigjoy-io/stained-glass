@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { LazyMotion, m } from "framer-motion"
 import PlainBlockFactory from "./plain-block-factory"
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import UrlValidator from "../../util/file-upload/url-validator"
 import Alert from "../alert/alert"
 import Input from "../input/input"

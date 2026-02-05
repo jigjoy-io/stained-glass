@@ -10,7 +10,7 @@ export class SelectorOptions {
 				key: "pages",
 				commands: [
 					{
-						key: "page-configurer",
+						key: "page-tile",
 						label: "Blank Page",
 						icon: PageIcon,
 					},

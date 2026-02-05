@@ -1,5 +1,3 @@
-import React from "react"
-
 export default function DuplicateIcon() {
 	return (
 		<svg viewBox="0 0 16 16" className="w-[16px] h-[16px] block">

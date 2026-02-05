@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import SpeakerOnIcon from "../../icons/speaker-on-icon"
 import SpeakerOnIcon1 from "../../icons/speaker-on-1-icon"
 import SpeakerOnIcon2 from "../../icons/speaker-on-2-icon"

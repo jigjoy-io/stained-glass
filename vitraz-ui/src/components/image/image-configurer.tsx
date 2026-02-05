@@ -1,4 +1,3 @@
-import React from "react"
 import ImageEditingIcon from "../../icons/image-editing-icon"
 import MediaSettings from "../media-settings/media-settings"
 

@@ -10,23 +10,6 @@ function traversBlankPage(page: any, block: any) {
 	return page
 }
 
-function traversCarouselPage(page: any, block: any) {
-	for (let i = 0; i < page.config.pages.length; i++) {
-		if (page.config.pages[i].id == block.id) {
-			//TODO: REMOVE AFTER REFACTORE
-			delete page.config.pages[i].root
-			delete page.config.pages[i].ident
-			delete page.config.pages[i].mode
-			page.config.pages[i] = block
-			return page
-		} else {
-			page.config.pages[i] = traversPage(page.config.pages[i], block)
-		}
-	}
-
-	return page
-}
-
 function traversPage(page: any, block: any) {
 	//TODO: REMOVE AFTER REFACTORE
 	delete page.root

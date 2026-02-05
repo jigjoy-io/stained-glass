@@ -1,5 +1,3 @@
-import React from "react"
-
 export default function OpenMenuIcon() {
 	return (
 		<div role="button" className="flex items-center justify-center w-[18px] h-[24px] rounded-[5px]">

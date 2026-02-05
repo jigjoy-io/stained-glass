@@ -7,7 +7,6 @@ const Title = lazy(() => import("../../components/title/title"))
 const Image = lazy(() => import("../../components/image/image"))
 const Button = lazy(() => import("../../components/button/button"))
 const PageTile = lazy(() => import("../../components/page/page-tile"))
-const PageConfigurer = lazy(() => import("../../components/page/page-configurer"))
 const BlockSelector = lazy(() => import("../../pages/designer/toolbar/block-selector/block-selector"))
 const ImageConfigurer = lazy(() => import("../../components/image/image-configurer"))
 const AudioConfigurer = lazy(() => import("../../components/audio/audio-configurer"))
@@ -40,9 +39,6 @@ export default class BlockFactory extends React.Component {
 		},
 		"page-tile": {
 			component: PageTile,
-		},
-		"page-configurer": {
-			component: PageConfigurer,
 		},
 		"block-selector": {
 			component: BlockSelector,

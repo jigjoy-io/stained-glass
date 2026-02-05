@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 
 export default function Tab(props: any) {
 	const [display, setDisplay] = useState(false)

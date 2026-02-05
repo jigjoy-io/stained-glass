@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react"
+import { useRef, useState, useEffect, cloneElement, Children } from "react"
 
 function Popover(props: any) {
 	const [on, setOn] = useState(props.on)
@@ -16,8 +16,8 @@ function Popover(props: any) {
 
 	return (
 		<div className="flex flex-row" ref={ref}>
-			{React.Children.map(props.children, (child) =>
-				React.cloneElement(child, { on: on, toggle: toggle, onClose: props.onClose, rect: rect }),
+			{Children.map(props.children, (child: any) =>
+				cloneElement(child, { on: on, toggle: toggle, onClose: props.onClose, rect: rect }),
 			)}
 		</div>
 	)

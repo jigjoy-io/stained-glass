@@ -1,5 +1,3 @@
-import { v4 as uuid } from "uuid"
-
 export class TemplatesStorage {
 	static getTemplates() {
 		let templates = {
@@ -41,13 +39,6 @@ export class TemplatesStorage {
 			},
 			"block-selector": {
 				type: "block-selector",
-			},
-			"page-configurer": {
-				type: "page-configurer",
-				accessType: "freebie",
-				title: "Title",
-				description: "Description...",
-				display: true,
 			},
 			"page-tile": {
 				type: "page-tile",

@@ -1,4 +1,3 @@
-import React from "react"
 import { usePage } from "../util/store"
 import { PageFactory } from "../util/factories/page-factory"
 

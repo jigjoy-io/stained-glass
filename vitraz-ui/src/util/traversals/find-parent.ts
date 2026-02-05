@@ -16,20 +16,6 @@ function traversBlankPage(page: any, innerPage: any, parent: any) {
 	return parent
 }
 
-function traversCarouselPage(page: any, innerPage: any, parent: any) {
-	for (let i = 0; i < page.config.pages.length; i++) {
-		if (page.config.pages[i].id == innerPage.id) {
-			return page
-		}
-	}
-
-	for (let i = 0; i < page.config.pages.length; i++) {
-		parent = traversePage(page.config.pages[i], innerPage, parent)
-	}
-
-	return parent
-}
-
 export function traversePage(page: any, innerPage: any, parent: any) {
 	if (page.type == "blank") {
 		parent = traversBlankPage(page, innerPage, parent)

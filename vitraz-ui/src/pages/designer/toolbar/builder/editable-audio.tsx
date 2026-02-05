@@ -1,4 +1,3 @@
-import React from "react"
 import AudioEditor from "../editors/audio-editor"
 import PositionEditor from "../editors/position-editor"
 import Toolbar from "../toolbar"

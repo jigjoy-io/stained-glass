@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { LazyMotion, m } from "framer-motion"
 import { useDispatch } from "react-redux"
 import { appendBlock, focusBlock } from "../../reducers/page-reducer"

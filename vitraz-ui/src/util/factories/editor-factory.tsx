@@ -35,9 +35,6 @@ export default class EditorFactory extends React.Component {
 		cta: {
 			builder: new NoneEditableBlock(),
 		},
-		"page-configurer": {
-			builder: new BasicEditableBlock(),
-		},
 		"page-tile": {
 			builder: new EditablePageTile(),
 		},

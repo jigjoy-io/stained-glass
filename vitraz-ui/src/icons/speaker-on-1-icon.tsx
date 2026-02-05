@@ -1,4 +1,3 @@
-import React from "react"
 
 function SpeakerOnIcon1() {
 	return (

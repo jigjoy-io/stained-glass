@@ -1,5 +1,4 @@
-import React, { useState } from "react"
-import { useEffect } from "react"
+import { useState, useEffect} from "react"
 import FailedIcon from "../../icons/failed-icon"
 import SuccessIcon from "../../icons/success-icon"
 import InfoIcon from "../../icons/info-icon"

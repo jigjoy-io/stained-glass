@@ -33,7 +33,6 @@ export const useHovered = () => useAppSelector((state: any) => state.sidebar.hov
 
 export const usePage = () => useAppSelector((state: any) => state.page.activePage)
 export const useActivePlayer = () => useAppSelector((state: any) => state.page.activePlayer)
-export const useCurrentCarouselPage = () => useAppSelector((state: any) => state.page.currentCarouselPage)
 export const useModified = () => useAppSelector((state: any) => state.page.modified)
 export const usePages = () => useAppSelector((state: any) => state.page.pages)
 export const useRootPage = () => useAppSelector((state: any) => state.page.rootPage)

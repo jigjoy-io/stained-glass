@@ -1,5 +1,3 @@
-import React from "react"
-
 export default function ExpandDownIcon() {
 	return (
 		<svg viewBox="0 0 12 12" className="w-[12px] h-[12px] block">

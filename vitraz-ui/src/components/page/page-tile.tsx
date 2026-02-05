@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import Button from "../button/button"
 import Grid from "../grid/grid"
 import { useDispatch } from "react-redux"

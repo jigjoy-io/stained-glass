@@ -1,4 +1,3 @@
-import React from "react"
 import Grid from "../grid/grid"
 import Item from "../item/item"
 

@@ -1,4 +1,3 @@
-import React from "react"
 import ViewPageContent from "./view-page-content"
 import EditPageContent from "./edit-page-content"
 

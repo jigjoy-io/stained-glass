@@ -1,5 +1,3 @@
-import React from "react"
-
 export default function PageIcon() {
 	return (
 		<svg viewBox="0 0 16 16" className="w-[18px] h-[18px] block">

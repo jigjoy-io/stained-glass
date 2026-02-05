@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import CheckedIcon from "../../icons/checked-icon"
 
 export default function Checkbox(props: any) {

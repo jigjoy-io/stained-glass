@@ -1,4 +1,3 @@
-import React from "react"
 import * as styles from "./spinner.module.css"
 
 function Spinner() {

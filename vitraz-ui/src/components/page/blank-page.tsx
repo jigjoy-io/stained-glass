@@ -1,4 +1,3 @@
-import React from "react"
 import { usePage } from "../../util/store"
 import Content from "../page-content"
 

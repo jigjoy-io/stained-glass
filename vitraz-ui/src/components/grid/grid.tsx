@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import { Children, cloneElement, useEffect, useState } from "react"
 
 export default function Grid(props: any) {
 	const [layout, setLayout] = useState(props.layout)
@@ -11,5 +11,5 @@ export default function Grid(props: any) {
 		}
 	})
 
-	return <div className={`grid ${layout} rounded-[5px] gap-1 w-max max-w-[100%]`}>{React.Children.map(props.children, (child) => React.cloneElement(child, { "data-border-on": false }))}</div>
+	return <div className={`grid ${layout} rounded-[5px] gap-1 w-max max-w-[100%]`}>{Children.map(props.children, (child: any) => cloneElement(child, { "data-border-on": false }))}</div>
 }

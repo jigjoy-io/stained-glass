@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react"
+import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import { useDispatch } from "react-redux"
 import { blockingUpdated } from "../../reducers/editor-reducer"
 import { updateBlock } from "../../reducers/page-reducer"

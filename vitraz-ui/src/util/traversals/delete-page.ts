@@ -17,19 +17,6 @@ function deleteFromBlankPage(page: any, blockId: any) {
 	return page
 }
 
-function deleteFromCarouselPage(page: any, blockId: any) {
-	let filtered: any[] = []
-	for (let i = 0; i < page.config.pages.length; i++) {
-		if (page.config.pages[i].id !== blockId) {
-			page.config.pages[i] = deleteFromBlankPage(page.config.pages[i], blockId)
-			filtered.push(page.config.pages[i])
-		}
-	}
-
-	page.config.pages = filtered
-
-	return page
-}
 export function deletePage(page: any, blockId: any) {
 	//TODO: REMOVE AFTER REFACTORE
 	delete page.root
