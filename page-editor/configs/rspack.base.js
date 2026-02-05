@@ -1,14 +1,14 @@
 const path = require("path")
 const rspack = require("@rspack/core")
 const Dotenv = require("dotenv-webpack")
-const { TsCheckerRspackPlugin } = require('ts-checker-rspack-plugin');
+const { TsCheckerRspackPlugin } = require("ts-checker-rspack-plugin")
 
 // Target browsers, see: https://github.com/browserslist/browserslist
 const targets = ["chrome >= 87", "edge >= 88", "firefox >= 78", "safari >= 14"]
 
 module.exports = {
 	entry: {
-		main: path.join(__dirname, "../src/main.tsx"),
+		main: path.join(__dirname, "../src/index.tsx"),
 	},
 	output: {
 		publicPath: "auto",
@@ -59,14 +59,14 @@ module.exports = {
 		}),
 		new TsCheckerRspackPlugin({
 			typescript: {
-			  configOverwrite: {
-				compilerOptions: {
-				  jsx: "react-jsx", 
-				  allowJs: true, 
+				configOverwrite: {
+					compilerOptions: {
+						jsx: "react-jsx",
+						allowJs: true,
+					},
 				},
-			  },
 			},
-		  }),
+		}),
 	],
 	optimization: {
 		minimizer: [
