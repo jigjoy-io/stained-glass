@@ -8,13 +8,11 @@ const Image = lazy(() => import("../../components/image/image"))
 const Button = lazy(() => import("../../components/button/button"))
 const Question = lazy(() => import("../../components/question/question"))
 const Message = lazy(() => import("../../components/message/message"))
-const Reel = lazy(() => import("../../components/reel/reel"))
 const PageTile = lazy(() => import("../../components/page/page-tile"))
 const PageConfigurer = lazy(() => import("../../components/page/page-configurer"))
 const BlockSelector = lazy(() => import("../../pages/designer/toolbar/block-selector/block-selector"))
 const ImageConfigurer = lazy(() => import("../../components/image/image-configurer"))
 const AudioConfigurer = lazy(() => import("../../components/audio/audio-configurer"))
-const ReelConfigurer = lazy(() => import("../../components/reel/reel-configurer"))
 
 export default class BlockFactory extends React.Component {
 	static buildingBlocks: any = {
@@ -47,12 +45,6 @@ export default class BlockFactory extends React.Component {
 		},
 		message: {
 			component: Message,
-		},
-		reel: {
-			component: Reel,
-		},
-		"reel-configurer": {
-			component: ReelConfigurer,
 		},
 		"page-tile": {
 			component: PageTile,

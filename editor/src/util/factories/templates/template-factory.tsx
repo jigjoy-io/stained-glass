@@ -42,12 +42,6 @@ export default class TemplateFactory {
 		return audioBlock
 	}
 
-	static createReelBlock(fileUrl) {
-		let reelBlock = this.create("reel")
-		reelBlock.source = fileUrl
-		return reelBlock
-	}
-
 	static createPage(type, origin) {
 		if (type == "blank") return this.createBlankPage(origin)
 
@@ -60,9 +54,6 @@ export default class TemplateFactory {
 		}
 		if (mediaType === "image") {
 			return TemplateFactory.createImageBlock(uploadedFileUrl)
-		}
-		if (mediaType === "video") {
-			return TemplateFactory.createReelBlock(uploadedFileUrl)
 		}
 	}
 

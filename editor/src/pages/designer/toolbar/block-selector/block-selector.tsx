@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react"
 import { useDispatch } from "react-redux"
 import { createPortal } from "react-dom"
-import { useActiveBlock, usePage } from "../../../../util/store"
+import { SelectorOptions } from "./selector-options"
+import { useActiveBlock } from "../../../../util/store"
 import { blockingUpdated } from "../../../../reducers/editor-reducer"
 import TemplateFactory from "../../../../util/factories/templates/template-factory"
 import { focusBlock, insertBlock } from "../../../../reducers/page-reducer"
@@ -10,8 +11,6 @@ import Item from "../../../../components/item/item"
 import { handleTextBlockKeyDown } from "../../../../util/factories/key-command-factory"
 
 export default function BlockSelector(props: any) {
-	const page = usePage()
-
 	const [option, setOption] = useState(props.option || "")
 	const [options, setOptions] = useState([] as any)
 	const [allOptions, setAllOptions] = useState([] as any)
@@ -25,6 +24,11 @@ export default function BlockSelector(props: any) {
 	const dispatch = useDispatch()
 
 	useEffect(() => {
+		const selectorOptions = SelectorOptions.getOptions()
+
+		setOptions(selectorOptions)
+		setAllOptions(selectorOptions)
+
 		inputRef.current?.focus()
 	}, [])
 
@@ -141,7 +145,7 @@ export default function BlockSelector(props: any) {
 					<ClickOutsideListener callback={closeMenu}>
 						<div
 							style={{ top: top, left: left, transform: `translate(-100%, -${calculateY()}%)` }}
-							className={`fixed flex flex-col w-[100%] h-auto max-h-[400px] overflow-y-auto bg-white shadow rounded-[5px] p-1 -translate-x-[100%]`}
+							className={`fixed flex flex-col w-[100%] md:max-w-[340px] h-auto max-h-[400px] overflow-y-auto bg-white shadow rounded-[2px] p-1 -translate-x-[100%]`}
 						>
 							{options.map((option: any, index) => (
 								<div key={option.key}>
@@ -170,7 +174,7 @@ export default function BlockSelector(props: any) {
 				type="text"
 				value={option}
 				onFocus={() => setPlaceholder(placeholder)}
-				className="w-full h-10 px-3 py-2 bg-white rounded-md border border-light outline-none"
+				className="w-full h-10 bg-white rounded-md outline-none"
 				placeholder={placeholder}
 				onChange={handleChange}
 				onKeyDown={handleKeyDown}

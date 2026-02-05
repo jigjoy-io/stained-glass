@@ -1,7 +1,6 @@
 import PageIcon from "../../../../icons/page-icon"
 import RenameIcon from "../../../../icons/rename-icon"
 import ImageIcon from "../../../../icons/image-icon"
-import VideoIcon from "../../../../icons/video-icon"
 import AudioIcon from "../../../../icons/audio-icon"
 import QuestionIcon from "../../../../icons/question-icon"
 import MessageIcon from "../../../../icons/message-icon"
@@ -52,12 +51,6 @@ export class SelectorOptions {
 						label: "Image",
 						description: "Upload an image or insert its link.",
 						icon: ImageIcon,
-					},
-					{
-						key: "reel-configurer",
-						label: "Reel",
-						description: "Upload an video or insert its link.",
-						icon: VideoIcon,
 					},
 					{
 						key: "audio-configurer",

@@ -85,46 +85,8 @@ export class TemplatesStorage {
 				position: "left",
 				color: "rose",
 			},
-			reel: {
-				type: "reel",
-				source: "https://www.w3schools.com/html/mov_bbb.mp4",
-				position: "left",
-			},
-			"reel-configurer": {
-				type: "reel-configurer",
-				source: "https://www.w3schools.com/html/mov_bbb.mp4",
-				display: true,
-			},
-			"carousel-tile": {
-				type: "carousel-tile",
-				title: "Title",
-				description: "Description...",
-				cta: "Start",
-			},
 			"block-selector": {
 				type: "block-selector",
-			},
-			"carousel-configurer": {
-				type: "carousel-configurer",
-				accessType: "freebie",
-				title: "Title",
-				description: "Description...",
-				numberOfPages: 3,
-				display: true,
-			},
-			carousel: {
-				type: "carousel",
-				name: "Carousel",
-				environment: "development",
-				linkedPageId: null,
-				config: {
-					pages: [],
-					buttons: {
-						previous: "Previous",
-						next: "Next",
-						home: "Back to Home",
-					},
-				},
 			},
 			"page-configurer": {
 				type: "page-configurer",
