@@ -1,4 +1,4 @@
-# Stained Glass Page Editor
+# Vitraz Page Editor
 
 A modular editor built for mixing and matching blocks into flexible, interactive pages.
 
