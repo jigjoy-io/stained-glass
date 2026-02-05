@@ -230,11 +230,3 @@ export async function removePage(id: string) {
 	publishedById.delete(id)
 	return { success: true }
 }
-
-export async function publishPage(page: any) {
-	const copy = JSON.parse(JSON.stringify(page))
-	const key = copy.linkedPageId ?? copy.id
-	publishedById.set(key, copy)
-	pagesById.set(copy.id, copy)
-	return copy
-}

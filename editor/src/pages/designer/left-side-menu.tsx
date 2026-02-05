@@ -18,44 +18,11 @@ export default function LeftSideMenu() {
 	const navigate = useNavigate()
 	const pages = usePages()
 	const page = useRootPage()
-	const [isLoading, setIsLoading] = useState(false)
-	const [showSuccess, setShowSuccess] = useState(false)
-	const [showError, setShowError] = useState(false)
 
 	const dispatch = useDispatch()
 
 	const enterPreview = () => {
 		navigate({ to: "/preview" })
-	}
-
-	const publish = async () => {
-		setIsLoading(true)
-		setShowSuccess(false)
-		setShowError(false)
-		try {
-			let pageToPublish = JSON.parse(JSON.stringify(page))
-
-			if (!pageToPublish.linkedPageId) {
-				pageToPublish.linkedPageId = uuidv4()
-
-				dispatch(rootPageUpdated(pageToPublish))
-				dispatch(pageUpdated(pageToPublish))
-
-				updatePage(pageToPublish)
-			}
-
-			await publishPage(pageToPublish)
-
-			setShowSuccess(true)
-			setIsLoading(false)
-			setTimeout(() => {
-				setShowSuccess(false)
-				setShowError(false)
-			}, 3000)
-		} catch (error) {
-			console.log(error)
-			setShowError(true)
-		}
 	}
 
 	return (
@@ -94,31 +61,6 @@ export default function LeftSideMenu() {
 			<div className="w-full relative h-[300px] min-h-[300px] pt-4">
 				{page && (
 					<div className="w-full py-2 absolute bottom-0">
-						{isLoading && (
-							<div className="px-3">
-								<div className="w-full h-fit">
-									<Loader message="Publishing page in progress" />
-								</div>
-							</div>
-						)}
-						{showSuccess && (
-							<div className="px-3">
-								<Alert
-									type="success"
-									title="Project published"
-									message="Click `Share` to get a link with applied changes"
-								/>
-							</div>
-						)}
-						{showError && (
-							<div className="px-3">
-								<Alert
-									type="danger"
-									title="Something went wrong"
-									message="The page was not published. Please try again later or contact JigJoy support."
-								/>
-							</div>
-						)}
 						<div className="w-[100%] px-3 py-1 flex gap-x-2">
 							<div className="w-[50%]">
 								<Button text="Preview" color="default" width="w-full" action={enterPreview} />
@@ -130,9 +72,6 @@ export default function LeftSideMenu() {
 							>
 								Share
 							</Link>
-						</div>
-						<div className="w-[100%] px-3 py-1">
-							<Button width="w-full" text="Publish" action={publish} />
 						</div>
 					</div>
 				)}
