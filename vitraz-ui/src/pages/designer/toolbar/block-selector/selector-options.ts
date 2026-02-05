@@ -3,7 +3,6 @@ import RenameIcon from "../../../../icons/rename-icon"
 import ImageIcon from "../../../../icons/image-icon"
 import AudioIcon from "../../../../icons/audio-icon"
 import QuestionIcon from "../../../../icons/question-icon"
-import MessageIcon from "../../../../icons/message-icon"
 
 export class SelectorOptions {
 	static getOptions() {
@@ -61,11 +60,6 @@ export class SelectorOptions {
 						key: "question",
 						label: "Question",
 						icon: QuestionIcon,
-					},
-					{
-						key: "message",
-						label: "Message",
-						icon: MessageIcon,
 					},
 				],
 			},

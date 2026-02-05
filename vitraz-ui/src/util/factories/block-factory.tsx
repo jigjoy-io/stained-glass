@@ -7,7 +7,6 @@ const Title = lazy(() => import("../../components/title/title"))
 const Image = lazy(() => import("../../components/image/image"))
 const Button = lazy(() => import("../../components/button/button"))
 const Question = lazy(() => import("../../components/question/question"))
-const Message = lazy(() => import("../../components/message/message"))
 const PageTile = lazy(() => import("../../components/page/page-tile"))
 const PageConfigurer = lazy(() => import("../../components/page/page-configurer"))
 const BlockSelector = lazy(() => import("../../pages/designer/toolbar/block-selector/block-selector"))
@@ -42,9 +41,6 @@ export default class BlockFactory extends React.Component {
 		},
 		question: {
 			component: Question,
-		},
-		message: {
-			component: Message,
 		},
 		"page-tile": {
 			component: PageTile,

@@ -78,13 +78,6 @@ export class TemplatesStorage {
 					},
 				},
 			},
-			message: {
-				type: "message",
-				message: "Message text goes here...",
-				audio: "https://www.w3schools.com/html/mov_bbb.mp4",
-				position: "left",
-				color: "rose",
-			},
 			"block-selector": {
 				type: "block-selector",
 			},

@@ -5,7 +5,6 @@ const gaps: any = {
 	title: "py-3",
 	image: "py-3",
 	question: "py-3",
-	message: "py-3",
 	"page-tile": "py-3",
 	"block-selector": "py-1",
 	"page-configurer": "py-1",

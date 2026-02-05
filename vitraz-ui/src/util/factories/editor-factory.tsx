@@ -3,7 +3,6 @@ import EditableText from "../../pages/designer/toolbar/builder/editable-text"
 import EditableImage from "../../pages/designer/toolbar/builder/editable-image"
 import NoneEditableBlock from "../../pages/designer/toolbar/builder/none-editable-block"
 import EditableQuestion from "../../pages/designer/toolbar/builder/editable-question"
-import EditableMessage from "../../pages/designer/toolbar/builder/editable-message"
 import EditableAudio from "../../pages/designer/toolbar/builder/editable-audio"
 import BasicEditableBlock from "../../pages/designer/toolbar/builder/basic-editable-block"
 import EditablePageTile from "../../pages/designer/toolbar/builder/editable-page-tile"
@@ -30,9 +29,6 @@ export default class EditorFactory extends React.Component {
 		},
 		question: {
 			builder: new EditableQuestion(),
-		},
-		message: {
-			builder: new EditableMessage(),
 		},
 		audio: {
 			builder: new EditableAudio(),
