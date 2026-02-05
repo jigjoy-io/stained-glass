@@ -141,7 +141,7 @@ export default function BlockSelector(props: any) {
 					<ClickOutsideListener callback={closeMenu}>
 						<div
 							style={{ top: top, left: left, transform: `translate(-100%, -${calculateY()}%)` }}
-							className={`fixed flex flex-col w-[100%] md:max-w-[340px] h-auto max-h-[400px] overflow-y-auto bg-white shadow rounded-[5px] p-1 -translate-x-[100%]`}
+							className={`fixed flex flex-col w-[100%] h-auto max-h-[400px] overflow-y-auto bg-white shadow rounded-[5px] p-1 -translate-x-[100%]`}
 						>
 							{options.map((option: any, index) => (
 								<div key={option.key}>

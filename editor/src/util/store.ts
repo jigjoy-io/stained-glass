@@ -3,8 +3,6 @@ import pageReducer from "../reducers/page-reducer"
 import { useDispatch, useSelector } from "react-redux"
 import toolbarReducer from "../reducers/editor-reducer"
 import sidebarReducer from "../reducers/sidebar-reducer"
-import storage from "redux-persist/lib/storage"
-import { persistStore, persistReducer } from "redux-persist"
 
 const rootReducer = combineReducers({
 	toolbar: toolbarReducer,
@@ -12,22 +10,13 @@ const rootReducer = combineReducers({
 	sidebar: sidebarReducer,
 })
 
-const persistConfig = {
-	key: "root",
-	storage: storage,
-	whitelist: ["page"],
-}
-
-const persistedReducer = persistReducer<ReturnType<typeof rootReducer>>(persistConfig, rootReducer)
-
 export const store = configureStore({
-	reducer: persistedReducer,
+	reducer: rootReducer,
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({
 			serializableCheck: false,
 		}),
 })
-export const persistor = persistStore(store)
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>

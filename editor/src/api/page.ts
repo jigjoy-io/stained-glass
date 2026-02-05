@@ -23,7 +23,6 @@ function seedMockPages(origin: string): any[] {
 				createMockBlock("heading", { text: "Section heading" }),
 				createMockBlock("text", { text: "Some body text here." }),
 				createMockBlock("image", { source: "/public/images/placeholderimage/jpg", position: "left", size: "large" }),
-				createMockBlock("button"),
 			],
 		},
 	}

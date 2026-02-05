@@ -49,7 +49,7 @@ export default function Designer() {
 	return (
 		<div style={{ pointerEvents: blocked ? "none" : "auto" }} className="overflow-x-hidden">
 			<div className="flex flex-row">
-				<div className="w-[200px] min-w-[200px] max-w-[200px] lg:w-[230px] lg:min-w-[360px] lg:max-w-[360px] grow-0">
+				<div className="w-[200px] min-w-[200px] max-w-[200px] lg:w-[230px] lg:min-w-[230px] lg:max-w-[230px] grow-0">
 					<LeftSideMenu />
 				</div>
 				<div
