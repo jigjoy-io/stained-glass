@@ -1,17 +1,12 @@
-import React, { useState } from "react"
+import React from "react"
 import { useDispatch } from "react-redux"
-import { publishPage, updatePage } from "../../api/page"
-import Alert from "../../components/alert/alert"
 import Button from "../../components/button/button"
-import { pageUpdated, rootPageUpdated } from "../../reducers/page-reducer"
 import { usePages, useRootPage } from "../../util/store"
 import Node from "./node"
 import { Link, useNavigate } from "@tanstack/react-router"
 import { sidebarExpanded } from "../../reducers/sidebar-reducer"
-import Loader from "../../components/loader/loader"
 
 import MagicIcon from "../../icons/magic-icon"
-import { v4 as uuidv4 } from "uuid"
 import SidePanel from "./right-side-menu/side-panel"
 
 export default function LeftSideMenu() {
@@ -62,16 +57,7 @@ export default function LeftSideMenu() {
 				{page && (
 					<div className="w-full py-2 absolute bottom-0">
 						<div className="w-[100%] px-3 py-1 flex gap-x-2">
-							<div className="w-[50%]">
-								<Button text="Preview" color="default" width="w-full" action={enterPreview} />
-							</div>
-							<Link
-								to={`/${page.id}`}
-								target="_blank"
-								className="bg-primary-light hover:opacity-80 flex justify-center items-center cursor-pointer rounded-[5px] w-[50%] font-bold"
-							>
-								Share
-							</Link>
+							<Button text="Preview" color="default" width="w-full" action={enterPreview} />
 						</div>
 					</div>
 				)}

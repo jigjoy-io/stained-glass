@@ -1,5 +1,4 @@
 import { v4 as uuidv4 } from "uuid"
-import { NotFoundError } from "../util/errors/not-found-error"
 
 export const API_HOST = process.env.REACT_APP_API
 
@@ -157,20 +156,6 @@ function ensureMockPages(origin: string): any[] {
 	const pages = seedMockPages(origin)
 	pages.forEach((p) => pagesById.set(p.id, JSON.parse(JSON.stringify(p))))
 	return Array.from(pagesById.values()).filter((p) => p.origin === origin)
-}
-
-// --- API methods (mock implementations) ---
-
-export async function accessPage(id: string, pageNotFoundMessage: string) {
-	const page = publishedById.get(id) ?? pagesById.get(id)
-	if (!page) {
-		// Allow viewing mock pages by id even if not "published"
-		const all = Array.from(pagesById.values())
-		const found = all.find((p) => p.id === id)
-		if (found) return JSON.parse(JSON.stringify(found))
-		throw new NotFoundError(pageNotFoundMessage)
-	}
-	return JSON.parse(JSON.stringify(page))
 }
 
 export async function getPage(id: string) {

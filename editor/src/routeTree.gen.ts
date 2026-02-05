@@ -11,7 +11,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as PageIdRouteImport } from './routes/$pageId'
 import { Route as IndexRouteImport } from './routes/index'
 
 const PreviewLazyRouteImport = createFileRoute('/preview')()
@@ -21,11 +20,6 @@ const PreviewLazyRoute = PreviewLazyRouteImport.update({
   path: '/preview',
   getParentRoute: () => rootRouteImport,
 } as any).lazy(() => import('./routes/preview.lazy').then((d) => d.Route))
-const PageIdRoute = PageIdRouteImport.update({
-  id: '/$pageId',
-  path: '/$pageId',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -34,31 +28,27 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/$pageId': typeof PageIdRoute
   '/preview': typeof PreviewLazyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/$pageId': typeof PageIdRoute
   '/preview': typeof PreviewLazyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/$pageId': typeof PageIdRoute
   '/preview': typeof PreviewLazyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/$pageId' | '/preview'
+  fullPaths: '/' | '/preview'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$pageId' | '/preview'
-  id: '__root__' | '/' | '/$pageId' | '/preview'
+  to: '/' | '/preview'
+  id: '__root__' | '/' | '/preview'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  PageIdRoute: typeof PageIdRoute
   PreviewLazyRoute: typeof PreviewLazyRoute
 }
 
@@ -69,13 +59,6 @@ declare module '@tanstack/react-router' {
       path: '/preview'
       fullPath: '/preview'
       preLoaderRoute: typeof PreviewLazyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/$pageId': {
-      id: '/$pageId'
-      path: '/$pageId'
-      fullPath: '/$pageId'
-      preLoaderRoute: typeof PageIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -90,7 +73,6 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  PageIdRoute: PageIdRoute,
   PreviewLazyRoute: PreviewLazyRoute,
 }
 export const routeTree = rootRouteImport
