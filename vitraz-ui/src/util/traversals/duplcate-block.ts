@@ -24,7 +24,7 @@ function replaceIds(block: any) {
 		delete block.ident
 		delete block.mode
 		block = refineBuildingBlocks(block)
-	} else if (block.type == "page-tile") {
+	} else if (block.type == "page.display") {
 		block.page = replaceIds(block.page)
 	}
 	return block

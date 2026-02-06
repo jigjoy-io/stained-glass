@@ -3,7 +3,7 @@ function traversBlankPage(page: any, block: any) {
 		if (page.config.buildingBlocks[i].id == block.id) {
 			page.config.buildingBlocks[i] = block
 			return page
-		} else if (page.config.buildingBlocks[i].type == "page-tile") {
+		} else if (page.config.buildingBlocks[i].type == "page.display") {
 			page.config.buildingBlocks[i].page = traversPage(page.config.buildingBlocks[i].page, block)
 		}
 	}

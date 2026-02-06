@@ -9,7 +9,7 @@ export class SelectorOptions {
 				key: "pages",
 				commands: [
 					{
-						key: "page-tile",
+						key: "page.display",
 						label: "Blank Page",
 						icon: PageIcon,
 					},

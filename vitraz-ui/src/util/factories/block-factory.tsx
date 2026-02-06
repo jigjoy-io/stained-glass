@@ -1,5 +1,5 @@
 import React, { Suspense } from "react"
-import PageTile from "../../building-blocks/page/page-tile"
+import PageDisplay from "../../building-blocks/page/page.display"
 import Title from "../../building-blocks/title/title"
 import Heading from "../../building-blocks/heading/heading"
 import Text from "../../building-blocks/text/text"
@@ -24,8 +24,8 @@ export default class BlockFactory extends React.Component {
 		"image-uploader": {
 			component: ImageUploader,
 		},
-		"page-tile": {
-			component: PageTile,
+		"page.display": {
+			component: PageDisplay,
 		},
 		"block-selector": {
 			component: BlockSelector,

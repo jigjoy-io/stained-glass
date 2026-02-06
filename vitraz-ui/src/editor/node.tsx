@@ -1,8 +1,6 @@
 import React, { memo, useRef, useState } from "react"
 import { useDispatch } from "react-redux"
 import { createPage, removePage, updatePage } from "../api/page"
-import Grid from "../components/grid/grid"
-import Item from "../components/item/item"
 import DeleteBlockIcon from "../icons/delete-block-icon"
 import DuplicateIcon from "../icons/duplicate-icon"
 import ExpandPage from "../icons/expand-page"
@@ -35,7 +33,7 @@ const Node = memo(function Node(props: any) {
 	const [ident, setIdent] = useState(props.ident + 12)
 
 	const [renameValue, setRenameValue] = useState("")
-	const [tileToAdd, setTileToAdd] = useState("page-tile")
+	const [tileToAdd, setTileToAdd] = useState("page.display")
 
 	const ref = useRef<HTMLDivElement>(null)
 	const portalRef = useRef(null)
@@ -232,7 +230,7 @@ const Node = memo(function Node(props: any) {
 	const createNewPage = () => {
 		closeAdding()
 
-		let block = TemplateFactory.createTile(tileToAdd, props.id)
+		let block = TemplateFactory.createPageDisplayBlock(props.id)
 
 		let page = JSON.parse(JSON.stringify(props))
 		let root = JSON.parse(JSON.stringify(props.root))
@@ -296,7 +294,7 @@ const Node = memo(function Node(props: any) {
 					props.config.buildingBlocks &&
 					props.config.buildingBlocks.map((block: any) => (
 						<div key={block.id}>
-							{block.type == "page-tile" && <Node {...block.page} ident={ident} root={props.root} />}
+							{block.type == "page.display" && <Node {...block.page} ident={ident} root={props.root} />}
 						</div>
 					))}
 				{expandedPages.includes(props.id) &&
@@ -312,12 +310,21 @@ const Node = memo(function Node(props: any) {
 							style={{ top: rect.top + rect.height, left: rect.x + rect.width - 20 }}
 							ref={portalRef}
 						>
-							<Grid numberOfCols={1}>
-								<Item text="Rename" icon={RenameIcon} action={(e: any) => openRenamePopup(e)} />
-								<Item text="Duplicate" icon={DuplicateIcon} action={duplicatePage} />
+							<div className="w-full shadow">
+								<div onClick={openRenamePopup} className="hover:cursor-pointer flex flex-row">
+									<RenameIcon />
+									Rename
+								</div>
+								<div onClick={duplicatePage} className="hover:cursor-pointer flex flex-row">
+									<DuplicateIcon />
+									Duplicate
+								</div>
 								<div className="border-b border-default-light" />
-								<Item text="Delete" icon={DeleteBlockIcon} action={(e: any) => openDeletePopup(e)} />
-							</Grid>
+								<div onClick={openDeletePopup} className="hover:cursor-pointer flex flex-row">
+									<DeleteBlockIcon />
+									Delete
+								</div>
+							</div>
 						</div>
 					</ClickOutsideListener>,
 					document.body,
@@ -363,7 +370,7 @@ const Node = memo(function Node(props: any) {
 									onChange={handlePageToCreate}
 									value={tileToAdd}
 								>
-									<option value="page-tile">Blank Page</option>
+									<option value="page.display">Blank Page</option>
 								</select>
 								<div className="flex mt-3">
 									<Button size="sm" color="white" onClick={createNewPage}>

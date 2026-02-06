@@ -3,7 +3,7 @@ function deleteFromBlankPage(page: any, blockId: any) {
 
 	let filtered: any[] = []
 	page.config.buildingBlocks.forEach((block: any) => {
-		if (block.type == "page-tile") {
+		if (block.type == "page.display") {
 			if (block.page.id !== blockId) {
 				block.page = deletePage(block.page, blockId)
 				filtered.push(block)

@@ -1,6 +1,6 @@
 function traversBlankPage(page: any, innerPage: any, parent: any) {
 	for (let i = 0; i < page.config.buildingBlocks.length; i++) {
-		if (page.config.buildingBlocks[i].type == "page-tile") {
+		if (page.config.buildingBlocks[i].type == "page.display") {
 			if (page.config.buildingBlocks[i].page.id == innerPage.id) {
 				return page
 			}
@@ -8,7 +8,7 @@ function traversBlankPage(page: any, innerPage: any, parent: any) {
 	}
 
 	for (let i = 0; i < page.config.buildingBlocks.length; i++) {
-		if (page.config.buildingBlocks[i].type == "page-tile") {
+		if (page.config.buildingBlocks[i].type == "page.display") {
 			parent = traversePage(page.config.buildingBlocks[i].page, innerPage, parent)
 		}
 	}

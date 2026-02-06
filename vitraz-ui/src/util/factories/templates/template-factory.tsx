@@ -9,6 +9,11 @@ export default class TemplateFactory {
 
 		let template = JSON.parse(JSON.stringify(block))
 		template.id = uuidv4()
+
+		if (type == "page.display") {
+			template.page = this.createBlankPage(origin)
+		}
+
 		return template
 	}
 
@@ -49,16 +54,13 @@ export default class TemplateFactory {
 	}
 
 	static createMediaBlock(uploadedFileUrl: any, mediaType: string) {
-		if (mediaType === "audio") {
-			return TemplateFactory.createAudioBlock(uploadedFileUrl)
-		}
 		if (mediaType === "image") {
 			return TemplateFactory.createImageBlock(uploadedFileUrl)
 		}
 	}
 
-	static createPageTileBlock(origin: any) {
-		let block = this.create("page-tile")
+	static createPageDisplayBlock(origin: any) {
+		let block = this.create("page.display")
 		let page = this.createBlankPage(origin)
 
 		block.page = page
@@ -67,11 +69,11 @@ export default class TemplateFactory {
 	}
 
 	static createTile(type: string, origin: any) {
-		if (type != "page-tile") throw "Page not supported"
+		if (type != "page.display") throw "Page not supported"
 
 		let block: any = null
 
-		if (type == "page-tile") block = this.createPageTileBlock(origin)
+		if (type == "page.display") block = this.createPageDisplayBlock(origin)
 
 		return block
 	}

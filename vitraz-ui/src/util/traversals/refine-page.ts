@@ -25,7 +25,7 @@ function refine(block: any) {
 		delete block.mode
 		block.type = "blank"
 		block = refineBuildingBlocks(block)
-	} else if (block.type == "page-tile") {
+	} else if (block.type == "page.display") {
 		block.page = refine(block.page)
 	}
 	return block

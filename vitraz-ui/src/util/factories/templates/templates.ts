@@ -30,11 +30,9 @@ export class TemplatesStorage {
 			"block-selector": {
 				type: "block-selector",
 			},
-			"page-tile": {
-				type: "page-tile",
+			"page.display": {
+				type: "page.display",
 				title: "Title",
-				description: "Description...",
-				cta: "Start",
 			},
 			blank: {
 				type: "blank",

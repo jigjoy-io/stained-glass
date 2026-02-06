@@ -1,9 +1,7 @@
 import React from "react"
 import EditableText from "../../editor/toolbar/builder/editable-text"
 import EditableImage from "../../editor/toolbar/builder/editable-image"
-import NoneEditableBlock from "../../editor/toolbar/builder/none-editable-block"
 import BasicEditableBlock from "../../editor/toolbar/builder/basic-editable-block"
-import EditablePageTile from "../../editor/toolbar/builder/editable-page-tile"
 
 export default class EditorFactory extends React.Component {
 	static builders: any = {
@@ -22,14 +20,8 @@ export default class EditorFactory extends React.Component {
 		"image-uploader": {
 			builder: new BasicEditableBlock(),
 		},
-		button: {
-			builder: new NoneEditableBlock(),
-		},
-		cta: {
-			builder: new NoneEditableBlock(),
-		},
-		"page-tile": {
-			builder: new EditablePageTile(),
+		"page.display": {
+			builder: new BasicEditableBlock(),
 		},
 		"block-selector": {
 			builder: new BasicEditableBlock(),
