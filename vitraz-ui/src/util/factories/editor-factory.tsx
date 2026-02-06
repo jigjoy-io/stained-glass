@@ -2,7 +2,6 @@ import React from "react"
 import EditableText from "../../pages/designer/toolbar/builder/editable-text"
 import EditableImage from "../../pages/designer/toolbar/builder/editable-image"
 import NoneEditableBlock from "../../pages/designer/toolbar/builder/none-editable-block"
-import EditableAudio from "../../pages/designer/toolbar/builder/editable-audio"
 import BasicEditableBlock from "../../pages/designer/toolbar/builder/basic-editable-block"
 import EditablePageTile from "../../pages/designer/toolbar/builder/editable-page-tile"
 
@@ -25,12 +24,6 @@ export default class EditorFactory extends React.Component {
 		},
 		button: {
 			builder: new NoneEditableBlock(),
-		},
-		audio: {
-			builder: new EditableAudio(),
-		},
-		"audio-configurer": {
-			builder: new BasicEditableBlock(),
 		},
 		cta: {
 			builder: new NoneEditableBlock(),

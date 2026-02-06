@@ -1,7 +1,6 @@
 import PageIcon from "../../../../icons/page-icon"
 import RenameIcon from "../../../../icons/rename-icon"
 import ImageIcon from "../../../../icons/image-icon"
-import AudioIcon from "../../../../icons/audio-icon"
 
 export class SelectorOptions {
 	static getOptions() {
@@ -45,13 +44,8 @@ export class SelectorOptions {
 						label: "Image",
 						icon: ImageIcon,
 					},
-					{
-						key: "audio-configurer",
-						label: "Audio",
-						icon: AudioIcon,
-					},
 				],
-			}
+			},
 		]
 
 		return options
