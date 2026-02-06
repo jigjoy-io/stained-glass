@@ -1,9 +1,9 @@
 import React from "react"
-import EditableText from "../../pages/designer/toolbar/builder/editable-text"
-import EditableImage from "../../pages/designer/toolbar/builder/editable-image"
-import NoneEditableBlock from "../../pages/designer/toolbar/builder/none-editable-block"
-import BasicEditableBlock from "../../pages/designer/toolbar/builder/basic-editable-block"
-import EditablePageTile from "../../pages/designer/toolbar/builder/editable-page-tile"
+import EditableText from "../../editor/toolbar/builder/editable-text"
+import EditableImage from "../../editor/toolbar/builder/editable-image"
+import NoneEditableBlock from "../../editor/toolbar/builder/none-editable-block"
+import BasicEditableBlock from "../../editor/toolbar/builder/basic-editable-block"
+import EditablePageTile from "../../editor/toolbar/builder/editable-page-tile"
 
 export default class EditorFactory extends React.Component {
 	static builders: any = {

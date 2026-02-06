@@ -5,11 +5,11 @@ import { modeUpdated, pageUpdated, pagesUpdated, rootPageUpdated } from "../redu
 import { AppDispatch, useBlocked, useModified, usePage, useRootPage, useSidebarVisible } from "../util/store"
 import { getPages, updatePage } from "../api/page"
 import { replaceBlock } from "../util/traversals/replace-block"
-import LeftSideMenu from "./designer/left-side-menu"
-import { RightSideMenu } from "./designer/right-side-menu/right-side-menu"
+import LeftSideMenu from "./left-side-menu"
+import { RightSideMenu } from "./right-side-menu/right-side-menu"
 import { blockingUpdated } from "../reducers/editor-reducer"
 
-export default function Designer() {
+export default function Editor() {
 	const blocked = useBlocked()
 	const page = usePage()
 	const rootPage = useRootPage()

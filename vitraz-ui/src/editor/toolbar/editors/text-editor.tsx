@@ -1,12 +1,10 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import { useDispatch } from "react-redux"
-import Button from "../../../../components/button/button"
-import { updateBlock } from "../../../../reducers/page-reducer"
+import { updateBlock } from "../../../reducers/page-reducer"
+import Button from "../../../components/button/button"
 
-export default function LimitedTextEditor(props: any) {
+export default function TextEditor(props: any) {
 	const [value, setValue] = useState(props.value)
-	const [limit, setLimit] = useState(props.extraProps.limit)
-
 	const dispatch = useDispatch()
 
 	const update = () => {
@@ -20,14 +18,8 @@ export default function LimitedTextEditor(props: any) {
 			<input
 				className="p-2 rounded-[5px] border w-[100%] mb-2"
 				value={value}
-				maxLength={limit}
 				onChange={(event) => setValue(event.target.value)}
 			/>
-			<div className="text-xs mb-2 gray-400">
-				<span className="float-right">
-					{value.length} / {limit}
-				</span>
-			</div>
 			<Button text="Update" action={update} />
 		</div>
 	)

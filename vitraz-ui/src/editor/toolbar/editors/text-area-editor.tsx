@@ -1,9 +1,9 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import { useDispatch } from "react-redux"
-import { updateBlock } from "../../../../reducers/page-reducer"
-import Button from "../../../../components/button/button"
+import { updateBlock } from "../../../reducers/page-reducer"
+import Button from "../../../components/button/button"
 
-export default function TextEditor(props: any) {
+export default function TextAreaEditor(props: any) {
 	const [value, setValue] = useState(props.value)
 	const dispatch = useDispatch()
 
@@ -15,8 +15,8 @@ export default function TextEditor(props: any) {
 
 	return (
 		<div className="flex flex-col p-2">
-			<input
-				className="p-2 rounded-[5px] border w-[100%] mb-2"
+			<textarea
+				className="p-2 rounded-[5px] border w-[400px] mb-2"
 				value={value}
 				onChange={(event) => setValue(event.target.value)}
 			/>

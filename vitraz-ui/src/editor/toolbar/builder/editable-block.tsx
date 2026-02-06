@@ -1,6 +1,6 @@
 import { ReactElement } from "react"
-import BlockFactory from "../../../../util/factories/block-factory"
-import gaps from "../../../../util/style-helper/gaps"
+import BlockFactory from "../../../util/factories/block-factory"
+import gaps from "../../../util/style-helper/gaps"
 
 export default abstract class EditableBlock {
 	block: ReactElement | null = null

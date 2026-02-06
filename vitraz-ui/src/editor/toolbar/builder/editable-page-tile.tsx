@@ -1,15 +1,14 @@
-import React from "react"
 import ColorEditor from "../editors/color-editor"
 import TextEditor from "../editors/text-editor"
 import Toolbar from "../toolbar"
 import EditableBlock from "./editable-block"
 import ImageEditor from "../editors/image-editor"
 import TextAreaEditor from "../editors/text-area-editor"
-import RenameIcon from "../../../../icons/rename-icon"
-import ImageIcon from "../../../../icons/image-icon"
-import DescriptionIcon from "../../../../icons/description-icon"
-import CTAIcon from "../../../../icons/cta-icon"
-import ColorIcon from "../../../../icons/color-icon"
+import RenameIcon from "../../../icons/rename-icon"
+import ImageIcon from "../../../icons/image-icon"
+import DescriptionIcon from "../../../icons/description-icon"
+import CTAIcon from "../../../icons/cta-icon"
+import ColorIcon from "../../../icons/color-icon"
 
 export default class EditablePageTile extends EditableBlock {
 	getEditingOptions() {

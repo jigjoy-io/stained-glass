@@ -1,9 +1,8 @@
 import { useDispatch } from "react-redux"
-import { usePages, useRootPage } from "../../util/store"
+import { usePages, useRootPage } from "../util/store"
 import Node from "./node"
-import { sidebarExpanded } from "../../reducers/sidebar-reducer"
-
-import MagicIcon from "../../icons/magic-icon"
+import { sidebarExpanded } from "../reducers/sidebar-reducer"
+import MagicIcon from "../icons/magic-icon"
 import SidePanel from "./right-side-menu/side-panel"
 
 export default function LeftSideMenu() {

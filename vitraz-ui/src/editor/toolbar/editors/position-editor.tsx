@@ -1,18 +1,21 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import { useDispatch } from "react-redux"
-import { updateBlock } from "../../../../reducers/page-reducer"
-import Item from "../../../../components/item/item"
-import Button from "../../../../components/button/button"
+import { updateBlock } from "../../../reducers/page-reducer"
+import LeftAlignmentIcon from "../../../icons/alignment-left-icon"
+import RightAlignmentIcon from "../../../icons/alignment-right-icon"
+import CenterAlignmentIcon from "../../../icons/alignment-center-icon"
+import Item from "../../../components/item/item"
+import Button from "../../../components/button/button"
 
-const positions = [
-	{ text: "Text", key: "text" },
-	{ text: "Date", key: "date" },
-	{ text: "Number", key: "number" },
-]
-
-export default function InputTypeEditor(props: any) {
+export default function PositionEditor(props: any) {
 	const [value, setValue] = useState(props.value)
 	const dispatch = useDispatch()
+
+	let positions = [
+		{ text: "Left", key: "left", icon: LeftAlignmentIcon },
+		{ text: "Center", key: "center", icon: CenterAlignmentIcon },
+		{ text: "Right", key: "right", icon: RightAlignmentIcon },
+	]
 
 	const update = () => {
 		let block = JSON.parse(JSON.stringify(props.block))

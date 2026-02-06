@@ -1,9 +1,8 @@
-import React from "react"
 import ContentEditingText from "../editors/content-editing-text"
 import PositionEditor from "../editors/position-editor"
 import Toolbar from "../toolbar"
 import EditableBlock from "./editable-block"
-import PositionIcon from "../../../../icons/position-icon"
+import PositionIcon from "../../../icons/position-icon"
 
 export default class EditableText extends EditableBlock {
 	getEditingOptions() {

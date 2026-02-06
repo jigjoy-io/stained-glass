@@ -1,8 +1,8 @@
 import { useDispatch } from "react-redux"
 import ToolbarButtonWrapper from "../toolbar-button-wrapper"
-import { insertBlock } from "../../../../reducers/page-reducer"
-import TemplateFactory from "../../../../util/factories/templates/template-factory"
-import AddBlockIcon from "../../../../icons/add-block-icon"
+import { insertBlock } from "../../../reducers/page-reducer"
+import TemplateFactory from "../../../util/factories/templates/template-factory"
+import AddBlockIcon from "../../../icons/add-block-icon"
 
 export function AddNewBlock(props: any) {
 	const dispatch = useDispatch()

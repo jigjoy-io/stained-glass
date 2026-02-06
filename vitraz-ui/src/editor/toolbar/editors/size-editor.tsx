@@ -1,8 +1,8 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import { useDispatch } from "react-redux"
-import { updateBlock } from "../../../../reducers/page-reducer"
-import Checkbox from "../../../../components/checkbox/checkbox"
-import Button from "../../../../components/button/button"
+import { updateBlock } from "../../../reducers/page-reducer"
+import Checkbox from "../../../components/checkbox/checkbox"
+import Button from "../../../components/button/button"
 
 const sizes = [
 	{ text: "Small", key: "small" },

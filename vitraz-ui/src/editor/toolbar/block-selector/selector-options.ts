@@ -1,6 +1,6 @@
-import PageIcon from "../../../../icons/page-icon"
-import RenameIcon from "../../../../icons/rename-icon"
-import ImageIcon from "../../../../icons/image-icon"
+import PageIcon from "../../../icons/page-icon"
+import RenameIcon from "../../../icons/rename-icon"
+import ImageIcon from "../../../icons/image-icon"
 
 export class SelectorOptions {
 	static getOptions() {

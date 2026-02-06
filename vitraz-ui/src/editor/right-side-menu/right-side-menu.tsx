@@ -1,7 +1,7 @@
 import { AnimatePresence, LazyMotion, m } from "framer-motion"
-import { AppDispatch, useSidebarComponent, useSidebarVisible } from "../../../util/store"
+import { AppDispatch, useSidebarComponent, useSidebarVisible } from "../../util/store"
 import { useDispatch } from "react-redux"
-import { sidebarExpanded } from "../../../reducers/sidebar-reducer"
+import { sidebarExpanded } from "../../reducers/sidebar-reducer"
 import ToolbarButtonWrapper from "../toolbar/toolbar-button-wrapper"
 
 const animation = {
@@ -21,7 +21,7 @@ const transition: any = {
 	duration: 0.15,
 }
 
-const loadFeatures = () => import("../../../util/style-helper/animations").then((res) => res.default)
+const loadFeatures = () => import("../../util/style-helper/animations").then((res) => res.default)
 
 export function RightSideMenu() {
 	const sidebar = {

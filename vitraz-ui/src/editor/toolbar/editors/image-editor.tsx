@@ -1,4 +1,3 @@
-import React from "react"
 import FileEditor from "./file-editor"
 
 export default function ImageEditor(props: any) {

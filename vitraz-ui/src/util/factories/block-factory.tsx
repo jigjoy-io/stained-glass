@@ -5,7 +5,7 @@ import Heading from "../../building-blocks/heading/heading"
 import Text from "../../building-blocks/text/text"
 import Image from "../../building-blocks/image/image"
 import ImageUploader from "../../building-blocks/image/image-uploader"
-import BlockSelector from "../../pages/designer/toolbar/block-selector/block-selector"
+import BlockSelector from "../../editor/toolbar/block-selector/block-selector"
 
 export default class BlockFactory extends React.Component {
 	static buildingBlocks: any = {

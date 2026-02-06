@@ -1,9 +1,9 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import { useDispatch } from "react-redux"
-import { updateBlock } from "../../../../reducers/page-reducer"
-import Button from "../../../../components/button/button"
-import colorVariants from "../../../../util/style-helper/color-variants"
-import Item from "../../../../components/item/item"
+import { updateBlock } from "../../../reducers/page-reducer"
+import Button from "../../../components/button/button"
+import colorVariants from "../../../util/style-helper/color-variants"
+import Item from "../../../components/item/item"
 
 const colors = [
 	{ text: "Blue", key: "blue" },

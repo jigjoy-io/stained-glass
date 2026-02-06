@@ -1,18 +1,18 @@
-import React, { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import ToolbarButtonWrapper from "./toolbar-button-wrapper"
 import { useDispatch } from "react-redux"
 import { AddNewBlock } from "./builder/add-new-block"
 import { createPortal } from "react-dom"
 import { AnimatePresence, LazyMotion, m } from "framer-motion"
-import { blockingUpdated } from "../../../reducers/editor-reducer"
-import { insertBlock, removeBlock } from "../../../reducers/page-reducer"
-import { duplicateBlock } from "../../../util/traversals/duplcate-block"
-import ClickOutsideListener from "../../../util/click-outside-listener"
-import DuplicateIcon from "../../../icons/duplicate-icon"
-import OpenMenuIcon from "../../../icons/open-menu-icon"
-import DeleteBlockIcon from "../../../icons/delete-block-icon"
-import Grid from "../../../components/grid/grid"
-import Item from "../../../components/item/item"
+import { blockingUpdated } from "../../reducers/editor-reducer"
+import { insertBlock, removeBlock } from "../../reducers/page-reducer"
+import { duplicateBlock } from "../../util/traversals/duplcate-block"
+import ClickOutsideListener from "../../util/click-outside-listener"
+import DuplicateIcon from "../../icons/duplicate-icon"
+import OpenMenuIcon from "../../icons/open-menu-icon"
+import DeleteBlockIcon from "../../icons/delete-block-icon"
+import Grid from "../../components/grid/grid"
+import Item from "../../components/item/item"
 
 const animation = {
 	hidden: { opacity: 0 },
@@ -25,7 +25,7 @@ const transition: any = {
 	duration: 0.25,
 }
 
-const loadFeatures = () => import("../../../util/style-helper/animations").then((res) => res.default)
+const loadFeatures = () => import("../../util/style-helper/animations").then((res) => res.default)
 
 export default function Toolbar(props: any) {
 	const [on, setOn] = useState(false)
