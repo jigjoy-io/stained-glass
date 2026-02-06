@@ -1,6 +1,6 @@
 import { useExpandedPages } from "../util/store"
 import ExpandDownIcon from "./expand-down-icon"
-import PageIcon from "./page-icon"
+import PageIcon from "../building-blocks/page/page.icon"
 
 export default function ExpandPage(props: any) {
 	const expandedPages = useExpandedPages()

@@ -42,9 +42,6 @@ input {
 	--color-text-default: #e2e2e2;
 	--color-dot-color: #4b5563;
 
-	/* Shadow */
-	--shadow: 0px 2px 8px rgba(17, 17, 26, 0.1), 0px 4px 12px rgba(17, 17, 26, 0.1), 0px 8px 28px rgba(17, 17, 26, 0.1);
-
 
 
 }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import alignmentVariations from "../../util/style-helper/alignment-variations"
 
-export default function Heading(props: any) {
+export default function H2(props: any) {
 	const [position, setPosition] = useState(props.position)
 
 	useEffect(() => {

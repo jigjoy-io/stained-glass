@@ -11,7 +11,7 @@ const getBlocks = () => {
 }
 export const findPreviousTextBlock = (currentBlockId: string): Block | null => {
 	const blocks: Block[] = getBlocks()
-	const validTypes: string[] = ["text", "title", "heading", "block-selector"]
+	const validTypes: string[] = ["text", "h1", "h2", "block-selector"]
 
 	const currentIndex = blocks?.findIndex((block) => block.id === currentBlockId)
 

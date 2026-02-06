@@ -2,10 +2,10 @@ const textEditingVariants: any = {
 	text: {
 		class: "h-8 flex items-center",
 	},
-	heading: {
+	h2: {
 		class: "text-3xl font-bold flex items-center text-secondary-200",
 	},
-	title: {
+	h1: {
 		class: "text-4xl font-bold flex items-center",
 	},
 }

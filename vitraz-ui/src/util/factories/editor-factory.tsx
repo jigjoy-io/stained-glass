@@ -8,10 +8,10 @@ export default class EditorFactory extends React.Component {
 		text: {
 			builder: new EditableText(),
 		},
-		heading: {
+		h2: {
 			builder: new EditableText(),
 		},
-		title: {
+		h1: {
 			builder: new EditableText(),
 		},
 		image: {

@@ -1,22 +1,22 @@
 import React, { Suspense } from "react"
 import PageDisplay from "../../building-blocks/page/page.display"
-import Title from "../../building-blocks/title/title"
-import Heading from "../../building-blocks/heading/heading"
+import H1 from "../../building-blocks/h1/h1"
+import H2 from "../../building-blocks/h2/h2"
 import Text from "../../building-blocks/text/text"
 import Image from "../../building-blocks/image/image"
 import ImageUploader from "../../building-blocks/image/image-uploader"
-import BlockSelector from "../../editor/toolbar/block-selector/block-selector"
+import BlockSelector from "../../building-blocks/block-selector/block-selector"
 
 export default class BlockFactory extends React.Component {
 	static buildingBlocks: any = {
 		text: {
 			component: Text,
 		},
-		heading: {
-			component: Heading,
+		h2: {
+			component: H2,
 		},
-		title: {
-			component: Title,
+		h1: {
+			component: H1,
 		},
 		image: {
 			component: Image,

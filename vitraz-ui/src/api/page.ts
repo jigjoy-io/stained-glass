@@ -18,11 +18,9 @@ function seedMockPages(origin: string): any[] {
 		origin,
 		config: {
 			buildingBlocks: [
-				createMockBlock("block-selector"),
-				createMockBlock("title", { text: "Welcome" }),
-				createMockBlock("heading", { text: "Section heading" }),
-				createMockBlock("text", { text: "Some body text here." }),
-				createMockBlock("image", { source: "/public/images/placeholderimage/jpg", position: "left", size: "large" }),
+				createMockBlock("h1", { text: "Welcome" }),
+				createMockBlock("h2", { text: "Section heading" }),
+				createMockBlock("text", { text: "Some body text here." })
 			],
 		},
 	}
@@ -48,8 +46,8 @@ function seedMockPages(origin: string): any[] {
 		origin,
 		config: {
 			buildingBlocks: [
+				createMockBlock("h1", { text: "Learn something" }),
 				createMockBlock("block-selector"),
-				createMockBlock("title", { text: "Learn something" }),
 			],
 		},
 	}
@@ -85,30 +83,6 @@ export async function createPage(page: any) {
 	const copy = JSON.parse(JSON.stringify(page))
 	pagesById.set(copy.id, copy)
 	return copy
-}
-
-export async function generatePage(request: any) {
-	// Return a mock generated page (blank with blocks based on "statement")
-	const id = uuidv4()
-	const page = {
-		id,
-		type: "blank",
-		name: "AI generated",
-		environment: "development",
-		linkedPageId: null,
-		origin: "",
-		config: {
-			buildingBlocks: [
-				createMockBlock("block-selector"),
-				createMockBlock("title", { text: "Generated content" }),
-				createMockBlock("heading", { text: request?.statement ? String(request.statement).slice(0, 60) : "New page" }),
-				createMockBlock("text", { text: "This is mock generated content. Backend was removed." }),
-				createMockBlock("button"),
-			],
-		},
-	}
-	pagesById.set(id, page)
-	return JSON.parse(JSON.stringify(page))
 }
 
 export async function updatePage(page: any) {

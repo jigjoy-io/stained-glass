@@ -2,13 +2,13 @@ import React, { useEffect, useRef, useState } from "react"
 import { useDispatch } from "react-redux"
 import { createPortal } from "react-dom"
 import { SelectorOptions } from "./selector-options"
-import { useActiveBlock } from "../../../util/store"
-import { blockingUpdated } from "../../../reducers/editor-reducer"
-import TemplateFactory from "../../../util/factories/templates/template-factory"
-import { focusBlock, insertBlock } from "../../../reducers/page-reducer"
-import ClickOutsideListener from "../../../util/click-outside-listener"
-import Item from "../../../components/item/item"
-import { handleTextBlockKeyDown } from "../../../util/factories/key-command-factory"
+import { useActiveBlock } from "../../util/store"
+import { blockingUpdated } from "../../reducers/editor-reducer"
+import TemplateFactory from "../../util/factories/templates/template-factory"
+import { focusBlock, insertBlock } from "../../reducers/page-reducer"
+import ClickOutsideListener from "../../util/click-outside-listener"
+import Item from "../../components/item/item"
+import { handleTextBlockKeyDown } from "../../util/factories/key-command-factory"
 
 export default function BlockSelector(props: any) {
 	const [option, setOption] = useState(props.option || "")
@@ -134,7 +134,7 @@ export default function BlockSelector(props: any) {
 					<ClickOutsideListener callback={closeMenu}>
 						<div
 							style={{ top: top, left: left,  }}
-							className={`fixed flex flex-col h-auto overflow-y-auto bg-white shadow rounded-lg `}
+							className={`fixed flex flex-col h-auto overflow-y-auto bg-white rounded-lg shadow-xl border border-default-light`}
 						>
 							{options.map((option: any, index: number) => (
 								<div key={option.key}>

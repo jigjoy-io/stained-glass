@@ -3,9 +3,10 @@ import PositionEditor from "../editors/position-editor"
 import SizeEditor from "../editors/size-editor"
 import Toolbar from "../toolbar"
 import EditableBlock from "./editable-block"
-import ImageIcon from "../../../icons/image-icon"
 import SizeIcon from "../../../icons/size-icon"
 import PositionIcon from "../../../icons/position-icon"
+import ImageIcon from "../../../building-blocks/image/image.icon"
+
 export default class EditableImage extends EditableBlock {
 	getEditingOptions() {
 		return [

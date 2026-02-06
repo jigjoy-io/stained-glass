@@ -6,13 +6,13 @@ export class TemplatesStorage {
 				text: "",
 				position: "left",
 			},
-			heading: {
-				type: "heading",
+			h2: {
+				type: "h2",
 				text: "",
 				position: "left",
 			},
-			title: {
-				type: "title",
+			h1: {
+				type: "h1",
 				text: "",
 				position: "left",
 			},
@@ -32,7 +32,7 @@ export class TemplatesStorage {
 			},
 			"page.display": {
 				type: "page.display",
-				title: "Title",
+				title: "Blank Page",
 			},
 			blank: {
 				type: "blank",

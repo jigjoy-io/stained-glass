@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import alignmentVariations from "../../util/style-helper/alignment-variations"
 
-export default function Title(props: any) {
+export default function H1(props: any) {
 	const [position, setPosition] = useState(props.position)
 	const [text, setText] = useState(props.text)
 
