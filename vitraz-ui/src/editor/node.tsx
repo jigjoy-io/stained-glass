@@ -269,7 +269,7 @@ const Node = memo(function Node(props: any) {
 			>
 				<ExpandPage id={props.id} type={props.type} expand={expandPage} hover={hovered === props.id} />
 
-				<div className="ml-1 px-1 hover:cursor-pointer grow flex truncate text-ellipsis overflow-hidden">
+				<div className="ml-1 px-1 text-sm hover:cursor-pointer grow flex truncate text-ellipsis overflow-hidden">
 					{props.name}
 				</div>
 				{hovered === props.id && (

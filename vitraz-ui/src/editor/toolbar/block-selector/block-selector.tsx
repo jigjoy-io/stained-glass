@@ -47,7 +47,7 @@ export default function BlockSelector(props: any) {
 		if (inputRef.current) {
 			let rect: any = inputRef.current.getBoundingClientRect()
 
-			setLeft(rect.width)
+			setLeft(rect.left)
 
 			if (rect.top + window.innerHeight / 2 > window.innerHeight) {
 				setTop(rect.top)
@@ -66,17 +66,6 @@ export default function BlockSelector(props: any) {
 	useEffect(() => {
 		setMenuPosition()
 	}, [options])
-
-	const calculateY = () => {
-		if (inputRef.current) {
-			let rect: any = inputRef.current.getBoundingClientRect()
-			if (rect.top + window.innerHeight / 2 > window.innerHeight) {
-				return 100
-			} else {
-				return 0
-			}
-		}
-	}
 
 	const handleChange = (event: any) => {
 		setOption(event.target.value)
@@ -144,8 +133,8 @@ export default function BlockSelector(props: any) {
 				createPortal(
 					<ClickOutsideListener callback={closeMenu}>
 						<div
-							style={{ top: top, left: left, transform: `translate(-100%, -${calculateY()}%)` }}
-							className={`fixed flex flex-col w-[100%] md:max-w-[340px] h-auto max-h-[400px] overflow-y-auto bg-white shadow rounded-lg -translate-x-[100%]`}
+							style={{ top: top, left: left,  }}
+							className={`fixed flex flex-col h-auto overflow-y-auto bg-white shadow rounded-lg `}
 						>
 							{options.map((option: any, index: number) => (
 								<div key={option.key}>
@@ -172,7 +161,7 @@ export default function BlockSelector(props: any) {
 				type="text"
 				value={option}
 				onFocus={() => setPlaceholder(placeholder)}
-				className="w-full h-10 bg-white rounded-md outline-none"
+				className="w-full h-8 bg-white rounded-md outline-none"
 				placeholder={placeholder}
 				onChange={handleChange}
 				onKeyDown={handleKeyDown}

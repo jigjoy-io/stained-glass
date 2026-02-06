@@ -12,7 +12,7 @@ export default function PageDisplay({ title = "Blank Page", page }: { title: str
 	}
 
 	return (
-		<div className="flex flex-row gap-2 rounded-sm p-1 hover:cursor-pointer" onClick={load}>
+		<div className="flex flex-row gap-2 h-8 rounded-sm hover:cursor-pointer items-center" onClick={load}>
 			<PageIcon /> {title}
 		</div>
 	)

@@ -5,7 +5,7 @@ body {
 	margin: 0;
 	font-family: "Open-sans", sans-serif;
 	width: 100%;
-	font-size: 0.875rem;
+	font-size: 1.025rem;
 }
 
 :root {
@@ -45,25 +45,6 @@ input {
 	/* Shadow */
 	--shadow: 0px 2px 8px rgba(17, 17, 26, 0.1), 0px 4px 12px rgba(17, 17, 26, 0.1), 0px 8px 28px rgba(17, 17, 26, 0.1);
 
-	/* Gradients */
-	--background-image-gradient-custom: linear-gradient(90deg, #d4e546 0%, #95ed3a 50%, #48ec92 100%);
 
-	--background-image-gradient-custom-opacity: linear-gradient(
-		90deg,
-		rgba(212, 229, 70, 0.2) 0%,
-		rgba(149, 237, 58, 0.2) 50%,
-		rgba(72, 236, 146, 0.2) 100%
-	);
 
-	/* Typography */
-	--text-title: 2.25rem;
-	--text-title-line-height: 2.5rem;
-	--text-title-font-weight: 700;
-
-	--text-heading: 1.5rem;
-	--text-heading-line-height: 2rem;
-	--text-heading-font-weight: 700;
-
-	--text-paragraph: 0.875rem;
-	--text-paragraph-line-height: 1.25rem;
 }

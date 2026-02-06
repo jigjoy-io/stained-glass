@@ -1,15 +1,12 @@
 const textEditingVariants: any = {
 	text: {
-		lineHeight: "h-min-[1.7rem] h-[1.7rem]",
-		class: "text-paragraph",
+		class: "h-8 flex items-center",
 	},
 	heading: {
-		lineHeight: "h-min-[2rem] h-[2rem]",
-		class: "text-heading",
+		class: "text-3xl font-bold flex items-center text-secondary-200",
 	},
 	title: {
-		lineHeight: "h-min-[2.5rem] h-[2.5rem]",
-		class: "text-title",
+		class: "text-4xl font-bold flex items-center",
 	},
 }
 
