@@ -1,5 +1,5 @@
 import React from "react"
-import BlankPage from "../../components/page/blank-page"
+import BlankPage from "../../building-blocks/page/blank-page"
 
 export class PageFactory extends React.Component {
 	static layouts: any = {

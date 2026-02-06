@@ -1,10 +1,10 @@
 import { useRef, useState } from "react"
-import Alert from "../alert/alert"
-import { useRootPage } from "../../util/store"
-import AlertProps, { AlertType } from "../alert/alert-props"
-import { FileTooLargeError } from "../../util/errors/file-too-large-error"
-import FileHelper from "../../util/file-upload/file-upload"
-import Button from "../button/button"
+import Alert from "../../../components/alert/alert"
+import { useRootPage } from "../../../util/store"
+import AlertProps, { AlertType } from "../../../components/alert/alert-props"
+import { FileTooLargeError } from "../../../util/errors/file-too-large-error"
+import FileHelper from "../../../util/file-upload/file-upload"
+import Button from "../../../components/button/button"
 
 export default function FileUploader({
 	mediaType,

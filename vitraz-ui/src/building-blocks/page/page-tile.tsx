@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
-import Button from "../button/button"
-import Grid from "../grid/grid"
+import Button from "../../components/button/button"
+import Grid from "../../components/grid/grid"
 import { useDispatch } from "react-redux"
-import Tile from "../tile/tile"
+import Tile from "../../components/tile/tile"
 import { pageExpanded, pageUpdated } from "../../reducers/page-reducer"
 
 export default function PageTile(props: any) {

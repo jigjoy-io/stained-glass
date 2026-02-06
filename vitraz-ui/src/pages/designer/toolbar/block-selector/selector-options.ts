@@ -40,7 +40,7 @@ export class SelectorOptions {
 				key: "multimedia",
 				commands: [
 					{
-						key: "image-configurer",
+						key: "image-uploader",
 						label: "Image",
 						icon: ImageIcon,
 					},

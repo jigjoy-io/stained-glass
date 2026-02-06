@@ -1,9 +1,9 @@
 import { useState } from "react"
-import UrlValidator from "../../util/file-upload/url-validator"
-import Alert from "../alert/alert"
-import Input from "../input/input"
-import Button from "../button/button"
-import AlertProps, { AlertType } from "../alert/alert-props"
+import UrlValidator from "../../../util/file-upload/url-validator"
+import Alert from "../../../components/alert/alert"
+import Input from "../../../components/input/input"
+import Button from "../../../components/button/button"
+import AlertProps, { AlertType } from "../../../components/alert/alert-props"
 
 export default function FileUrlEditor({
 	filePath,

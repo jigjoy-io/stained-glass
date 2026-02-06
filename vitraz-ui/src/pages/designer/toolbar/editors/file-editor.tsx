@@ -1,8 +1,8 @@
 import React from "react"
 import Tabs from "../../../../components/tabs/tabs"
 import Tab from "../../../../components/tabs/tab"
-import FileUploader from "../../../../components/file-uploader/file-uploader"
-import FileUrlEditor from "../../../../components/file-uploader/file-url-editor"
+import FileUploader from "../../../../building-blocks/image/file-uploader/file-uploader"
+import FileUrlEditor from "../../../../building-blocks/image/file-uploader/file-url-editor"
 import { updateBlock } from "../../../../reducers/page-reducer"
 import { useDispatch } from "react-redux"
 

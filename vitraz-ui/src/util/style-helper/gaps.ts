@@ -6,8 +6,7 @@ const gaps: any = {
 	image: "py-3",
 	"page-tile": "py-3",
 	"block-selector": "py-1",
-	"image-configurer": "py-1",
-	"audio-configurer": "py-1",
+	"image-uploader": "py-1",
 }
 
 export default gaps

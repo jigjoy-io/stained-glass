@@ -1,5 +1,5 @@
 import { usePage } from "../../util/store"
-import Content from "../page-content"
+import Content from "./page-content"
 
 export default function BlankPage() {
 	const page: any = usePage()

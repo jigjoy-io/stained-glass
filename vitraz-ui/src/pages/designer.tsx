@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
-import Page from "../components/page"
+import Page from "../building-blocks/page/page"
 import { modeUpdated, pageUpdated, pagesUpdated, rootPageUpdated } from "../reducers/page-reducer"
 import { AppDispatch, useBlocked, useModified, usePage, useRootPage, useSidebarVisible } from "../util/store"
 import { getPages, updatePage } from "../api/page"

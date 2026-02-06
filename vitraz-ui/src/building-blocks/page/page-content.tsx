@@ -1,5 +1,5 @@
-import PageContentFactory from "../util/factories/page-content-factory"
-import { useMode } from "../util/store"
+import PageContentFactory from "../../util/factories/page-content-factory"
+import { useMode } from "../../util/store"
 
 export default function PageContent(props: any) {
 	const mode = useMode()

@@ -1,12 +1,11 @@
-import React, { lazy, Suspense } from "react"
-
-const Text = lazy(() => import("../../components/text/text"))
-const Heading = lazy(() => import("../../building-blocks/heading/heading"))
-const Title = lazy(() => import("../../building-blocks/title/title"))
-const Image = lazy(() => import("../../components/image/image"))
-const PageTile = lazy(() => import("../../components/page/page-tile"))
-const BlockSelector = lazy(() => import("../../pages/designer/toolbar/block-selector/block-selector"))
-const ImageConfigurer = lazy(() => import("../../components/image/image-configurer"))
+import React, { Suspense } from "react"
+import PageTile from "../../building-blocks/page/page-tile"
+import Title from "../../building-blocks/title/title"
+import Heading from "../../building-blocks/heading/heading"
+import Text from "../../building-blocks/text/text"
+import Image from "../../building-blocks/image/image"
+import ImageUploader from "../../building-blocks/image/image-uploader"
+import BlockSelector from "../../pages/designer/toolbar/block-selector/block-selector"
 
 export default class BlockFactory extends React.Component {
 	static buildingBlocks: any = {
@@ -22,8 +21,8 @@ export default class BlockFactory extends React.Component {
 		image: {
 			component: Image,
 		},
-		"image-configurer": {
-			component: ImageConfigurer,
+		"image-uploader": {
+			component: ImageUploader,
 		},
 		"page-tile": {
 			component: PageTile,

@@ -1,5 +1,5 @@
-import { usePage } from "../util/store"
-import { PageFactory } from "../util/factories/page-factory"
+import { usePage } from "../../util/store"
+import { PageFactory } from "../../util/factories/page-factory"
 
 function Page() {
 	const page = usePage()

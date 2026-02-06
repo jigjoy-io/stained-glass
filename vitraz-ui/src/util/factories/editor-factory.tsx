@@ -19,7 +19,7 @@ export default class EditorFactory extends React.Component {
 		image: {
 			builder: new EditableImage(),
 		},
-		"image-configurer": {
+		"image-uploader": {
 			builder: new BasicEditableBlock(),
 		},
 		button: {

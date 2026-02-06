@@ -1,13 +1,13 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import { useDispatch } from "react-redux"
-import { blockingUpdated } from "../../reducers/editor-reducer"
-import { updateBlock } from "../../reducers/page-reducer"
+import { blockingUpdated } from "../../../reducers/editor-reducer"
+import { updateBlock } from "../../../reducers/page-reducer"
 import { createPortal } from "react-dom"
-import ClickOutsideListener from "../../util/click-outside-listener"
-import Tabs from "../tabs/tabs"
-import Tab from "../tabs/tab"
+import ClickOutsideListener from "../../../util/click-outside-listener"
+import Tabs from "../../../components/tabs/tabs"
+import Tab from "../../../components/tabs/tab"
 import FileUploader from "../file-uploader/file-uploader"
-import TemplateFactory from "../../util/factories/templates/template-factory"
+import TemplateFactory from "../../../util/factories/templates/template-factory"
 import FileUrlEditor from "../file-uploader/file-url-editor"
 
 interface MediaSettingsProps {
@@ -41,7 +41,7 @@ export default function MediaSettings({ mediaType, icon, props }: MediaSettingsP
 		}
 	}, [display])
 
-	const openConfigurer = () => {
+	const openUploader = () => {
 		setDisplay(true)
 		dispatch(blockingUpdated(true))
 	}
@@ -112,7 +112,7 @@ export default function MediaSettings({ mediaType, icon, props }: MediaSettingsP
 
 			<div
 				ref={ref}
-				onClick={openConfigurer}
+				onClick={openUploader}
 				className="w-[100%] py-[8px] bg-default-light hover:bg-gray-300 cursor-pointer rounded-[5px] flex items-center pl-5 hover:opacity-60"
 			>
 				{icon}

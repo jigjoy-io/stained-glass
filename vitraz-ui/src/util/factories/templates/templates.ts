@@ -1,16 +1,6 @@
 export class TemplatesStorage {
 	static getTemplates() {
 		let templates = {
-			audio: {
-				type: "audio",
-				source: "https://www.w3schools.com/html/mov_bbb.mp4",
-				position: "left",
-			},
-			"audio-configurer": {
-				type: "audio-configurer",
-				source: "https://www.w3schools.com/html/mov_bbb.mp4",
-				display: true,
-			},
 			text: {
 				type: "text",
 				text: "",
@@ -32,8 +22,8 @@ export class TemplatesStorage {
 				position: "left",
 				size: "large",
 			},
-			"image-configurer": {
-				type: "image-configurer",
+			"image-uploader": {
+				type: "image-uploader",
 				source: "/public/images/placeholderimage.jpg",
 				display: true,
 			},
