@@ -263,7 +263,7 @@ const Node = memo(function Node(props: any) {
 				onClick={(e: React.MouseEvent) => loadPage(e, props)}
 				className={`w-[100%] h-[28px]
             	${selected == props.id ? " bg-primary-light " : ""}
-            	hover:bg-primary-light hover:bg-opacity-60 rounded-sm flex flex-row items-center w-full`}
+            	hover:bg-primary-light hover:bg-opacity-60 rounded-md flex flex-row items-center w-full`}
 				onMouseEnter={() => dispatch(nodeHovered(props.id))}
 				onPointerLeave={() => dispatch(nodeHovered(null))}
 				style={{ paddingLeft: `${ident}px` }}
@@ -277,13 +277,13 @@ const Node = memo(function Node(props: any) {
 				</div>
 				{hovered === props.id && (
 					<div className="flex flex-row right-0">
-						<div onClick={expandDropdown} ref={ref}>
+						<div onClick={expandDropdown} ref={ref} className="w-[24px] hover:bg-pink-300 rounded-md">
 							<Tooltip message="Delete, duplicate, and more...">
 								<MoreIcon />
 							</Tooltip>
 						</div>
 
-						<div onClick={addPage}>
+						<div onClick={addPage} className="w-[24px] hover:bg-pink-300 rounded-md">
 							<Tooltip message="Add page inside">
 								<AddBlockIcon />
 							</Tooltip>
