@@ -309,7 +309,7 @@ const Node = memo(function Node(props: any) {
 				createPortal(
 					<ClickOutsideListener callback={closeDropdown}>
 						<div
-							className={`fixed flex rounded-lg p-1 shadow-xl bg-[white]`}
+							className={`fixed flex rounded-md p-1 shadow-xl border border-default-light bg-[white]`}
 							style={{ top: rect.top + rect.height, left: rect.x + rect.width - 20 }}
 							ref={portalRef}
 						>

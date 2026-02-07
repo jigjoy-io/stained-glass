@@ -36,9 +36,9 @@ export default function Item(props: {
 			${selected != null && selected === props.id ? "bg-gradient-custom-opacity" : "bg-[white]"} 
 			border-2 border-[white] md:hover:bg-primary-light  
 			${props.borderOn && "border border-light shadow-md"} 
-			rounded-[5px] cursor-pointer flex flex-col`}
+			rounded-lg cursor-pointer flex flex-col`}
 		>
-			<div className="flex flex-row p-1">
+			<div className="flex flex-row p-0.5">
 				{props.icon && (
 					<div className="pl-1 pr-2 flex items-center">
 						<props.icon />

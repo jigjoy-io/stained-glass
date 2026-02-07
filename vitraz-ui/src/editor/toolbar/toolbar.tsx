@@ -185,7 +185,7 @@ export default function Toolbar(props: any) {
 				createPortal(
 					<ClickOutsideListener callback={handleToolbarClose}>
 						<div
-							className="fixed flex rounded-lg p-1 shadow-xl bg-[white] z-50 -translate-x-[100%]"
+							className="fixed flex rounded-lg p-1 shadow-xl border border-default-light bg-[white] z-50 -translate-x-[100%]"
 							style={{ top: toolbarTop, left: toolbarLeft }}
 							ref={toolbarRef}
 						>
@@ -219,7 +219,7 @@ export default function Toolbar(props: any) {
 				createPortal(
 					<ClickOutsideListener callback={handleEditorClose}>
 						<div
-							className="fixed flex rounded-[5px] p-1 shadow bg-[white] z-50"
+							className="fixed flex rounded-lg p-1 shadow-xl border border-default-light bg-[white] z-50"
 							style={{ top: editorTop, left: editorLeft }}
 							ref={editorRef}
 						>

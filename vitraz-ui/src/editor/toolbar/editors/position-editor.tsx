@@ -28,8 +28,8 @@ export default function PositionEditor(props: any) {
 	}
 
 	return (
-		<div className="flex flex-col p-2">
-			<div className="pb-3">
+		<div className="flex flex-col rounded-lg">
+			<div>
 				{positions.map((position: any) => (
 					<Item
 						tabFocus={false}
@@ -41,7 +41,12 @@ export default function PositionEditor(props: any) {
 					/>
 				))}
 			</div>
-			<Button onClick={update}>Update</Button>
+			<hr className="text-default-light" />
+			<div className="flex w-full justify-end">
+				<Button className="w-fit mt-1" onClick={update}>
+					Update
+				</Button>
+			</div>
 		</div>
 	)
 }

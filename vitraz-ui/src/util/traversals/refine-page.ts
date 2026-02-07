@@ -7,14 +7,6 @@ function refineBuildingBlocks(block: any) {
 	return block
 }
 
-function refinePages(block: any) {
-	for (let i = 0; i < block.config.pages.length; i++) {
-		block.config.pages[i] = refine(block.config.pages[i])
-	}
-
-	return block
-}
-
 function refine(block: any) {
 	block.id = uuid()
 
