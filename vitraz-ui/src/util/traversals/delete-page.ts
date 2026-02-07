@@ -1,6 +1,4 @@
 function deleteFromBlankPage(page: any, blockId: any) {
-	//page.config.buildingBlocks = page.config.buildingBlocks.filter((block: any) => block.page?.id !== blockId)
-
 	let filtered: any[] = []
 	page.config.buildingBlocks.forEach((block: any) => {
 		if (block.type == "page.display") {
