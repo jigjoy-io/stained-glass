@@ -5,7 +5,6 @@ body {
 	margin: 0;
 	font-family: "Open-sans", sans-serif;
 	width: 100%;
-	font-size: 1.025rem;
 }
 
 :root {
@@ -28,20 +27,4 @@ input {
 	--color-alert-success: #d1f4e0;
 	--color-alert-danger: #fdd0df;
 	--color-alert-info: #e6f3ff;
-
-	--color-jig-brown: #f2eef0;
-	--color-jig-green: #effdfb;
-	--color-jig-rose: #fbbeea33;
-	--color-jig-yellow: #fef7ea;
-	--color-jig-blue: #e5effa;
-	--color-jig-red: #fdd0df;
-
-	--color-shallow-gray: #e5e7eb;
-	--color-text-danger: #ed5249;
-	--color-highlight: #dbeafe;
-	--color-text-default: #e2e2e2;
-	--color-dot-color: #4b5563;
-
-
-
 }

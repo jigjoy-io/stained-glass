@@ -36,7 +36,7 @@ export function RightSideMenu() {
 			<AnimatePresence>
 				{sidebar.visible && (
 					<m.div variants={animation} initial="hidden" animate="show" exit="exit" transition={transition}>
-						<div className="border-l border-light shadow-lg fixed right-0 bottom-0 h-[100dvh] lg:w-[50%] bg-[white] flex flex-col">
+						<div className="border-l border-light shadow-lg fixed right-0 bottom-0 h-dvh lg:w-[50%] bg-[white] flex flex-col">
 							<div
 								className="h-[24px] w-[24px] m-2"
 								onClick={() => dispatch(sidebarExpanded({ expanded: false, component: null }))}
@@ -44,7 +44,7 @@ export function RightSideMenu() {
 								<Tooltip message="Close panel">
 									<div
 										aria-label="Close panel"
-										className="cursor-pointer items-center justify-center rounded-[6px] h-[24px] w-[24px] p-1 bg-[transparent] hover:bg-primary-light"
+										className="cursor-pointer items-center justify-center rounded-[6px] h-[24px] w-[24px] p-1 bg-transparent hover:bg-primary-light"
 									>
 										<svg viewBox="0 0 16 16" className="w-[16px] h-[16px] block" fill="#2E2E2E">
 											<path

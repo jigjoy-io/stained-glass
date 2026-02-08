@@ -28,8 +28,16 @@ export default function ContentEditingText(props: any) {
 		if (activeBlock === props.id) ref.current?.focus()
 	}, [activeBlock])
 
+	useEffect(() => {
+		if (ref.current && ref.current.innerText !== props.text) {
+			ref.current.innerText = props.text.trim() || ""
+		}
+	}, [props.text, ref])
+
 	const updateText = (event: any) => {
-		let newValue = event.target.innerText.trim()
+		const raw = event.target.innerText ?? ""
+		const newValue = raw.replace(/\n/g, "").trim()
+
 		let block = {
 			id: props.id,
 			position: props.position,
@@ -50,18 +58,18 @@ export default function ContentEditingText(props: any) {
 	}
 
 	return (
-		<div className={`inline-block w-full ${style.lineHeight} ${alignmentVariations[position]}`}>
+		<div className={`inline-block w-full`}>
 			<div
 				contentEditable="plaintext-only"
-				suppressContentEditableWarning={true}
-				spellCheck="false"
+				suppressContentEditableWarning
+				spellCheck={false}
 				onKeyDown={handleKeyDown}
-				onBlur={(e) => updateText(e)}
+				onBlur={updateText}
 				data-block-id={props.id}
-				className={`${style.class} w-full [[contenteditable]]:focus:border-none [[contenteditable]]:focus:outline-none`}
+				className={`${style.class} w-full focus:outline-none flex ${alignmentVariations[position]}`}
 				ref={ref}
 			>
-				{props.text}
+				{props.text ?? ""}
 			</div>
 		</div>
 	)

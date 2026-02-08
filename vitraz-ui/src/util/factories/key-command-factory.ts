@@ -6,13 +6,14 @@ import { KeyHandlerContext } from "../text-utils/commands/key-handler-context"
 
 class KeyCommandFactory {
 	static createCommand(event: React.KeyboardEvent, context: KeyHandlerContext): KeyCommand | null {
-		switch (event.key) {
-			case "Enter":
-				return event.shiftKey ? new ShiftEnterCommand(context) : new EnterCommand(context)
-			case "Backspace":
-				return new BackspaceCommand(context)
-			default:
-				return null
+		if (event.shiftKey && event.key === "Enter") {
+			return new ShiftEnterCommand(context)
+		} else if (event.key === "Enter") {
+			return new EnterCommand(context)
+		} else if (event.key === "Backspace") {
+			return new BackspaceCommand(context)
+		} else {
+			return null
 		}
 	}
 }

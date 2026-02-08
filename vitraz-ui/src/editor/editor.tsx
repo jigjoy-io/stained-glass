@@ -1,4 +1,4 @@
-import { Suspense, useEffect } from "react"
+import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import Page from "../building-blocks/page/page"
 import { modeUpdated, pageUpdated, pagesUpdated, rootPageUpdated } from "../reducers/page-reducer"
@@ -52,9 +52,7 @@ export default function Editor() {
 				<div className="w-[200px] min-w-[200px] max-w-[200px] lg:w-[230px] lg:min-w-[230px] lg:max-w-[230px] grow-0">
 					<LeftSideMenu />
 				</div>
-				<div
-					className={`flex flex-col pt-20 ${sidebarVisible ? "grow" : "w-[100%]"} max-h-[100dvh] h-[100dvh] overflow-y-auto`}
-				>
+				<div className={`flex flex-col pt-20 ${sidebarVisible ? "grow" : "w-full"} max-h-dvh h-dvh overflow-y-auto`}>
 					<div className="grow">{page && <Page />}</div>
 				</div>
 

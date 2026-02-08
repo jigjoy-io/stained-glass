@@ -106,6 +106,8 @@ export default function BlockSelector(props: any) {
 
 	const insert = (event: any, type: string) => {
 		dispatch(focusBlock(null))
+		event.preventDefault()
+		event.stopPropagation()
 		let block = TemplateFactory.create(type)
 
 		dispatch(
@@ -161,7 +163,7 @@ export default function BlockSelector(props: any) {
 				type="text"
 				value={option}
 				onFocus={() => setPlaceholder(placeholder)}
-				className="w-full h-8 bg-white rounded-md outline-none"
+				className="w-full h-10 bg-white rounded-md outline-none"
 				placeholder={placeholder}
 				onChange={handleChange}
 				onKeyDown={handleKeyDown}

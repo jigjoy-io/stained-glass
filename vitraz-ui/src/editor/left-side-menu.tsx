@@ -12,7 +12,7 @@ export default function LeftSideMenu() {
 	const dispatch = useDispatch()
 
 	return (
-		<div className="h-[100dvh] max-h-[100dvh] bg-[#F2EEF0] bg-opacity-30 border-r border-light shadow-lg flex flex-col flex-none">
+		<div className="h-dvh max-h-dvh bg-[#F2EEF0] bg-opacity-30 border-r border-light shadow-lg flex flex-col flex-none">
 			<div className="grow overflow-y-auto mt-4">
 				{pages.length > 0 && (
 					<div className="flex flex-col">
@@ -35,7 +35,7 @@ export default function LeftSideMenu() {
 					className="flex flex-col pl-4 hover:cursor-pointer hover:bg-primary-light h-[30px] items-center"
 					onClick={() => dispatch(sidebarExpanded({ expanded: true, component: SidePanel }))}
 				>
-					<div className="flex flex-row w-[100%] h-[100%]">
+					<div className="flex flex-row w-full h-full">
 						<div className="pr-2 flex items-center">
 							<MagicIcon />
 						</div>
