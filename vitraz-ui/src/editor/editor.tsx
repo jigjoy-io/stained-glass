@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { Suspense, useEffect } from "react"
 import { useDispatch } from "react-redux"
 import Page from "../building-blocks/page/page"
 import { modeUpdated, pageUpdated, pagesUpdated, rootPageUpdated } from "../reducers/page-reducer"

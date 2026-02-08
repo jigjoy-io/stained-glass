@@ -2,10 +2,13 @@ import React, { Suspense } from "react"
 import PageDisplay from "../../building-blocks/page/page.display"
 import H1 from "../../building-blocks/h1/h1"
 import H2 from "../../building-blocks/h2/h2"
-import Text from "../../building-blocks/text/text"
 import Image from "../../building-blocks/image/image"
 import ImageUploader from "../../building-blocks/image/image-uploader"
 import BlockSelector from "../../building-blocks/block-selector/block-selector"
+
+import { loadRemote } from "@module-federation/enhanced/runtime"
+
+const Text = React.lazy(() => loadRemote("provider/Text"))
 
 export default class BlockFactory extends React.Component {
 	static buildingBlocks: any = {

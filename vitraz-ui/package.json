@@ -10,6 +10,7 @@
 	},
 	"dependencies": {
 		"@jigjoy-io/ui-library": "^0.1.1",
+		"@module-federation/enhanced": "^2.0.0",
 		"@reduxjs/toolkit": "^2.11.2",
 		"@tanstack/react-router": "^1.158.1",
 		"framer-motion": "^12.31.0",

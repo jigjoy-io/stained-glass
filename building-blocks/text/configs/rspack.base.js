@@ -54,13 +54,17 @@ module.exports = {
 		new rspack.HtmlRspackPlugin({
 			template: path.join(__dirname, "../index.html"),
 		}),
-
+		new Dotenv({
+			path: "./.env",
+			safe: true,
+		}),
 		new ModuleFederationPlugin(
 			createModuleFederationConfig({
-				name: "vitraz-ui-editor",
+				name: "text_block_provider",
 
-				remotes: {
-					provider: "text_block_provider@http://localhost:3102/mf-manifest.json",
+				exposes: {
+					"./Text": "./src/text.tsx",
+					"./TextIcon": "./src/text.icon.tsx",
 				},
 				shared: {
 					react: {
@@ -72,13 +76,8 @@ module.exports = {
 						eager: true,
 					},
 				},
-			}),
+			})
 		),
-
-		new Dotenv({
-			path: "./.env",
-			safe: true,
-		}),
 		new TsCheckerRspackPlugin({
 			typescript: {
 				configOverwrite: {

@@ -1,8 +1,11 @@
 import PageIcon from "../page/page.icon"
 import ImageIcon from "../image/image.icon"
-import TextIcon from "../text/text.icon"
 import H1Icon from "../h1/h1.icon"
 import H2Icon from "../h2/h2.icon"
+import { loadRemote } from "@module-federation/enhanced/runtime"
+import React from "react"
+
+const TextIcon = React.lazy(() => loadRemote("provider/TextIcon"))
 
 export class SelectorOptions {
 	static getOptions() {
@@ -42,7 +45,7 @@ export class SelectorOptions {
 						icon: ImageIcon,
 					},
 				],
-			}
+			},
 		]
 
 		return options
