@@ -3,45 +3,60 @@ import { useDispatch } from "react-redux"
 import { updateBlock } from "../../../reducers/page-reducer"
 import { useActiveBlock } from "../../../util/store"
 import textEditingVariants from "../../../util/style-helper/text-editing-variations"
-import alignmentVariations from "../../../util/style-helper/alignment-variations"
 import { handleTextBlockKeyDown } from "../../../util/factories/key-command-factory"
 
-export default function ContentEditingText(props: any) {
-	const [position, setPosition] = useState(props.position)
-	const [type, setType] = useState(props.type)
+const textAlignMap = {
+	left: "justify-start text-left",
+	center: "justify-center text-center",
+	right: "justify-end text-right",
+}
+
+export default function ContentEditingText({
+	id,
+	text,
+	position,
+	type,
+}: {
+	id: string
+	text: string
+	position: "left" | "center" | "right"
+	type: string
+}) {
+	const [textPosition, setTextPosition] = useState("")
+	const [textType, setTextType] = useState(type)
 	const [style, setStyle] = useState({} as any)
 
 	useEffect(() => {
-		setPosition(props.position)
-	}, [props.position])
+		setTextPosition(textAlignMap[position])
+	}, [position])
 
 	useEffect(() => {
 		setStyle(textEditingVariants[type])
-		setType(props.type)
-	}, [props.type])
+		setTextType(type)
+	}, [type])
 
 	const dispatch = useDispatch()
 	const ref = useRef<HTMLDivElement>(null)
 	const activeBlock = useActiveBlock()
 
 	useEffect(() => {
-		if (activeBlock === props.id) ref.current?.focus()
+		if (activeBlock === id) ref.current?.focus()
 	}, [activeBlock])
 
 	useEffect(() => {
-		if (ref.current && ref.current.innerText !== props.text) {
-			ref.current.innerText = props.text.trim() || ""
+		if (ref.current && ref.current.innerText !== text) {
+			ref.current.innerText = text.trim() || ""
 		}
-	}, [props.text, ref])
+	}, [text, ref])
 
 	const updateText = (event: any) => {
 		const raw = event.target.innerText ?? ""
 		const newValue = raw.replace(/\n/g, "").trim()
 
 		let block = {
-			id: props.id,
-			position: props.position,
-			type: props.type,
+			id: id,
+			position: position,
+			type: textType,
 			text: newValue,
 		}
 		dispatch(updateBlock(block))
@@ -51,8 +66,8 @@ export default function ContentEditingText(props: any) {
 		handleTextBlockKeyDown({
 			event,
 			dispatch,
-			blockId: props.id,
-			blockType: props.type,
+			blockId: id,
+			blockType: type,
 			ref: ref as React.RefObject<HTMLElement>,
 		})
 	}
@@ -65,11 +80,11 @@ export default function ContentEditingText(props: any) {
 				spellCheck={false}
 				onKeyDown={handleKeyDown}
 				onBlur={updateText}
-				data-block-id={props.id}
-				className={`${style.class} w-full focus:outline-none flex ${alignmentVariations[position]}`}
+				data-block-id={id}
+				className={`${style.class} w-full focus:outline-none ${textPosition}`}
 				ref={ref}
 			>
-				{props.text ?? ""}
+				{text ?? ""}
 			</div>
 		</div>
 	)

@@ -1,16 +1,21 @@
 import { useEffect, useState } from "react"
-import alignmentVariations from "../../util/style-helper/alignment-variations"
 
-export default function H2(props: any) {
-	const [position, setPosition] = useState(props.position)
+const textAlignMap = {
+	left: "text-left",
+	center: "text-center",
+	right: "text-right",
+}
+
+export default function H2({ text, position }: { text: string; position: "left" | "center" | "right" }) {
+	const [textPosition, setTextPosition] = useState("")
 
 	useEffect(() => {
-		setPosition(props.position)
-	}, [props.position])
+		setTextPosition(textAlignMap[position])
+	}, [position])
 
 	return (
-		<div className={`inline-block w-full h-min-[2rem] h-max ${alignmentVariations[position]}`}>
-			<div className="text-heading">{props.text}</div>
+		<div className={`inline-block w-full h-min-[2rem] h-max`}>
+			<div className={`text-heading w-full flex ${textPosition}`}>{text}</div>
 		</div>
 	)
 }
