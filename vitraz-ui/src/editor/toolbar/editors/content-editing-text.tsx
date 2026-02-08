@@ -45,7 +45,7 @@ export default function ContentEditingText(props: any) {
 			dispatch,
 			blockId: props.id,
 			blockType: props.type,
-			ref,
+			ref: ref as React.RefObject<HTMLElement>,
 		})
 	}
 

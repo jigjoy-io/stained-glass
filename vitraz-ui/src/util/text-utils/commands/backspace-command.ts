@@ -9,11 +9,13 @@ export class BackspaceCommand extends KeyCommand {
 		if (!ref?.current) return
 
 		const isInput = ref.current instanceof HTMLInputElement
-		const caretPosition = isInput ? (ref.current.selectionStart ?? 0) : getCursorPosition(ref.current)
+		const caretPosition = isInput
+			? ((ref.current as HTMLInputElement).selectionStart ?? 0)
+			: getCursorPosition(ref.current)
 
 		if ((!isInput && !ref.current.innerText.trim()) || caretPosition === 0) {
 			event.preventDefault()
-			const currentText = isInput ? ref.current.value : ref.current.innerText || ""
+			const currentText = isInput ? (ref.current as HTMLInputElement).value : ref.current.innerText || ""
 			mergeWithPreviousBlock({ id: blockId }, currentText, dispatch)
 		}
 	}

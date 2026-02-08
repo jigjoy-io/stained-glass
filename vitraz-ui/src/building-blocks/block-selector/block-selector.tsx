@@ -91,7 +91,7 @@ export default function BlockSelector(props: any) {
 			dispatch,
 			blockId: props.id,
 			blockType: "block-selector",
-			ref: inputRef,
+			ref: inputRef as React.RefObject<HTMLElement>,
 			options: {
 				onClose: closeMenu,
 				setOption: setOption,
