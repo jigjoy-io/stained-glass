@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { Suspense, useEffect, useState } from "react"
 
 export default function Item(props: {
 	selected?: string
@@ -41,7 +41,9 @@ export default function Item(props: {
 			<div className="flex flex-row p-0.5">
 				{props.icon && (
 					<div className="pl-1 pr-2 flex items-center">
-						<props.icon />
+						<Suspense fallback={<div></div>}>
+							<props.icon />
+						</Suspense>
 					</div>
 				)}
 				<div className={props.color && `${props.color}`}>{props.text}</div>

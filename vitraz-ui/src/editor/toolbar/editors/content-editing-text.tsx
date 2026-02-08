@@ -50,7 +50,7 @@ export default function ContentEditingText(props: any) {
 	}
 
 	return (
-		<div className={`inline-block w-[100%] ${style.lineHeight} ${alignmentVariations[position]}`}>
+		<div className={`inline-block w-full ${style.lineHeight} ${alignmentVariations[position]}`}>
 			<div
 				contentEditable="plaintext-only"
 				suppressContentEditableWarning={true}
@@ -58,7 +58,7 @@ export default function ContentEditingText(props: any) {
 				onKeyDown={handleKeyDown}
 				onBlur={(e) => updateText(e)}
 				data-block-id={props.id}
-				className={`${style.class} w-[100%] [&[contenteditable]]:focus:border-none [&[contenteditable]]:focus:outline-none`}
+				className={`${style.class} w-full [[contenteditable]]:focus:border-none [[contenteditable]]:focus:outline-none`}
 				ref={ref}
 			>
 				{props.text}

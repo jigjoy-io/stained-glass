@@ -9,7 +9,7 @@ export default function H2(props: any) {
 	}, [props.position])
 
 	return (
-		<div className={`inline-block w-[100%] h-min-[2rem] h-max ${alignmentVariations[position]}`}>
+		<div className={`inline-block w-full h-min-[2rem] h-max ${alignmentVariations[position]}`}>
 			<div className="text-heading">{props.text}</div>
 		</div>
 	)

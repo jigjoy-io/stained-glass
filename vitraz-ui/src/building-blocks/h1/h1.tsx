@@ -14,7 +14,7 @@ export default function H1(props: any) {
 	}, [props.text])
 
 	return (
-		<div className={`inline-block w-[100%] h-min-[2.5rem] h-max ${alignmentVariations[position]}`}>
+		<div className={`inline-block w-full h-min-[2.5rem] h-max ${alignmentVariations[position]}`}>
 			<div className="text-title">{text}</div>
 		</div>
 	)
